@@ -63,6 +63,26 @@ Phrases come from three places:
    A second Claude pass then reviews grammar, naturalness, translation and meaning, and drops anything it doesn't approve. Beginner notes come from the same analyzer as the importer. Results are cached per word, so re-runs only pay for new words. It defaults to Claude Sonnet 5.5 (≈ $25–30 for ~5,000 words); `--model claude-haiku-5-5` costs about a twentieth of that. **Claude Max plans include monthly API credits** ($100 on Max 5x, $200 on Max 20x) that cover this. To claim them, go to claude.ai Settings › Billing › API credits › Link organization, then create the API key in that Console organization. **Or use your Claude plan instead of API credits:** `--backend claude-code` sends the requests through Claude Code (`claude -p`) signed in with your plan. It counts against your plan's usage limits, it's slower, and if it hits a limit it saves progress and stops, so re-run later and it continues. Any `ANTHROPIC_API_KEY` in your shell is ignored in this mode so it doesn't bill the API. Novice phrases are listed in `tools/phrases_review.md`. To drop a phrase, put its id in `tools/phrases_rejected.txt` and run `python3 tools/import_dictionary.py --merge-only`.
 3. **Live on her phone**: Settings › AI phrases. Paste an Anthropic API key (stored in the iPhone's Keychain only) and every card gets a **Show me another** button. It writes a new phrase with Claude Haiku 5.5, runs the on-device checks, and saves the phrase to the Phrasebook marked NEW (not reviewed). This setup is fine for a personal app. For an App Store release, route requests through your own server instead of putting a key on the device.
 
+## Sanity check
+
+After an import or a phrase run, check the result:
+
+```bash
+python3 tools/sanity_check.py            # summary + tools/.cache/sanity_report.md
+python3 tools/sanity_check.py --strict   # exits 1 on serious problems (use before committing)
+```
+
+It flags suspects in the deck:
+- accent-only duplicates
+- cards that look like a form of another verb
+- filler-only or untranslated meanings
+- examples whose highlight or note doesn't match
+- grammar notes that look wrong
+- missing key forms
+- broken phrases
+
+It also summarizes the last phrase run: drop reasons, the words with the most drops (usually the card is the problem), and review rejections grouped by cause. The cause groups are wrong meaning, wrong note, regional, literary, and unnatural.
+
 ## Levels
 
 The levels loosely follow CEFR, which is also how the Instituto Cervantes curriculum is organised:
