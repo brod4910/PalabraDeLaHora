@@ -17,7 +17,7 @@ struct WordCardView: View {
             // Meaning 1 (the main one): its sentence, key forms and how to use it.
             section(title: hasExtraMeanings ? "1 · \(word.english)" : "In a sentence",
                     systemImage: hasExtraMeanings ? "1.circle.fill" : "text.quote") {
-                exampleBlock(word.example, word.exampleTranslation)
+                exampleBlock(word.example, word.exampleTranslation, word: word.exampleWord, note: word.exampleNote)
             }
             formsSection(word.formRows, title: "Key forms")
             if word.formRows.isEmpty && word.neverChangesForm {
@@ -40,7 +40,8 @@ struct WordCardView: View {
                         Text(pos).font(.caption.weight(.semibold)).foregroundStyle(.secondary)
                     }
                     if let example = meaning.example {
-                        exampleBlock(example, meaning.exampleTranslation ?? "")
+                        exampleBlock(example, meaning.exampleTranslation ?? "",
+                                     word: meaning.exampleWord, note: meaning.exampleNote)
                     }
                     if !meaning.formRows.isEmpty {
                         Divider().padding(.vertical, 4)
@@ -62,14 +63,19 @@ struct WordCardView: View {
         }
     }
 
-    private func exampleBlock(_ example: String, _ translation: String) -> some View {
+    private func exampleBlock(_ example: String, _ translation: String,
+                              word highlight: String? = nil, note: String? = nil) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(example)
+            Text(highlighted(example, word: highlight, color: Theme.coral))
                 .font(.title3.weight(.medium))
                 .fontDesign(.serif)
                 .italic()
             Text(translation)
                 .foregroundStyle(.secondary)
+            if let note {
+                ExampleNoteView(note: note)
+                    .padding(.top, 2)
+            }
             HStack {
                 PlayButton(title: "Play", systemImage: "play.fill") { speaker.speak(example) }
                 PlayButton(title: "Slow", systemImage: "tortoise.fill") { speaker.speak(example, slow: true) }

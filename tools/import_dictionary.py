@@ -484,8 +484,11 @@ def key_forms(e: dict, word: str) -> str | None:
         tu = find_form(e, {"second-person", "singular", "present", "indicative"}, bad)
         el = find_form(e, {"third-person", "singular", "present", "indicative"}, bad)
         past = find_form(e, {"first-person", "singular", "preterite", "indicative"}, bad)
+        we = find_form(e, {"first-person", "plural", "present", "indicative"}, bad)
         if yo and tu and el:
             rows = [("yo", yo), ("tú", tu), ("él / ella", el)]
+            if we:
+                rows.append(("nosotros", we))
             if past:
                 rows.append(("past (yo)", past))
     elif pos == "noun":
@@ -508,6 +511,133 @@ def key_forms(e: dict, word: str) -> str | None:
     elif pos in ("adj", "det", "article", "pron", "num"):
         rows = gendered_rows(e, word)
     return "\n".join(f"{label}: {value}" for label, value in rows) or None
+
+
+# ─────────────────────────────────────────────────────────────── explaining forms to a beginner
+
+META_TAGS = {"table-tags", "inflection-template", "class", "romanization"}
+PERSONS = [
+    (("first-person", "singular"), "**I** (yo)"),
+    (("second-person", "singular"), "**you** (tú)"),
+    (("third-person", "singular"), "**he / she** (él / ella) or formal *usted*"),
+    (("first-person", "plural"), "**we** (nosotros)"),
+    (("second-person", "plural"), "**you all** (vosotros, used in Spain)"),
+    (("third-person", "plural"), "**they** (ellos / ellas) or *ustedes*"),
+]
+CLITIC_MEANING = {
+    "me": "me / myself", "te": "you / yourself", "se": "himself / herself / themselves",
+    "nos": "us / ourselves", "os": "you all", "lo": "it / him", "la": "it / her", "le": "to him / to her",
+    "los": "them", "las": "them", "les": "to them",
+}
+CLITIC_ORDER = sorted(CLITIC_MEANING, key=len, reverse=True)
+
+
+def form_tags(e: dict) -> dict[str, list[set[str]]]:
+    out: dict[str, list[set[str]]] = defaultdict(list)
+    for f in e.get("forms", []) or []:
+        tags = set(f.get("tags", [])) - META_TAGS
+        if f.get("form") and tags:
+            out[f["form"].lower()].append(tags)
+    return out
+
+
+def person_of(tags: set[str]) -> str | None:
+    for (p, n), label in PERSONS:
+        if p in tags and n in tags:
+            return label
+    return None
+
+
+def describe(tags: set[str]) -> str:
+    person = person_of(tags)
+    who = f" for {person}" if person else ""
+    if "infinitive" in tags: return "the basic **to …** form"
+    if "gerund" in tags: return "the **-ing** form"
+    if "participle" in tags: return "the **past participle** (like English *-ed*: *he terminado* = I have finished)"
+    if "imperative" in tags:
+        kind = "a **don't-do-it command**" if "negative" in tags else "a **command**"
+        return kind + (f" to {person}" if person else "")
+    if "subjunctive" in tags:
+        return f"the **subjunctive**{who} — used after wishes and requests like *quiero que…* or *ojalá*"
+    if "preterite" in tags: return f"the **past** tense{who} (a finished action)"
+    if "imperfect" in tags: return f"the **past** tense{who} for ongoing or habitual actions (*was …-ing*, *used to*)"
+    if "future" in tags: return f"the **future** tense{who} (*will …*)"
+    if "conditional" in tags: return f"the **conditional**{who} (*would …*)"
+    if "present" in tags: return f"the **present** tense{who}"
+    return "a form" + who
+
+
+def tag_rank(tags: set[str]) -> int:
+    """Lower = simpler for a beginner. Used to pick examples and to choose between readings."""
+    if "infinitive" in tags: return 0
+    if "present" in tags and "indicative" in tags: return 1 if "singular" in tags else 2
+    if "gerund" in tags: return 3
+    if "preterite" in tags: return 4
+    if "imperative" in tags: return 5
+    if "imperfect" in tags: return 6
+    if "future" in tags or "conditional" in tags or "participle" in tags: return 7
+    if "subjunctive" in tags: return 9
+    return 8
+
+
+def analyze(token: str, lemma: str, entry: dict) -> tuple[str, list[str], set[str], list[set[str]]] | None:
+    """How a word in a sentence relates to the dictionary word: (base form, attached pronouns,
+    chosen tags, all possible tag sets). 'quítate' → ('quita', ['te'], imperative tú, …)."""
+    t = token.lower()
+    ft = form_tags(entry)
+    if t == lemma:
+        return (t, [], {"infinitive"}, [{"infinitive"}])
+    # Pronouns attached to the end (dame, quítate, dámelo, comerlo) are checked first, so even
+    # when Wiktionary lists "quítate" as a form, the note can say *quita* + *te*.
+    if (split := split_clitics(t, lemma, ft)):
+        return split
+    if t in ft:
+        options = ft[t]
+        return (t, [], min(options, key=tag_rank), options)
+    return None
+
+
+def split_clitics(t: str, lemma: str, ft: dict[str, list[set[str]]]):
+    for first in CLITIC_ORDER:
+        if not t.endswith(first):
+            continue
+        stem, clitics = t[: -len(first)], [first]
+        for second in CLITIC_ORDER:                    # a second pronoun: dá-me-lo
+            if stem.endswith(second) and (strip_accents(stem[: -len(second)]) in ft or strip_accents(stem[: -len(second)]) == lemma):
+                stem, clitics = stem[: -len(second)], [second, first]
+                break
+        base = strip_accents(stem) if strip_accents(stem) in ft or strip_accents(stem) == lemma else stem
+        if base == lemma:
+            return (base, clitics, {"infinitive"}, [{"infinitive"}])
+        if base in ft:
+            # Pronouns only attach to commands, infinitives and -ing forms.
+            options = [o for o in ft[base] if o & {"imperative", "gerund", "infinitive"}] or ft[base]
+            return (base, clitics, min(options, key=tag_rank), options)
+    return None
+
+
+def explain(surface: str, lemma: str, analysis) -> str | None:
+    base, clitics, tags, options = analysis
+    word = surface.lower()
+    if word == lemma and not clitics:
+        return None
+    if clitics:
+        parts = " + ".join(f"*{c}* ({CLITIC_MEANING[c]})" for c in clitics)
+        base_desc = "the basic *to …* form" if base == lemma else describe(tags)
+        return f"**{word}** = *{base}* ({base_desc}) + {parts}."
+    text = f"**{word}** = *{lemma}* → {describe(tags)}."
+    # Same spelling, other reading (mira = he looks / Look!)
+    if "imperative" not in tags and any("imperative" in o and "negative" not in o for o in options):
+        text += " It can also be a **command** to **you** (tú) — same spelling."
+    return text
+
+
+def beginner_penalty(analysis, novice: bool) -> int:
+    if analysis is None:
+        return 1500
+    _, clitics, tags, _ = analysis
+    penalty = [0, 150, 300, 700, 1000, 1500, 1500, 1800, 2000, 2500][tag_rank(tags)] + (1500 if clitics else 0)
+    return penalty * (2 if novice else 1)
 
 
 # ─────────────────────────────────────────────────────────────── Tatoeba
@@ -681,19 +811,43 @@ def build(args) -> list[dict]:
                 out.append({"gloss": gloss, "kws": kws, "entry": e, "sense": sense})
         return out
 
-    def support(lemma: str, meaning: dict) -> tuple[int, tuple[str, str] | None]:
-        """How many sentence pairs use this meaning, and the easiest one."""
-        variants = set().union(*(english_variants(k) for k in meaning["kws"][:1]))
+    def support(lemma: str, meaning: dict, novice: bool) -> tuple[int, tuple[str, str] | None, str | None]:
+        """How many sentence pairs use this meaning, the easiest one, and the word form it uses.
+        "Easiest" = common vocabulary, short, and the simplest form of the word (plain form or
+        present tense beats past tenses, commands, subjunctive and attached pronouns)."""
+        variants = set().union(*(english_variants(k) for k in meaning["kws"][:3]))
         best, count = None, 0
         for form in spanish_forms(lemma, meaning["entry"]):
+            penalty = beginner_penalty(analyze(form, lemma, meaning["entry"]), novice)
             for k in index.get(form, []):
                 if not (scored[k][3] & variants):
                     continue
                 count += 1
-                cand = (scored[k][0] + (0 if form == lemma else 150), k)
+                cand = (scored[k][0] + penalty, k, form)
                 if best is None or cand < best:
                     best = cand
-        return count, ((scored[best[1]][1], scored[best[1]][2]) if best else None)
+        if not best:
+            return count, None, None
+        return count, (scored[best[1]][1], scored[best[1]][2]), best[2]
+
+    def annotate(target: dict, lemma: str, entry: dict, sentence: str, form: str | None) -> None:
+        """Highlights the word in the example; explains it and adds it to Key forms if it's a
+        form the table doesn't show."""
+        candidates = [form] if form else []
+        candidates += [t for t in tokens(sentence) if t not in candidates]
+        for cand in candidates:
+            if not cand or not (analysis := analyze(cand, lemma, entry)):
+                continue
+            surface = find_in_sentence(sentence, cand) or cand
+            target["exampleWord"] = surface
+            if note := explain(surface, lemma, analysis):
+                target["exampleNote"] = note
+                if target.get("forms") is not None or "forms" in target:
+                    values = [v.lower() for v in form_values(target.get("forms"))]
+                    if surface.lower() not in values:
+                        target["forms"] = (target.get("forms") + "\n" if target.get("forms") else "") + \
+                                          f"in the example: {surface.lower()}"
+            return
 
     def pos_label(entry: dict) -> str:
         pos = POS_LABELS[entry["pos"]]
@@ -712,8 +866,9 @@ def build(args) -> list[dict]:
         if not meanings:
             skipped["no usable definition"] += 1; continue
 
+        novice = level_for(rank) in ("novice", "beginner")
         for order, m in enumerate(meanings):
-            m["count"], m["example"] = support(lemma, m)
+            m["count"], m["example"], m["form"] = support(lemma, m, novice)
             m["order"] = order
             if not m["example"]:
                 m["example"] = wiktionary_example(m["sense"])
@@ -740,15 +895,20 @@ def build(args) -> list[dict]:
             "level": level_for(rank), "kind": "phrase" if primary["entry"]["pos"] == "phrase" else "word",
             "source": "dictionary",
         }
-        if forms := key_forms(primary["entry"], lemma):
-            card["forms"] = forms
+        card["forms"] = key_forms(primary["entry"], lemma)
+        annotate(card, lemma, primary["entry"], card["example"], primary.get("form"))
+        if not card["forms"]:
+            del card["forms"]
         if others:
             card["otherMeanings"] = []
             for m in others:
                 om = {"english": m["gloss"], "partOfSpeech": pos_label(m["entry"]),
                       "example": m["example"][0], "exampleTranslation": m["example"][1]}
-                if m["entry"] is not primary["entry"] and (f := key_forms(m["entry"], lemma)):
-                    om["forms"] = f
+                if m["entry"] is not primary["entry"]:
+                    om["forms"] = key_forms(m["entry"], lemma)
+                annotate(om, lemma, m["entry"], om["example"], m.get("form"))
+                if not om.get("forms"):
+                    om.pop("forms", None)
                 card["otherMeanings"].append(om)
         cards.append(card)
 
@@ -769,11 +929,46 @@ def build(args) -> list[dict]:
     return cards
 
 
+def form_values(forms: str | None) -> list[str]:
+    """All values in a key-forms block ("yo: tengo" → "tengo"; "el amigo / la amiga" → both)."""
+    out = []
+    for line in (forms or "").split("\n"):
+        if ": " in line:
+            out += [v.strip() for v in line.split(": ", 1)[1].split(" / ")]
+    return out
+
+
+def find_in_sentence(sentence: str, phrase: str) -> str | None:
+    """The phrase as it's written in the sentence (keeps capitals), matching whole words only."""
+    m = re.search(rf"(?<![a-záéíóúüñ]){re.escape(phrase)}(?![a-záéíóúüñ])", sentence, re.IGNORECASE)
+    return m.group(0) if m else None
+
+
+def annotate_curated_example(card: dict, note: tuple[str, str] | None) -> dict:
+    """Highlights the word in the example and, when it's a form not in Key forms, explains it."""
+    card = dict(card)
+    values = form_values(card.get("forms"))
+    if note:
+        word, text = note
+        card["exampleWord"], card["exampleNote"] = word, text
+        shown = re.search(r"\*\*(.+?)\*\*", text)
+        in_example = (shown.group(1) if shown else word).strip("¡!¿?").lower()
+        if card.get("forms") and in_example not in (v.lower() for v in values):
+            card["forms"] += f"\nin the example: {in_example}"
+        return card
+    # Otherwise just highlight whichever key form (or the word itself) the sentence uses.
+    for candidate in sorted(values + [card["spanish"]], key=len, reverse=True):
+        if (hit := find_in_sentence(card["example"], candidate)):
+            card["exampleWord"] = hit
+            break
+    return card
+
+
 def merge() -> None:
     curated = json.loads(CURATED.read_text(encoding="utf-8")) if CURATED.exists() else []
     generated = json.loads(GENERATED.read_text(encoding="utf-8")) if GENERATED.exists() else []
     sys.path.insert(0, str(TOOLS))
-    from curated_forms import FORMS as CURATED_FORMS, MEANING_FORMS
+    from curated_forms import FORMS as CURATED_FORMS, MEANING_FORMS, EXAMPLE_NOTES
 
     generated_forms = {g["spanish"].lower(): g["forms"] for g in generated if g.get("forms")}
     deck, ids = [], set()
@@ -784,6 +979,7 @@ def merge() -> None:
         forms = CURATED_FORMS.get(c["spanish"]) or generated_forms.get(c["spanish"].lower())
         if forms:
             c = {**c, "forms": forms}; with_forms += 1
+        c = annotate_curated_example(c, EXAMPLE_NOTES.get(c["spanish"]))
         if c.get("otherMeanings"):
             c = {**c, "otherMeanings": [
                 {**m, "forms": MEANING_FORMS[(c["spanish"], i)]} if (c["spanish"], i) in MEANING_FORMS else m

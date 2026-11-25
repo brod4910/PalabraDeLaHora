@@ -74,6 +74,8 @@ python3 tools/import_dictionary.py            # ~5,000 cards (use --count 8000 f
 
 **Words with several meanings** (cuarto = *room* / *fourth* / *quarter*) get up to three. Each meaning has its own example, and a sentence only counts for a meaning if its English translation actually uses that meaning, so a "room" example always says "room". The meaning with the most real sentences comes first. Hand-written cards with two meanings (querer, tiempo, esperar, tarde …) are split the same way in `tools/new_words.py` (`MEANINGS`).
 
+**Beginner-friendly examples.** For each meaning, the importer prefers sentences that use the plain form (*quitar*) or the present tense. Past tenses, commands, subjunctives and attached pronouns (*quítate*) are used only when nothing simpler exists, and even less for Novice/Beginner words. The word is highlighted in the example. When the example uses a form not in the Key forms table, the card explains it in plain English, e.g. "**quítate** = *quita* (a command to you) + *te* (yourself)" or "**quitaron** = *quitar* → the past tense for they". That form is also added to Key forms as "in the example". Hand-written cards get the same notes from `tools/curated_forms.py` (`EXAMPLE_NOTES`).
+
 Words tagged vulgar, offensive or derogatory in Wiktionary are skipped, along with sentences that contain them. Hand-written cards always win over generated ones for the same word. The first run downloads about 1–3 GB into `tools/.cache/` (git-ignored) and takes a few minutes. After that, the filtered subset is cached. The output goes to `tools/generated.json` (commit it) and is merged into `Shared/words.json`. Attribution is in Settings › About › Credits & licenses.
 
 ## Adding words

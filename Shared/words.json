@@ -19,7 +19,8 @@
     "exampleTranslation": "I love you so much."
    }
   ],
-  "forms": "yo: quiero\ntú: quieres\nél / ella: quiere\npast (yo): quise"
+  "forms": "yo: quiero\ntú: quieres\nél / ella: quiere\nnosotros: queremos\npast (yo): quise",
+  "exampleWord": "Quiero"
  },
  {
   "id": "necesitar",
@@ -33,7 +34,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: necesito\ntú: necesitas\nél / ella: necesita\npast (yo): necesité"
+  "forms": "yo: necesito\ntú: necesitas\nél / ella: necesita\nnosotros: necesitamos\npast (yo): necesité",
+  "exampleWord": "Necesito"
  },
  {
   "id": "tener",
@@ -48,7 +50,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Spanish ‘has’ feelings: Tengo hambre = I’m hungry (lit. I have hunger).",
-  "forms": "yo: tengo\ntú: tienes\nél / ella: tiene\npast (yo): tuve"
+  "forms": "yo: tengo\ntú: tienes\nél / ella: tiene\nnosotros: tenemos\npast (yo): tuve",
+  "exampleWord": "Tengo"
  },
  {
   "id": "ir",
@@ -62,7 +65,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: voy\ntú: vas\nél / ella: va\npast (yo): fui"
+  "forms": "yo: voy\ntú: vas\nél / ella: va\nnosotros: vamos\npast (yo): fui",
+  "exampleWord": "Vamos"
  },
  {
   "id": "poder",
@@ -77,7 +81,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "The o changes to ue: puedo, puedes, puede.",
-  "forms": "yo: puedo\ntú: puedes\nél / ella: puede\npast (yo): pude"
+  "forms": "yo: puedo\ntú: puedes\nél / ella: puede\nnosotros: podemos\npast (yo): pude",
+  "exampleWord": "Puedes"
  },
  {
   "id": "gustar",
@@ -92,7 +97,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "The thing you like is the subject: ‘Mexican food pleases me.’",
-  "forms": "a mí: me gusta\na ti: te gusta\na él / ella: le gusta\npast: me gustó"
+  "forms": "a mí: me gusta\na ti: te gusta\na él / ella: le gusta\na nosotros: nos gusta\npast: me gustó",
+  "exampleWord": "Me gusta"
  },
  {
   "id": "hablar",
@@ -107,7 +113,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "The h is always silent.",
-  "forms": "yo: hablo\ntú: hablas\nél / ella: habla\npast (yo): hablé"
+  "forms": "yo: hablo\ntú: hablas\nél / ella: habla\nnosotros: hablamos\npast (yo): hablé",
+  "exampleWord": "Hablas"
  },
  {
   "id": "comer",
@@ -121,7 +128,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: como\ntú: comes\nél / ella: come\npast (yo): comí"
+  "forms": "yo: como\ntú: comes\nél / ella: come\nnosotros: comemos\npast (yo): comí",
+  "exampleWord": "Comemos"
  },
  {
   "id": "beber",
@@ -136,7 +144,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "In Mexico you’ll also hear “tomar” for drinking.",
-  "forms": "yo: bebo\ntú: bebes\nél / ella: bebe\npast (yo): bebí"
+  "forms": "yo: bebo\ntú: bebes\nél / ella: bebe\nnosotros: bebemos\npast (yo): bebí",
+  "exampleWord": "Bebo"
  },
  {
   "id": "hacer",
@@ -151,7 +160,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Weather uses hacer, not estar.",
-  "forms": "yo: hago\ntú: haces\nél / ella: hace\npast (yo): hice"
+  "forms": "yo: hago\ntú: haces\nél / ella: hace\nnosotros: hacemos\npast (yo): hice",
+  "exampleWord": "haces"
  },
  {
   "id": "saber",
@@ -166,7 +176,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Use saber for information; conocer for people and places.",
-  "forms": "yo: sé\ntú: sabes\nél / ella: sabe\npast (yo): supe"
+  "forms": "yo: sé\ntú: sabes\nél / ella: sabe\nnosotros: sabemos\npast (yo): supe",
+  "exampleWord": "sé"
  },
  {
   "id": "conocer",
@@ -181,7 +192,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Mucho gusto en conocerte = Nice to meet you.",
-  "forms": "yo: conozco\ntú: conoces\nél / ella: conoce\npast (yo): conocí"
+  "forms": "yo: conozco\ntú: conoces\nél / ella: conoce\nnosotros: conocemos\npast (yo): conocí",
+  "exampleWord": "Conoces"
  },
  {
   "id": "estar",
@@ -196,7 +208,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Feelings and locations change, so they use estar.",
-  "forms": "yo: estoy\ntú: estás\nél / ella: está\npast (yo): estuve"
+  "forms": "yo: estoy\ntú: estás\nél / ella: está\nnosotros: estamos\npast (yo): estuve",
+  "exampleWord": "Estoy"
  },
  {
   "id": "ser",
@@ -211,7 +224,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Ser is for what something is; estar is for how or where it is.",
-  "forms": "yo: soy\ntú: eres\nél / ella: es\npast (yo): fui"
+  "forms": "yo: soy\ntú: eres\nél / ella: es\nnosotros: somos\npast (yo): fui",
+  "exampleWord": "Soy"
  },
  {
   "id": "sentir",
@@ -226,7 +240,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "contigo = with you, conmigo = with me.",
-  "forms": "yo: siento\ntú: sientes\nél / ella: siente\npast (yo): sentí"
+  "forms": "yo: siento\ntú: sientes\nél / ella: siente\nnosotros: sentimos\npast (yo): sentí",
+  "exampleWord": "siento"
  },
  {
   "id": "esperar",
@@ -248,7 +263,8 @@
     "exampleTranslation": "I'll wait for you in the car."
    }
   ],
-  "forms": "yo: espero\ntú: esperas\nél / ella: espera\npast (yo): esperé"
+  "forms": "yo: espero\ntú: esperas\nél / ella: espera\nnosotros: esperamos\npast (yo): esperé",
+  "exampleWord": "Espero"
  },
  {
   "id": "llegar",
@@ -263,7 +279,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "ll sounds like the English y in most of Latin America.",
-  "forms": "yo: llego\ntú: llegas\nél / ella: llega\npast (yo): llegué"
+  "forms": "yo: llego\ntú: llegas\nél / ella: llega\nnosotros: llegamos\npast (yo): llegué",
+  "exampleWord": "Llego"
  },
  {
   "id": "salir",
@@ -278,7 +295,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "First person is irregular: salgo.",
-  "forms": "yo: salgo\ntú: sales\nél / ella: sale\npast (yo): salí"
+  "forms": "yo: salgo\ntú: sales\nél / ella: sale\nnosotros: salimos\npast (yo): salí",
+  "exampleWord": "Salimos"
  },
  {
   "id": "buscar",
@@ -292,7 +310,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: busco\ntú: buscas\nél / ella: busca\npast (yo): busqué"
+  "forms": "yo: busco\ntú: buscas\nél / ella: busca\nnosotros: buscamos\npast (yo): busqué",
+  "exampleWord": "Busco"
  },
  {
   "id": "encontrar",
@@ -307,7 +326,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "o → ue: encuentro, encuentras.",
-  "forms": "yo: encuentro\ntú: encuentras\nél / ella: encuentra\npast (yo): encontré"
+  "forms": "yo: encuentro\ntú: encuentras\nél / ella: encuentra\nnosotros: encontramos\npast (yo): encontré",
+  "exampleWord": "encuentro"
  },
  {
   "id": "pensar",
@@ -322,7 +342,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "e → ie: pienso, piensas.",
-  "forms": "yo: pienso\ntú: piensas\nél / ella: piensa\npast (yo): pensé"
+  "forms": "yo: pienso\ntú: piensas\nél / ella: piensa\nnosotros: pensamos\npast (yo): pensé",
+  "exampleWord": "Pienso"
  },
  {
   "id": "dormir",
@@ -336,7 +357,9 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: duermo\ntú: duermes\nél / ella: duerme\npast (yo): dormí"
+  "forms": "yo: duermo\ntú: duermes\nél / ella: duerme\nnosotros: dormimos\npast (yo): dormí\nin the example: dormiste",
+  "exampleWord": "Dormiste",
+  "exampleNote": "**dormiste** = *dormir* in the **past** tense for **you** (tú): \"did you sleep?\""
  },
  {
   "id": "trabajar",
@@ -351,7 +374,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "j sounds like a breathy English h.",
-  "forms": "yo: trabajo\ntú: trabajas\nél / ella: trabaja\npast (yo): trabajé"
+  "forms": "yo: trabajo\ntú: trabajas\nél / ella: trabaja\nnosotros: trabajamos\npast (yo): trabajé",
+  "exampleWord": "Trabajo"
  },
  {
   "id": "aprender",
@@ -366,7 +390,9 @@
   "kind": "word",
   "source": "curated",
   "tip": "Aprender a + infinitive = to learn to …",
-  "forms": "yo: aprendo\ntú: aprendes\nél / ella: aprende\npast (yo): aprendí"
+  "forms": "yo: aprendo\ntú: aprendes\nél / ella: aprende\nnosotros: aprendemos\npast (yo): aprendí\nin the example: aprendiendo",
+  "exampleWord": "aprendiendo",
+  "exampleNote": "**aprendiendo** is the **-ing** form of *aprender*. *Estoy aprendiendo* = I am learning."
  },
  {
   "id": "entender",
@@ -381,7 +407,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "e → ie: entiendo, entiendes.",
-  "forms": "yo: entiendo\ntú: entiendes\nél / ella: entiende\npast (yo): entendí"
+  "forms": "yo: entiendo\ntú: entiendes\nél / ella: entiende\nnosotros: entendemos\npast (yo): entendí",
+  "exampleWord": "entiendes"
  },
  {
   "id": "recordar",
@@ -395,7 +422,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: recuerdo\ntú: recuerdas\nél / ella: recuerda\npast (yo): recordé"
+  "forms": "yo: recuerdo\ntú: recuerdas\nél / ella: recuerda\nnosotros: recordamos\npast (yo): recordé",
+  "exampleWord": "Recuerdas"
  },
  {
   "id": "viajar",
@@ -409,7 +437,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: viajo\ntú: viajas\nél / ella: viaja\npast (yo): viajé"
+  "forms": "yo: viajo\ntú: viajas\nél / ella: viaja\nnosotros: viajamos\npast (yo): viajé",
+  "exampleWord": "viajar"
  },
  {
   "id": "cocinar",
@@ -423,7 +452,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: cocino\ntú: cocinas\nél / ella: cocina\npast (yo): cociné"
+  "forms": "yo: cocino\ntú: cocinas\nél / ella: cocina\nnosotros: cocinamos\npast (yo): cociné",
+  "exampleWord": "cocina"
  },
  {
   "id": "extranar",
@@ -438,7 +468,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "ñ sounds like the ny in canyon.",
-  "forms": "yo: extraño\ntú: extrañas\nél / ella: extraña\npast (yo): extrañé"
+  "forms": "yo: extraño\ntú: extrañas\nél / ella: extraña\nnosotros: extrañamos\npast (yo): extrañé",
+  "exampleWord": "extraño"
  },
  {
   "id": "casa",
@@ -452,7 +483,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: la casa\nplural: las casas"
+  "forms": "singular: la casa\nplural: las casas",
+  "exampleWord": "casa"
  },
  {
   "id": "agua",
@@ -467,7 +499,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Feminine, but takes ‘el’: el agua fría.",
-  "forms": "singular: el agua\nplural: las aguas"
+  "forms": "singular: el agua\nplural: las aguas",
+  "exampleWord": "agua"
  },
  {
   "id": "comida",
@@ -481,7 +514,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: la comida\nplural: las comidas"
+  "forms": "singular: la comida\nplural: las comidas",
+  "exampleWord": "La comida"
  },
  {
   "id": "tiempo",
@@ -502,7 +536,8 @@
     "exampleTranslation": "The weather is nice today."
    }
   ],
-  "forms": "singular: el tiempo\nplural: los tiempos"
+  "forms": "singular: el tiempo\nplural: los tiempos",
+  "exampleWord": "tiempo"
  },
  {
   "id": "dia",
@@ -517,7 +552,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Masculine even though it ends in -a.",
-  "forms": "singular: el día\nplural: los días"
+  "forms": "singular: el día\nplural: los días",
+  "exampleWord": "día"
  },
  {
   "id": "noche",
@@ -553,7 +589,8 @@
     "exampleTranslation": "I go running in the morning.",
     "forms": "singular: la mañana\nplural: las mañanas"
    }
-  ]
+  ],
+  "exampleWord": "mañana"
  },
  {
   "id": "amor",
@@ -568,7 +605,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "“Mi amor” is a very common pet name.",
-  "forms": "singular: el amor\nplural: los amores"
+  "forms": "singular: el amor\nplural: los amores",
+  "exampleWord": "el amor"
  },
  {
   "id": "familia",
@@ -583,7 +621,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Adjectives usually go after the noun.",
-  "forms": "singular: la familia\nplural: las familias"
+  "forms": "singular: la familia\nplural: las familias",
+  "exampleWord": "familia"
  },
  {
   "id": "amigo",
@@ -612,7 +651,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el trabajo\nplural: los trabajos"
+  "forms": "singular: el trabajo\nplural: los trabajos",
+  "exampleWord": "el trabajo"
  },
  {
   "id": "ciudad",
@@ -627,7 +667,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Words ending in -dad are feminine.",
-  "forms": "singular: la ciudad\nplural: las ciudades"
+  "forms": "singular: la ciudad\nplural: las ciudades",
+  "exampleWord": "ciudad"
  },
  {
   "id": "perro",
@@ -642,7 +683,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Roll the rr. Pero (one r) means but.",
-  "forms": "singular: el perro\nplural: los perros"
+  "forms": "singular: el perro\nplural: los perros",
+  "exampleWord": "El perro"
  },
  {
   "id": "boda",
@@ -656,7 +698,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: la boda\nplural: las bodas"
+  "forms": "singular: la boda\nplural: las bodas",
+  "exampleWord": "la boda"
  },
  {
   "id": "prometido",
@@ -685,7 +728,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el hambre"
+  "forms": "singular: el hambre",
+  "exampleWord": "hambre"
  },
  {
   "id": "cansado",
@@ -700,7 +744,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Ending matches the speaker: cansado (m.), cansada (f.).",
-  "forms": "masculine: cansado\nfeminine: cansada\nplural: cansados / cansadas"
+  "forms": "masculine: cansado\nfeminine: cansada\nplural: cansados / cansadas",
+  "exampleWord": "cansada"
  },
  {
   "id": "feliz",
@@ -714,7 +759,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "m. & f.: feliz\nplural: felices"
+  "forms": "m. & f.: feliz\nplural: felices",
+  "exampleWord": "Feliz"
  },
  {
   "id": "bonito",
@@ -728,7 +774,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: bonito\nfeminine: bonita\nplural: bonitos / bonitas"
+  "forms": "masculine: bonito\nfeminine: bonita\nplural: bonitos / bonitas",
+  "exampleWord": "bonito"
  },
  {
   "id": "rico",
@@ -749,7 +796,8 @@
     "exampleTranslation": "His family is very rich."
    }
   ],
-  "forms": "masculine: rico\nfeminine: rica\nplural: ricos / ricas"
+  "forms": "masculine: rico\nfeminine: rica\nplural: ricos / ricas",
+  "exampleWord": "rico"
  },
  {
   "id": "dificil",
@@ -763,7 +811,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "m. & f.: difícil\nplural: difíciles"
+  "forms": "m. & f.: difícil\nplural: difíciles",
+  "exampleWord": "difícil"
  },
  {
   "id": "siempre",
@@ -776,7 +825,8 @@
   "pattern": "Siempre + verb",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Siempre"
  },
  {
   "id": "nunca",
@@ -789,7 +839,8 @@
   "pattern": "Nunca + verb (no extra ‘no’ needed)",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Nunca"
  },
  {
   "id": "ahora",
@@ -803,7 +854,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "tip": "In Mexico, ‘ahorita’ means right now… or eventually."
+  "tip": "In Mexico, ‘ahorita’ means right now… or eventually.",
+  "exampleWord": "Ahora"
  },
  {
   "id": "tambien",
@@ -816,7 +868,8 @@
   "pattern": "Yo también = me too  ·  Yo tampoco = me neither",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "también"
  },
  {
   "id": "pero",
@@ -830,7 +883,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "tip": "Single tapped r — not perro (dog)."
+  "tip": "Single tapped r — not perro (dog).",
+  "exampleWord": "pero"
  },
  {
   "id": "porque",
@@ -843,7 +897,8 @@
   "pattern": "¿Por qué? = Why?  ·  porque = because",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "porque"
  },
  {
   "id": "donde",
@@ -857,7 +912,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "tip": "Spanish questions open with ¿ and close with ?"
+  "tip": "Spanish questions open with ¿ and close with ?",
+  "exampleWord": "Dónde"
  },
  {
   "id": "cuando",
@@ -870,7 +926,8 @@
   "pattern": "¿Cuándo es + event?",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Cuándo"
  },
  {
   "id": "cuanto",
@@ -884,7 +941,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: cuánto\nfeminine: cuánta\nplural: cuántos / cuántas"
+  "forms": "masculine: cuánto\nfeminine: cuánta\nplural: cuántos / cuántas",
+  "exampleWord": "Cuánto"
  },
  {
   "id": "por-favor",
@@ -897,7 +955,8 @@
   "pattern": "¿Me pasas + thing? = Can you pass me …?",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "por favor"
  },
  {
   "id": "gracias",
@@ -911,7 +970,8 @@
   "level": "novice",
   "kind": "phrase",
   "source": "curated",
-  "tip": "Reply with “De nada” = You’re welcome."
+  "tip": "Reply with “De nada” = You’re welcome.",
+  "exampleWord": "gracias"
  },
  {
   "id": "lo-siento",
@@ -925,7 +985,8 @@
   "level": "novice",
   "kind": "phrase",
   "source": "curated",
-  "tip": "For bumping into someone, use “Perdón.”"
+  "tip": "For bumping into someone, use “Perdón.”",
+  "exampleWord": "Lo siento"
  },
  {
   "id": "hola",
@@ -939,7 +1000,8 @@
   "level": "novice",
   "kind": "phrase",
   "source": "curated",
-  "tip": "The h is silent."
+  "tip": "The h is silent.",
+  "exampleWord": "Hola"
  },
  {
   "id": "si",
@@ -953,7 +1015,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "tip": "With an accent it means yes; si without one means if."
+  "tip": "With an accent it means yes; si without one means if.",
+  "exampleWord": "Sí"
  },
  {
   "id": "no",
@@ -966,7 +1029,8 @@
   "pattern": "No goes right before the verb",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "No"
  },
  {
   "id": "bien",
@@ -979,7 +1043,8 @@
   "pattern": "Estoy bien  ·  Muy bien = very well",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "bien"
  },
  {
   "id": "mal",
@@ -992,7 +1057,8 @@
   "pattern": "Me siento + bien / mal",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "mal"
  },
  {
   "id": "bueno",
@@ -1007,7 +1073,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Before a masculine noun it shortens to buen: buen día.",
-  "forms": "masculine: bueno\nfeminine: buena\nplural: buenos / buenas"
+  "forms": "masculine: bueno\nfeminine: buena\nplural: buenos / buenas",
+  "exampleWord": "buena"
  },
  {
   "id": "grande",
@@ -1022,7 +1089,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Before a noun it becomes gran = great: un gran día.",
-  "forms": "m. & f.: grande\nplural: grandes"
+  "forms": "m. & f.: grande\nplural: grandes",
+  "exampleWord": "grande"
  },
  {
   "id": "pequeno",
@@ -1036,7 +1104,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: pequeño\nfeminine: pequeña\nplural: pequeños / pequeñas"
+  "forms": "masculine: pequeño\nfeminine: pequeña\nplural: pequeños / pequeñas",
+  "exampleWord": "pequeño"
  },
  {
   "id": "nuevo",
@@ -1050,7 +1119,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: nuevo\nfeminine: nueva\nplural: nuevos / nuevas"
+  "forms": "masculine: nuevo\nfeminine: nueva\nplural: nuevos / nuevas",
+  "exampleWord": "nuevo"
  },
  {
   "id": "hoy",
@@ -1063,7 +1133,8 @@
   "pattern": "hasta las + hour = until … o'clock",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Hoy"
  },
  {
   "id": "ayer",
@@ -1076,7 +1147,8 @@
   "pattern": "Ayer + past tense",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Ayer"
  },
  {
   "id": "aqui",
@@ -1089,7 +1161,8 @@
   "pattern": "Estoy aquí  ·  Ven aquí = Come here",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "aquí"
  },
  {
   "id": "mucho",
@@ -1103,7 +1176,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: mucho\nfeminine: mucha\nplural: muchos / muchas"
+  "forms": "masculine: mucho\nfeminine: mucha\nplural: muchos / muchas",
+  "exampleWord": "mucho"
  },
  {
   "id": "mas",
@@ -1116,7 +1190,8 @@
   "pattern": "más + noun  ·  más + adjective + que = more … than",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "más"
  },
  {
   "id": "uno-dos-tres",
@@ -1153,7 +1228,8 @@
     "exampleTranslation": "The movie lasts two hours."
    }
   ],
-  "forms": "singular: la hora\nplural: las horas"
+  "forms": "singular: la hora\nplural: las horas",
+  "exampleWord": "hora"
  },
  {
   "id": "semana",
@@ -1167,7 +1243,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: la semana\nplural: las semanas"
+  "forms": "singular: la semana\nplural: las semanas",
+  "exampleWord": "semana"
  },
  {
   "id": "dinero",
@@ -1181,7 +1258,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el dinero"
+  "forms": "singular: el dinero",
+  "exampleWord": "dinero"
  },
  {
   "id": "cafe",
@@ -1195,7 +1273,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el café\nplural: los cafés"
+  "forms": "singular: el café\nplural: los cafés",
+  "exampleWord": "café"
  },
  {
   "id": "hermano",
@@ -1210,7 +1289,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "hermana = sister, hermanos = siblings",
-  "forms": "singular: el hermano / la hermana\nplural: los hermanos / las hermanas"
+  "forms": "singular: el hermano / la hermana\nplural: los hermanos / las hermanas",
+  "exampleWord": "hermano"
  },
  {
   "id": "madre",
@@ -1225,7 +1305,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Everyday word: mamá.",
-  "forms": "singular: la madre\nplural: las madres"
+  "forms": "singular: la madre\nplural: las madres",
+  "exampleWord": "madre"
  },
  {
   "id": "padre",
@@ -1240,7 +1321,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "In Mexico, ¡qué padre! means how cool!",
-  "forms": "singular: el padre\nplural: los padres"
+  "forms": "singular: el padre\nplural: los padres",
+  "exampleWord": "padre"
  },
  {
   "id": "hijo",
@@ -1269,7 +1351,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "In Mexico and much of Latin America: carro.",
-  "forms": "singular: el coche\nplural: los coches"
+  "forms": "singular: el coche\nplural: los coches",
+  "exampleWord": "El coche"
  },
  {
   "id": "vivir",
@@ -1283,7 +1366,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: vivo\ntú: vives\nél / ella: vive\npast (yo): viví"
+  "forms": "yo: vivo\ntú: vives\nél / ella: vive\nnosotros: vivimos\npast (yo): viví",
+  "exampleWord": "Vivimos"
  },
  {
   "id": "ver",
@@ -1297,7 +1381,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: veo\ntú: ves\nél / ella: ve\npast (yo): vi"
+  "forms": "yo: veo\ntú: ves\nél / ella: ve\nnosotros: vemos\npast (yo): vi",
+  "exampleWord": "Vemos"
  },
  {
   "id": "dar",
@@ -1311,7 +1396,9 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: doy\ntú: das\nél / ella: da\npast (yo): di"
+  "forms": "yo: doy\ntú: das\nél / ella: da\nnosotros: damos\npast (yo): di\nin the example: dame",
+  "exampleWord": "Dame",
+  "exampleNote": "**dame** = *da* (a **command** to **you**: give!) + *me* (to me)."
  },
  {
   "id": "decir",
@@ -1326,7 +1413,9 @@
   "kind": "word",
   "source": "curated",
   "tip": "Irregular: digo, dices, dice.",
-  "forms": "yo: digo\ntú: dices\nél / ella: dice\npast (yo): dije"
+  "forms": "yo: digo\ntú: dices\nél / ella: dice\nnosotros: decimos\npast (yo): dije\nin the example: dijiste",
+  "exampleWord": "dijiste",
+  "exampleNote": "**dijiste** = *decir* in the **past** tense for **you** (tú): \"what did you say?\" (irregular)"
  },
  {
   "id": "venir",
@@ -1340,7 +1429,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: vengo\ntú: vienes\nél / ella: viene\npast (yo): vine"
+  "forms": "yo: vengo\ntú: vienes\nél / ella: viene\nnosotros: venimos\npast (yo): vine",
+  "exampleWord": "Vienes"
  },
  {
   "id": "llamar",
@@ -1354,7 +1444,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: llamo\ntú: llamas\nél / ella: llama\npast (yo): llamé"
+  "forms": "yo: llamo\ntú: llamas\nél / ella: llama\nnosotros: llamamos\npast (yo): llamé",
+  "exampleWord": "llamo"
  },
  {
   "id": "leer",
@@ -1368,7 +1459,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: leo\ntú: lees\nél / ella: lee\npast (yo): leí"
+  "forms": "yo: leo\ntú: lees\nél / ella: lee\nnosotros: leemos\npast (yo): leí",
+  "exampleWord": "leer"
  },
  {
   "id": "escribir",
@@ -1382,7 +1474,9 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: escribo\ntú: escribes\nél / ella: escribe\npast (yo): escribí"
+  "forms": "yo: escribo\ntú: escribes\nél / ella: escribe\nnosotros: escribimos\npast (yo): escribí\nin the example: escríbeme",
+  "exampleWord": "Escríbeme",
+  "exampleNote": "**escríbeme** = *escribe* (a **command** to **you**: write!) + *me* (to me). The accent keeps the stress on *crí*."
  },
  {
   "id": "comprar",
@@ -1396,7 +1490,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: compro\ntú: compras\nél / ella: compra\npast (yo): compré"
+  "forms": "yo: compro\ntú: compras\nél / ella: compra\nnosotros: compramos\npast (yo): compré",
+  "exampleWord": "comprar"
  },
  {
   "id": "pagar",
@@ -1410,7 +1505,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: pago\ntú: pagas\nél / ella: paga\npast (yo): pagué"
+  "forms": "yo: pago\ntú: pagas\nél / ella: paga\nnosotros: pagamos\npast (yo): pagué",
+  "exampleWord": "pago"
  },
  {
   "id": "ayudar",
@@ -1424,7 +1520,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: ayudo\ntú: ayudas\nél / ella: ayuda\npast (yo): ayudé"
+  "forms": "yo: ayudo\ntú: ayudas\nél / ella: ayuda\nnosotros: ayudamos\npast (yo): ayudé",
+  "exampleWord": "ayudas"
  },
  {
   "id": "tomar",
@@ -1445,7 +1542,8 @@
     "exampleTranslation": "We take the bus at eight."
    }
   ],
-  "forms": "yo: tomo\ntú: tomas\nél / ella: toma\npast (yo): tomé"
+  "forms": "yo: tomo\ntú: tomas\nél / ella: toma\nnosotros: tomamos\npast (yo): tomé",
+  "exampleWord": "Tomamos"
  },
  {
   "id": "jugar",
@@ -1460,7 +1558,9 @@
   "kind": "word",
   "source": "curated",
   "tip": "u → ue: juego, juegas.",
-  "forms": "yo: juego\ntú: juegas\nél / ella: juega\npast (yo): jugué"
+  "forms": "yo: juego\ntú: juegas\nél / ella: juega\nnosotros: jugamos\npast (yo): jugué\nin the example: juegan",
+  "exampleWord": "juegan",
+  "exampleNote": "**juegan** = *jugar* in the **present** tense for **they** (ellos / ellas)."
  },
  {
   "id": "buenos-dias",
@@ -1473,7 +1573,8 @@
   "pattern": "Buenos días · Buenas tardes · Buenas noches",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Buenos días"
  },
  {
   "id": "como-estas",
@@ -1487,7 +1588,8 @@
   "level": "novice",
   "kind": "phrase",
   "source": "curated",
-  "tip": "Answer: Bien, ¿y tú?"
+  "tip": "Answer: Bien, ¿y tú?",
+  "exampleWord": "¿cómo estás?"
  },
  {
   "id": "que-tal",
@@ -1513,7 +1615,8 @@
   "pattern": "Mucho gusto  ·  Encantado / Encantada",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "mucho gusto"
  },
  {
   "id": "me-llamo",
@@ -1526,7 +1629,8 @@
   "pattern": "¿Cómo te llamas? = What's your name?",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Me llamo"
  },
  {
   "id": "de-nada",
@@ -1539,7 +1643,8 @@
   "pattern": "Gracias → De nada",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "De nada"
  },
  {
   "id": "perdon",
@@ -1552,7 +1657,8 @@
   "pattern": "Perdón + question",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Perdón"
  },
  {
   "id": "no-entiendo",
@@ -1565,7 +1671,8 @@
   "pattern": "¿Puedes repetir? = Can you repeat?",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "no entiendo"
  },
  {
   "id": "mas-despacio-por-favor",
@@ -1578,7 +1685,8 @@
   "pattern": "Más despacio, por favor",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Más despacio, por favor"
  },
  {
   "id": "te-quiero",
@@ -1591,7 +1699,8 @@
   "pattern": "Te quiero (everyday)  ·  Te amo (deeper, more intense)",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Te quiero"
  },
  {
   "id": "hasta-luego",
@@ -1604,7 +1713,8 @@
   "pattern": "Hasta luego · Hasta mañana · Hasta pronto",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Hasta luego"
  },
  {
   "id": "nos-vemos",
@@ -1617,7 +1727,8 @@
   "pattern": "Nos vemos + time / place",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Nos vemos"
  },
  {
   "id": "claro",
@@ -1630,7 +1741,8 @@
   "pattern": "¡Claro! · Claro que sí = Of course",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Claro"
  },
  {
   "id": "esta-bien",
@@ -1644,7 +1756,8 @@
   "level": "novice",
   "kind": "phrase",
   "source": "curated",
-  "tip": "Spain says vale; Mexico says sale or órale."
+  "tip": "Spain says vale; Mexico says sale or órale.",
+  "exampleWord": "Está bien"
  },
  {
   "id": "que-es-esto",
@@ -1657,7 +1770,8 @@
   "pattern": "¿Qué es + esto / eso?",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "¿Qué es esto?"
  },
  {
   "id": "la-cuenta-por-favor",
@@ -1670,7 +1784,8 @@
   "pattern": "Disculpe = excuse me (to a stranger)",
   "level": "novice",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "la cuenta, por favor"
  },
  {
   "id": "salud",
@@ -1691,7 +1806,8 @@
     "example": "—¡Achú! —¡Salud!",
     "exampleTranslation": "\"Achoo!\" \"Bless you!\""
    }
-  ]
+  ],
+  "exampleWord": "Salud"
  },
  {
   "id": "buen-provecho",
@@ -1705,7 +1821,8 @@
   "level": "novice",
   "kind": "phrase",
   "source": "curated",
-  "tip": "Said to people who are eating — even strangers."
+  "tip": "Said to people who are eating — even strangers.",
+  "exampleWord": "Buen provecho"
  },
  {
   "id": "preguntar",
@@ -1720,7 +1837,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Asking FOR something is pedir.",
-  "forms": "yo: pregunto\ntú: preguntas\nél / ella: pregunta\npast (yo): pregunté"
+  "forms": "yo: pregunto\ntú: preguntas\nél / ella: pregunta\nnosotros: preguntamos\npast (yo): pregunté",
+  "exampleWord": "preguntar"
  },
  {
   "id": "pedir",
@@ -1735,7 +1853,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "e → i: pido, pides.",
-  "forms": "yo: pido\ntú: pides\nél / ella: pide\npast (yo): pedí"
+  "forms": "yo: pido\ntú: pides\nél / ella: pide\nnosotros: pedimos\npast (yo): pedí",
+  "exampleWord": "pedir"
  },
  {
   "id": "contestar",
@@ -1749,7 +1868,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: contesto\ntú: contestas\nél / ella: contesta\npast (yo): contesté"
+  "forms": "yo: contesto\ntú: contestas\nél / ella: contesta\nnosotros: contestamos\npast (yo): contesté",
+  "exampleWord": "contesta"
  },
  {
   "id": "empezar",
@@ -1764,7 +1884,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "e → ie: empiezo.",
-  "forms": "yo: empiezo\ntú: empiezas\nél / ella: empieza\npast (yo): empecé"
+  "forms": "yo: empiezo\ntú: empiezas\nél / ella: empieza\nnosotros: empezamos\npast (yo): empecé",
+  "exampleWord": "empieza"
  },
  {
   "id": "terminar",
@@ -1778,7 +1899,9 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: termino\ntú: terminas\nél / ella: termina\npast (yo): terminé"
+  "forms": "yo: termino\ntú: terminas\nél / ella: termina\nnosotros: terminamos\npast (yo): terminé\nin the example: terminaste",
+  "exampleWord": "terminaste",
+  "exampleNote": "**terminaste** = *terminar* in the **past** tense for **you** (tú): \"did you finish?\""
  },
  {
   "id": "volver",
@@ -1793,7 +1916,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "o → ue: vuelvo.",
-  "forms": "yo: vuelvo\ntú: vuelves\nél / ella: vuelve\npast (yo): volví"
+  "forms": "yo: vuelvo\ntú: vuelves\nél / ella: vuelve\nnosotros: volvemos\npast (yo): volví",
+  "exampleWord": "Vuelvo"
  },
  {
   "id": "cambiar",
@@ -1807,7 +1931,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: cambio\ntú: cambias\nél / ella: cambia\npast (yo): cambié"
+  "forms": "yo: cambio\ntú: cambias\nél / ella: cambia\nnosotros: cambiamos\npast (yo): cambié",
+  "exampleWord": "cambiar"
  },
  {
   "id": "olvidar",
@@ -1822,7 +1947,9 @@
   "kind": "word",
   "source": "curated",
   "tip": "Very natural, blame-free way to say it.",
-  "forms": "yo: olvido\ntú: olvidas\nél / ella: olvida\npast (yo): olvidé"
+  "forms": "yo: olvido\ntú: olvidas\nél / ella: olvida\nnosotros: olvidamos\npast (yo): olvidé\nin the example: olvidaron",
+  "exampleWord": "olvidaron",
+  "exampleNote": "**olvidaron** = *olvidar* in the **past** tense for **they**. *Se me olvidaron las llaves* is literally \"the keys got forgotten on me\" — a blame-free way to say *I forgot my keys*."
  },
  {
   "id": "perder",
@@ -1844,7 +1971,8 @@
     "exampleTranslation": "I missed the bus."
    }
   ],
-  "forms": "yo: pierdo\ntú: pierdes\nél / ella: pierde\npast (yo): perdí"
+  "forms": "yo: pierdo\ntú: pierdes\nél / ella: pierde\nnosotros: perdemos\npast (yo): perdí",
+  "exampleWord": "Perdí"
  },
  {
   "id": "ganar",
@@ -1865,7 +1993,9 @@
     "exampleTranslation": "She earns a lot of money."
    }
   ],
-  "forms": "yo: gano\ntú: ganas\nél / ella: gana\npast (yo): gané"
+  "forms": "yo: gano\ntú: ganas\nél / ella: gana\nnosotros: ganamos\npast (yo): gané\nin the example: ganó",
+  "exampleWord": "ganó",
+  "exampleNote": "**ganó** = *ganar* in the **past** tense for **he / she**: \"who won?\""
  },
  {
   "id": "mirar",
@@ -1879,7 +2009,9 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: miro\ntú: miras\nél / ella: mira\npast (yo): miré"
+  "forms": "yo: miro\ntú: miras\nél / ella: mira\nnosotros: miramos\npast (yo): miré",
+  "exampleWord": "Mira",
+  "exampleNote": "**¡Mira!** here is a **command** to **you** (tú): \"Look!\" It looks the same as the *él / ella* form — tú commands usually do."
  },
  {
   "id": "escuchar",
@@ -1893,7 +2025,9 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: escucho\ntú: escuchas\nél / ella: escucha\npast (yo): escuché"
+  "forms": "yo: escucho\ntú: escuchas\nél / ella: escucha\nnosotros: escuchamos\npast (yo): escuché",
+  "exampleWord": "Escucha",
+  "exampleNote": "**¡Escucha!** here is a **command** to **you** (tú): \"Listen!\" Same spelling as the *él / ella* form."
  },
  {
   "id": "caminar",
@@ -1907,7 +2041,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: camino\ntú: caminas\nél / ella: camina\npast (yo): caminé"
+  "forms": "yo: camino\ntú: caminas\nél / ella: camina\nnosotros: caminamos\npast (yo): caminé",
+  "exampleWord": "Caminamos"
  },
  {
   "id": "descansar",
@@ -1921,7 +2056,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: descanso\ntú: descansas\nél / ella: descansa\npast (yo): descansé"
+  "forms": "yo: descanso\ntú: descansas\nél / ella: descansa\nnosotros: descansamos\npast (yo): descansé",
+  "exampleWord": "descansar"
  },
  {
   "id": "limpiar",
@@ -1935,7 +2071,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: limpio\ntú: limpias\nél / ella: limpia\npast (yo): limpié"
+  "forms": "yo: limpio\ntú: limpias\nél / ella: limpia\nnosotros: limpiamos\npast (yo): limpié",
+  "exampleWord": "limpiamos"
  },
  {
   "id": "llevar",
@@ -1957,7 +2094,8 @@
     "exampleTranslation": "You're wearing a beautiful dress."
    }
   ],
-  "forms": "yo: llevo\ntú: llevas\nél / ella: lleva\npast (yo): llevé"
+  "forms": "yo: llevo\ntú: llevas\nél / ella: lleva\nnosotros: llevamos\npast (yo): llevé",
+  "exampleWord": "Llevo"
  },
  {
   "id": "traer",
@@ -1972,7 +2110,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "First person: traigo.",
-  "forms": "yo: traigo\ntú: traes\nél / ella: trae\npast (yo): traje"
+  "forms": "yo: traigo\ntú: traes\nél / ella: trae\nnosotros: traemos\npast (yo): traje",
+  "exampleWord": "traes"
  },
  {
   "id": "poner",
@@ -1987,7 +2126,9 @@
   "kind": "word",
   "source": "curated",
   "tip": "First person: pongo.",
-  "forms": "yo: pongo\ntú: pones\nél / ella: pone\npast (yo): puse"
+  "forms": "yo: pongo\ntú: pones\nél / ella: pone\nnosotros: ponemos\npast (yo): puse\nin the example: pon",
+  "exampleWord": "Pon",
+  "exampleNote": "**pon** is a **command** to **you** (tú): put! It's irregular — just *pon*."
  },
  {
   "id": "creer",
@@ -2008,7 +2149,8 @@
     "exampleTranslation": "I don't believe you."
    }
   ],
-  "forms": "yo: creo\ntú: crees\nél / ella: cree\npast (yo): creí"
+  "forms": "yo: creo\ntú: crees\nél / ella: cree\nnosotros: creemos\npast (yo): creí",
+  "exampleWord": "Creo"
  },
  {
   "id": "parecer",
@@ -2022,7 +2164,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: parezco\ntú: pareces\nél / ella: parece\npast (yo): parecí"
+  "forms": "yo: parezco\ntú: pareces\nél / ella: parece\nnosotros: parecemos\npast (yo): parecí",
+  "exampleWord": "parece"
  },
  {
   "id": "otro",
@@ -2036,7 +2179,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: otro\nfeminine: otra\nplural: otros / otras"
+  "forms": "masculine: otro\nfeminine: otra\nplural: otros / otras",
+  "exampleWord": "otro"
  },
  {
   "id": "todo",
@@ -2050,7 +2194,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: todo\nfeminine: toda\nplural: todos / todas"
+  "forms": "masculine: todo\nfeminine: toda\nplural: todos / todas",
+  "exampleWord": "Todo"
  },
  {
   "id": "cada",
@@ -2063,7 +2208,8 @@
   "pattern": "cada + singular noun",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "cada"
  },
  {
   "id": "algo",
@@ -2076,7 +2222,8 @@
   "pattern": "algo de + infinitive",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "algo"
  },
  {
   "id": "nada",
@@ -2089,7 +2236,8 @@
   "pattern": "No + verb + nada (double negative is correct)",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "nada"
  },
  {
   "id": "alguien",
@@ -2102,7 +2250,8 @@
   "pattern": "Alguien + verb",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Alguien"
  },
  {
   "id": "nadie",
@@ -2115,7 +2264,8 @@
   "pattern": "No + verb + nadie",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "nadie"
  },
  {
   "id": "temprano",
@@ -2128,7 +2278,8 @@
   "pattern": "levantarse temprano = get up early",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "temprano"
  },
  {
   "id": "tarde",
@@ -2150,7 +2301,8 @@
     "exampleTranslation": "See you this afternoon.",
     "forms": "singular: la tarde\nplural: las tardes"
    }
-  ]
+  ],
+  "exampleWord": "tarde"
  },
  {
   "id": "todavia",
@@ -2163,7 +2315,8 @@
   "pattern": "todavía no = not yet",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Todavía"
  },
  {
   "id": "ya",
@@ -2183,7 +2336,8 @@
     "example": "Ya no vivo allí.",
     "exampleTranslation": "I don't live there anymore."
    }
-  ]
+  ],
+  "exampleWord": "Ya"
  },
  {
   "id": "despues",
@@ -2196,7 +2350,8 @@
   "pattern": "después de + infinitive",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Después"
  },
  {
   "id": "antes",
@@ -2209,7 +2364,8 @@
   "pattern": "antes de + infinitive",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "antes"
  },
  {
   "id": "cerca",
@@ -2222,7 +2378,8 @@
   "pattern": "cerca de + place  ·  lejos de = far from",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "cerca"
  },
  {
   "id": "tienda",
@@ -2236,7 +2393,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: la tienda\nplural: las tiendas"
+  "forms": "singular: la tienda\nplural: las tiendas",
+  "exampleWord": "la tienda"
  },
  {
   "id": "ropa",
@@ -2251,7 +2409,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Ropa is singular in Spanish: la ropa está limpia.",
-  "forms": "singular: la ropa"
+  "forms": "singular: la ropa",
+  "exampleWord": "la ropa"
  },
  {
   "id": "cumpleanos",
@@ -2265,7 +2424,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el cumpleaños\nplural: los cumpleaños"
+  "forms": "singular: el cumpleaños\nplural: los cumpleaños",
+  "exampleWord": "cumpleaños"
  },
  {
   "id": "regalo",
@@ -2279,7 +2439,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el regalo\nplural: los regalos"
+  "forms": "singular: el regalo\nplural: los regalos",
+  "exampleWord": "regalo"
  },
  {
   "id": "fin-de-semana",
@@ -2293,7 +2454,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el fin de semana\nplural: los fines de semana"
+  "forms": "singular: el fin de semana\nplural: los fines de semana",
+  "exampleWord": "fin de semana"
  },
  {
   "id": "vacaciones",
@@ -2307,7 +2469,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "plural: las vacaciones"
+  "forms": "plural: las vacaciones",
+  "exampleWord": "vacaciones"
  },
  {
   "id": "facil",
@@ -2321,7 +2484,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "m. & f.: fácil\nplural: fáciles"
+  "forms": "m. & f.: fácil\nplural: fáciles",
+  "exampleWord": "fácil"
  },
  {
   "id": "caro",
@@ -2335,7 +2499,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: caro\nfeminine: cara\nplural: caros / caras"
+  "forms": "masculine: caro\nfeminine: cara\nplural: caros / caras",
+  "exampleWord": "caro"
  },
  {
   "id": "listo",
@@ -2356,7 +2521,8 @@
     "exampleTranslation": "Your sister is very smart."
    }
   ],
-  "forms": "masculine: listo\nfeminine: lista\nplural: listos / listas"
+  "forms": "masculine: listo\nfeminine: lista\nplural: listos / listas",
+  "exampleWord": "lista"
  },
  {
   "id": "ocupado",
@@ -2370,7 +2536,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: ocupado\nfeminine: ocupada\nplural: ocupados / ocupadas"
+  "forms": "masculine: ocupado\nfeminine: ocupada\nplural: ocupados / ocupadas",
+  "exampleWord": "ocupado"
  },
  {
   "id": "enfermo",
@@ -2384,7 +2551,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: enfermo\nfeminine: enferma\nplural: enfermos / enfermas"
+  "forms": "masculine: enfermo\nfeminine: enferma\nplural: enfermos / enfermas",
+  "exampleWord": "enfermo"
  },
  {
   "id": "contento",
@@ -2398,7 +2566,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: contento\nfeminine: contenta\nplural: contentos / contentas"
+  "forms": "masculine: contento\nfeminine: contenta\nplural: contentos / contentas",
+  "exampleWord": "contenta"
  },
  {
   "id": "tranquilo",
@@ -2412,7 +2581,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: tranquilo\nfeminine: tranquila\nplural: tranquilos / tranquilas"
+  "forms": "masculine: tranquilo\nfeminine: tranquila\nplural: tranquilos / tranquilas",
+  "exampleWord": "Tranquila"
  },
  {
   "id": "juntos",
@@ -2426,7 +2596,8 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: juntos\nfeminine: juntas"
+  "forms": "masculine: juntos\nfeminine: juntas",
+  "exampleWord": "juntos"
  },
  {
   "id": "me-gustaria",
@@ -2439,7 +2610,8 @@
   "pattern": "Me gustaría + noun / infinitive (polite)",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Me gustaría"
  },
  {
   "id": "que-pasa",
@@ -2452,7 +2624,8 @@
   "pattern": "¿Qué pasa? · No pasa nada = It's nothing",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "¿Qué pasa?"
  },
  {
   "id": "no-te-preocupes",
@@ -2465,7 +2638,8 @@
   "pattern": "No te + subjunctive = Don't …",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "No te preocupes"
  },
  {
   "id": "tengo-que-irme",
@@ -2478,7 +2652,8 @@
   "pattern": "Tengo que + infinitive",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Tengo que irme"
  },
  {
   "id": "como-se-dice",
@@ -2518,7 +2693,8 @@
   "pattern": "Estar de acuerdo con + person",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Estoy de acuerdo"
  },
  {
   "id": "que-bueno",
@@ -2531,7 +2707,8 @@
   "pattern": "¡Qué bueno que + verb!",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Qué bueno"
  },
  {
   "id": "a-veces",
@@ -2544,7 +2721,8 @@
   "pattern": "A veces + verb",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "A veces"
  },
  {
   "id": "por-supuesto",
@@ -2557,7 +2735,8 @@
   "pattern": "¡Por supuesto!",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Por supuesto"
  },
  {
   "id": "ten-cuidado",
@@ -2570,7 +2749,8 @@
   "pattern": "Ten cuidado con + noun",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Ten cuidado"
  },
  {
   "id": "que-te-vaya-bien",
@@ -2583,7 +2763,8 @@
   "pattern": "Que + subjunctive = I hope …",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Que te vaya bien"
  },
  {
   "id": "lo-mismo",
@@ -2596,7 +2777,8 @@
   "pattern": "Para mí, + order",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "lo mismo"
  },
  {
   "id": "ya-voy",
@@ -2609,7 +2791,8 @@
   "pattern": "Ya voy · Ya vengo = I'll be right back",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Ya voy"
  },
  {
   "id": "cuidate",
@@ -2622,7 +2805,8 @@
   "pattern": "Cuídate · Cuídense (to a group)",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Cuídate"
  },
  {
   "id": "estas-bien",
@@ -2635,7 +2819,8 @@
   "pattern": "¿Estás + adjective?",
   "level": "beginner",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "¿Estás bien?"
  },
  {
   "id": "lograr",
@@ -2649,7 +2834,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: logro\ntú: logras\nél / ella: logra\npast (yo): logré"
+  "forms": "yo: logro\ntú: logras\nél / ella: logra\nnosotros: logramos\npast (yo): logré",
+  "exampleWord": "logré"
  },
  {
   "id": "intentar",
@@ -2663,7 +2849,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: intento\ntú: intentas\nél / ella: intenta\npast (yo): intenté"
+  "forms": "yo: intento\ntú: intentas\nél / ella: intenta\nnosotros: intentamos\npast (yo): intenté",
+  "exampleWord": "intentar"
  },
  {
   "id": "darse-cuenta",
@@ -2678,7 +2865,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Realizar means to carry out, not to realize.",
-  "forms": "yo: me doy cuenta\ntú: te das cuenta\nél / ella: se da cuenta\npast (yo): me di cuenta"
+  "forms": "yo: me doy cuenta\ntú: te das cuenta\nél / ella: se da cuenta\nnosotros: nos damos cuenta\npast (yo): me di cuenta",
+  "exampleWord": "Me di cuenta"
  },
  {
   "id": "acordarse",
@@ -2693,7 +2881,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "o → ue: me acuerdo.",
-  "forms": "yo: me acuerdo\ntú: te acuerdas\nél / ella: se acuerda\npast (yo): me acordé"
+  "forms": "yo: me acuerdo\ntú: te acuerdas\nél / ella: se acuerda\nnosotros: nos acordamos\npast (yo): me acordé",
+  "exampleWord": "Te acuerdas"
  },
  {
   "id": "quedarse",
@@ -2707,7 +2896,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: me quedo\ntú: te quedas\nél / ella: se queda\npast (yo): me quedé"
+  "forms": "yo: me quedo\ntú: te quedas\nél / ella: se queda\nnosotros: nos quedamos\npast (yo): me quedé",
+  "exampleWord": "Me quedo"
  },
  {
   "id": "preocuparse",
@@ -2721,7 +2911,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: me preocupo\ntú: te preocupas\nél / ella: se preocupa\npast (yo): me preocupé"
+  "forms": "yo: me preocupo\ntú: te preocupas\nél / ella: se preocupa\nnosotros: nos preocupamos\npast (yo): me preocupé",
+  "exampleWord": "Me preocupo"
  },
  {
   "id": "enojarse",
@@ -2736,7 +2927,9 @@
   "kind": "word",
   "source": "curated",
   "tip": "In Spain: enfadarse.",
-  "forms": "yo: me enojo\ntú: te enojas\nél / ella: se enoja\npast (yo): me enojé"
+  "forms": "yo: me enojo\ntú: te enojas\nél / ella: se enoja\nnosotros: nos enojamos\npast (yo): me enojé\nin the example: no te enojes",
+  "exampleWord": "enojes",
+  "exampleNote": "**no te enojes** = \"don't get angry\" — a **don't-do-it command** to **you** (tú). Commands with *no* use this special form."
  },
  {
   "id": "casarse",
@@ -2750,7 +2943,9 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: me caso\ntú: te casas\nél / ella: se casa\npast (yo): me casé"
+  "forms": "yo: me caso\ntú: te casas\nél / ella: se casa\nnosotros: nos casamos\npast (yo): me casé\nin the example: se casan",
+  "exampleWord": "se casan",
+  "exampleNote": "**se casan** = *casarse* in the **present** tense for **you two / they** (ustedes / ellos). Spanish often uses the present for planned future events."
  },
  {
   "id": "mudarse",
@@ -2764,7 +2959,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: me mudo\ntú: te mudas\nél / ella: se muda\npast (yo): me mudé"
+  "forms": "yo: me mudo\ntú: te mudas\nél / ella: se muda\nnosotros: nos mudamos\npast (yo): me mudé",
+  "exampleWord": "Nos mudamos"
  },
  {
   "id": "ahorrar",
@@ -2778,7 +2974,9 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: ahorro\ntú: ahorras\nél / ella: ahorra\npast (yo): ahorré"
+  "forms": "yo: ahorro\ntú: ahorras\nél / ella: ahorra\nnosotros: ahorramos\npast (yo): ahorré\nin the example: ahorrando",
+  "exampleWord": "ahorrando",
+  "exampleNote": "**ahorrando** is the **-ing** form of *ahorrar*. *Estamos ahorrando* = we are saving."
  },
  {
   "id": "gastar",
@@ -2792,7 +2990,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: gasto\ntú: gastas\nél / ella: gasta\npast (yo): gasté"
+  "forms": "yo: gasto\ntú: gastas\nél / ella: gasta\nnosotros: gastamos\npast (yo): gasté",
+  "exampleWord": "Gastamos"
  },
  {
   "id": "compartir",
@@ -2806,7 +3005,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: comparto\ntú: compartes\nél / ella: comparte\npast (yo): compartí"
+  "forms": "yo: comparto\ntú: compartes\nél / ella: comparte\nnosotros: compartimos\npast (yo): compartí",
+  "exampleWord": "Compartimos"
  },
  {
   "id": "cuidar",
@@ -2820,7 +3020,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: cuido\ntú: cuidas\nél / ella: cuida\npast (yo): cuidé"
+  "forms": "yo: cuido\ntú: cuidas\nél / ella: cuida\nnosotros: cuidamos\npast (yo): cuidé",
+  "exampleWord": "cuido"
  },
  {
   "id": "elegir",
@@ -2835,7 +3036,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "e → i, g → j: elijo.",
-  "forms": "yo: elijo\ntú: eliges\nél / ella: elige\npast (yo): elegí"
+  "forms": "yo: elijo\ntú: eliges\nél / ella: elige\nnosotros: elegimos\npast (yo): elegí",
+  "exampleWord": "eliges"
  },
  {
   "id": "probar",
@@ -2857,7 +3059,9 @@
     "exampleTranslation": "Can I try on this shirt?"
    }
   ],
-  "forms": "yo: pruebo\ntú: pruebas\nél / ella: prueba\npast (yo): probé"
+  "forms": "yo: pruebo\ntú: pruebas\nél / ella: prueba\nnosotros: probamos\npast (yo): probé",
+  "exampleWord": "Prueba",
+  "exampleNote": "**¡Prueba!** here is a **command** to **you** (tú): \"Try it!\" Same spelling as the *él / ella* form."
  },
  {
   "id": "merecer",
@@ -2871,7 +3075,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: merezco\ntú: mereces\nél / ella: merece\npast (yo): merecí"
+  "forms": "yo: merezco\ntú: mereces\nél / ella: merece\nnosotros: merecemos\npast (yo): merecí",
+  "exampleWord": "mereces"
  },
  {
   "id": "apoyar",
@@ -2886,7 +3091,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Soportar means to put up with — a false friend.",
-  "forms": "yo: apoyo\ntú: apoyas\nél / ella: apoya\npast (yo): apoyé"
+  "forms": "yo: apoyo\ntú: apoyas\nél / ella: apoya\nnosotros: apoyamos\npast (yo): apoyé",
+  "exampleWord": "apoyar"
  },
  {
   "id": "dejar",
@@ -2907,7 +3113,9 @@
     "exampleTranslation": "I left the keys at home."
    }
   ],
-  "forms": "yo: dejo\ntú: dejas\nél / ella: deja\npast (yo): dejé"
+  "forms": "yo: dejo\ntú: dejas\nél / ella: deja\nnosotros: dejamos\npast (yo): dejé\nin the example: déjame",
+  "exampleWord": "Déjame",
+  "exampleNote": "**déjame** = *deja* (a **command** to **you**: let!) + *me* (me). The accent keeps the stress on *dé*."
  },
  {
   "id": "seguir",
@@ -2922,7 +3130,9 @@
   "kind": "word",
   "source": "curated",
   "tip": "e → i: sigo.",
-  "forms": "yo: sigo\ntú: sigues\nél / ella: sigue\npast (yo): seguí"
+  "forms": "yo: sigo\ntú: sigues\nél / ella: sigue\nnosotros: seguimos\npast (yo): seguí",
+  "exampleWord": "Sigue",
+  "exampleNote": "**sigue** here is a **command** to **you** (tú): \"keep going\". Same spelling as the *él / ella* form."
  },
  {
   "id": "faltar",
@@ -2936,7 +3146,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "a mí: me falta\na ti: te falta\na él / ella: le falta\npast: me faltó"
+  "forms": "a mí: me falta\na ti: te falta\na él / ella: le falta\na nosotros: nos falta\npast: me faltó",
+  "exampleWord": "Me falta"
  },
  {
   "id": "importar",
@@ -2950,7 +3161,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "a mí: me importa\na ti: te importa\na él / ella: le importa\npast: me importó"
+  "forms": "a mí: me importa\na ti: te importa\na él / ella: le importa\na nosotros: nos importa\npast: me importó",
+  "exampleWord": "me importa"
  },
  {
   "id": "doler",
@@ -2964,7 +3176,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "a mí: me duele\na ti: te duele\na él / ella: le duele\npast: me dolió"
+  "forms": "a mí: me duele\na ti: te duele\na él / ella: le duele\na nosotros: nos duele\npast: me dolió",
+  "exampleWord": "Me duele"
  },
  {
   "id": "molestar",
@@ -2978,7 +3191,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: molesto\ntú: molestas\nél / ella: molesta\npast (yo): molesté"
+  "forms": "yo: molesto\ntú: molestas\nél / ella: molesta\nnosotros: molestamos\npast (yo): molesté",
+  "exampleWord": "molesta"
  },
  {
   "id": "aunque",
@@ -2991,7 +3205,8 @@
   "pattern": "Aunque + indicative (fact) / subjunctive (hypothetical)",
   "level": "intermediate",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Aunque"
  },
  {
   "id": "sin-embargo",
@@ -3004,7 +3219,8 @@
   "pattern": "sentence; sin embargo, sentence",
   "level": "intermediate",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "sin embargo"
  },
  {
   "id": "por-eso",
@@ -3017,7 +3233,8 @@
   "pattern": "cause, por eso + result",
   "level": "intermediate",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "por eso"
  },
  {
   "id": "entonces",
@@ -3030,7 +3247,8 @@
   "pattern": "Entonces, + question",
   "level": "intermediate",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Entonces"
  },
  {
   "id": "ademas",
@@ -3043,7 +3261,8 @@
   "pattern": "Además, + sentence",
   "level": "intermediate",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Además"
  },
  {
   "id": "mientras",
@@ -3056,7 +3275,8 @@
   "pattern": "mientras + verb",
   "level": "intermediate",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "mientras"
  },
  {
   "id": "casi",
@@ -3069,7 +3289,8 @@
   "pattern": "casi + verb / adjective",
   "level": "intermediate",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Casi"
  },
  {
   "id": "quizas",
@@ -3082,7 +3303,8 @@
   "pattern": "Quizás + indicative / subjunctive (more doubt)",
   "level": "intermediate",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Quizás"
  },
  {
   "id": "cita",
@@ -3104,7 +3326,8 @@
     "exampleTranslation": "We have a date on Friday."
    }
   ],
-  "forms": "singular: la cita\nplural: las citas"
+  "forms": "singular: la cita\nplural: las citas",
+  "exampleWord": "cita"
  },
  {
   "id": "sueno",
@@ -3125,7 +3348,8 @@
     "exampleTranslation": "Last night I had a really strange dream."
    }
   ],
-  "forms": "singular: el sueño\nplural: los sueños"
+  "forms": "singular: el sueño\nplural: los sueños",
+  "exampleWord": "sueño"
  },
  {
   "id": "miedo",
@@ -3139,7 +3363,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el miedo\nplural: los miedos"
+  "forms": "singular: el miedo\nplural: los miedos",
+  "exampleWord": "miedo"
  },
  {
   "id": "ganas",
@@ -3153,7 +3378,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "plural: las ganas"
+  "forms": "plural: las ganas",
+  "exampleWord": "ganas"
  },
  {
   "id": "consejo",
@@ -3167,7 +3393,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el consejo\nplural: los consejos"
+  "forms": "singular: el consejo\nplural: los consejos",
+  "exampleWord": "consejo"
  },
  {
   "id": "equivocado",
@@ -3181,7 +3408,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: equivocado\nfeminine: equivocada\nplural: equivocados / equivocadas"
+  "forms": "masculine: equivocado\nfeminine: equivocada\nplural: equivocados / equivocadas",
+  "exampleWord": "equivocado"
  },
  {
   "id": "orgulloso",
@@ -3195,7 +3423,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: orgulloso\nfeminine: orgullosa\nplural: orgullosos / orgullosas"
+  "forms": "masculine: orgulloso\nfeminine: orgullosa\nplural: orgullosos / orgullosas",
+  "exampleWord": "orgulloso"
  },
  {
   "id": "emocionado",
@@ -3209,7 +3438,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: emocionado\nfeminine: emocionada\nplural: emocionados / emocionadas"
+  "forms": "masculine: emocionado\nfeminine: emocionada\nplural: emocionados / emocionadas",
+  "exampleWord": "emocionada"
  },
  {
   "id": "agradecido",
@@ -3223,7 +3453,8 @@
   "level": "intermediate",
   "kind": "word",
   "source": "curated",
-  "forms": "masculine: agradecido\nfeminine: agradecida\nplural: agradecidos / agradecidas"
+  "forms": "masculine: agradecido\nfeminine: agradecida\nplural: agradecidos / agradecidas",
+  "exampleWord": "agradecida"
  },
  {
   "id": "vale-la-pena",
@@ -3236,7 +3467,8 @@
   "pattern": "Vale la pena + infinitive",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "vale la pena"
  },
  {
   "id": "tener-razon",
@@ -3262,7 +3494,8 @@
   "pattern": "Hace falta + noun / infinitive",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Hace falta"
  },
  {
   "id": "me-da-igual",
@@ -3275,7 +3508,8 @@
   "pattern": "Me da igual · Me da lo mismo",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Me da igual"
  },
  {
   "id": "acabar-de",
@@ -3327,7 +3561,8 @@
   "pattern": "Me encantaría + infinitive",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Me encantaría"
  },
  {
   "id": "a-lo-mejor",
@@ -3341,7 +3576,8 @@
   "level": "intermediate",
   "kind": "phrase",
   "source": "curated",
-  "tip": "Extremely common in everyday speech."
+  "tip": "Extremely common in everyday speech.",
+  "exampleWord": "A lo mejor"
  },
  {
   "id": "ojala",
@@ -3354,7 +3590,8 @@
   "pattern": "Ojalá (que) + subjunctive",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Ojalá"
  },
  {
   "id": "en-serio",
@@ -3367,7 +3604,8 @@
   "pattern": "¿En serio?",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "En serio"
  },
  {
   "id": "me-cae-bien",
@@ -3407,7 +3645,8 @@
   "pattern": "Soy + profession (no 'un / una')",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "¿A qué te dedicas?"
  },
  {
   "id": "no-tengo-ni-idea",
@@ -3420,7 +3659,8 @@
   "pattern": "No tengo ni idea de + noun / question",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "No tengo ni idea"
  },
  {
   "id": "poco-a-poco",
@@ -3433,7 +3673,8 @@
   "pattern": "Poco a poco + verb",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Poco a poco"
  },
  {
   "id": "lo-que-sea",
@@ -3446,7 +3687,8 @@
   "pattern": "lo que + subjunctive = whatever …",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Lo que sea"
  },
  {
   "id": "que-onda",
@@ -3460,7 +3702,8 @@
   "level": "intermediate",
   "kind": "phrase",
   "source": "curated",
-  "tip": "Friends only — too casual for strangers."
+  "tip": "Friends only — too casual for strangers.",
+  "exampleWord": "¿Qué onda?"
  },
  {
   "id": "que-padre",
@@ -3486,7 +3729,8 @@
   "pattern": "Ni modo (Mexico)",
   "level": "intermediate",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Ni modo"
  },
  {
   "id": "aprovechar",
@@ -3500,7 +3744,8 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: aprovecho\ntú: aprovechas\nél / ella: aprovecha\npast (yo): aproveché"
+  "forms": "yo: aprovecho\ntú: aprovechas\nél / ella: aprovecha\nnosotros: aprovechamos\npast (yo): aproveché",
+  "exampleWord": "aprovechar"
  },
  {
   "id": "cumplir",
@@ -3521,7 +3766,8 @@
     "exampleTranslation": "Tomorrow I turn thirty."
    }
   ],
-  "forms": "yo: cumplo\ntú: cumples\nél / ella: cumple\npast (yo): cumplí"
+  "forms": "yo: cumplo\ntú: cumples\nél / ella: cumple\nnosotros: cumplimos\npast (yo): cumplí",
+  "exampleWord": "Cumplí"
  },
  {
   "id": "superar",
@@ -3535,7 +3781,8 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: supero\ntú: superas\nél / ella: supera\npast (yo): superé"
+  "forms": "yo: supero\ntú: superas\nél / ella: supera\nnosotros: superamos\npast (yo): superé",
+  "exampleWord": "Superamos"
  },
  {
   "id": "suponer",
@@ -3550,7 +3797,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "Asumir means to take on (responsibility), not to suppose.",
-  "forms": "yo: supongo\ntú: supones\nél / ella: supone\npast (yo): supuse"
+  "forms": "yo: supongo\ntú: supones\nél / ella: supone\nnosotros: suponemos\npast (yo): supuse",
+  "exampleWord": "Supongo"
  },
  {
   "id": "fingir",
@@ -3565,7 +3813,9 @@
   "kind": "word",
   "source": "curated",
   "tip": "Pretender means to aim or intend — a false friend.",
-  "forms": "yo: finjo\ntú: finges\nél / ella: finge\npast (yo): fingí"
+  "forms": "yo: finjo\ntú: finges\nél / ella: finge\nnosotros: fingimos\npast (yo): fingí\nin the example: no finjas",
+  "exampleWord": "finjas",
+  "exampleNote": "**no finjas** = \"don't pretend\" — a **don't-do-it command** to **you** (tú). Commands with *no* use this special form."
  },
  {
   "id": "arrepentirse",
@@ -3579,7 +3829,8 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: me arrepiento\ntú: te arrepientes\nél / ella: se arrepiente\npast (yo): me arrepentí"
+  "forms": "yo: me arrepiento\ntú: te arrepientes\nél / ella: se arrepiente\nnosotros: nos arrepentimos\npast (yo): me arrepentí",
+  "exampleWord": "me arrepiento"
  },
  {
   "id": "enterarse",
@@ -3593,7 +3844,8 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: me entero\ntú: te enteras\nél / ella: se entera\npast (yo): me enteré"
+  "forms": "yo: me entero\ntú: te enteras\nél / ella: se entera\nnosotros: nos enteramos\npast (yo): me enteré",
+  "exampleWord": "Me enteré"
  },
  {
   "id": "aguantar",
@@ -3607,7 +3859,9 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: aguanto\ntú: aguantas\nél / ella: aguanta\npast (yo): aguanté"
+  "forms": "yo: aguanto\ntú: aguantas\nél / ella: aguanta\nnosotros: aguantamos\npast (yo): aguanté",
+  "exampleWord": "Aguanta",
+  "exampleNote": "**¡Aguanta!** here is a **command** to **you** (tú): \"Hang on!\" Same spelling as the *él / ella* form."
  },
  {
   "id": "madrugar",
@@ -3622,7 +3876,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "la madrugada = the small hours of the morning",
-  "forms": "yo: madrugo\ntú: madrugas\nél / ella: madruga\npast (yo): madrugué"
+  "forms": "yo: madrugo\ntú: madrugas\nél / ella: madruga\nnosotros: madrugamos\npast (yo): madrugué",
+  "exampleWord": "madrugar"
  },
  {
   "id": "convivir",
@@ -3636,7 +3891,8 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: convivo\ntú: convives\nél / ella: convive\npast (yo): conviví"
+  "forms": "yo: convivo\ntú: convives\nél / ella: convive\nnosotros: convivimos\npast (yo): conviví",
+  "exampleWord": "Convivir"
  },
  {
   "id": "disfrutar",
@@ -3650,7 +3906,9 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "forms": "yo: disfruto\ntú: disfrutas\nél / ella: disfruta\npast (yo): disfruté"
+  "forms": "yo: disfruto\ntú: disfrutas\nél / ella: disfruta\nnosotros: disfrutamos\npast (yo): disfruté",
+  "exampleWord": "Disfruta",
+  "exampleNote": "**¡Disfruta!** here is a **command** to **you** (tú): \"Enjoy!\" Same spelling as the *él / ella* form."
  },
  {
   "id": "agotado",
@@ -3671,7 +3929,8 @@
     "exampleTranslation": "The tickets are sold out."
    }
   ],
-  "forms": "masculine: agotado\nfeminine: agotada\nplural: agotados / agotadas"
+  "forms": "masculine: agotado\nfeminine: agotada\nplural: agotados / agotadas",
+  "exampleWord": "agotada"
  },
  {
   "id": "desafio",
@@ -3685,7 +3944,8 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: el desafío\nplural: los desafíos"
+  "forms": "singular: el desafío\nplural: los desafíos",
+  "exampleWord": "desafío"
  },
  {
   "id": "compromiso",
@@ -3707,7 +3967,8 @@
     "exampleTranslation": "It's a very serious commitment."
    }
   ],
-  "forms": "singular: el compromiso\nplural: los compromisos"
+  "forms": "singular: el compromiso\nplural: los compromisos",
+  "exampleWord": "compromiso"
  },
  {
   "id": "embarazada",
@@ -3722,7 +3983,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "False friend! Embarrassed = avergonzado/a, or me da vergüenza.",
-  "forms": "singular: embarazada\nplural: embarazadas"
+  "forms": "singular: embarazada\nplural: embarazadas",
+  "exampleWord": "embarazada"
  },
  {
   "id": "verguenza",
@@ -3736,7 +3998,8 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "forms": "singular: la vergüenza"
+  "forms": "singular: la vergüenza",
+  "exampleWord": "vergüenza"
  },
  {
   "id": "exito",
@@ -3751,7 +4014,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "False friend: exit = salida.",
-  "forms": "singular: el éxito\nplural: los éxitos"
+  "forms": "singular: el éxito\nplural: los éxitos",
+  "exampleWord": "éxito"
  },
  {
   "id": "actualmente",
@@ -3765,7 +4029,8 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "tip": "False friend: actually = en realidad."
+  "tip": "False friend: actually = en realidad.",
+  "exampleWord": "Actualmente"
  },
  {
   "id": "en-realidad",
@@ -3778,7 +4043,8 @@
   "pattern": "En realidad, + sentence",
   "level": "fluent",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "En realidad"
  },
  {
   "id": "sensible",
@@ -3793,7 +4059,8 @@
   "kind": "word",
   "source": "curated",
   "tip": "False friend: sensible = sensato.",
-  "forms": "m. & f.: sensible\nplural: sensibles"
+  "forms": "m. & f.: sensible\nplural: sensibles",
+  "exampleWord": "sensible"
  },
  {
   "id": "sin-querer",
@@ -3806,7 +4073,8 @@
   "pattern": "verb + sin querer",
   "level": "fluent",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "sin querer"
  },
  {
   "id": "a-proposito",
@@ -3826,7 +4094,8 @@
     "example": "A propósito, ¿hablaste con tu mamá?",
     "exampleTranslation": "By the way, did you talk to your mom?"
    }
-  ]
+  ],
+  "exampleWord": "a propósito"
  },
  {
   "id": "a-pesar-de",
@@ -3839,7 +4108,8 @@
   "pattern": "A pesar de + noun  ·  a pesar de que + sentence",
   "level": "fluent",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "A pesar de"
  },
  {
   "id": "en-cuanto",
@@ -3852,7 +4122,8 @@
   "pattern": "En cuanto + subjunctive (for the future)",
   "level": "fluent",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "en cuanto"
  },
  {
   "id": "con-tal-de-que",
@@ -3865,7 +4136,8 @@
   "pattern": "Con tal de que + subjunctive",
   "level": "fluent",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "con tal de que"
  },
  {
   "id": "si-hubiera-sabido",
@@ -3878,7 +4150,8 @@
   "pattern": "Si + hubiera + participle, habría + participle",
   "level": "fluent",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Si hubiera sabido"
  },
  {
   "id": "hacer-caso",
@@ -3904,7 +4177,8 @@
   "pattern": "Lo que pasa es que + sentence",
   "level": "fluent",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Lo que pasa es que"
  },
  {
   "id": "no-es-para-tanto",
@@ -3917,7 +4191,8 @@
   "pattern": "No es para tanto",
   "level": "fluent",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "no es para tanto"
  },
  {
   "id": "media-naranja",
@@ -3931,7 +4206,8 @@
   "level": "fluent",
   "kind": "phrase",
   "source": "curated",
-  "tip": "Literally 'half orange'."
+  "tip": "Literally 'half orange'.",
+  "exampleWord": "media naranja"
  },
  {
   "id": "meter-la-pata",
@@ -3957,7 +4233,8 @@
   "pattern": "Cuesta un ojo de la cara",
   "level": "fluent",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "costar un ojo de la cara"
  },
  {
   "id": "ser-pan-comido",
@@ -4088,7 +4365,8 @@
   "pattern": "Más vale + A + que + B",
   "level": "fluent",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "más vale tarde que nunca"
  },
  {
   "id": "al-fin-y-al-cabo",
@@ -4101,6 +4379,7 @@
   "pattern": "Al fin y al cabo, + sentence",
   "level": "fluent",
   "kind": "phrase",
-  "source": "curated"
+  "source": "curated",
+  "exampleWord": "Al fin y al cabo"
  }
 ]

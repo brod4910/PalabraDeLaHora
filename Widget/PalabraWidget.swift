@@ -179,7 +179,7 @@ private struct MediumView: View {
                 .opacity(0.95)
                 .lineLimit(1)
             Spacer(minLength: 0)
-            Text(word.example)
+            Text(highlighted(word.example, word: word.exampleWord))
                 .font(.system(size: 14, weight: .medium, design: .serif).italic())
                 .lineLimit(2).minimumScaleFactor(0.8)
             Text(word.exampleTranslation)
@@ -213,7 +213,7 @@ private struct LargeView: View {
             Divider().overlay(.white.opacity(0.4))
 
             VStack(alignment: .leading, spacing: 3) {
-                Text(word.example)
+                Text(highlighted(word.example, word: word.exampleWord))
                     .font(.system(size: 18, weight: .medium, design: .serif).italic())
                 Text(word.exampleTranslation)
                     .font(.system(size: 13, design: .rounded))

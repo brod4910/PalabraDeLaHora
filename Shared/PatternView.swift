@@ -12,7 +12,7 @@ struct PatternRow: Hashable {
         guard let label else { return nil }
         let value = self.value.replacingOccurrences(of: " / ", with: ", ")
         switch label {
-        case "yo", "tú": return "\(label) \(value)"
+        case "yo", "tú", "nosotros": return "\(label) \(value)"
         case "él / ella": return "él \(value)"
         case "past (yo)": return "yo \(value)"
         default: return value
@@ -136,4 +136,32 @@ struct PatternView: View {
         PatternView(rows: Word.sample.patternRows)
     }
     .padding()
+}
+
+/// The example sentence with the word in it highlighted.
+func highlighted(_ sentence: String, word: String?, color: Color? = nil) -> AttributedString {
+    var text = AttributedString(sentence)
+    guard let word, !word.isEmpty,
+          let range = text.range(of: word, options: [.caseInsensitive, .diacriticInsensitive]) else { return text }
+    text[range].inlinePresentationIntent = .stronglyEmphasized
+    if let color { text[range].foregroundColor = color }
+    return text
+}
+
+/// A beginner note under an example sentence ("**quitaron** = *quitar* → past tense for they").
+struct ExampleNoteView: View {
+    let note: String
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Image(systemName: "info.circle.fill")
+                .foregroundStyle(Theme.coral)
+            Text(LocalizedStringKey(note))
+                .font(.subheadline)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Theme.coral.opacity(0.08), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
 }

@@ -196,13 +196,29 @@ def _rows(block):
         yield [x.strip() for x in line.split("|")]
 
 
+IRREGULAR_NOSOTROS = {"ir": "vamos", "ser": "somos"}
+
+
+def nosotros(infinitive: str) -> str:
+    """Present-tense 'we' form. Always regular from the infinitive except ir/ser; stem changes
+    (quiero, duermo, pido) never happen in the nosotros form."""
+    words = infinitive.split(" ")
+    verb, rest = words[0], " ".join(words[1:])
+    reflexive = verb.endswith("se") and verb[:-2].endswith(("ar", "er", "ir"))
+    if reflexive:
+        verb = verb[:-2]
+    form = IRREGULAR_NOSOTROS.get(verb) or verb[:-2] + {"ar": "amos", "er": "emos", "ir": "imos"}[verb[-2:]]
+    return " ".join(x for x in (("nos" if reflexive else ""), form, rest) if x)
+
+
 def build() -> dict[str, str]:
     """spanish → 'label: value' lines, the same format the dictionary importer produces."""
     forms: dict[str, str] = {}
     for word, yo, tu, el, past in _rows(VERBS):
-        forms[word] = f"yo: {yo}\ntú: {tu}\nél / ella: {el}\npast (yo): {past}"
+        forms[word] = f"yo: {yo}\ntú: {tu}\nél / ella: {el}\nnosotros: {nosotros(word)}\npast (yo): {past}"
     for word, a, b, c, past in _rows(LIKE_GUSTAR):
-        forms[word] = f"a mí: {a}\na ti: {b}\na él / ella: {c}\npast: {past}"
+        we = "nos " + c.split(" ", 1)[1]
+        forms[word] = f"a mí: {a}\na ti: {b}\na él / ella: {c}\na nosotros: {we}\npast: {past}"
     for word, sing, plural in _rows(NOUNS):
         lines = []
         if sing != "-": lines.append(f"singular: {sing}")
@@ -218,3 +234,31 @@ def build() -> dict[str, str]:
 
 
 FORMS = build()
+
+
+# When an example sentence uses a form that isn't in the table, explain it in plain English for a
+# beginner. spanish → (the word as written in the sentence, note). Markdown: **bold**, *italic*.
+# The form is also added to Key forms as "in the example".
+EXAMPLE_NOTES = {
+    "dormir": ("Dormiste", "**dormiste** = *dormir* in the **past** tense for **you** (tú): \"did you sleep?\""),
+    "aprender": ("aprendiendo", "**aprendiendo** is the **-ing** form of *aprender*. *Estoy aprendiendo* = I am learning."),
+    "ahorrar": ("ahorrando", "**ahorrando** is the **-ing** form of *ahorrar*. *Estamos ahorrando* = we are saving."),
+    "dar": ("Dame", "**dame** = *da* (a **command** to **you**: give!) + *me* (to me)."),
+    "escribir": ("Escríbeme", "**escríbeme** = *escribe* (a **command** to **you**: write!) + *me* (to me). The accent keeps the stress on *crí*."),
+    "dejar": ("Déjame", "**déjame** = *deja* (a **command** to **you**: let!) + *me* (me). The accent keeps the stress on *dé*."),
+    "poner": ("Pon", "**pon** is a **command** to **you** (tú): put! It's irregular — just *pon*."),
+    "terminar": ("terminaste", "**terminaste** = *terminar* in the **past** tense for **you** (tú): \"did you finish?\""),
+    "decir": ("dijiste", "**dijiste** = *decir* in the **past** tense for **you** (tú): \"what did you say?\" (irregular)"),
+    "ganar": ("ganó", "**ganó** = *ganar* in the **past** tense for **he / she**: \"who won?\""),
+    "olvidar": ("olvidaron", "**olvidaron** = *olvidar* in the **past** tense for **they**. *Se me olvidaron las llaves* is literally \"the keys got forgotten on me\" — a blame-free way to say *I forgot my keys*."),
+    "jugar": ("juegan", "**juegan** = *jugar* in the **present** tense for **they** (ellos / ellas)."),
+    "casarse": ("se casan", "**se casan** = *casarse* in the **present** tense for **you two / they** (ustedes / ellos). Spanish often uses the present for planned future events."),
+    "enojarse": ("enojes", "**no te enojes** = \"don't get angry\" — a **don't-do-it command** to **you** (tú). Commands with *no* use this special form."),
+    "fingir": ("finjas", "**no finjas** = \"don't pretend\" — a **don't-do-it command** to **you** (tú). Commands with *no* use this special form."),
+    "mirar": ("Mira", "**¡Mira!** here is a **command** to **you** (tú): \"Look!\" It looks the same as the *él / ella* form — tú commands usually do."),
+    "escuchar": ("Escucha", "**¡Escucha!** here is a **command** to **you** (tú): \"Listen!\" Same spelling as the *él / ella* form."),
+    "probar": ("Prueba", "**¡Prueba!** here is a **command** to **you** (tú): \"Try it!\" Same spelling as the *él / ella* form."),
+    "seguir": ("Sigue", "**sigue** here is a **command** to **you** (tú): \"keep going\". Same spelling as the *él / ella* form."),
+    "aguantar": ("Aguanta", "**¡Aguanta!** here is a **command** to **you** (tú): \"Hang on!\" Same spelling as the *él / ella* form."),
+    "disfrutar": ("Disfruta", "**¡Disfruta!** here is a **command** to **you** (tú): \"Enjoy!\" Same spelling as the *él / ella* form."),
+}

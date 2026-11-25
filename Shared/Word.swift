@@ -63,6 +63,10 @@ struct Meaning: Codable, Hashable, Sendable {
     let exampleTranslation: String?
     /// Key forms for this meaning when they differ from the main one ("label: value" lines).
     let forms: String?
+    /// The word as it appears in `example` (highlighted), and a beginner note when it's a form
+    /// she hasn't met yet ("**quitaron** = *quitar* → past tense for they").
+    let exampleWord: String?
+    let exampleNote: String?
 }
 
 /// One vocabulary card. Loaded from `words.json`, which is bundled into both the app and the widget.
@@ -86,6 +90,10 @@ struct Word: Codable, Identifiable, Hashable, Sendable {
     let source: String?
     /// Other meanings, most common first. The main meaning is `english` / `example` above.
     let otherMeanings: [Meaning]?
+    /// The word as it appears in `example` (highlighted) and, when it's a form not obvious to a
+    /// beginner, a plain-English note (Markdown) explaining it.
+    let exampleWord: String?
+    let exampleNote: String?
 
     var extraMeanings: [Meaning] { otherMeanings ?? [] }
 
@@ -109,7 +117,10 @@ struct Word: Codable, Identifiable, Hashable, Sendable {
         kind: .word,
         source: "curated",
         otherMeanings: [Meaning(english: "to love (someone)", partOfSpeech: nil,
-                                example: "Te quiero mucho.", exampleTranslation: "I love you so much.", forms: nil)]
+                                example: "Te quiero mucho.", exampleTranslation: "I love you so much.", forms: nil,
+                                exampleWord: "quiero", exampleNote: nil)],
+        exampleWord: "Quiero",
+        exampleNote: nil
     )
 }
 
