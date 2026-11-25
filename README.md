@@ -57,9 +57,26 @@ The levels loosely follow CEFR, which is also how the Instituto Cervantes curric
 
 `WordSchedule` adds `AppSettings.skipOffset` to the clock slot. "Next word" increments it, reloads the widget timelines and re-queues notifications. When the next hour arrives she continues from where she skipped to, so nothing repeats. Seen words are recorded in the App Group by `LearningProgress.catchUp()`, which runs from both the app and the widget, so the Review and Quiz tabs include words she skipped past.
 
+## Building the full deck from a dictionary
+
+The app ships with the 284 hand-written cards. To add thousands of dictionary cards, run this once on your Mac. It needs only plain Python 3:
+
+```bash
+python3 tools/import_dictionary.py            # ~5,000 cards (use --count 8000 for more)
+```
+
+| Card field | Source |
+|---|---|
+| which words, in what order, and the level | FrequencyWords (OpenSubtitles 2018), CC BY-SA 4.0. Conjugated forms are counted toward their dictionary word. Rank ≤600 → Novice, ≤1,500 → Beginner, ≤3,000 → Intermediate, then Fluent |
+| meaning, part of speech, gender, "Key forms" (yo tengo · tú tienes · él/ella tiene, el/la + plural, adjective endings) | English Wiktionary via Wiktextract / kaikki.org, CC BY-SA |
+| example sentence and translation | Tatoeba, CC BY 2.0 FR. Short sentences built from the easiest vocabulary are preferred. Ambiguous words like *como* use Wiktionary's own example for the right meaning |
+| phonetic spelling (`keh-REHR`) | generated from Spanish spelling rules. It matches 279 of the 284 hand-written ones |
+
+Words tagged vulgar, offensive or derogatory in Wiktionary are skipped, along with sentences that contain them. Hand-written cards always win over generated ones for the same word. The first run downloads about 1–3 GB into `tools/.cache/` (git-ignored) and takes a few minutes. After that, the filtered subset is cached. The output goes to `tools/generated.json` (commit it) and is merged into `Shared/words.json`. Attribution is in Settings › About › Credits & licenses.
+
 ## Adding words
 
-Add lines to `tools/new_words.py` under the right `## level` heading, then run `python3 tools/words_source.py` to regenerate `Shared/words.json`. The format is pipe-delimited: `spanish | english | part of speech | phonetic | example | translation | pattern | tip?`. Use `phrase` or `idiom` as the part of speech to make an entry an everyday-phrase card. You can also edit the JSON by hand: `tip` is optional, and `id` must be unique and URL-safe.
+Add lines to `tools/new_words.py` under the right `## level` heading, then run `python3 tools/words_source.py`. It writes `tools/curated.json` and re-merges `Shared/words.json`, keeping any dictionary cards you've imported. The format is pipe-delimited: `spanish | english | part of speech | phonetic | example | translation | pattern | tip?`. Use `phrase` or `idiom` as the part of speech to make an entry an everyday-phrase card. You can also edit the JSON by hand: `tip` is optional, and `id` must be unique and URL-safe.
 
 ## Things worth knowing
 

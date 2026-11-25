@@ -277,7 +277,7 @@ out = []
 def add(es, en, pos, ph, ex, exen, pat, tip, level):
     d = dict(id=slug(es), spanish=es, english=en, partOfSpeech=pos, phonetic=ph,
              example=ex, exampleTranslation=exen, pattern=pat,
-             level=level, kind="phrase" if pos in PHRASE_POS else "word")
+             level=level, kind="phrase" if pos in PHRASE_POS else "word", source="curated")
     if tip: d["tip"] = tip
     for k, v in d.items():
         assert v, f"empty {k} in {es}"
@@ -299,9 +299,16 @@ for raw in NEW.strip().splitlines():
     add(*f, level)
 ids = [d["id"] for d in out]
 assert len(ids) == len(set(ids)), "duplicate ids"
-p = pathlib.Path(__file__).resolve().parent.parent / "Shared" / "words.json"
+# Hand-written cards go to tools/curated.json; tools/import_dictionary.py merges them with the
+# dictionary-generated cards into Shared/words.json. Without an import, curated cards are the deck.
+p = pathlib.Path(__file__).resolve().parent / "curated.json"
 p.parent.mkdir(parents=True, exist_ok=True)
 p.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 from collections import Counter
-print(f"wrote {len(out)} entries to {p}")
+print(f"wrote {len(out)} curated entries to {p}")
+words_json = p.parent.parent / "Shared" / "words.json"
+if "--no-deck" not in sys.argv:
+    # Keep Shared/words.json in sync when no dictionary import has been run.
+    import subprocess
+    subprocess.run([sys.executable, str(p.parent / "import_dictionary.py"), "--merge-only"], check=True)
 print(Counter((d["level"], d["kind"]) for d in out))

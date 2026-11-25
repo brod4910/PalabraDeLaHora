@@ -220,17 +220,19 @@ private struct LargeView: View {
                     .opacity(0.85)
             }
 
-            VStack(alignment: .leading, spacing: 3) {
-                Text("HOW TO USE IT")
-                    .font(.system(size: 10, weight: .heavy, design: .rounded))
-                    .tracking(0.8).opacity(0.75)
-                Text(word.pattern)
-                    .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .lineLimit(3)
+            if let pattern = word.pattern {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(word.source == "dictionary" ? "KEY FORMS" : "HOW TO USE IT")
+                        .font(.system(size: 10, weight: .heavy, design: .rounded))
+                        .tracking(0.8).opacity(0.75)
+                    Text(pattern)
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .lineLimit(3)
+                }
+                .padding(10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(.white.opacity(0.15), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
             }
-            .padding(10)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.white.opacity(0.15), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
 
             if let tip = word.tip {
                 Text("💡 \(tip)")

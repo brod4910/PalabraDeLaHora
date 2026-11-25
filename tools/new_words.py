@@ -151,7 +151,7 @@ faltar | to be missing / to need | verb | fahl-TAHR | Me falta un poco de práct
 importar | to matter | verb | eem-pohr-TAHR | No me importa. | I don't mind. / It doesn't matter to me. | Me importa + noun (works like gustar)
 doler | to hurt | verb | doh-LEHR | Me duele la cabeza. | I have a headache. | Me duele + body part (works like gustar)
 molestar | to bother | verb | moh-lehs-TAHR | ¿Te molesta si abro la ventana? | Do you mind if I open the window? | ¿Te molesta si + verb?
-aunque | although / even if | conjunction | ah-OON-keh | Aunque estoy cansada, voy a ir. | Even though I'm tired, I'm going. | Aunque + indicative (fact) / subjunctive (hypothetical)
+aunque | although / even if | conjunction | OWN-keh | Aunque estoy cansada, voy a ir. | Even though I'm tired, I'm going. | Aunque + indicative (fact) / subjunctive (hypothetical)
 sin embargo | however | conjunction | seen ehm-BAHR-goh | Es caro; sin embargo, vale la pena. | It's expensive; however, it's worth it. | sentence; sin embargo, sentence
 por eso | that's why | conjunction | pohr EH-soh | Llovía, por eso no salimos. | It was raining, that's why we didn't go out. | cause, por eso + result
 entonces | so / then | adverb | ehn-TOHN-sehs | Entonces, ¿qué hacemos? | So, what do we do? | Entonces, + question

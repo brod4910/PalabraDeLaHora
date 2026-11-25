@@ -120,6 +120,7 @@ struct SettingsView: View {
                     LabeledContent("Cards in the app", value: "\(WordBank.all.count)")
                     LabeledContent("Seen so far", value: "\(LearningProgress.seen.count)")
                     LabeledContent("Learning since", value: AppSettings.startDate.formatted(date: .abbreviated, time: .omitted))
+                    NavigationLink("Credits & licenses") { CreditsView() }
                 }
             }
             .navigationTitle("Settings")
@@ -160,5 +161,34 @@ struct SettingsView: View {
     private func hourLabel(_ hour: Int) -> String {
         let date = Calendar.current.date(bySettingHour: hour, minute: 0, second: 0, of: .now) ?? .now
         return date.formatted(date: .omitted, time: .shortened)
+    }
+}
+
+/// Attribution for the open data the dictionary cards are built from (tools/import_dictionary.py).
+struct CreditsView: View {
+    var body: some View {
+        List {
+            Section {
+                Text("Hand-written cards (patterns, tips and examples) were created for Palabra. Dictionary cards are generated from the open data below.")
+                    .font(.subheadline)
+            }
+            Section("Meanings & word forms") {
+                Link("Wiktionary, via Wiktextract / kaikki.org (Tatu Ylonen)", destination: URL(string: "https://kaikki.org")!)
+                Text("Wiktionary content is available under CC BY-SA.").font(.footnote).foregroundStyle(.secondary)
+            }
+            Section("Example sentences") {
+                Link("Tatoeba — tatoeba.org", destination: URL(string: "https://tatoeba.org")!)
+                Text("Sentences and translations licensed under CC BY 2.0 FR.").font(.footnote).foregroundStyle(.secondary)
+            }
+            Section("Word frequency & levels") {
+                Link("FrequencyWords (OpenSubtitles 2018) — Hermit Dave", destination: URL(string: "https://github.com/hermitdave/FrequencyWords")!)
+                Text("Content licensed under CC BY-SA 4.0.").font(.footnote).foregroundStyle(.secondary)
+            }
+            Section("Pronunciation") {
+                Text("Audio is spoken by the voices built into iOS. Phonetic spellings are generated from Spanish spelling rules.")
+                    .font(.footnote).foregroundStyle(.secondary)
+            }
+        }
+        .navigationTitle("Credits")
     }
 }
