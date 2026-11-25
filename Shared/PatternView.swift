@@ -4,6 +4,20 @@ import SwiftUI
 struct PatternRow: Hashable {
     let label: String?
     let value: String
+
+    /// What to say aloud, or nil when the row isn't pure Spanish (hand-written patterns mix in
+    /// English like "Quiero + noun"). Verb forms are spoken with their pronoun ("yo tengo"),
+    /// noun forms already include the article ("las casas"), alternatives get a pause.
+    var spokenText: String? {
+        guard let label else { return nil }
+        let value = self.value.replacingOccurrences(of: " / ", with: ", ")
+        switch label {
+        case "yo", "tú": return "\(label) \(value)"
+        case "él / ella": return "él \(value)"
+        case "past (yo)": return "yo \(value)"
+        default: return value
+        }
+    }
 }
 
 extension Word {
@@ -36,19 +50,41 @@ struct PatternView: View {
     var labelStyle: AnyShapeStyle = AnyShapeStyle(.secondary)
     var spacing: CGFloat = 6
     var maxRows: Int = .max
+    /// When set, speakable rows get a small 🔊 button.
+    var onSpeak: ((PatternRow) -> Void)? = nil
 
     var body: some View {
         let shown = Array(rows.prefix(maxRows))
         if shown.contains(where: { $0.label != nil }) {
             Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: 14, verticalSpacing: spacing) {
                 ForEach(shown, id: \.self) { row in
+                    let speakable = onSpeak != nil && row.spokenText != nil
+                    // Modifiers go on the cells, not the GridRow, so the columns stay aligned.
+                    // Tapping either cell (label or form) plays it.
                     GridRow {
                         Text(row.label ?? "")
                             .font(labelFont)
                             .foregroundStyle(labelStyle)
                             .gridColumnAlignment(.trailing)
-                        Text(row.value)
-                            .font(valueFont)
+                            .contentShape(Rectangle())
+                            .onTapGesture { if speakable { onSpeak?(row) } }
+                            .accessibilityHidden(true)
+                        HStack(spacing: 8) {
+                            Text(row.value)
+                                .font(valueFont)
+                            if speakable {
+                                Image(systemName: "speaker.wave.2.fill")
+                                    .font(.footnote)
+                                    .foregroundStyle(Theme.coral)
+                            }
+                            Spacer(minLength: 0)
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture { if speakable { onSpeak?(row) } }
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel("\(row.label ?? ""): \(row.value)")
+                        .accessibilityAddTraits(speakable ? .isButton : [])
+                        .accessibilityHint(speakable ? "Plays the pronunciation" : "")
                     }
                 }
             }

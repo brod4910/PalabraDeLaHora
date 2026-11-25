@@ -27,9 +27,17 @@ struct WordCardView: View {
                 }
             }
             if !word.patternRows.isEmpty {
+                let rows = word.patternRows
+                let spoken = rows.compactMap(\.spokenText)
+                let playAll: (() -> Void)? = spoken.isEmpty ? nil : {
+                    Task { await speaker.say(spoken.map { Speaker.Part.spanish($0, pause: 0.5) }) }
+                }
                 section(title: word.source == "dictionary" ? "Key forms" : "How to use it",
-                        systemImage: "puzzlepiece.extension.fill") {
-                    PatternView(rows: word.patternRows)
+                        systemImage: "puzzlepiece.extension.fill",
+                        playAll: playAll) {
+                    PatternView(rows: rows, onSpeak: { row in
+                        if let text = row.spokenText { speaker.speak(text) }
+                    })
                 }
             }
             if let tip = word.tip {
@@ -87,12 +95,25 @@ struct WordCardView: View {
     }
 
     private func section<Content: View>(title: String, systemImage: String,
+                                        playAll: (() -> Void)? = nil,
                                         @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Label(title, systemImage: systemImage)
-                .font(.caption.weight(.bold))
-                .textCase(.uppercase)
-                .foregroundStyle(Theme.coral)
+            HStack {
+                Label(title, systemImage: systemImage)
+                    .font(.caption.weight(.bold))
+                    .textCase(.uppercase)
+                    .foregroundStyle(Theme.coral)
+                Spacer()
+                if let playAll {
+                    Button(action: playAll) {
+                        Label("Play all", systemImage: "play.fill")
+                            .font(.caption.weight(.semibold))
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.mini)
+                    .tint(Theme.coral)
+                }
+            }
             content()
         }
         .padding(16)
