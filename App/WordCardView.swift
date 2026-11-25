@@ -8,44 +8,42 @@ struct WordCardView: View {
     @EnvironmentObject private var favorites: FavoritesStore
     @EnvironmentObject private var speaker: Speaker
 
+    private var hasExtraMeanings: Bool { !word.extraMeanings.isEmpty }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             hero
-            section(title: "In a sentence", systemImage: "text.quote") {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(word.example)
-                        .font(.title3.weight(.medium))
-                        .fontDesign(.serif)
-                        .italic()
-                    Text(word.exampleTranslation)
-                        .foregroundStyle(.secondary)
-                    HStack {
-                        PlayButton(title: "Play", systemImage: "play.fill") { speaker.speak(word.example) }
-                        PlayButton(title: "Slow", systemImage: "tortoise.fill") { speaker.speak(word.example, slow: true) }
-                    }
-                    .padding(.top, 4)
-                }
+
+            // Meaning 1 (the main one): its sentence, key forms and how to use it.
+            section(title: hasExtraMeanings ? "1 · \(word.english)" : "In a sentence",
+                    systemImage: hasExtraMeanings ? "1.circle.fill" : "text.quote") {
+                exampleBlock(word.example, word.exampleTranslation)
             }
-            if !word.formRows.isEmpty {
-                let rows = word.formRows
-                let spoken = rows.compactMap(\.spokenText)
-                let playAll: (() -> Void)? = spoken.isEmpty ? nil : {
-                    Task { await speaker.say(spoken.map { Speaker.Part.spanish($0, pause: 0.5) }) }
-                }
-                section(title: "Key forms", systemImage: "tablecells", playAll: playAll) {
-                    PatternView(rows: rows, onSpeak: { row in
-                        if let text = row.spokenText { speaker.speak(text) }
-                    })
-                    Text("Tap a form to hear it.")
-                        .font(.caption)
-                        .foregroundStyle(.tertiary)
-                }
-            }
+            formsSection(word.formRows, title: "Key forms")
             if !word.patternRows.isEmpty {
                 section(title: "How to use it", systemImage: "puzzlepiece.extension.fill") {
                     PatternView(rows: word.patternRows)
                 }
             }
+
+            // Other meanings, each with its own example (and key forms when they differ).
+            ForEach(Array(word.extraMeanings.enumerated()), id: \.offset) { i, meaning in
+                section(title: "\(i + 2) · \(meaning.english)", systemImage: "\(i + 2).circle.fill") {
+                    if let pos = meaning.partOfSpeech {
+                        Text(pos).font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                    }
+                    if let example = meaning.example {
+                        exampleBlock(example, meaning.exampleTranslation ?? "")
+                    }
+                    if !meaning.formRows.isEmpty {
+                        Divider().padding(.vertical, 4)
+                        PatternView(rows: meaning.formRows, onSpeak: { row in
+                            if let text = row.spokenText { speaker.speak(text) }
+                        })
+                    }
+                }
+            }
+
             if let tip = word.tip {
                 section(title: "Tip", systemImage: "lightbulb.fill") {
                     Text(tip)
@@ -54,6 +52,40 @@ struct WordCardView: View {
         }
         .onAppear {
             if autoplay { speaker.speak([word.spanish, word.example]) }
+        }
+    }
+
+    private func exampleBlock(_ example: String, _ translation: String) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(example)
+                .font(.title3.weight(.medium))
+                .fontDesign(.serif)
+                .italic()
+            Text(translation)
+                .foregroundStyle(.secondary)
+            HStack {
+                PlayButton(title: "Play", systemImage: "play.fill") { speaker.speak(example) }
+                PlayButton(title: "Slow", systemImage: "tortoise.fill") { speaker.speak(example, slow: true) }
+            }
+            .padding(.top, 4)
+        }
+    }
+
+    @ViewBuilder
+    private func formsSection(_ rows: [PatternRow], title: String) -> some View {
+        if !rows.isEmpty {
+            let spoken = rows.compactMap(\.spokenText)
+            let playAll: (() -> Void)? = spoken.isEmpty ? nil : {
+                Task { await speaker.say(spoken.map { Speaker.Part.spanish($0, pause: 0.5) }) }
+            }
+            section(title: title, systemImage: "tablecells", playAll: playAll) {
+                PatternView(rows: rows, onSpeak: { row in
+                    if let text = row.spokenText { speaker.speak(text) }
+                })
+                Text("Tap a form to hear it.")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            }
         }
     }
 
@@ -81,8 +113,23 @@ struct WordCardView: View {
             Text(word.phonetic)
                 .font(.title3.monospaced())
                 .opacity(0.9)
-            Text(word.english)
-                .font(.title3.weight(.semibold))
+            if hasExtraMeanings {
+                VStack(alignment: .leading, spacing: 3) {
+                    ForEach(Array(([word.english] + word.extraMeanings.map(\.english)).enumerated()), id: \.offset) { i, english in
+                        HStack(alignment: .firstTextBaseline, spacing: 8) {
+                            Text("\(i + 1)")
+                                .font(.caption.weight(.heavy))
+                                .frame(width: 18, height: 18)
+                                .background(.white.opacity(0.25), in: Circle())
+                            Text(english)
+                                .font(i == 0 ? .title3.weight(.semibold) : .body.weight(.medium))
+                        }
+                    }
+                }
+            } else {
+                Text(word.english)
+                    .font(.title3.weight(.semibold))
+            }
             HStack {
                 PlayButton(title: "Hear it", systemImage: "speaker.wave.2.fill", prominent: true) {
                     speaker.speak(word.spanish)

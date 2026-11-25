@@ -23,7 +23,7 @@ struct ReviewView: View {
         }
         guard !query.isEmpty else { return base }
         return base.filter {
-            $0.spanish.localizedCaseInsensitiveContains(query) || $0.english.localizedCaseInsensitiveContains(query)
+            $0.spanish.localizedCaseInsensitiveContains(query) || $0.allMeanings.localizedCaseInsensitiveContains(query)
         }
     }
 
@@ -98,7 +98,7 @@ private struct WordRow: View {
                         Image(systemName: "checkmark.seal.fill").font(.caption).foregroundStyle(.green)
                     }
                 }
-                Text(word.english).font(.subheadline).foregroundStyle(.secondary)
+                Text(word.allMeanings).font(.subheadline).foregroundStyle(.secondary)
                 Text(word.level.label)
                     .font(.caption2.weight(.semibold))
                     .foregroundStyle(Theme.coral)
@@ -137,7 +137,7 @@ struct PracticeView: View {
                         }
                         if revealed {
                             VStack(spacing: 6) {
-                                Text(word.english).font(.title2.weight(.semibold))
+                                Text(word.allMeanings).font(.title2.weight(.semibold))
                                 Text(word.example).italic()
                                 Text(word.exampleTranslation).foregroundStyle(.secondary)
                             }

@@ -70,7 +70,7 @@ struct PalabraWidgetView: View {
     @ViewBuilder private var content: some View {
         switch family {
         case .accessoryInline:
-            Text("\(entry.word.spanish) · \(entry.word.english)")
+            Text("\(entry.word.spanish) · \(entry.word.allMeanings)")
                 .containerBackground(for: .widget) { Color.clear }
         case .accessoryCircular:
             CircularView(word: entry.word)
@@ -146,7 +146,7 @@ private struct SmallView: View {
                 .opacity(0.85)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
-            Text(word.english)
+            Text(word.allMeanings)
                 .font(.system(size: 13, weight: .semibold, design: .rounded))
                 .lineLimit(2)
                 .minimumScaleFactor(0.8)
@@ -174,7 +174,7 @@ private struct MediumView: View {
                     .opacity(0.85)
                     .lineLimit(1)
             }
-            Text("\(word.english) · \(word.partOfSpeech)")
+            Text(word.allMeanings)
                 .font(.system(size: 13, weight: .semibold, design: .rounded))
                 .opacity(0.95)
                 .lineLimit(1)
@@ -206,7 +206,7 @@ private struct LargeView: View {
                 Text(word.phonetic)
                     .font(.system(size: 15, weight: .medium, design: .monospaced))
                     .opacity(0.85)
-                Text("\(word.english) · \(word.partOfSpeech)")
+                Text(word.allMeanings)
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
             }
 
@@ -273,7 +273,7 @@ private struct RectangularView: View {
             Text(word.phonetic)
                 .font(.caption2.monospaced())
                 .lineLimit(1)
-            Text(word.english)
+            Text(word.allMeanings)
                 .font(.caption)
                 .lineLimit(1)
         }

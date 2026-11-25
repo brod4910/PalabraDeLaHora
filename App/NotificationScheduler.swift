@@ -48,7 +48,7 @@ enum NotificationScheduler {
 
             let word = schedule.word(atPosition: slot + schedule.offset)
             let content = UNMutableNotificationContent()
-            content.title = "\(word.spanish) — \(word.english)"
+            content.title = "\(word.spanish) — \(word.allMeanings)"
             content.subtitle = word.phonetic
             content.body = "\(word.example)\n\(word.exampleTranslation)"
             content.sound = .default

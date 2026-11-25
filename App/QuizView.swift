@@ -207,7 +207,7 @@ struct QuizHomeView: View {
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text(word.spanish).font(.headline)
-                                    Text(word.english).font(.subheadline).foregroundStyle(.secondary)
+                                    Text(word.allMeanings).font(.subheadline).foregroundStyle(.secondary)
                                 }
                                 Spacer()
                                 Text("\(r.right)/\(r.attempts)")
@@ -353,7 +353,7 @@ struct QuizSessionView: View {
                         ForEach(missed) { w in
                             HStack {
                                 Text(w.spanish).bold()
-                                Text("— \(w.english)").foregroundStyle(.secondary).lineLimit(1)
+                                Text("— \(w.allMeanings)").foregroundStyle(.secondary).lineLimit(1)
                                 Spacer()
                                 Button { speaker.speak(w.spanish) } label: { Image(systemName: "speaker.wave.2.fill") }
                             }
@@ -531,7 +531,7 @@ private struct WrittenQuestionView: View {
     private var explanation: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text("\(question.word.spanish) — \(question.word.english)").font(.headline)
+                Text("\(question.word.spanish) — \(question.word.allMeanings)").font(.headline)
                 Spacer()
                 Button { speaker.speak([question.word.spanish, question.word.example]) } label: {
                     Image(systemName: "speaker.wave.2.fill")
@@ -606,7 +606,7 @@ private struct VerbalQuestionView: View {
             if phase == .correct || phase == .wrong {
                 VStack(spacing: 4) {
                     Text(question.word.spanish).font(.title2.bold())
-                    Text(question.word.english).foregroundStyle(.secondary)
+                    Text(question.word.allMeanings).foregroundStyle(.secondary)
                     if question.style == .repeatAfterMe {
                         Text(question.word.example).italic().multilineTextAlignment(.center).padding(.top, 4)
                     }
@@ -695,7 +695,7 @@ private struct VerbalQuestionView: View {
     private func grade(_ text: String) -> Bool {
         switch question.style {
         case .sayIt: AnswerMatcher.matchesSpanish(spoken: text, target: question.word.spanish)
-        case .whatDoesItMean: AnswerMatcher.matchesEnglish(spoken: text, english: question.word.english)
+        case .whatDoesItMean: AnswerMatcher.matchesEnglish(spoken: text, english: question.word.allMeanings.replacingOccurrences(of: " · ", with: " / "))
         case .repeatAfterMe: AnswerMatcher.overlap(spoken: text, sentence: question.word.example) >= 0.7
         default: false
         }
@@ -720,7 +720,7 @@ private struct VerbalQuestionView: View {
         case .sayIt:
             return [.english("The answer is", pause: 0.2), .spanish(question.word.spanish)]
         case .whatDoesItMean:
-            return [.english("It means: \(QuizBuilder.spokenEnglish(question.word.english))")]
+            return [.english("It means: \(QuizBuilder.spokenEnglish(question.word.allMeanings.replacingOccurrences(of: " · ", with: " / ")))")]
         case .repeatAfterMe:
             return [.english("Listen once more.", pause: 0.3), .spanish(question.word.example)]
         default:

@@ -234,3 +234,80 @@ hacerse el tonto | to play dumb | idiom | ah-SEHR-seh ehl TOHN-toh | No te hagas
 más vale tarde que nunca | better late than never | idiom | mahs BAH-leh TAHR-deh keh NOON-kah | Llegaste tarde, pero más vale tarde que nunca. | You're late, but better late than never. | Más vale + A + que + B
 al fin y al cabo | after all | phrase | ahl feen ee ahl KAH-boh | Al fin y al cabo, somos familia. | After all, we're family. | Al fin y al cabo, + sentence
 """
+
+
+# ---------------------------------------------------------------------------
+# Words with more than one meaning: the card shows every meaning, each with its own example.
+#   spanish → (main English, optional (main example, translation) override, [extra meanings])
+#   extra meaning = (English, part of speech or None, example, translation)
+MEANINGS = {
+    "querer": ("to want", None, [
+        ("to love (someone)", None, "Te quiero mucho.", "I love you so much."),
+    ]),
+    "tiempo": ("time", None, [
+        ("weather", None, "Hace buen tiempo hoy.", "The weather is nice today."),
+    ]),
+    "mañana": ("tomorrow", ("Nos vemos mañana.", "See you tomorrow."), [
+        ("morning (la mañana)", "noun (f.)", "Corro por la mañana.", "I go running in the morning."),
+    ]),
+    "tarde": ("late", None, [
+        ("afternoon (la tarde)", "noun (f.)", "Nos vemos esta tarde.", "See you this afternoon."),
+    ]),
+    "esperar": ("to hope", None, [
+        ("to wait (for)", None, "Te espero en el coche.", "I'll wait for you in the car."),
+    ]),
+    "listo": ("ready (estar listo)", None, [
+        ("smart, clever (ser listo)", None, "Tu hermana es muy lista.", "Your sister is very smart."),
+    ]),
+    "sueño": ("sleepiness (tener sueño)", None, [
+        ("dream", None, "Anoche tuve un sueño muy raro.", "Last night I had a really strange dream."),
+    ]),
+    "rico": ("delicious, tasty", None, [
+        ("rich", None, "Su familia es muy rica.", "His family is very rich."),
+    ]),
+    "cita": ("appointment", None, [
+        ("date (romantic)", None, "Tenemos una cita el viernes.", "We have a date on Friday."),
+    ]),
+    "dejar": ("to let", None, [
+        ("to leave (something somewhere)", None, "Dejé las llaves en casa.", "I left the keys at home."),
+    ]),
+    "tomar": ("to have (food or drink)", None, [
+        ("to take", None, "Tomamos el autobús a las ocho.", "We take the bus at eight."),
+    ]),
+    "llevar": ("to take / to bring along", None, [
+        ("to wear", None, "Llevas un vestido precioso.", "You're wearing a beautiful dress."),
+    ]),
+    "a propósito": ("on purpose", None, [
+        ("by the way", None, "A propósito, ¿hablaste con tu mamá?", "By the way, did you talk to your mom?"),
+    ]),
+    "agotado": ("exhausted", None, [
+        ("sold out", None, "Las entradas están agotadas.", "The tickets are sold out."),
+    ]),
+    "salud": ("cheers!", None, [
+        ("bless you! (after a sneeze)", None, "—¡Achú! —¡Salud!", "\"Achoo!\" \"Bless you!\""),
+    ]),
+    "hora": ("time (of day)", None, [
+        ("hour", None, "La película dura dos horas.", "The movie lasts two hours."),
+    ]),
+    "ya": ("already", None, [
+        ("no longer (ya no)", None, "Ya no vivo allí.", "I don't live there anymore."),
+    ]),
+    "ganar": ("to win", None, [
+        ("to earn", None, "Gana mucho dinero.", "She earns a lot of money."),
+    ]),
+    "perder": ("to lose", ("Perdí mis llaves.", "I lost my keys."), [
+        ("to miss (a bus, a flight)", None, "Perdí el autobús.", "I missed the bus."),
+    ]),
+    "probar": ("to try, to taste", None, [
+        ("to try on (clothes)", None, "¿Me puedo probar esta camisa?", "Can I try on this shirt?"),
+    ]),
+    "creer": ("to think (in my opinion)", None, [
+        ("to believe", None, "No te creo.", "I don't believe you."),
+    ]),
+    "cumplir": ("to keep (a promise)", None, [
+        ("to turn (an age)", None, "Mañana cumplo treinta años.", "Tomorrow I turn thirty."),
+    ]),
+    "compromiso": ("engagement", None, [
+        ("commitment", None, "Es un compromiso muy serio.", "It's a very serious commitment."),
+    ]),
+}

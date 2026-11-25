@@ -267,7 +267,7 @@ BEGINNER_IDS = {"saber", "conocer", "sentir", "esperar", "llegar", "salir", "bus
                 "tiempo", "ciudad", "boda", "prometido", "rico", "dificil", "trabajo"}
 PHRASE_POS = {"phrase", "greeting", "expression", "idiom"}
 
-from new_words import NEW  # noqa: E402  (pipe-delimited entries grouped by level)
+from new_words import NEW, MEANINGS  # noqa: E402  (pipe-delimited entries grouped by level)
 
 def slug(s):
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()
@@ -281,6 +281,15 @@ def add(es, en, pos, ph, ex, exen, pat, tip, level):
     if tip: d["tip"] = tip
     for k, v in d.items():
         assert v, f"empty {k} in {es}"
+    if es in MEANINGS:
+        main, main_example, extra = MEANINGS[es]
+        d["english"] = main
+        if main_example:
+            d["example"], d["exampleTranslation"] = main_example
+        d["otherMeanings"] = [
+            {k: v for k, v in dict(english=en_, partOfSpeech=pos_, example=ex_, exampleTranslation=tr_).items() if v}
+            for en_, pos_, ex_, tr_ in extra
+        ]
     out.append(d)
 
 for es, en, pos, ph, ex, exen, pat, tip in W:
@@ -297,6 +306,8 @@ for raw in NEW.strip().splitlines():
     assert len(f) in (7, 8), f"bad line ({len(f)} fields): {line}"
     if len(f) == 7: f.append("")
     add(*f, level)
+missing = set(MEANINGS) - {d["spanish"] for d in out}
+assert not missing, f"MEANINGS for unknown words: {missing}"
 ids = [d["id"] for d in out]
 assert len(ids) == len(set(ids)), "duplicate ids"
 # Hand-written cards go to tools/curated.json; tools/import_dictionary.py merges them with the

@@ -2,7 +2,7 @@
   {
     "id": "querer",
     "spanish": "querer",
-    "english": "to want / to love",
+    "english": "to want",
     "partOfSpeech": "verb",
     "phonetic": "keh-REHR",
     "example": "Quiero un café, por favor.",
@@ -11,7 +11,14 @@
     "level": "novice",
     "kind": "word",
     "source": "curated",
-    "tip": "“Te quiero” is the warm, everyday way to say I love you."
+    "tip": "“Te quiero” is the warm, everyday way to say I love you.",
+    "otherMeanings": [
+      {
+        "english": "to love (someone)",
+        "example": "Te quiero mucho.",
+        "exampleTranslation": "I love you so much."
+      }
+    ]
   },
   {
     "id": "necesitar",
@@ -209,7 +216,7 @@
   {
     "id": "esperar",
     "spanish": "esperar",
-    "english": "to wait / to hope",
+    "english": "to hope",
     "partOfSpeech": "verb",
     "phonetic": "ehs-peh-RAHR",
     "example": "Espero que tengas un buen día.",
@@ -218,7 +225,14 @@
     "level": "beginner",
     "kind": "word",
     "source": "curated",
-    "tip": "Same verb for waiting: Espérame = Wait for me."
+    "tip": "Same verb for waiting: Espérame = Wait for me.",
+    "otherMeanings": [
+      {
+        "english": "to wait (for)",
+        "example": "Te espero en el coche.",
+        "exampleTranslation": "I'll wait for you in the car."
+      }
+    ]
   },
   {
     "id": "llegar",
@@ -440,7 +454,7 @@
   {
     "id": "tiempo",
     "spanish": "tiempo",
-    "english": "time / weather",
+    "english": "time",
     "partOfSpeech": "noun (m.)",
     "phonetic": "TYEHM-poh",
     "example": "No tengo tiempo.",
@@ -448,7 +462,14 @@
     "pattern": "No tengo + noun  ·  ¿Qué tiempo hace? = What’s the weather like?",
     "level": "beginner",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "weather",
+        "example": "Hace buen tiempo hoy.",
+        "exampleTranslation": "The weather is nice today."
+      }
+    ]
   },
   {
     "id": "dia",
@@ -480,15 +501,23 @@
   {
     "id": "manana",
     "spanish": "mañana",
-    "english": "tomorrow / morning",
+    "english": "tomorrow",
     "partOfSpeech": "noun / adverb",
     "phonetic": "mah-NYAH-nah",
-    "example": "Nos vemos mañana por la mañana.",
-    "exampleTranslation": "See you tomorrow morning.",
+    "example": "Nos vemos mañana.",
+    "exampleTranslation": "See you tomorrow.",
     "pattern": "mañana = tomorrow  ·  la mañana = the morning",
     "level": "novice",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "morning (la mañana)",
+        "partOfSpeech": "noun (f.)",
+        "example": "Corro por la mañana.",
+        "exampleTranslation": "I go running in the morning."
+      }
+    ]
   },
   {
     "id": "amor",
@@ -656,7 +685,7 @@
   {
     "id": "rico",
     "spanish": "rico",
-    "english": "delicious / rich",
+    "english": "delicious, tasty",
     "partOfSpeech": "adjective",
     "phonetic": "REE-koh",
     "example": "¡Esto está muy rico!",
@@ -664,7 +693,14 @@
     "pattern": "estar rico = to taste good  ·  ser rico = to be rich",
     "level": "beginner",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "rich",
+        "example": "Su familia es muy rica.",
+        "exampleTranslation": "His family is very rich."
+      }
+    ]
   },
   {
     "id": "dificil",
@@ -1043,7 +1079,7 @@
   {
     "id": "hora",
     "spanish": "hora",
-    "english": "hour / time",
+    "english": "time (of day)",
     "partOfSpeech": "noun (f.)",
     "phonetic": "OH-rah",
     "example": "¿Qué hora es?",
@@ -1052,7 +1088,14 @@
     "level": "novice",
     "kind": "word",
     "source": "curated",
-    "tip": "It's one o'clock = Es la una."
+    "tip": "It's one o'clock = Es la una.",
+    "otherMeanings": [
+      {
+        "english": "hour",
+        "example": "La película dura dos horas.",
+        "exampleTranslation": "The movie lasts two hours."
+      }
+    ]
   },
   {
     "id": "semana",
@@ -1309,7 +1352,7 @@
   {
     "id": "tomar",
     "spanish": "tomar",
-    "english": "to take / to drink",
+    "english": "to have (food or drink)",
     "partOfSpeech": "verb",
     "phonetic": "toh-MAHR",
     "example": "¿Tomamos un café?",
@@ -1317,7 +1360,14 @@
     "pattern": "¿Tomamos + drink?",
     "level": "novice",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "to take",
+        "example": "Tomamos el autobús a las ocho.",
+        "exampleTranslation": "We take the bus at eight."
+      }
+    ]
   },
   {
     "id": "jugar",
@@ -1546,7 +1596,7 @@
   {
     "id": "salud",
     "spanish": "salud",
-    "english": "cheers / bless you",
+    "english": "cheers!",
     "partOfSpeech": "phrase",
     "phonetic": "sah-LOOD",
     "example": "¡Salud! Por nosotros.",
@@ -1555,7 +1605,14 @@
     "level": "novice",
     "kind": "phrase",
     "source": "curated",
-    "tip": "Also what you say when someone sneezes."
+    "tip": "Also what you say when someone sneezes.",
+    "otherMeanings": [
+      {
+        "english": "bless you! (after a sneeze)",
+        "example": "—¡Achú! —¡Salud!",
+        "exampleTranslation": "\"Achoo!\" \"Bless you!\""
+      }
+    ]
   },
   {
     "id": "buen-provecho",
@@ -1683,21 +1740,28 @@
   {
     "id": "perder",
     "spanish": "perder",
-    "english": "to lose / to miss",
+    "english": "to lose",
     "partOfSpeech": "verb",
     "phonetic": "pehr-DEHR",
-    "example": "Perdí el autobús.",
-    "exampleTranslation": "I missed the bus.",
+    "example": "Perdí mis llaves.",
+    "exampleTranslation": "I lost my keys.",
     "pattern": "Perder + thing",
     "level": "beginner",
     "kind": "word",
     "source": "curated",
-    "tip": "e → ie: pierdo."
+    "tip": "e → ie: pierdo.",
+    "otherMeanings": [
+      {
+        "english": "to miss (a bus, a flight)",
+        "example": "Perdí el autobús.",
+        "exampleTranslation": "I missed the bus."
+      }
+    ]
   },
   {
     "id": "ganar",
     "spanish": "ganar",
-    "english": "to win / to earn",
+    "english": "to win",
     "partOfSpeech": "verb",
     "phonetic": "gah-NAHR",
     "example": "¿Quién ganó el partido?",
@@ -1705,7 +1769,14 @@
     "pattern": "Ganar + game / dinero",
     "level": "beginner",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "to earn",
+        "example": "Gana mucho dinero.",
+        "exampleTranslation": "She earns a lot of money."
+      }
+    ]
   },
   {
     "id": "mirar",
@@ -1775,7 +1846,7 @@
   {
     "id": "llevar",
     "spanish": "llevar",
-    "english": "to take / to carry / to wear",
+    "english": "to take / to bring along",
     "partOfSpeech": "verb",
     "phonetic": "yeh-BAHR",
     "example": "¿Llevo algo a la fiesta?",
@@ -1784,7 +1855,14 @@
     "level": "beginner",
     "kind": "word",
     "source": "curated",
-    "tip": "llevar = take there; traer = bring here."
+    "tip": "llevar = take there; traer = bring here.",
+    "otherMeanings": [
+      {
+        "english": "to wear",
+        "example": "Llevas un vestido precioso.",
+        "exampleTranslation": "You're wearing a beautiful dress."
+      }
+    ]
   },
   {
     "id": "traer",
@@ -1817,7 +1895,7 @@
   {
     "id": "creer",
     "spanish": "creer",
-    "english": "to believe / to think",
+    "english": "to think (in my opinion)",
     "partOfSpeech": "verb",
     "phonetic": "kreh-EHR",
     "example": "Creo que sí.",
@@ -1825,7 +1903,14 @@
     "pattern": "Creo que + sentence  ·  Creo que no = I don't think so",
     "level": "beginner",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "to believe",
+        "example": "No te creo.",
+        "exampleTranslation": "I don't believe you."
+      }
+    ]
   },
   {
     "id": "parecer",
@@ -1947,7 +2032,7 @@
   {
     "id": "tarde",
     "spanish": "tarde",
-    "english": "late / afternoon",
+    "english": "late",
     "partOfSpeech": "adverb / noun",
     "phonetic": "TAHR-deh",
     "example": "Llego tarde, lo siento.",
@@ -1955,7 +2040,15 @@
     "pattern": "tarde = late  ·  la tarde = the afternoon",
     "level": "beginner",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "afternoon (la tarde)",
+        "partOfSpeech": "noun (f.)",
+        "example": "Nos vemos esta tarde.",
+        "exampleTranslation": "See you this afternoon."
+      }
+    ]
   },
   {
     "id": "todavia",
@@ -1973,7 +2066,7 @@
   {
     "id": "ya",
     "spanish": "ya",
-    "english": "already / now",
+    "english": "already",
     "partOfSpeech": "adverb",
     "phonetic": "yah",
     "example": "Ya llegué.",
@@ -1981,7 +2074,14 @@
     "pattern": "ya no = not anymore",
     "level": "beginner",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "no longer (ya no)",
+        "example": "Ya no vivo allí.",
+        "exampleTranslation": "I don't live there anymore."
+      }
+    ]
   },
   {
     "id": "despues",
@@ -2130,7 +2230,7 @@
   {
     "id": "listo",
     "spanish": "listo",
-    "english": "ready / smart",
+    "english": "ready (estar listo)",
     "partOfSpeech": "adjective",
     "phonetic": "LEES-toh",
     "example": "¿Estás lista?",
@@ -2138,7 +2238,14 @@
     "pattern": "estar listo = be ready  ·  ser listo = be smart",
     "level": "beginner",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "smart, clever (ser listo)",
+        "example": "Tu hermana es muy lista.",
+        "exampleTranslation": "Your sister is very smart."
+      }
+    ]
   },
   {
     "id": "ocupado",
@@ -2603,7 +2710,7 @@
   {
     "id": "probar",
     "spanish": "probar",
-    "english": "to try / to taste",
+    "english": "to try, to taste",
     "partOfSpeech": "verb",
     "phonetic": "proh-BAHR",
     "example": "Prueba esto, está buenísimo.",
@@ -2612,7 +2719,14 @@
     "level": "intermediate",
     "kind": "word",
     "source": "curated",
-    "tip": "o → ue: pruebo."
+    "tip": "o → ue: pruebo.",
+    "otherMeanings": [
+      {
+        "english": "to try on (clothes)",
+        "example": "¿Me puedo probar esta camisa?",
+        "exampleTranslation": "Can I try on this shirt?"
+      }
+    ]
   },
   {
     "id": "merecer",
@@ -2644,7 +2758,7 @@
   {
     "id": "dejar",
     "spanish": "dejar",
-    "english": "to leave / to let",
+    "english": "to let",
     "partOfSpeech": "verb",
     "phonetic": "deh-HAHR",
     "example": "Déjame pensarlo.",
@@ -2652,7 +2766,14 @@
     "pattern": "Dejar de + infinitive = to stop doing …",
     "level": "intermediate",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "to leave (something somewhere)",
+        "example": "Dejé las llaves en casa.",
+        "exampleTranslation": "I left the keys at home."
+      }
+    ]
   },
   {
     "id": "seguir",
@@ -2827,7 +2948,7 @@
   {
     "id": "cita",
     "spanish": "cita",
-    "english": "date / appointment",
+    "english": "appointment",
     "partOfSpeech": "noun (f.)",
     "phonetic": "SEE-tah",
     "example": "Tengo cita con el doctor.",
@@ -2836,12 +2957,19 @@
     "level": "intermediate",
     "kind": "word",
     "source": "curated",
-    "tip": "The same word means a romantic date."
+    "tip": "The same word means a romantic date.",
+    "otherMeanings": [
+      {
+        "english": "date (romantic)",
+        "example": "Tenemos una cita el viernes.",
+        "exampleTranslation": "We have a date on Friday."
+      }
+    ]
   },
   {
     "id": "sueno",
     "spanish": "sueño",
-    "english": "dream / sleepiness",
+    "english": "sleepiness (tener sueño)",
     "partOfSpeech": "noun (m.)",
     "phonetic": "SWEH-nyoh",
     "example": "Tengo sueño.",
@@ -2849,7 +2977,14 @@
     "pattern": "tener sueño = be sleepy  ·  un sueño = a dream",
     "level": "intermediate",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "dream",
+        "example": "Anoche tuve un sueño muy raro.",
+        "exampleTranslation": "Last night I had a really strange dream."
+      }
+    ]
   },
   {
     "id": "miedo",
@@ -3221,7 +3356,7 @@
   {
     "id": "cumplir",
     "spanish": "cumplir",
-    "english": "to fulfill / to turn (an age)",
+    "english": "to keep (a promise)",
     "partOfSpeech": "verb",
     "phonetic": "koom-PLEER",
     "example": "Cumplí mi promesa.",
@@ -3229,7 +3364,14 @@
     "pattern": "Cumplir + años = turn … years old",
     "level": "fluent",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "to turn (an age)",
+        "example": "Mañana cumplo treinta años.",
+        "exampleTranslation": "Tomorrow I turn thirty."
+      }
+    ]
   },
   {
     "id": "superar",
@@ -3354,7 +3496,7 @@
   {
     "id": "agotado",
     "spanish": "agotado",
-    "english": "exhausted / sold out",
+    "english": "exhausted",
     "partOfSpeech": "adjective",
     "phonetic": "ah-goh-TAH-doh",
     "example": "Estoy agotada después del viaje.",
@@ -3362,7 +3504,14 @@
     "pattern": "estar agotado = be exhausted (or sold out)",
     "level": "fluent",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "sold out",
+        "example": "Las entradas están agotadas.",
+        "exampleTranslation": "The tickets are sold out."
+      }
+    ]
   },
   {
     "id": "desafio",
@@ -3380,7 +3529,7 @@
   {
     "id": "compromiso",
     "spanish": "compromiso",
-    "english": "engagement / commitment",
+    "english": "engagement",
     "partOfSpeech": "noun (m.)",
     "phonetic": "kohm-proh-MEE-soh",
     "example": "El anillo de compromiso es precioso.",
@@ -3389,7 +3538,14 @@
     "level": "fluent",
     "kind": "word",
     "source": "curated",
-    "tip": "'Compromise' is usually acuerdo or término medio."
+    "tip": "'Compromise' is usually acuerdo or término medio.",
+    "otherMeanings": [
+      {
+        "english": "commitment",
+        "example": "Es un compromiso muy serio.",
+        "exampleTranslation": "It's a very serious commitment."
+      }
+    ]
   },
   {
     "id": "embarazada",
@@ -3489,7 +3645,7 @@
   {
     "id": "a-proposito",
     "spanish": "a propósito",
-    "english": "on purpose / by the way",
+    "english": "on purpose",
     "partOfSpeech": "phrase",
     "phonetic": "ah proh-POH-see-toh",
     "example": "No lo hice a propósito.",
@@ -3497,7 +3653,14 @@
     "pattern": "A propósito, … = By the way, …",
     "level": "fluent",
     "kind": "phrase",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "by the way",
+        "example": "A propósito, ¿hablaste con tu mamá?",
+        "exampleTranslation": "By the way, did you talk to your mom?"
+      }
+    ]
   },
   {
     "id": "a-pesar-de",

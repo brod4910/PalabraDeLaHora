@@ -32,7 +32,15 @@ extension Word {
     }
 
     /// "Key forms": "label: value" lines → a two-column table.
-    var formRows: [PatternRow] {
+    var formRows: [PatternRow] { PatternRow.rows(fromForms: forms) }
+}
+
+extension Meaning {
+    var formRows: [PatternRow] { PatternRow.rows(fromForms: forms) }
+}
+
+extension PatternRow {
+    static func rows(fromForms forms: String?) -> [PatternRow] {
         guard let forms, !forms.isEmpty else { return [] }
         return forms.split(separator: "\n").map { line in
             let line = String(line)

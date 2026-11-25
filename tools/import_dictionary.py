@@ -17,9 +17,12 @@ Only the Python 3 standard library is used. The first run downloads ~1–3 GB an
 the filtered subsets are cached, so later runs take seconds.
 
 Per card:
-  spanish / english / partOfSpeech  ← Wiktionary (most common sense; vulgar/offensive words skipped)
+  spanish / english / partOfSpeech  ← Wiktionary; vulgar/offensive words skipped. Words with several
+                                      meanings (cuarto = room / fourth) get up to 3, each with its own
+                                      example; most-used meaning first (counted in Tatoeba)
   phonetic                          ← generated from Spanish spelling (it's regular), e.g. keh-REHR
-  example / exampleTranslation      ← Tatoeba (fallback: Wiktionary usage examples)
+  example / exampleTranslation      ← Tatoeba, only sentences whose English uses that meaning
+                                      (fallback: Wiktionary's example for that exact sense)
   forms ("Key forms")               ← Wiktionary inflections, one "label: value" per line:
                                       yo: tengo / tú: tienes / él / ella: tiene / past (yo): tuve,
                                       singular: la casa / plural: las casas, adjective endings
@@ -371,6 +374,22 @@ def clean_gloss(g: str) -> str:
     return g
 
 
+STOPWORDS = {"to", "a", "an", "the", "of", "one", "be", "or", "and", "in", "on", "for", "with", "as", "at",
+             "by", "from", "something", "someone", "oneself", "somebody", "etc", "used", "very", "some", "any"}
+
+
+def keywords(gloss: str) -> list[str]:
+    """Content words of a gloss: "a room, chamber" → ["room", "chamber"]."""
+    return [w for w in re.findall(r"[a-z]+", gloss.lower()) if w not in STOPWORDS and len(w) > 2][:3]
+
+
+def english_variants(w: str) -> set[str]:
+    v = {w, w + "s", w + "es", w + "ed", w + "d", w + "ing"}
+    if w.endswith("y"): v |= {w[:-1] + "ies", w[:-1] + "ied"}
+    if w.endswith("e"): v |= {w[:-1] + "ing"}
+    return v
+
+
 def english_for(senses: list[dict]) -> str | None:
     preferred = [s for s in senses if not (sense_tags(s) & WEAK_TAGS)] or senses
     out: list[str] = []
@@ -579,38 +598,61 @@ def build(args) -> list[dict]:
         if not 3 <= len(toks) <= 10 or len(en_text) > 90 or blocked_forms & set(toks):
             continue
         difficulty = max(form_rank.get(t, 60_000) for t in toks)
-        scored.append((difficulty + 40 * len(toks), es_text, en_text))
+        scored.append((difficulty + 40 * len(toks), es_text, en_text, set(re.findall(r"[a-z]+", en_text.lower()))))
         for t in set(toks):
             index[t].append(len(scored) - 1)
 
-    # Homographs (e.g. "como" = like/as AND "I eat") can't be told apart in a raw sentence, so for
-    # those prefer Wiktionary's own usage examples, which belong to the exact sense on the card.
-    homographs = {w for w, es in entries.items()
-                  if len({e.get("pos") for e in es if lemma_senses(e)}) > 1 or
-                  (any(lemma_senses(e) for e in es) and any(form_of_targets(e) for e in es))}
+    # A word can have several meanings (cuarto = room / fourth / quarter). Each meaning gets its own
+    # example: a sentence only counts for a meaning if its *English translation* uses that meaning
+    # ("room"), so the example always matches. The meaning with the most real sentences comes first.
 
-    def wiktionary_example(entry: dict) -> tuple[str, str] | None:
-        for s in lemma_senses(entry)[:2]:
-            for ex in s.get("examples", []) or []:
-                tr = ex.get("translation") or ex.get("english")
-                if ex.get("text") and tr and len(ex["text"]) <= 90 and not (blocked_forms & set(tokens(ex["text"]))):
-                    return ex["text"], tr
+    def wiktionary_example(sense: dict) -> tuple[str, str] | None:
+        for ex in sense.get("examples", []) or []:
+            tr = ex.get("translation") or ex.get("english")
+            if ex.get("text") and tr and len(ex["text"]) <= 90 and not (blocked_forms & set(tokens(ex["text"]))):
+                return ex["text"], tr
         return None
 
-    def example_for(lemma: str, entry: dict) -> tuple[str, str] | None:
-        if lemma in homographs and (wx := wiktionary_example(entry)):
-            return wx
-        forms = {lemma} | {f.get("form", "").lower() for f in entry.get("forms", []) or [] if " " not in f.get("form", "")}
-        best = None
-        for form in forms:
+    def spanish_forms(lemma: str, entry: dict) -> set[str]:
+        return {lemma} | {f.get("form", "").lower() for f in entry.get("forms", []) or []
+                          if f.get("form") and " " not in f["form"]}
+
+    def candidate_meanings(lemma: str) -> list[dict]:
+        out: list[dict] = []
+        for e in entries.get(lemma, []):
+            if e.get("pos") not in POS_LABELS:
+                continue
+            for sense in lemma_senses(e)[:5]:
+                if sense_tags(sense) & (WEAK_TAGS | BLOCKED_TAGS):
+                    continue
+                gloss = clean_gloss(sense["glosses"][-1])
+                kws = keywords(gloss) or re.findall(r"[a-z]+", gloss.lower())[:1]   # "the", "to be"
+                if not gloss or len(gloss) > 40 or not kws:
+                    continue
+                if any(set(kws) & set(m["kws"]) for m in out):
+                    continue                        # same idea worded differently
+                out.append({"gloss": gloss, "kws": kws, "entry": e, "sense": sense})
+        return out
+
+    def support(lemma: str, meaning: dict) -> tuple[int, tuple[str, str] | None]:
+        """How many sentence pairs use this meaning, and the easiest one."""
+        variants = set().union(*(english_variants(k) for k in meaning["kws"][:1]))
+        best, count = None, 0
+        for form in spanish_forms(lemma, meaning["entry"]):
             for k in index.get(form, []):
-                bonus = 0 if form == lemma else 150      # prefer the dictionary form itself
-                cand = (scored[k][0] + bonus, k)
+                if not (scored[k][3] & variants):
+                    continue
+                count += 1
+                cand = (scored[k][0] + (0 if form == lemma else 150), k)
                 if best is None or cand < best:
                     best = cand
-        if best:
-            return scored[best[1]][1], scored[best[1]][2]
-        return wiktionary_example(entry)
+        return count, ((scored[best[1]][1], scored[best[1]][2]) if best else None)
+
+    def pos_label(entry: dict) -> str:
+        pos = POS_LABELS[entry["pos"]]
+        if entry["pos"] == "noun" and (g := noun_gender(entry)):
+            pos = f"noun ({g})"
+        return pos
 
     # 4. Cards.
     cards, skipped = [], defaultdict(int)
@@ -619,29 +661,48 @@ def build(args) -> list[dict]:
             break
         if lemma in blocked:
             skipped["vulgar/offensive"] += 1; continue
-        es = sorted((e for e in entries.get(lemma, []) if e.get("pos") in POS_LABELS and lemma_senses(e)),
-                    key=lambda e: POS_PRIORITY.index(e["pos"]) if e["pos"] in POS_PRIORITY else 99)
-        # Keep Wiktionary's own order unless a verb/noun sense exists further down for a very frequent word.
-        if not es:
-            skipped["no definition"] += 1; continue
-        entry = next((e for e in entries[lemma] if e in es), es[0])
-        english = english_for(lemma_senses(entry))
-        if not english:
-            skipped["no usable gloss"] += 1; continue
-        ex = example_for(lemma, entry)
-        if not ex:
-            skipped["no example sentence"] += 1; continue
-        pos = POS_LABELS[entry["pos"]]
-        if entry["pos"] == "noun" and (g := noun_gender(entry)):
-            pos = f"noun ({g})"
+        meanings = candidate_meanings(lemma)
+        if not meanings:
+            skipped["no usable definition"] += 1; continue
+
+        for order, m in enumerate(meanings):
+            m["count"], m["example"] = support(lemma, m)
+            m["order"] = order
+            if not m["example"]:
+                m["example"] = wiktionary_example(m["sense"])
+        # Most-used meaning first; Wiktionary's order breaks ties.
+        meanings.sort(key=lambda m: (-m["count"], m["order"]))
+        primary = meanings[0]
+        if not primary["example"] and len(meanings) == 1:
+            # Only one meaning, so any sentence with the word is safe to use.
+            best = min(((scored[k][0], k) for f in spanish_forms(lemma, primary["entry"]) for k in index.get(f, [])),
+                       default=None)
+            if best:
+                primary["example"] = (scored[best[1]][1], scored[best[1]][2])
+        if not primary["example"]:
+            skipped["no matching example sentence"] += 1; continue
+
+        # Other meanings: real usage (≥3% as many sentences as the main meaning) or a dictionary example.
+        others = [m for m in meanings[1:]
+                  if m["example"] and (m["count"] >= max(1, 0.03 * primary["count"]) or m["count"] == 0)][:2]
+
         card = {
-            "id": slug(lemma), "spanish": lemma, "english": english, "partOfSpeech": pos,
-            "phonetic": respell(lemma), "example": ex[0], "exampleTranslation": ex[1],
-            "level": level_for(rank), "kind": "phrase" if entry["pos"] == "phrase" else "word",
+            "id": slug(lemma), "spanish": lemma, "english": primary["gloss"],
+            "partOfSpeech": pos_label(primary["entry"]),
+            "phonetic": respell(lemma), "example": primary["example"][0], "exampleTranslation": primary["example"][1],
+            "level": level_for(rank), "kind": "phrase" if primary["entry"]["pos"] == "phrase" else "word",
             "source": "dictionary",
         }
-        if forms := key_forms(entry, lemma):
+        if forms := key_forms(primary["entry"], lemma):
             card["forms"] = forms
+        if others:
+            card["otherMeanings"] = []
+            for m in others:
+                om = {"english": m["gloss"], "partOfSpeech": pos_label(m["entry"]),
+                      "example": m["example"][0], "exampleTranslation": m["example"][1]}
+                if m["entry"] is not primary["entry"] and (f := key_forms(m["entry"], lemma)):
+                    om["forms"] = f
+                card["otherMeanings"].append(om)
         cards.append(card)
 
     print(f"Generated {len(cards):,} cards. Skipped: " + ", ".join(f"{v:,} {k}" for k, v in skipped.items()))
