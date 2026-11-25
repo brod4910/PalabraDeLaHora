@@ -20,7 +20,10 @@ struct PalabraApp: App {
         }
         .onChange(of: scenePhase) { _, phase in
             // Keep the local-notification queue topped up (iOS allows 64 pending).
-            if phase == .active { Task { await NotificationScheduler.reschedule() } }
+            if phase == .active {
+                LearningProgress.catchUp()
+                Task { await NotificationScheduler.reschedule() }
+            }
         }
     }
 }
@@ -30,7 +33,7 @@ struct PalabraApp: App {
 final class AppRouter: ObservableObject {
     static let shared = AppRouter()
 
-    enum Tab: Hashable { case today, review, settings }
+    enum Tab: Hashable { case today, review, quiz, settings }
 
     @Published var tab: Tab = .today
     /// A word to present (from a widget tap or a notification) — may not be the current word.

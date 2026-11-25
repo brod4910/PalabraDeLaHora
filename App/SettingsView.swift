@@ -11,12 +11,41 @@ struct SettingsView: View {
     @AppStorage(AppSettings.Key.quietStart, store: AppSettings.defaults) private var quietStart = 21
     @AppStorage(AppSettings.Key.quietEnd, store: AppSettings.defaults) private var quietEnd = 8
 
+    @AppStorage(AppSettings.Key.level, store: AppSettings.defaults) private var levelRaw = Level.novice.rawValue
+    @AppStorage(AppSettings.Key.includeEarlierLevels, store: AppSettings.defaults) private var includeEarlier = false
+    @AppStorage(AppSettings.Key.focus, store: AppSettings.defaults) private var focusRaw = Focus.everything.rawValue
+    @AppStorage(AppSettings.Key.quizzesEnabled, store: AppSettings.defaults) private var quizzesEnabled = true
+
     @State private var confirmReshuffle = false
+    @State private var confirmResetQuiz = false
+
+    private var level: Level { Level(rawValue: levelRaw) ?? .novice }
+    private var deckCount: Int {
+        WordBank.deck(level: level, includeEarlier: includeEarlier, focus: Focus(rawValue: focusRaw) ?? .everything).count
+    }
     @State private var notificationsDenied = false
 
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    Picker("Level", selection: $levelRaw) {
+                        ForEach(Level.allCases) { Text("\($0.label) (\($0.cefr))").tag($0.rawValue) }
+                    }
+                    Text(level.summary)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                    Picker("Focus", selection: $focusRaw) {
+                        ForEach(Focus.allCases) { Text($0.label).tag($0.rawValue) }
+                    }
+                    Toggle("Mix in earlier levels", isOn: $includeEarlier)
+                        .disabled(level == .novice || focusRaw == Focus.phrases.rawValue)
+                } header: {
+                    Text("What to learn")
+                } footer: {
+                    Text("\(deckCount) cards in rotation. “Everyday phrases” is ready-to-say spoken Spanish and always includes phrases from easier levels.")
+                }
+
                 Section {
                     Picker("New word", selection: $cadenceRaw) {
                         ForEach(Cadence.allCases) { Text($0.label).tag($0.rawValue) }
@@ -24,7 +53,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Cadence")
                 } footer: {
-                    Text("The widget, notifications and the Hoy tab all switch to the next word on this schedule.")
+                    Text("The widget, notifications and the Hoy tab all switch to the next word on this schedule. Want more? Tap “Learn the next word now” on the Hoy tab any time.")
                 }
 
                 Section("Pronunciation") {
@@ -73,13 +102,23 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Toggle("Quizzes", isOn: $quizzesEnabled)
+                    Button("Reset quiz progress", role: .destructive) { confirmResetQuiz = true }
+                } header: {
+                    Text("Quizzes")
+                } footer: {
+                    Text("Optional quizzes use only words you've already seen, and ask the ones you miss more often.")
+                }
+
+                Section {
                     Button("Reshuffle word order", role: .destructive) { confirmReshuffle = true }
                 } footer: {
                     Text("Starts a new random order and clears the “Seen” list.")
                 }
 
                 Section("About") {
-                    LabeledContent("Words", value: "\(WordBank.all.count)")
+                    LabeledContent("Cards in the app", value: "\(WordBank.all.count)")
+                    LabeledContent("Seen so far", value: "\(LearningProgress.seen.count)")
                     LabeledContent("Learning since", value: AppSettings.startDate.formatted(date: .abbreviated, time: .omitted))
                 }
             }
@@ -87,9 +126,16 @@ struct SettingsView: View {
             .confirmationDialog("Reshuffle the word order?", isPresented: $confirmReshuffle, titleVisibility: .visible) {
                 Button("Reshuffle", role: .destructive) {
                     AppSettings.reshuffle()
+                    LearningProgress.resetSeen()
                     scheduleChanged()
                 }
             }
+            .confirmationDialog("Reset all quiz progress?", isPresented: $confirmResetQuiz, titleVisibility: .visible) {
+                Button("Reset", role: .destructive) { LearningProgress.resetQuizStats() }
+            }
+            .onChange(of: levelRaw) { scheduleChanged() }
+            .onChange(of: focusRaw) { scheduleChanged() }
+            .onChange(of: includeEarlier) { scheduleChanged() }
             .onChange(of: cadenceRaw) { scheduleChanged() }
             .onChange(of: quietStart) { Task { await NotificationScheduler.reschedule() } }
             .onChange(of: quietEnd) { Task { await NotificationScheduler.reschedule() } }
@@ -107,8 +153,8 @@ struct SettingsView: View {
     }
 
     private func scheduleChanged() {
-        WidgetCenter.shared.reloadAllTimelines()
-        Task { await NotificationScheduler.reschedule() }
+        LearningProgress.catchUp()
+        Rotation.didChange()
     }
 
     private func hourLabel(_ hour: Int) -> String {

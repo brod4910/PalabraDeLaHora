@@ -46,7 +46,7 @@ enum NotificationScheduler {
             let end = schedule.startOfSlot(slot + 1)
             guard let fireDate = deliveryDate(slotStart: start, slotEnd: end, calendar: calendar) else { continue }
 
-            let word = schedule.word(forSlot: slot)
+            let word = schedule.word(atPosition: slot + schedule.offset)
             let content = UNMutableNotificationContent()
             content.title = "\(word.spanish) — \(word.english)"
             content.subtitle = word.phonetic

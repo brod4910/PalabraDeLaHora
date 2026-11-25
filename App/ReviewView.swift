@@ -15,9 +15,11 @@ struct ReviewView: View {
     private var words: [Word] {
         let base: [Word]
         switch filter {
-        case .seen: base = WordSchedule.current.history()
+        case .seen: base = LearningProgress.seenWords()
         case .favorites: base = WordBank.all.filter { favorites.contains($0) }
-        case .all: base = WordBank.all.sorted { $0.spanish.localizedCompare($1.spanish) == .orderedAscending }
+        case .all: base = WordBank.all.sorted {
+            ($0.level, $0.spanish.lowercased()) < ($1.level, $1.spanish.lowercased())
+        }
         }
         guard !query.isEmpty else { return base }
         return base.filter {
@@ -58,7 +60,7 @@ struct ReviewView: View {
                     }
                 } footer: {
                     if filter == .seen, !words.isEmpty {
-                        Text("\(words.count) of \(WordBank.all.count) words so far.")
+                        Text("\(words.count) of \(WordBank.all.count) cards seen so far.")
                     }
                 }
             }
@@ -92,8 +94,14 @@ private struct WordRow: View {
                 HStack(spacing: 6) {
                     Text(word.spanish).font(.headline)
                     if isFavorite { Image(systemName: "star.fill").font(.caption).foregroundStyle(Theme.sun) }
+                    if LearningProgress.record(for: word.id).isMastered {
+                        Image(systemName: "checkmark.seal.fill").font(.caption).foregroundStyle(.green)
+                    }
                 }
                 Text(word.english).font(.subheadline).foregroundStyle(.secondary)
+                Text(word.level.label)
+                    .font(.caption2.weight(.semibold))
+                    .foregroundStyle(Theme.coral)
             }
             Spacer()
             Button(action: play) {

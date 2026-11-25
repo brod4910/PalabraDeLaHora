@@ -29,7 +29,10 @@ iOS 17+, Xcode 15+ (built against the Xcode 16 project format). No third-party d
 | Hoy tab: full study card, countdown, the next 3 words | `App/ContentView.swift`, `App/WordCardView.swift` |
 | Review tab: words seen so far, favorites ⭐, search, flashcard **Practice** mode | `App/ReviewView.swift` |
 | Settings: cadence, accent (MX/ES/US), speech speed, notifications, reshuffle | `App/SettingsView.swift` |
-| 63-word starter deck (verbs, nouns, connectors, phrases, plus a few couple-y ones) | `Shared/words.json` |
+| **Levels** (Novice A1 → Fluent B2–C1) and **focus** (words + phrases / everyday phrases / vocabulary) | `Shared/Word.swift` (`WordBank.deck`) |
+| **"Learn the next word now"**: skip ahead without waiting. The widget, notifications and "Coming up" all shift with it | `App/ContentView.swift` (`Rotation.skipAhead`) |
+| **Optional quizzes** on seen words: meaning, reverse, listening, fill-in-the-blank; missed words come back sooner | `App/QuizView.swift`, `Shared/LearningProgress.swift` |
+| 284-card deck: 205 words + 79 everyday phrases and idioms, tagged by level | `Shared/words.json` (source: `tools/words_source.py`, `tools/new_words.py`) |
 
 ## How the schedule works
 
@@ -37,9 +40,26 @@ iOS 17+, Xcode 15+ (built against the Xcode 16 project format). No third-party d
 
 Since the word for any moment can be computed, the widget pre-builds the next 24 timeline entries. It flips on time without spending its reload budget, and the app, widget and notifications always agree. The seed and the start date live in the App Group's `UserDefaults`, and the "Seen" list is derived from them, so nothing has to be synced.
 
+## Levels
+
+The levels loosely follow CEFR, which is also how the Instituto Cervantes curriculum is organised:
+
+| Level | ≈ CEFR | Cards | What's in it |
+|---|---|---|---|
+| Novice | A1 | 95 | greetings, core verbs, family, food, time |
+| Beginner | A2 | 86 | routines, plans, feelings, shopping, asking for things |
+| Intermediate | B1 | 60 | reflexive verbs, connectors (aunque, sin embargo), opinions, Mexican slang |
+| Fluent | B2–C1 | 43 | false friends, idioms, subjunctive/conditional patterns |
+
+"Everyday phrases" always includes the phrases from every level up to the one selected. Each level only has a few dozen phrases, and the easier ones are the most useful in conversation.
+
+## Skipping ahead
+
+`WordSchedule` adds `AppSettings.skipOffset` to the clock slot. "Next word" increments it, reloads the widget timelines and re-queues notifications. When the next hour arrives she continues from where she skipped to, so nothing repeats. Seen words are recorded in the App Group by `LearningProgress.catchUp()`, which runs from both the app and the widget, so the Review and Quiz tabs include words she skipped past.
+
 ## Adding words
 
-Edit `tools/words_source.py`, then run `python3 tools/words_source.py` to regenerate `Shared/words.json`. You can also edit the JSON by hand: `tip` is optional, and `id` must be unique and URL-safe.
+Add lines to `tools/new_words.py` under the right `## level` heading, then run `python3 tools/words_source.py` to regenerate `Shared/words.json`. The format is pipe-delimited: `spanish | english | part of speech | phonetic | example | translation | pattern | tip?`. Use `phrase` or `idiom` as the part of speech to make an entry an everyday-phrase card. You can also edit the JSON by hand: `tip` is optional, and `id` must be unique and URL-safe.
 
 ## Things worth knowing
 

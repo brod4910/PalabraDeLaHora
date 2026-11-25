@@ -9,16 +9,24 @@ import Foundation
 /// Because the word for any moment can be computed, the widget can pre-build a full day of timeline
 /// entries and flip exactly on the hour without spending its refresh budget, and the app and
 /// notifications always agree with the widget.
+///
+/// "Next word" skips ahead by adding `offset` to the clock slot: the clock keeps ticking from the new
+/// position, so skipping never causes repeats and everything downstream stays in sync.
 struct WordSchedule: Sendable {
     let words: [Word]
     let cadence: Cadence
     let seed: UInt64
     let startDate: Date
+    var offset: Int = 0
 
     static var current: WordSchedule {
-        WordSchedule(words: WordBank.all, cadence: AppSettings.cadence,
-                     seed: AppSettings.seed, startDate: AppSettings.startDate)
+        WordSchedule(words: WordBank.currentDeck, cadence: AppSettings.cadence,
+                     seed: AppSettings.seed, startDate: AppSettings.startDate,
+                     offset: AppSettings.skipOffset)
     }
+
+    /// Position in the word sequence at `date` (clock slot + skips).
+    func position(at date: Date) -> Int { slot(for: date) + offset }
 
     // MARK: Slots
 
@@ -54,32 +62,18 @@ struct WordSchedule: Sendable {
         return order(forCycle: cycle)[position]
     }
 
-    func word(at date: Date) -> Word { word(forSlot: slot(for: date)) }
+    /// Word at a sequence position (see `position(at:)`).
+    func word(atPosition p: Int) -> Word { word(forSlot: p) }
 
-    /// Upcoming changes after `date` (not including the current word).
+    func word(at date: Date) -> Word { word(atPosition: position(at: date)) }
+
+    /// Upcoming changes after `date` (not including the current word). Includes skips.
     func upcoming(after date: Date, count: Int) -> [UpcomingWord] {
         var result: [UpcomingWord] = []
         var s = slot(for: date)
         for _ in 0..<count {
             s += 1
-            result.append(UpcomingWord(date: startOfSlot(s), word: word(forSlot: s)))
-        }
-        return result
-    }
-
-    /// Words shown since `startDate`, newest first, without duplicates.
-    func history(upTo date: Date = .now) -> [Word] {
-        let first = slot(for: startDate)
-        var s = slot(for: date)
-        var seen = Set<String>()
-        var result: [Word] = []
-        // At most two full cycles back is enough to list every word that has appeared.
-        var budget = words.count * 2
-        while s >= first, budget > 0, result.count < words.count {
-            let w = word(forSlot: s)
-            if seen.insert(w.id).inserted { result.append(w) }
-            s -= 1
-            budget -= 1
+            result.append(UpcomingWord(date: startOfSlot(s), word: word(atPosition: s + offset)))
         }
         return result
     }

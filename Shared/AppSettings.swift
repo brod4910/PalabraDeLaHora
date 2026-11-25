@@ -58,6 +58,46 @@ enum AppSettings {
         static let seed = "seed"
         static let startDate = "startDate"
         static let favorites = "favorites"
+        static let level = "level"
+        static let includeEarlierLevels = "includeEarlierLevels"
+        static let focus = "focus"
+        static let skipOffset = "skipOffset"
+        static let seen = "seen"
+        static let seenCursor = "seenCursor"
+        static let quizStats = "quizStats"
+        static let quizzesEnabled = "quizzesEnabled"
+    }
+
+    static var level: Level {
+        get { Level(rawValue: defaults.string(forKey: Key.level) ?? "") ?? .novice }
+        set { defaults.set(newValue.rawValue, forKey: Key.level) }
+    }
+
+    static var includeEarlierLevels: Bool {
+        get { defaults.bool(forKey: Key.includeEarlierLevels) }
+        set { defaults.set(newValue, forKey: Key.includeEarlierLevels) }
+    }
+
+    static var focus: Focus {
+        get { Focus(rawValue: defaults.string(forKey: Key.focus) ?? "") ?? .everything }
+        set { defaults.set(newValue.rawValue, forKey: Key.focus) }
+    }
+
+    /// How many words the learner has skipped ahead with "Next word". Added to the clock-based
+    /// slot, so the widget, notifications and "Coming up" all move forward together.
+    static var skipOffset: Int {
+        get { defaults.integer(forKey: Key.skipOffset) }
+        set { defaults.set(newValue, forKey: Key.skipOffset) }
+    }
+
+    static var quizzesEnabled: Bool {
+        get { defaults.object(forKey: Key.quizzesEnabled) as? Bool ?? true }
+        set { defaults.set(newValue, forKey: Key.quizzesEnabled) }
+    }
+
+    /// Identifies the current rotation; when it changes, the "seen" catch-up restarts from now.
+    static var deckSignature: String {
+        "\(level.rawValue)|\(includeEarlierLevels)|\(focus.rawValue)|\(cadence.rawValue)|\(seed)"
     }
 
     static var cadence: Cadence {
@@ -109,6 +149,7 @@ enum AppSettings {
     static func reshuffle() {
         defaults.set(String(UInt64.random(in: 1...UInt64.max)), forKey: Key.seed)
         defaults.set(Date(), forKey: Key.startDate)
+        defaults.set(0, forKey: Key.skipOffset)
     }
 
     /// When learning started — the Review tab lists every word shown since then.

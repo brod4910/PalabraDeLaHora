@@ -43,7 +43,7 @@ struct WordCardView: View {
     private var hero: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .top) {
-                Text(word.partOfSpeech.uppercased())
+                Text("\(word.level.label) · \(word.partOfSpeech)".uppercased())
                     .font(.caption.weight(.heavy))
                     .tracking(1)
                     .padding(.horizontal, 8).padding(.vertical, 4)

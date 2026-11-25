@@ -1,7 +1,8 @@
 # Source of truth for Shared/words.json.
 # Run: python3 tools/words_source.py  (writes Shared/words.json)
 # Fields: id, spanish, english, partOfSpeech, phonetic, example, exampleTranslation, pattern, tip
-import json, pathlib, re, unicodedata
+import json, pathlib, re, sys, unicodedata
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 W = [
  ("querer", "to want / to love", "verb", "keh-REHR",
@@ -258,19 +259,49 @@ W = [
   "The h is silent."),
 ]
 
+# ---------------------------------------------------------------------------
+# Levels (roughly CEFR): novice ≈ A1, beginner ≈ A2, intermediate ≈ B1, fluent ≈ B2–C1.
+# Words in the original starter deck above are assigned here; everything else is in NEW below.
+BEGINNER_IDS = {"saber", "conocer", "sentir", "esperar", "llegar", "salir", "buscar", "encontrar",
+                "pensar", "aprender", "entender", "recordar", "viajar", "cocinar", "extranar",
+                "tiempo", "ciudad", "boda", "prometido", "rico", "dificil", "trabajo"}
+PHRASE_POS = {"phrase", "greeting", "expression", "idiom"}
+
+from new_words import NEW  # noqa: E402  (pipe-delimited entries grouped by level)
+
 def slug(s):
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
 
 out = []
-for es, en, pos, ph, ex, exen, pat, tip in W:
+def add(es, en, pos, ph, ex, exen, pat, tip, level):
     d = dict(id=slug(es), spanish=es, english=en, partOfSpeech=pos, phonetic=ph,
-             example=ex, exampleTranslation=exen, pattern=pat)
+             example=ex, exampleTranslation=exen, pattern=pat,
+             level=level, kind="phrase" if pos in PHRASE_POS else "word")
     if tip: d["tip"] = tip
+    for k, v in d.items():
+        assert v, f"empty {k} in {es}"
     out.append(d)
+
+for es, en, pos, ph, ex, exen, pat, tip in W:
+    if es in ("por favor", "gracias", "lo siento"): pos = "phrase"
+    add(es, en, pos, ph, ex, exen, pat, tip, "beginner" if slug(es) in BEGINNER_IDS else "novice")
+
+level = None
+for raw in NEW.strip().splitlines():
+    line = raw.strip()
+    if not line or line.startswith("#!"): continue
+    if line.startswith("## "):
+        level = line[3:].strip(); assert level in ("novice", "beginner", "intermediate", "fluent"); continue
+    f = [x.strip() for x in line.split("|")]
+    assert len(f) in (7, 8), f"bad line ({len(f)} fields): {line}"
+    if len(f) == 7: f.append("")
+    add(*f, level)
 ids = [d["id"] for d in out]
 assert len(ids) == len(set(ids)), "duplicate ids"
 p = pathlib.Path(__file__).resolve().parent.parent / "Shared" / "words.json"
 p.parent.mkdir(parents=True, exist_ok=True)
 p.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-print(f"wrote {len(out)} words to {p}")
+from collections import Counter
+print(f"wrote {len(out)} entries to {p}")
+print(Counter((d["level"], d["kind"]) for d in out))
