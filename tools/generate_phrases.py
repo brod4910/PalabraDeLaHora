@@ -231,12 +231,29 @@ class Checker:
 
     def word_forms(self, card: dict) -> set[str]:
         forms = {card["spanish"].lower()}
-        forms |= {v.lower() for v in dict_tools.form_values(card.get("forms"))}
+        values = list(dict_tools.form_values(card.get("forms")))
         for m in card.get("otherMeanings") or []:
-            forms |= {v.lower() for v in dict_tools.form_values(m.get("forms"))}
+            values += dict_tools.form_values(m.get("forms"))
+        articles = {"el", "la", "los", "las", "un", "una", "me", "te", "se", "nos", "a", "mí", "ti", "le"}
+        for v in values:
+            forms.add(v.lower())
+            # "la hija" → "hija", "me acuerdo" → "acuerdo" (the article/pronoun isn't the word itself)
+            forms |= {t for t in dict_tools.tokens(v) if t not in articles}
         for e in self.entries.get(card["spanish"].lower(), []):
             forms |= {f.get("form", "").lower() for f in e.get("forms", []) or [] if f.get("form")}
         return {f for f in forms if f}
+
+    def is_form_of(self, token: str, lemma: str, forms: set[str]) -> bool:
+        f = token.lower()
+        if f in forms:
+            return True
+        if lemma in dict_tools.CLITIC_MEANING:
+            # Pronoun cards (lo, los, te…): attached to a verb counts — cómelos, dímelo.
+            return f.endswith(lemma) and len(f) > len(lemma) + 1
+        stem = dict_tools.strip_accents(re.sub(r"(ar|er|ir)(se)?$", "", lemma))[:4]
+        if len(stem) >= 3 and dict_tools.strip_accents(f).startswith(stem):
+            return True
+        return any(f.endswith(c) and dict_tools.strip_accents(f[: -len(c)]) in forms for c in dict_tools.CLITIC_ORDER)
 
     def check(self, card: dict, ph: dict, deck_words: set[str]) -> str | None:
         """None if fine, else the reason it was dropped."""
@@ -253,15 +270,14 @@ class Checker:
             if not all(c in toks or any(t.startswith(c[:4]) for t in toks) for c in core):
                 return "target phrase missing"
         else:
-            if not form or not dict_tools.find_in_sentence(es, form):
-                return "form not in phrase"
-            f = form.lower()
-            stem = dict_tools.strip_accents(re.sub(r"(ar|er|ir)(se)?$", "", lemma))[:4]
-            related = (f in forms or dict_tools.strip_accents(f).startswith(stem)
-                       or any(f.endswith(c) and dict_tools.strip_accents(f[: -len(c)]) in forms
-                              for c in dict_tools.CLITIC_ORDER))
-            if not related:
-                return f"'{form}' is not a form of {lemma}"
+            # The model sometimes reports the wrong word as "form" (e.g. "Ahorramos" for dinero in
+            # "Ahorramos dinero"). If its form doesn't check out, look for the real one in the phrase.
+            if not (form and dict_tools.find_in_sentence(es, form) and self.is_form_of(form, lemma, forms)):
+                found = next((t for t in toks if self.is_form_of(t, lemma, forms)), None)
+                if not found:
+                    return (f"'{form}' is not a form of {lemma}" if form and dict_tools.find_in_sentence(es, form)
+                            else "form not in phrase")
+                ph["form"] = dict_tools.find_in_sentence(es, found) or found
         unknown = [t for t in toks if not self.known(t, deck_words)]
         if unknown:
             return "unknown words: " + ", ".join(unknown)
