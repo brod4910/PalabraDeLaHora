@@ -220,14 +220,19 @@ private struct LargeView: View {
                     .opacity(0.85)
             }
 
-            if let pattern = word.pattern {
-                VStack(alignment: .leading, spacing: 3) {
+            if !word.patternRows.isEmpty {
+                VStack(alignment: .leading, spacing: 5) {
                     Text(word.source == "dictionary" ? "KEY FORMS" : "HOW TO USE IT")
                         .font(.system(size: 10, weight: .heavy, design: .rounded))
                         .tracking(0.8).opacity(0.75)
-                    Text(pattern)
-                        .font(.system(size: 13, weight: .semibold, design: .rounded))
-                        .lineLimit(3)
+                    PatternView(rows: word.patternRows,
+                                labelFont: .system(size: 11, weight: .medium, design: .rounded),
+                                valueFont: .system(size: 13, weight: .semibold, design: .rounded),
+                                labelStyle: AnyShapeStyle(Color.white.opacity(0.75)),
+                                spacing: 3,
+                                maxRows: 3)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                 }
                 .padding(10)
                 .frame(maxWidth: .infinity, alignment: .leading)

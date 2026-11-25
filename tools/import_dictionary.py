@@ -20,8 +20,9 @@ Per card:
   spanish / english / partOfSpeech  ← Wiktionary (most common sense; vulgar/offensive words skipped)
   phonetic                          ← generated from Spanish spelling (it's regular), e.g. keh-REHR
   example / exampleTranslation      ← Tatoeba (fallback: Wiktionary usage examples)
-  pattern ("Key forms")             ← Wiktionary inflections: yo tengo · tú tienes · él tiene,
-                                      el/la + noun · plural, adjective endings
+  pattern ("Key forms")             ← Wiktionary inflections, one "label: value" per line:
+                                      yo: tengo / tú: tienes / él / ella: tiene / past (yo): tuve,
+                                      singular: la casa / plural: las casas, adjective endings
   level                             ← frequency rank: ≤600 novice, ≤1500 beginner, ≤3000 intermediate, else fluent
 """
 from __future__ import annotations
@@ -409,32 +410,38 @@ def find_form(e: dict, required: set[str], forbidden: set[str] = frozenset()) ->
 
 
 def key_forms(e: dict, word: str) -> str | None:
+    """One "label: value" per line; the app shows these as a small two-column table."""
     pos = e.get("pos")
+    rows: list[tuple[str, str]] = []
     if pos == "verb":
-        bad = {"subjunctive", "imperative", "voseo", "vos", "formal", "obsolete", "archaic", "dated"}
+        bad = {"subjunctive", "imperative", "voseo", "vos", "vos-form", "formal", "obsolete", "archaic", "dated"}
         yo = find_form(e, {"first-person", "singular", "present", "indicative"}, bad)
-        tu = find_form(e, {"second-person", "singular", "present", "indicative"}, bad | {"informal-vos"})
+        tu = find_form(e, {"second-person", "singular", "present", "indicative"}, bad)
         el = find_form(e, {"third-person", "singular", "present", "indicative"}, bad)
         past = find_form(e, {"first-person", "singular", "preterite", "indicative"}, bad)
         if yo and tu and el:
-            s = f"yo {yo} · tú {tu} · él/ella {el}"
-            return s + (f"  ·  past: yo {past}" if past else "")
-    if pos == "noun":
+            rows = [("yo", yo), ("tú", tu), ("él / ella", el)]
+            if past:
+                rows.append(("past (yo)", past))
+    elif pos == "noun":
         g = noun_gender(e)
         plural = find_form(e, {"plural"})
-        article = {"m.": "el", "f.": "la", "m./f.": "el / la"}.get(g or "")
-        bits = [f"{article} {word}"] if article else []
+        article, plural_article = {"m.": ("el", "los"), "f.": ("la", "las"), "m./f.": ("el / la", "los / las")}.get(g or "", ("", ""))
+        if article:
+            rows.append(("singular", f"{article} {word}"))
         if plural and plural != word:
-            bits.append(f"plural: {plural}")
-        return "  ·  ".join(bits) or None
-    if pos == "adj":
+            rows.append(("plural", f"{plural_article} {plural}".strip()))
+    elif pos == "adj":
         fem = find_form(e, {"feminine", "singular"}) or find_form(e, {"feminine"}, {"plural"})
         mpl = find_form(e, {"masculine", "plural"}) or find_form(e, {"plural"}, {"feminine"})
+        fpl = find_form(e, {"feminine", "plural"})
         if fem and fem != word:
-            return f"{word} (m.) · {fem} (f.)" + (f"  ·  plural: {mpl}" if mpl else "")
-        if mpl:
-            return f"same for m./f.  ·  plural: {mpl}"
-    return None
+            rows = [("masculine", word), ("feminine", fem)]
+            if mpl or fpl:
+                rows.append(("plural", " / ".join(x for x in (mpl, fpl) if x)))
+        elif mpl:
+            rows = [("m. & f.", word), ("plural", mpl)]
+    return "\n".join(f"{label}: {value}" for label, value in rows) or None
 
 
 # ─────────────────────────────────────────────────────────────── Tatoeba

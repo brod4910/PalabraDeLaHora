@@ -26,10 +26,10 @@ struct WordCardView: View {
                     .padding(.top, 4)
                 }
             }
-            if let pattern = word.pattern {
+            if !word.patternRows.isEmpty {
                 section(title: word.source == "dictionary" ? "Key forms" : "How to use it",
                         systemImage: "puzzlepiece.extension.fill") {
-                    Text(pattern).font(.body.weight(.semibold))
+                    PatternView(rows: word.patternRows)
                 }
             }
             if let tip = word.tip {
