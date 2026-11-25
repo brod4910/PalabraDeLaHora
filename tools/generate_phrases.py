@@ -77,6 +77,16 @@ SITUATIONS = ["home", "food", "shopping", "work", "travel", "texting", "family",
 # Highest frequency rank a word in the phrase may have (besides the card's own word).
 LEVEL_VOCAB = {"novice": 3000, "beginner": 6000, "intermediate": 15000, "fluent": None}
 
+# Everyday Mexican words the frequency list (built from movie subtitles, much of it from Spain)
+# ranks low or misses. They count as very common, at every level, with all their forms.
+EVERYDAY_MX = """platicar ahorita refri refrigerador recámara gripa celular camión carro cobija chamarra
+taco tortilla frijol frijoles elote quesadilla tamal salsa aguacate jitomate chile limón pan dulce refresco
+plato vaso taza cuchara tenedor cuchillo sartén estufa lavar cocinar cenar desayunar almorzar
+mandado súper tienda mercado mochila lentes chamba trabajo cuate bonito padre sobrino sobrina prima primo
+suegra suegro cuñada cuñado nuera yerno abuelita abuelito mami papi domingo lunes martes miércoles jueves
+viernes sábado enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre
+fruta verdura huevo leche queso pollo carne arroz sopa kilo peso pesos llover llueve lluvia frío calor""".split()
+
 VARIETIES = {
     "es-MX": "Mexican Spanish (use tú; ustedes for plural 'you'; Mexican everyday vocabulary like carro, celular, platicar)",
     "es-ES": "Spain Spanish (use tú and vosotros; Spain vocabulary like coche, móvil)",
@@ -96,7 +106,10 @@ Rules:
 - Use the word itself in the phrase (any form of it is fine).
 - Meanings: use meaning 0 (the main, most common one) for most phrases. Use another listed meaning for at
   most ONE phrase, and only if it is common in everyday speech. Set "meaning" to the one you used.
-  Don't use the word inside a fixed expression that hides its meaning (e.g. "qué tal" for tal, "por supuesto" for supuesto).
+  Don't use the word inside a fixed expression that changes its meaning: "qué tal" for tal, "por supuesto"
+  for supuesto, "tratar de" (= try) for tratar = treat, "tener razón" for razón = reason, "ni modo" for ni,
+  "cumplir años" for año, "mucho gusto" for mucho, "¿por qué?" for por.
+- If the word is a phrase (several words), use the whole phrase exactly, every word of it.
 - Spread phrases across different situations, chosen from: {situations}.
 - Level "novice" or "beginner": mostly present tense, the infinitive, and simple tú commands; at most one past-tense phrase; only very common words.
 - Level "intermediate"/"fluent": any tense, still natural and common.
@@ -105,7 +118,8 @@ Rules:
   no literary or archaic words (mas = but, he aquí), and no word-for-word calques of English.
 - Prefer what a native would actually say, e.g. "¿Ya comiste?" not "¿Ya estás comido?"; "poner la mesa"; "una llamada".
 - No real people's names, brands, or sensitive or explicit content.
-- "en": a natural English translation (not word-for-word).
+- "en": a natural English translation (not word-for-word) in the same tense as the Spanish. Spanish questions
+  take ¿…? and exclamations ¡…!.
 - "form": the exact word form as it appears in the phrase (copy it, including accents and attached pronouns).
 - "note": if "form" is not the dictionary form, a beginner explanation under 20 words in this style:
   "**quitaste** = *quitar* → past tense for **you** (tú)". Otherwise "".
@@ -217,15 +231,43 @@ class Checker:
         self.rank = {w: i + 1 for i, (w, _) in enumerate(dict_tools.load_frequency(freq_path))}
         subset = dict_tools.CACHE / "kaikki-es-subset.jsonl"
         self.entries = dict_tools.load_entries(subset) if subset.exists() else {}
+        # Every spelled form of a dictionary word → its rank, so "platicamos", "amanecieron",
+        # "comemos" and "domingos" are as easy as platicar, amanecer, comer and domingo.
+        for w in EVERYDAY_MX:
+            self.rank[w] = 1
+        self.form_rank: dict[str, int] = {}
+        for lemma, es in self.entries.items():
+            r = self.rank.get(lemma)
+            if r is None:
+                continue
+            for e in es:
+                for f in e.get("forms", []) or []:
+                    form = (f.get("form") or "").lower()
+                    if form and " " not in form:
+                        self.form_rank[form] = min(r, self.form_rank.get(form, r))
+
+    def rank_of(self, token: str) -> int | None:
+        t = token.lower()
+        ranks = [r for r in (self.rank.get(t), self.form_rank.get(t)) if r is not None]
+        if ranks:
+            return min(ranks)
+        # Everyday Mexican words may be missing from the dictionary subset entirely: accept their
+        # plurals (recámaras, tortillas) and regular verb endings (platicamos, platican).
+        for w in EVERYDAY_MX:
+            if t in (w + "s", w + "es"):
+                return 1
+            if w.endswith(("ar", "er", "ir")) and t.startswith(w[:-2]) and 1 <= len(t) - len(w) + 2 <= 5:
+                return 1
+        return None
 
     def known(self, token: str, deck_words: set[str]) -> bool:
         t = token.lower()
-        if t in self.rank or t in deck_words:
+        if self.rank_of(t) is not None or t in deck_words:
             return True
         for clitic in dict_tools.CLITIC_ORDER:          # dámelo, quítate
             if t.endswith(clitic) and len(t) > len(clitic) + 1:
                 base = dict_tools.strip_accents(t[: -len(clitic)])
-                if base in self.rank or self.known_rest(base, deck_words):
+                if self.rank_of(base) is not None or self.known_rest(base, deck_words):
                     return True
         return False
 
@@ -284,26 +326,39 @@ class Checker:
                     return (f"'{form}' is not a form of {lemma}" if form and dict_tools.find_in_sentence(es, form)
                             else "form not in phrase")
                 ph["form"] = dict_tools.find_in_sentence(es, found) or found
-        unknown = [t for t in toks if not self.known(t, deck_words)]
+        # Place names written with a capital in mid-sentence (Puebla, Cancún, WhatsApp) are fine.
+        names = {m.group(0).lower() for m in re.finditer(r"(?<=[a-záéíóúüñ,] )[A-ZÁÉÍÓÚÑ][a-záéíóúüñA-Z]+", es)}
+        unknown = [t for t in toks if t not in names and not self.known(t, deck_words)]
         if unknown:
             return "unknown words: " + ", ".join(unknown)
         limit = LEVEL_VOCAB.get(card.get("level", "fluent"))
         if limit:
             own = {t for t in toks if t in forms or dict_tools.strip_accents(t).startswith(lemma[:4])}
-            hard = [t for t in toks if t not in own and len(t) > 3 and self.rank.get(t, 10**9) > limit]
+            hard = [t for t in toks if t not in own and t not in names and len(t) > 3
+                    and (self.rank_of(t) or 10**9) > limit]
             if len(hard) > 1:
                 return "too advanced: " + ", ".join(hard)
         return None
 
     def note_for(self, card: dict, ph: dict) -> str | None:
-        """Prefer the importer's analyzer (deterministic) over the model's note."""
+        """The importer's analyzer writes the note (deterministic, checked). The model's own notes
+        were wrong too often ("felices = feminine plural", "¡Salud! = salud → a form"), so they're
+        kept only for phrase cards, which the analyzer can't explain."""
         lemma = card["spanish"].lower()
-        for e in self.entries.get(lemma, []):
-            if e.get("pos") in dict_tools.POS_LABELS and ph.get("form"):
-                if (a := dict_tools.analyze(ph["form"], lemma, e)):
-                    return dict_tools.explain(ph["form"], lemma, a)
-        note = (ph.get("note") or "").strip()
-        return note or None
+        form = (ph.get("form") or "").strip("¡!¿?.,;:\"' ")
+        if card.get("kind") == "phrase" or " " in lemma:
+            note = (ph.get("note") or "").strip()
+            return note if note and form.lower() != lemma else None
+        if not form or form.lower() == lemma:
+            return None
+        # The entry for the card's own part of speech first (café the noun, not café = brown).
+        pos = card.get("partOfSpeech", "").split(" ")[0]
+        entries = [e for e in self.entries.get(lemma, []) if e.get("pos") in dict_tools.POS_LABELS]
+        entries.sort(key=lambda e: dict_tools.POS_LABELS[e["pos"]] != pos)
+        for e in entries:
+            if (a := dict_tools.analyze(form, lemma, e)):
+                return dict_tools.explain(form, lemma, a)
+        return None
 
 
 # ─────────────────────────────────────────────────────────────── generation
@@ -531,6 +586,14 @@ def finish(deck: list[dict]) -> None:
         # written. Phrases from before signatures existed stay until that word is regenerated.
         if card and data.get("phrases") and data.get("signature") in (None, signature(card)):
             phrases[f.stem] = data["phrases"]
+    # Notes are re-derived every time from the current analyzer, so a fix to the notes reaches
+    # phrases written before it without generating them again.
+    if phrases and (dict_tools.CACHE / "kaikki-es-subset.jsonl").exists():
+        checker = Checker()
+        for cid, phs in phrases.items():
+            for i, ph in enumerate(phs):
+                note = checker.note_for(cards[cid], ph)
+                phs[i] = {**{k: v for k, v in ph.items() if k != "note"}, **({"note": note} if note else {})}
     if phrases or OUTPUT.exists():
         OUTPUT.write_text(json.dumps(phrases, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
         write_review(deck, phrases)

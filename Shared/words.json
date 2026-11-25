@@ -4211,15 +4211,6 @@
   "exampleWord": "Hola",
   "phrases": [
    {
-    "id": "fb6bc17809",
-    "es": "¡Hola! ¿Cómo estás?",
-    "en": "Hi! How are you?",
-    "situation": "friends",
-    "form": "Hola",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
     "id": "c3897537d6",
     "es": "Hola, mi amor, ya llegué.",
     "en": "Hi, my love, I'm here.",
@@ -4262,6 +4253,1965 @@
     "form": "Hola"
    }
   ]
+ },
+ {
+  "id": "y",
+  "spanish": "y",
+  "english": "and",
+  "partOfSpeech": "conjunction",
+  "phonetic": "ee",
+  "example": "Quiero tacos y agua.",
+  "exampleTranslation": "I want tacos and water.",
+  "pattern": "this + y + that",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Before a word starting with an i sound it becomes e: padres e hijos.",
+  "exampleWord": "y",
+  "phrases": [
+   {
+    "id": "c5ea4dcea1",
+    "es": "¿Y tú qué quieres hacer?",
+    "en": "And what do you want to do?",
+    "situation": "plans",
+    "form": "Y",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "ce21bb8392",
+    "es": "Hoy hace bueno y mañana también lo hará.",
+    "en": "It's nice out today, and will be tomorrow as well.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "y"
+   },
+   {
+    "id": "f6ab3ae73f",
+    "es": "Él trabaja bien y rápido.",
+    "en": "He works quickly and well.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "y"
+   },
+   {
+    "id": "74ef38c169",
+    "es": "Y sin embargo, también lo contrario es siempre verdadero.",
+    "en": "And yet, the contrary is always true as well.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Y"
+   }
+  ]
+ },
+ {
+  "id": "o",
+  "spanish": "o",
+  "english": "or",
+  "partOfSpeech": "conjunction",
+  "phonetic": "oh",
+  "example": "¿Café o té?",
+  "exampleTranslation": "Coffee or tea?",
+  "pattern": "this + o + that",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Before a word starting with an o sound it becomes u: siete u ocho.",
+  "exampleWord": "o",
+  "phrases": [
+   {
+    "id": "822070765c",
+    "es": "Elige uno u otro.",
+    "en": "Choose either one or the other.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "u",
+    "note": "**u** = *o* → a form."
+   },
+   {
+    "id": "7696d39973",
+    "es": "Está con nosotros o contra nosotros.",
+    "en": "You are either with us, or against us.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "o"
+   },
+   {
+    "id": "1e8b363095",
+    "es": "O tú tienes razón o la tiene él.",
+    "en": "Either you are right or he is.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "O"
+   }
+  ]
+ },
+ {
+  "id": "a",
+  "spanish": "a",
+  "english": "to / at",
+  "partOfSpeech": "preposition",
+  "phonetic": "ah",
+  "example": "Vamos a la playa.",
+  "exampleTranslation": "Let's go to the beach.",
+  "pattern": "ir a + place  ·  a las + hour = at … o'clock",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Also before a person after many verbs, with no English word: Llamo a mi mamá.",
+  "exampleWord": "a",
+  "phrases": [
+   {
+    "id": "d33194299e",
+    "es": "A él le encanta el sarcasmo.",
+    "en": "He likes sarcasm a lot.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "A"
+   },
+   {
+    "id": "b4d6e36393",
+    "es": "Veo a la muerte con indiferencia.",
+    "en": "I look at death with indifference.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "a"
+   },
+   {
+    "id": "83adab5683",
+    "es": "Saca a tus caballos antes de desarrollar los alfiles.",
+    "en": "Bring out your knights before developing the bishops.",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "a"
+   }
+  ]
+ },
+ {
+  "id": "de",
+  "spanish": "de",
+  "english": "of / from",
+  "partOfSpeech": "preposition",
+  "phonetic": "deh",
+  "example": "Soy de México.",
+  "exampleTranslation": "I'm from Mexico.",
+  "pattern": "ser de + place  ·  la casa de Ana = Ana's house",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Spanish has no 's: Ana's house = la casa de Ana.",
+  "exampleWord": "de",
+  "phrases": [
+   {
+    "id": "b64cda9239",
+    "es": "Hablamos de la fiesta mañana.",
+    "en": "We're talking about the party tomorrow.",
+    "situation": "plans",
+    "form": "de",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "1658713fa2",
+    "es": "¿De qué quieres platicar?",
+    "en": "What do you want to talk about?",
+    "situation": "friends",
+    "form": "De",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "e61a3df8cf",
+    "es": "Mi mamá siempre habla de ti.",
+    "en": "My mom always talks about you.",
+    "situation": "family",
+    "form": "de",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "5f8e9bac1c",
+    "es": "No sé nada de él.",
+    "en": "I don't know anything about him at all.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "de"
+   },
+   {
+    "id": "72ebd23e40",
+    "es": "No sé nada de eso.",
+    "en": "I know nothing about that.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "de"
+   },
+   {
+    "id": "88b15ec358",
+    "es": "De eso no sé nada.",
+    "en": "I don't know anything about that.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "De"
+   },
+   {
+    "id": "b8ac0248b6",
+    "es": "Ya no me acuerdo de su nombre.",
+    "en": "I don't remember her name anymore.",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "de"
+   },
+   {
+    "id": "b55dbc42f8",
+    "es": "¿Cuál es el nombre de él?",
+    "en": "What is his name?",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "de"
+   },
+   {
+    "id": "ccf5502304",
+    "es": "En este momento no me acuerdo de su nombre.",
+    "en": "I can't recall her name at the moment.",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "de"
+   }
+  ]
+ },
+ {
+  "id": "en",
+  "spanish": "en",
+  "english": "in / on / at",
+  "partOfSpeech": "preposition",
+  "phonetic": "ehn",
+  "example": "Estoy en casa.",
+  "exampleTranslation": "I'm at home.",
+  "pattern": "estar en + place",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "One word for in, on and at: en la mesa = on the table.",
+  "exampleWord": "en",
+  "phrases": [
+   {
+    "id": "0af955c449",
+    "es": "Nos vemos en el restaurante.",
+    "en": "See you at the restaurant.",
+    "situation": "plans",
+    "form": "en",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "fca7335989",
+    "es": "Mi celular está en la mesa.",
+    "en": "My phone is on the table.",
+    "situation": "everyday",
+    "form": "en",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "b437025d86",
+    "es": "Trabajo en una oficina cerca.",
+    "en": "I work in an office nearby.",
+    "situation": "work",
+    "form": "en",
+    "source": "ai",
+    "meaning": 0
+   }
+  ]
+ },
+ {
+  "id": "con",
+  "spanish": "con",
+  "english": "with",
+  "partOfSpeech": "preposition",
+  "phonetic": "kohn",
+  "example": "Voy con mi hermana.",
+  "exampleTranslation": "I'm going with my sister.",
+  "pattern": "con + person / thing",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "With me = conmigo, with you = contigo.",
+  "exampleWord": "con",
+  "phrases": [
+   {
+    "id": "02835124db",
+    "es": "¿Quieres café con leche?",
+    "en": "Do you want coffee with milk?",
+    "situation": "food",
+    "form": "con",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "ff61009984",
+    "es": "Voy con mi mamá al mercado.",
+    "en": "I'm going with my mom to the market.",
+    "situation": "family",
+    "form": "con",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "d2b52fbed2",
+    "es": "Ven conmigo, por favor.",
+    "en": "Come with me, please.",
+    "situation": "couple",
+    "form": "conmigo",
+    "source": "ai",
+    "meaning": 0,
+    "note": "**conmigo** = *con* + *mí* → \"with me\""
+   },
+   {
+    "id": "85ed83841e",
+    "es": "Hablo con mi jefe mañana.",
+    "en": "I'm talking with my boss tomorrow.",
+    "situation": "work",
+    "form": "con",
+    "source": "ai",
+    "meaning": 0
+   }
+  ]
+ },
+ {
+  "id": "por",
+  "spanish": "por",
+  "english": "for / because of",
+  "partOfSpeech": "preposition",
+  "phonetic": "pohr",
+  "example": "Gracias por todo.",
+  "exampleTranslation": "Thanks for everything.",
+  "pattern": "Gracias por + noun  ·  por la mañana = in the morning",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "¿Por qué? = why?  ·  porque = because.",
+  "exampleWord": "por",
+  "phrases": [
+   {
+    "id": "74d911798b",
+    "es": "Te llamo por teléfono más tarde.",
+    "en": "I'll call you by phone later.",
+    "situation": "plans",
+    "form": "por",
+    "source": "ai",
+    "meaning": 2
+   },
+   {
+    "id": "58aca51b91",
+    "es": "Estoy preocupada por mi mamá.",
+    "en": "I'm worried about my mom.",
+    "situation": "family",
+    "form": "por",
+    "source": "ai",
+    "meaning": 1
+   },
+   {
+    "id": "ee34221d79",
+    "es": "¿Pero por qué?",
+    "en": "But why?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "por"
+   },
+   {
+    "id": "1a9ce710e1",
+    "es": "¿Es por eso?",
+    "en": "Is that why?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "por"
+   },
+   {
+    "id": "1c61005101",
+    "es": "¿Por qué yo?",
+    "en": "Why me?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Por"
+   },
+   {
+    "id": "4d2a41c3ae",
+    "es": "Me siento muy mal por eso.",
+    "en": "I feel awful about that.",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "por"
+   },
+   {
+    "id": "5807bce754",
+    "es": "¡Ellos están por volver!",
+    "en": "They're about to return!",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "por"
+   },
+   {
+    "id": "07ae9cbfe0",
+    "es": "¿Por qué sabes tanto de mí?",
+    "en": "Why do you know so much about me?",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "Por"
+   },
+   {
+    "id": "52065f95d8",
+    "es": "¿Podemos pasar por aquí?",
+    "en": "Can we go through here?",
+    "source": "tatoeba",
+    "meaning": 2,
+    "form": "por"
+   },
+   {
+    "id": "c6206987e4",
+    "es": "No sabes por lo que hemos pasado.",
+    "en": "You don't know what we've been through.",
+    "source": "tatoeba",
+    "meaning": 2,
+    "form": "por"
+   },
+   {
+    "id": "4863c4a575",
+    "es": "Por la noche no me gusta salir solo.",
+    "en": "I don't like going out by myself at night.",
+    "source": "tatoeba",
+    "meaning": 2,
+    "form": "Por"
+   }
+  ]
+ },
+ {
+  "id": "para",
+  "spanish": "para",
+  "english": "for / in order to",
+  "partOfSpeech": "preposition",
+  "phonetic": "PAH-rah",
+  "example": "Esto es para ti.",
+  "exampleTranslation": "This is for you.",
+  "pattern": "para + person  ·  para + infinitive = in order to",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "para = for a person or a purpose; por = because of.",
+  "exampleWord": "para"
+ },
+ {
+  "id": "sin",
+  "spanish": "sin",
+  "english": "without",
+  "partOfSpeech": "preposition",
+  "phonetic": "seen",
+  "example": "Un café sin azúcar, por favor.",
+  "exampleTranslation": "A coffee without sugar, please.",
+  "pattern": "sin + noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "exampleWord": "sin",
+  "phrases": [
+   {
+    "id": "c218b5d206",
+    "es": "Quiero un café sin azúcar.",
+    "en": "I want a coffee without sugar.",
+    "situation": "food",
+    "form": "sin",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "dcc0fd110f",
+    "es": "No puedo vivir sin ti.",
+    "en": "I can't live without you.",
+    "situation": "couple",
+    "form": "sin",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "9f0a674c72",
+    "es": "Salí de la casa sin celular.",
+    "en": "I left the house without my phone.",
+    "situation": "everyday",
+    "form": "sin",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "5f2364467b",
+    "es": "Hoy es un día sin lluvia.",
+    "en": "Today is a day without rain.",
+    "situation": "weather",
+    "form": "sin",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "d201f3dc46",
+    "es": "Todo es mejor sin ti.",
+    "en": "Everything is better without you.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "sin"
+   },
+   {
+    "id": "89db9feff5",
+    "es": "Sin ti no soy nada.",
+    "en": "Without you I am nothing.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Sin"
+   },
+   {
+    "id": "6d5e92fd3d",
+    "es": "Sin ti no estoy bien.",
+    "en": "Without you, I am not well.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Sin"
+   }
+  ]
+ },
+ {
+  "id": "el",
+  "spanish": "el",
+  "english": "the",
+  "partOfSpeech": "article",
+  "phonetic": "ehl",
+  "example": "El perro está en la casa.",
+  "exampleTranslation": "The dog is in the house.",
+  "pattern": "el + masculine noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Él with an accent means he.",
+  "forms": "masculine: el\nfeminine: la\nplural: los / las",
+  "exampleWord": "El",
+  "phrases": [
+   {
+    "id": "827cfd05e6",
+    "es": "El café está caliente.",
+    "en": "The coffee is hot.",
+    "situation": "food",
+    "form": "El",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "1b4e93609c",
+    "es": "Apaga el celular, mi amor.",
+    "en": "Turn off the phone, my love.",
+    "situation": "couple",
+    "form": "el",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "4b9201b1ca",
+    "es": "Hoy hace mucho frío en el parque.",
+    "en": "It's very cold at the park today.",
+    "situation": "weather",
+    "form": "el",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "fc106fd0f2",
+    "es": "¿Dónde está el baño?",
+    "en": "Where is the bathroom?",
+    "situation": "travel",
+    "form": "el",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "b91ae75d80",
+    "es": "El locutor de la radio tenía una voz masculina.",
+    "en": "The radio announcer had a masculine voice.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "la",
+    "note": "**la** = *el* → the **feminine** form."
+   },
+   {
+    "id": "9d9a2972be",
+    "es": "A los hombres les gusta verse masculinos.",
+    "en": "Men like to look masculine.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "los",
+    "note": "**los** = *el* → the **plural** form."
+   },
+   {
+    "id": "2f94f0aa40",
+    "es": "Prefieren a las mujeres masculinas.",
+    "en": "They prefer masculine women.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "las",
+    "note": "**las** = *el* → the **feminine plural** form."
+   }
+  ]
+ },
+ {
+  "id": "la",
+  "spanish": "la",
+  "english": "the",
+  "partOfSpeech": "article",
+  "phonetic": "lah",
+  "example": "La comida está lista.",
+  "exampleTranslation": "The food is ready.",
+  "pattern": "la + feminine noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Before a verb it means her / it: La veo = I see her.",
+  "forms": "masculine: el\nfeminine: la\nplural: los / las",
+  "exampleWord": "La",
+  "phrases": [
+   {
+    "id": "c020d8b207",
+    "es": "Cierra la puerta, por favor.",
+    "en": "Close the door, please.",
+    "situation": "home",
+    "form": "la",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "a401ce325f",
+    "es": "Me gusta la comida de tu mamá.",
+    "en": "I like your mom's food.",
+    "situation": "food",
+    "form": "la",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "229abaf90b",
+    "es": "La casa está muy bonita.",
+    "en": "The house looks very nice.",
+    "situation": "home",
+    "form": "La",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "98da536884",
+    "es": "¿Dónde dejaste la llave?",
+    "en": "Where did you leave the key?",
+    "situation": "everyday",
+    "form": "la",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "5e65d129e2",
+    "es": "El singular de \"data\" es \"datum\".",
+    "en": "The singular of 'data' is 'datum'.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "El",
+    "note": "**el** = *la* → the **masculine** form."
+   },
+   {
+    "id": "570d4c2d15",
+    "es": "El genitivo singular de \"rosa\" es \"rosae\".",
+    "en": "The genitive singular of \"rosa\" is \"rosae\".",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "El",
+    "note": "**el** = *la* → the **masculine** form."
+   },
+   {
+    "id": "6aee15c286",
+    "es": "Los sustantivos rusos pueden ser masculinos, femeninos o neutros.",
+    "en": "Russian nouns can be masculine, feminine, or neuter.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Los",
+    "note": "**los** = *la* → the **plural** form."
+   }
+  ]
+ },
+ {
+  "id": "los",
+  "spanish": "los",
+  "english": "the",
+  "partOfSpeech": "article",
+  "phonetic": "lohs",
+  "example": "Los niños están en la escuela.",
+  "exampleTranslation": "The kids are at school.",
+  "pattern": "los + masculine or mixed plural noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Before a verb it means them: Los veo = I see them.",
+  "forms": "masculine: el\nfeminine: la\nplural: los / las",
+  "exampleWord": "Los",
+  "phrases": [
+   {
+    "id": "836bd5a1b2",
+    "es": "Los quiero mucho a todos.",
+    "en": "I love you all very much.",
+    "situation": "family",
+    "form": "Los",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "0c1fc04e2b",
+    "es": "El pene es uno de los órganos sexuales masculinos.",
+    "en": "The penis is one of the masculine sexual organs.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "los"
+   },
+   {
+    "id": "13cec2eef1",
+    "es": "A los hombres les gusta lucir varoniles.",
+    "en": "Men like to look masculine.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "los"
+   },
+   {
+    "id": "6aee15c286",
+    "es": "Los sustantivos rusos pueden ser masculinos, femeninos o neutros.",
+    "en": "Russian nouns can be masculine, feminine, or neuter.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Los"
+   }
+  ]
+ },
+ {
+  "id": "las",
+  "spanish": "las",
+  "english": "the",
+  "partOfSpeech": "article",
+  "phonetic": "lahs",
+  "example": "Las tortillas están calientes.",
+  "exampleTranslation": "The tortillas are hot.",
+  "pattern": "las + feminine plural noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Before a verb it means them: Las compro = I buy them.",
+  "forms": "masculine: el\nfeminine: la\nplural: los / las",
+  "exampleWord": "Las",
+  "phrases": [
+   {
+    "id": "f50df79a8b",
+    "es": "Las llaves están en la mesa.",
+    "en": "The keys are on the table.",
+    "situation": "home",
+    "form": "Las",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "4df0d78a86",
+    "es": "Nos vemos a las cinco.",
+    "en": "See you at five.",
+    "situation": "plans",
+    "form": "las",
+    "source": "ai",
+    "meaning": 0
+   }
+  ]
+ },
+ {
+  "id": "un",
+  "spanish": "un",
+  "english": "a / an",
+  "partOfSpeech": "article",
+  "phonetic": "oon",
+  "example": "Tengo un perro.",
+  "exampleTranslation": "I have a dog.",
+  "pattern": "un + masculine noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "On its own, one is uno: ¿Cuántos? — Uno.",
+  "forms": "masculine: un\nfeminine: una\nplural: unos / unas",
+  "exampleWord": "un",
+  "phrases": [
+   {
+    "id": "69c66a95e7",
+    "es": "Quiero un café, por favor.",
+    "en": "I'd like a coffee, please.",
+    "situation": "food",
+    "form": "un",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "43050edb67",
+    "es": "Tengo un perro muy bonito.",
+    "en": "I have a very cute dog.",
+    "situation": "friends",
+    "form": "un",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "07ce9753d5",
+    "es": "Dame un minuto, ya voy.",
+    "en": "Give me a minute, I'm coming.",
+    "situation": "everyday",
+    "form": "un",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "b423e66c68",
+    "es": "Es un día muy bonito.",
+    "en": "It's a very nice day.",
+    "situation": "weather",
+    "form": "un",
+    "source": "ai",
+    "meaning": 0
+   }
+  ]
+ },
+ {
+  "id": "una",
+  "spanish": "una",
+  "english": "a / an / one",
+  "partOfSpeech": "article",
+  "phonetic": "OO-nah",
+  "example": "Tengo una pregunta.",
+  "exampleTranslation": "I have a question.",
+  "pattern": "una + feminine noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Also the number one: una hora = one hour.",
+  "forms": "masculine: un\nfeminine: una\nplural: unos / unas",
+  "exampleWord": "una",
+  "phrases": [
+   {
+    "id": "ab0aab9655",
+    "es": "Quiero una taza de café.",
+    "en": "I want a cup of coffee.",
+    "situation": "food",
+    "form": "una",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "03bb77f660",
+    "es": "Espera una hora, por favor.",
+    "en": "Wait an hour, please.",
+    "situation": "plans",
+    "form": "una",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "e86f6de39c",
+    "es": "Necesito una camisa nueva.",
+    "en": "I need a new shirt.",
+    "situation": "shopping",
+    "form": "una",
+    "source": "ai",
+    "meaning": 0
+   }
+  ]
+ },
+ {
+  "id": "al",
+  "spanish": "al",
+  "english": "to the",
+  "partOfSpeech": "contraction",
+  "phonetic": "ahl",
+  "example": "Vamos al parque.",
+  "exampleTranslation": "Let's go to the park.",
+  "pattern": "a + el = al",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Only with el: a la casa stays two words.",
+  "exampleWord": "al",
+  "phrases": [
+   {
+    "id": "86bee546dd",
+    "es": "Llámame al llegar a casa.",
+    "en": "Call me upon getting home.",
+    "situation": "texting",
+    "form": "al",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "5a72a524a0",
+    "es": "Tuvo ganas de llorar al oír eso.",
+    "en": "She felt like crying upon hearing that.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "al"
+   },
+   {
+    "id": "5cd966470d",
+    "es": "Al oír las noticias se puso a llorar.",
+    "en": "Upon hearing the news, she burst out crying.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Al"
+   },
+   {
+    "id": "18a6f7c240",
+    "es": "Al llegar al aeropuerto, llamó a su mujer por teléfono.",
+    "en": "Upon arriving at the airport, he made a phone call to his wife.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Al"
+   }
+  ]
+ },
+ {
+  "id": "del",
+  "spanish": "del",
+  "english": "of the / from the",
+  "partOfSpeech": "contraction",
+  "phonetic": "dehl",
+  "example": "Vengo del trabajo.",
+  "exampleTranslation": "I'm coming from work.",
+  "pattern": "de + el = del",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Only with el: de la casa stays two words.",
+  "exampleWord": "del",
+  "phrases": [
+   {
+    "id": "0ea0814e55",
+    "es": "Es el celular del niño.",
+    "en": "It's the boy's cell phone.",
+    "situation": "family",
+    "form": "del",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "7d94120d82",
+    "es": "Me gusta el sabor del café.",
+    "en": "I like the taste of the coffee.",
+    "situation": "food",
+    "form": "del",
+    "source": "ai",
+    "meaning": 0
+   }
+  ]
+ },
+ {
+  "id": "que",
+  "spanish": "que",
+  "english": "that",
+  "partOfSpeech": "conjunction",
+  "phonetic": "keh",
+  "example": "Creo que sí.",
+  "exampleTranslation": "I think so.",
+  "pattern": "creo que + sentence = I think that …",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Without an accent it joins ideas; with one, qué means what.",
+  "exampleWord": "que",
+  "phrases": [
+   {
+    "id": "28db3ec5f9",
+    "es": "Creo que ya llegó mi mamá.",
+    "en": "I think my mom already arrived.",
+    "situation": "family",
+    "form": "que",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "90cf8222b6",
+    "es": "Quiero que vengas conmigo.",
+    "en": "I want you to come with me.",
+    "situation": "couple",
+    "form": "que",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "d600044541",
+    "es": "Dice que está muy cansado hoy.",
+    "en": "He says he's very tired today.",
+    "situation": "feelings",
+    "form": "que",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "fea9019b59",
+    "es": "Esta pizza es mejor que la otra.",
+    "en": "This pizza is better than the other one.",
+    "situation": "food",
+    "form": "que",
+    "source": "ai",
+    "meaning": 1
+   },
+   {
+    "id": "c3ffaabff9",
+    "es": "Sé que no sé.",
+    "en": "I know that I do not know.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "que"
+   },
+   {
+    "id": "868e09f5ec",
+    "es": "¿Es todo lo que hay?",
+    "en": "Is it all that's there?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "que"
+   },
+   {
+    "id": "7ff58793d0",
+    "es": "No tengo más que eso.",
+    "en": "I don't have more than that.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "que"
+   },
+   {
+    "id": "75f84fb0a3",
+    "es": "Es mejor que nada.",
+    "en": "Better than nothing.",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "que"
+   },
+   {
+    "id": "efa41a16d4",
+    "es": "Eres mejor que yo.",
+    "en": "You are better than me.",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "que"
+   },
+   {
+    "id": "987c1c3b7f",
+    "es": "Estoy mejor que él.",
+    "en": "I'm better than him.",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "que"
+   },
+   {
+    "id": "762b566f27",
+    "es": "Creo que sé quién es.",
+    "en": "I think I know who it is.",
+    "source": "tatoeba",
+    "meaning": 2,
+    "form": "que"
+   },
+   {
+    "id": "bff13318c1",
+    "es": "¡El que sabe, sabe!",
+    "en": "He who knows, knows.",
+    "source": "tatoeba",
+    "meaning": 2,
+    "form": "que"
+   },
+   {
+    "id": "2310bd9a13",
+    "es": "Soy el que lo hace mejor.",
+    "en": "I'm the one who does it best.",
+    "source": "tatoeba",
+    "meaning": 2,
+    "form": "que"
+   }
+  ]
+ },
+ {
+  "id": "que-2",
+  "spanish": "qué",
+  "english": "what",
+  "partOfSpeech": "pronoun",
+  "phonetic": "keh",
+  "example": "¿Qué quieres comer?",
+  "exampleTranslation": "What do you want to eat?",
+  "pattern": "¿Qué + verb?",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "¡Qué bonito! = How pretty!",
+  "exampleWord": "Qué",
+  "phrases": [
+   {
+    "id": "f6046b720e",
+    "es": "¿Qué quieres cenar hoy?",
+    "en": "What do you want for dinner today?",
+    "situation": "food",
+    "form": "Qué",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "fd1f7f944b",
+    "es": "¿Qué hora es?",
+    "en": "What time is it?",
+    "situation": "everyday",
+    "form": "Qué",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "64f8554138",
+    "es": "¿Qué haces este fin de semana?",
+    "en": "What are you doing this weekend?",
+    "situation": "plans",
+    "form": "Qué",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "419e7cfe50",
+    "es": "¡Qué rico huele!",
+    "en": "How good it smells!",
+    "situation": "home",
+    "form": "Qué",
+    "source": "ai",
+    "meaning": 1
+   },
+   {
+    "id": "cf16ff4224",
+    "es": "¿Qué está bien?",
+    "en": "What's good?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Qué"
+   },
+   {
+    "id": "a6e7768f43",
+    "es": "¿Qué es eso?",
+    "en": "What is it?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Qué"
+   },
+   {
+    "id": "b6f85093b4",
+    "es": "¿Qué es esto?",
+    "en": "What is this?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Qué"
+   },
+   {
+    "id": "f23785f320",
+    "es": "¿Qué te parece?",
+    "en": "How about it?",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "Qué"
+   },
+   {
+    "id": "c95d49415e",
+    "es": "Hola, ¿qué tal?",
+    "en": "Hello, how are you?",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "qué"
+   }
+  ]
+ },
+ {
+  "id": "me",
+  "spanish": "me",
+  "english": "me / myself",
+  "partOfSpeech": "pronoun",
+  "phonetic": "meh",
+  "example": "¿Me ayudas?",
+  "exampleTranslation": "Will you help me?",
+  "pattern": "me + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "It goes before the verb: Me gusta = I like it.",
+  "exampleWord": "Me"
+ },
+ {
+  "id": "te",
+  "spanish": "te",
+  "english": "you / yourself",
+  "partOfSpeech": "pronoun",
+  "phonetic": "teh",
+  "example": "Te extraño.",
+  "exampleTranslation": "I miss you.",
+  "pattern": "te + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "With an accent, té means tea.",
+  "exampleWord": "Te",
+  "phrases": [
+   {
+    "id": "22d88dc911",
+    "es": "Siéntate, la comida ya está lista.",
+    "en": "Sit down, the food is ready.",
+    "situation": "home",
+    "form": "Siéntate",
+    "source": "ai",
+    "meaning": 0,
+    "note": "**Siéntate** = *sentarse* → command for **you** (tú), with *te* attached: sit yourself down"
+   },
+   {
+    "id": "a34e34ebd3",
+    "es": "¿Te sientes orgulloso de ti mismo?",
+    "en": "Are you proud of yourself?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Te"
+   },
+   {
+    "id": "d3f34fd10b",
+    "es": "Te amas a ti mismo.",
+    "en": "You love yourself.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Te"
+   },
+   {
+    "id": "fb97346d60",
+    "es": "Te amas a ti misma.",
+    "en": "You love yourself.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Te"
+   },
+   {
+    "id": "2f393bccd1",
+    "es": "Su nombre comienza con una T y termina en M.",
+    "en": "His name begins with a T and ends with an M.",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "T",
+    "note": "**t** = *te* → a form."
+   },
+   {
+    "id": "8416671ec4",
+    "es": "¿Cómo te llamas?",
+    "en": "What is your name?",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "te"
+   },
+   {
+    "id": "8869a5a02e",
+    "es": "¿Te llamas Tom?",
+    "en": "Is your name Tom?",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "Te"
+   }
+  ]
+ },
+ {
+  "id": "se",
+  "spanish": "se",
+  "english": "himself / herself / themselves",
+  "partOfSpeech": "pronoun",
+  "phonetic": "seh",
+  "example": "Se llama Sofía.",
+  "exampleTranslation": "Her name is Sofía.",
+  "pattern": "se + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Many verbs come with se: se llama, se fue (he left).",
+  "exampleWord": "Se"
+ },
+ {
+  "id": "lo",
+  "spanish": "lo",
+  "english": "it / him",
+  "partOfSpeech": "pronoun",
+  "phonetic": "loh",
+  "example": "No lo sé.",
+  "exampleTranslation": "I don't know.",
+  "pattern": "lo + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Lo que = what: Lo que quieras = whatever you want.",
+  "forms": "him / it: lo\nher / it: la\nthem: los / las",
+  "exampleWord": "lo"
+ },
+ {
+  "id": "le",
+  "spanish": "le",
+  "english": "to him / to her / to you (usted)",
+  "partOfSpeech": "pronoun",
+  "phonetic": "leh",
+  "example": "Le doy un regalo.",
+  "exampleTranslation": "I'm giving him a gift.",
+  "pattern": "le + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "The rest of the sentence tells you who: Le escribo a mi mamá.",
+  "forms": "one person: le\nmore than one: les",
+  "exampleWord": "Le",
+  "phrases": [
+   {
+    "id": "1f362ffd32",
+    "es": "Le mando un mensaje a mi novio.",
+    "en": "I'm sending my boyfriend a message.",
+    "situation": "texting",
+    "form": "Le",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "2b18efe758",
+    "es": "¿Le ayudo en algo, señora?",
+    "en": "Can I help you with something, ma'am?",
+    "situation": "shopping",
+    "form": "Le",
+    "source": "ai",
+    "meaning": 1
+   },
+   {
+    "id": "bef0e6bc2e",
+    "es": "Le compro flores a ella.",
+    "en": "I'm buying flowers for her.",
+    "situation": "couple",
+    "form": "Le",
+    "source": "ai",
+    "meaning": 2
+   },
+   {
+    "id": "79b39f0efc",
+    "es": "Ya no le quiero.",
+    "en": "I do not love him any longer.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "le"
+   },
+   {
+    "id": "23d7910135",
+    "es": "Ya no le creo.",
+    "en": "I don't believe him any longer.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "le"
+   },
+   {
+    "id": "1ad7d51731",
+    "es": "Ella le quiere.",
+    "en": "She loves him.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "le"
+   },
+   {
+    "id": "7928940e3a",
+    "es": "¿Sabe que le quieres?",
+    "en": "Does he know that you love him?",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "le"
+   },
+   {
+    "id": "1bd2b9b6cf",
+    "es": "Así que tú también le quieres.",
+    "en": "So, you like him too.",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "le"
+   },
+   {
+    "id": "8dd8aae2e9",
+    "es": "¿Le gusta estar solo?",
+    "en": "Do you like to be alone?",
+    "source": "tatoeba",
+    "meaning": 1,
+    "form": "Le"
+   },
+   {
+    "id": "581c704c80",
+    "es": "A ella le gusta ella.",
+    "en": "She likes her.",
+    "source": "tatoeba",
+    "meaning": 2,
+    "form": "le"
+   },
+   {
+    "id": "80b0907168",
+    "es": "Le dijo que la quería.",
+    "en": "He told her that he loved her.",
+    "source": "tatoeba",
+    "meaning": 2,
+    "form": "Le"
+   },
+   {
+    "id": "e76ecf4e37",
+    "es": "Eso es lo que le dije.",
+    "en": "That's what I told her.",
+    "source": "tatoeba",
+    "meaning": 2,
+    "form": "le"
+   }
+  ]
+ },
+ {
+  "id": "les",
+  "spanish": "les",
+  "english": "to them / to you all",
+  "partOfSpeech": "pronoun",
+  "phonetic": "lehs",
+  "example": "¿Les gusta la comida?",
+  "exampleTranslation": "Do you all like the food?",
+  "pattern": "les + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Les gusta = they like it, or you all like it.",
+  "forms": "one person: le\nmore than one: les",
+  "exampleWord": "Les"
+ },
+ {
+  "id": "nos",
+  "spanish": "nos",
+  "english": "us / ourselves",
+  "partOfSpeech": "pronoun",
+  "phonetic": "nohs",
+  "example": "Nos vemos mañana.",
+  "exampleTranslation": "See you tomorrow.",
+  "pattern": "nos + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Nos vemos is literally we see each other.",
+  "exampleWord": "Nos",
+  "phrases": [
+   {
+    "id": "4d08c82d40",
+    "es": "Nos vemos mañana en la escuela.",
+    "en": "See you tomorrow at school.",
+    "situation": "school",
+    "form": "Nos",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "ae6abbc600",
+    "es": "Nos queremos mucho.",
+    "en": "We love each other a lot.",
+    "situation": "couple",
+    "form": "Nos",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "c547f811ba",
+    "es": "Hoy nos quedamos en casa.",
+    "en": "Today we're staying home.",
+    "situation": "plans",
+    "form": "nos",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "661b833668",
+    "es": "Nos vamos a las seis.",
+    "en": "We're leaving at six.",
+    "situation": "travel",
+    "form": "Nos",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "75f555fe06",
+    "es": "Realmente nos hemos divertido.",
+    "en": "We really enjoyed ourselves.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "nos"
+   },
+   {
+    "id": "c07e91a679",
+    "es": "Nos tenemos que cuidar.",
+    "en": "We need to care of ourselves.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Nos"
+   },
+   {
+    "id": "1267ff02c1",
+    "es": "Nos lo pasamos bien en la fiesta anoche.",
+    "en": "We enjoyed ourselves at the party last night.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Nos"
+   }
+  ]
+ },
+ {
+  "id": "mi",
+  "spanish": "mi",
+  "english": "my",
+  "partOfSpeech": "determiner",
+  "phonetic": "mee",
+  "example": "Mi casa es tu casa.",
+  "exampleTranslation": "My house is your house.",
+  "pattern": "mi + noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "With an accent, mí means me: para mí = for me.",
+  "forms": "singular: mi\nplural: mis",
+  "exampleWord": "Mi",
+  "phrases": [
+   {
+    "id": "4094d1fc43",
+    "es": "¿Quieres venir conmigo o sin mí?",
+    "en": "Do you want to come with me or without me?",
+    "situation": "plans",
+    "form": "mí",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "6b623bd51b",
+    "es": "Este regalo es para mí.",
+    "en": "This gift is for me.",
+    "situation": "family",
+    "form": "mí",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "6fb92ee0d7",
+    "es": "A mí me gusta el café.",
+    "en": "I like coffee.",
+    "situation": "food",
+    "form": "mí",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "5f03d2f454",
+    "es": "¿Piensas en mí?",
+    "en": "Do you think about me?",
+    "situation": "couple",
+    "form": "mí",
+    "source": "ai",
+    "meaning": 0
+   }
+  ]
+ },
+ {
+  "id": "tu",
+  "spanish": "tu",
+  "english": "your",
+  "partOfSpeech": "determiner",
+  "phonetic": "too",
+  "example": "¿Cómo está tu mamá?",
+  "exampleTranslation": "How's your mom?",
+  "pattern": "tu + noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "With an accent, tú means you: ¿Y tú?",
+  "forms": "singular: tu\nplural: tus",
+  "exampleWord": "tu",
+  "phrases": [
+   {
+    "id": "87eadf06d9",
+    "es": "¿Y tú qué quieres comer?",
+    "en": "And what do you want to eat?",
+    "situation": "food",
+    "form": "tú",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "10ebb55b82",
+    "es": "Tú sí sabes cocinar.",
+    "en": "You really do know how to cook.",
+    "situation": "home",
+    "form": "Tú",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "75ed90202d",
+    "es": "Primero tú, yo espero.",
+    "en": "You first, I'll wait.",
+    "situation": "everyday",
+    "form": "tú",
+    "source": "ai",
+    "meaning": 0
+   }
+  ]
+ },
+ {
+  "id": "su",
+  "spanish": "su",
+  "english": "his / her / their / your (usted)",
+  "partOfSpeech": "determiner",
+  "phonetic": "soo",
+  "example": "Su casa es muy bonita.",
+  "exampleTranslation": "Her house is very pretty.",
+  "pattern": "su + noun",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "One word for his, her and their: the context tells you which.",
+  "forms": "singular: su\nplural: sus",
+  "exampleWord": "Su"
+ },
+ {
+  "id": "yo",
+  "spanish": "yo",
+  "english": "I",
+  "partOfSpeech": "pronoun",
+  "phonetic": "yoh",
+  "example": "Yo cocino hoy.",
+  "exampleTranslation": "I'm cooking today.",
+  "pattern": "yo + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Often left out: Cocino hoy means the same.",
+  "forms": "singular: el yo\nplural: los yos",
+  "exampleWord": "Yo",
+  "phrases": [
+   {
+    "id": "9ddd36bef5",
+    "es": "El yo es parte de la mente.",
+    "en": "The ego is part of the mind.",
+    "situation": "school",
+    "form": "yo",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "bbde52435d",
+    "es": "Freud habló del yo y del ello.",
+    "en": "Freud talked about the ego and the id.",
+    "situation": "school",
+    "form": "yo",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "98af0a3eb9",
+    "es": "Mi maestro explicó qué es el yo.",
+    "en": "My teacher explained what the ego is.",
+    "situation": "school",
+    "form": "yo",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "b23490f393",
+    "es": "¿Qué es el yo en psicología?",
+    "en": "What is the ego in psychology?",
+    "situation": "school",
+    "form": "yo",
+    "source": "ai",
+    "meaning": 0
+   }
+  ]
+ },
+ {
+  "id": "tu-2",
+  "spanish": "tú",
+  "english": "you",
+  "partOfSpeech": "pronoun",
+  "phonetic": "too",
+  "example": "¿Y tú?",
+  "exampleTranslation": "And you?",
+  "pattern": "tú + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "The casual you, for friends and family. With strangers: usted.",
+  "exampleWord": "tú",
+  "phrases": [
+   {
+    "id": "8044f9bc45",
+    "es": "Ya te tengo.",
+    "en": "You're mine now.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "te",
+    "note": "**te** = *tú* → a form."
+   },
+   {
+    "id": "ef8c343719",
+    "es": "Creo en ti.",
+    "en": "I believe in you.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "ti",
+    "note": "**ti** = *tú* → a form."
+   },
+   {
+    "id": "74b1c89182",
+    "es": "¿Puedo hablar contigo?",
+    "en": "Can I have a word with you?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "contigo",
+    "note": "**contigo** = *tú* → a form."
+   }
+  ]
+ },
+ {
+  "id": "el-2",
+  "spanish": "él",
+  "english": "he / him",
+  "partOfSpeech": "pronoun",
+  "phonetic": "ehl",
+  "example": "Él es mi hermano.",
+  "exampleTranslation": "He's my brother.",
+  "pattern": "él + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Without an accent, el means the.",
+  "forms": "he: él\nshe: ella\nthey: ellos / ellas",
+  "exampleWord": "Él"
+ },
+ {
+  "id": "nosotros",
+  "spanish": "nosotros",
+  "english": "we / us",
+  "partOfSpeech": "pronoun",
+  "phonetic": "noh-SOH-trohs",
+  "example": "Nosotros vamos mañana.",
+  "exampleTranslation": "We're going tomorrow.",
+  "pattern": "nosotros + verb",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "A group of only women says nosotras.",
+  "forms": "masculine: nosotros\nfeminine: nosotras",
+  "exampleWord": "Nosotros"
+ },
+ {
+  "id": "usted",
+  "spanish": "usted",
+  "english": "you (formal)",
+  "partOfSpeech": "pronoun",
+  "phonetic": "oos-TEHD",
+  "example": "¿Cómo está usted?",
+  "exampleTranslation": "How are you?",
+  "pattern": "usted + él / ella verb form",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "For older people and strangers.",
+  "forms": "m. & f.: usted\nplural: ustedes",
+  "exampleWord": "usted",
+  "phrases": [
+   {
+    "id": "9a77d79588",
+    "es": "¿Cómo está usted, señora?",
+    "en": "How are you, ma'am?",
+    "situation": "everyday",
+    "form": "usted",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "9366859e26",
+    "es": "Usted primero, por favor.",
+    "en": "You first, please.",
+    "situation": "everyday",
+    "form": "Usted",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "4fb6dc4479",
+    "es": "¿Usted quiere agua, señor?",
+    "en": "Do you want water, sir?",
+    "situation": "food",
+    "form": "Usted",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "f811023ce8",
+    "es": "Ustedes pasan primero, yo espero.",
+    "en": "You all go first, I'll wait.",
+    "situation": "friends",
+    "form": "Ustedes",
+    "source": "ai",
+    "meaning": 0,
+    "note": "**ustedes** = *usted* → the **plural** form."
+   },
+   {
+    "id": "331e8c078b",
+    "es": "¿Cómo están ustedes?",
+    "en": "How do you do?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "ustedes",
+    "note": "**ustedes** = *usted* → the **plural** form."
+   },
+   {
+    "id": "dc16b1a815",
+    "es": "¿Está Ud. hablando conmigo?",
+    "en": "Are you speaking to me?",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Ud",
+    "note": "**ud** = *usted* → a form."
+   }
+  ]
+ },
+ {
+  "id": "ustedes",
+  "spanish": "ustedes",
+  "english": "you all",
+  "partOfSpeech": "pronoun",
+  "phonetic": "oos-TEH-dehs",
+  "example": "¿Ustedes quieren café?",
+  "exampleTranslation": "Do you all want coffee?",
+  "pattern": "ustedes + ellos verb form",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "In Mexico this is the only plural you; vosotros is used in Spain.",
+  "exampleWord": "Ustedes"
+ },
+ {
+  "id": "muy",
+  "spanish": "muy",
+  "english": "very",
+  "partOfSpeech": "adverb",
+  "phonetic": "mooy",
+  "example": "Estoy muy cansada.",
+  "exampleTranslation": "I'm very tired.",
+  "pattern": "muy + adjective",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "With a noun, use mucho: mucho trabajo = a lot of work.",
+  "exampleWord": "muy"
+ },
+ {
+  "id": "ni",
+  "spanish": "ni",
+  "english": "not even / nor",
+  "partOfSpeech": "conjunction",
+  "phonetic": "nee",
+  "example": "No tengo ni idea.",
+  "exampleTranslation": "I have no idea.",
+  "pattern": "ni … ni … = neither … nor …",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Ni modo = oh well (very Mexican).",
+  "exampleWord": "ni",
+  "phrases": [
+   {
+    "id": "ef1be66fb9",
+    "es": "No tengo ni un peso.",
+    "en": "I don't have even one peso.",
+    "situation": "shopping",
+    "form": "ni",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "22fccf7e44",
+    "es": "Hoy no quiero ni cocinar.",
+    "en": "Today I don't even want to cook.",
+    "situation": "food",
+    "form": "ni",
+    "source": "ai",
+    "meaning": 0
+   },
+   {
+    "id": "736624af53",
+    "es": "Ni él sabía la verdad.",
+    "en": "Not even he knew the truth.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Ni"
+   },
+   {
+    "id": "12771fcc77",
+    "es": "Ni siquiera lo siento",
+    "en": "I'm not even sorry.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "Ni"
+   },
+   {
+    "id": "6ad09c09e9",
+    "es": "Él no es tu amigo ni mi amigo.",
+    "en": "He is not your friend or my friend.",
+    "source": "tatoeba",
+    "meaning": 0,
+    "form": "ni"
+   }
+  ]
+ },
+ {
+  "id": "hay",
+  "spanish": "hay",
+  "english": "there is / there are",
+  "partOfSpeech": "verb",
+  "phonetic": "eye",
+  "example": "¿Hay café?",
+  "exampleTranslation": "Is there coffee?",
+  "pattern": "Hay + noun  ·  ¿Hay …? = Is there …?",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "Same word for one or many: hay un perro, hay dos perros.",
+  "forms": "now: hay\nbefore: había\nwill be: habrá",
+  "exampleWord": "Hay"
+ },
+ {
+  "id": "esto",
+  "spanish": "esto",
+  "english": "this",
+  "partOfSpeech": "pronoun",
+  "phonetic": "EHS-toh",
+  "example": "¿Cuánto cuesta esto?",
+  "exampleTranslation": "How much is this?",
+  "pattern": "esto on its own, no noun after it",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "With a noun, use este / esta: este libro.",
+  "forms": "this: esto\nthat: eso\nthat (far): aquello",
+  "exampleWord": "esto"
+ },
+ {
+  "id": "eso",
+  "spanish": "eso",
+  "english": "that",
+  "partOfSpeech": "pronoun",
+  "phonetic": "EH-soh",
+  "example": "¿Qué es eso?",
+  "exampleTranslation": "What's that?",
+  "pattern": "eso on its own, no noun after it",
+  "level": "novice",
+  "kind": "word",
+  "source": "curated",
+  "tip": "¡Eso! = That's it! Exactly!",
+  "forms": "this: esto\nthat: eso\nthat (far): aquello",
+  "exampleWord": "eso"
  },
  {
   "id": "si",
@@ -5057,15 +7007,6 @@
     "meaning": 0
    },
    {
-    "id": "52473442f6",
-    "es": "Hoy trabajo hasta las cinco",
-    "en": "Today I work until five.",
-    "situation": "work",
-    "form": "Hoy",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
     "id": "44e1252a2f",
     "es": "Hoy me siento muy bien",
     "en": "I feel really good today.",
@@ -5258,15 +7199,6 @@
   "forms": "masculine: mucho\nfeminine: mucha\nplural: muchos / muchas",
   "exampleWord": "mucho",
   "phrases": [
-   {
-    "id": "4a1cd5a462",
-    "es": "Te quiero mucho",
-    "en": "I love you a lot.",
-    "situation": "couple",
-    "form": "mucho",
-    "source": "ai",
-    "meaning": 0
-   },
    {
     "id": "bb0ba498ef",
     "es": "Hay mucha gente hoy",
@@ -5585,15 +7517,6 @@
   "exampleWord": "semana",
   "phrases": [
    {
-    "id": "914a4aec38",
-    "es": "Nos vemos la próxima semana",
-    "en": "See you next week",
-    "situation": "plans",
-    "form": "semana",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
     "id": "88a43e9b29",
     "es": "Esta semana tengo mucho trabajo",
     "en": "I have a lot of work this week",
@@ -5890,15 +7813,6 @@
   "forms": "singular: el padre\nplural: los padres",
   "exampleWord": "padre",
   "phrases": [
-   {
-    "id": "55d363574a",
-    "es": "Mi padre trabaja mucho",
-    "en": "My father works a lot",
-    "situation": "family",
-    "form": "padre",
-    "source": "ai",
-    "meaning": 0
-   },
    {
     "id": "48da9150dd",
     "es": "Hoy comemos con mi padre",
@@ -7169,7 +9083,7 @@
     "es": "Hola, amiga, ¿cómo estás hoy?",
     "en": "Hi, friend, how are you today?",
     "situation": "friends",
-    "form": "¿cómo estás?",
+    "form": "cómo estás",
     "source": "ai",
     "meaning": 0
    }
@@ -7193,7 +9107,7 @@
     "es": "Hola, ¿qué tal tu día?",
     "en": "Hi, how's your day going?",
     "situation": "everyday",
-    "form": "¿qué tal?",
+    "form": "qué tal",
     "source": "ai",
     "meaning": 0
    },
@@ -7202,7 +9116,7 @@
     "es": "¿Qué tal el trabajo hoy?",
     "en": "How's work going today?",
     "situation": "work",
-    "form": "¿Qué tal?",
+    "form": "Qué tal",
     "source": "ai",
     "meaning": 0
    },
@@ -7211,7 +9125,7 @@
     "es": "¿Qué tal la escuela, mijo?",
     "en": "How's school going, son?",
     "situation": "school",
-    "form": "¿Qué tal?",
+    "form": "Qué tal",
     "source": "ai",
     "meaning": 0
    },
@@ -7220,7 +9134,7 @@
     "es": "¡Hola! ¿Qué tal, todo bien?",
     "en": "Hey! How's it going, all good?",
     "situation": "texting",
-    "form": "¿Qué tal?",
+    "form": "Qué tal",
     "source": "ai",
     "meaning": 0
    }
@@ -7830,7 +9744,7 @@
     "es": "Oye, ¿qué es esto en la mesa?",
     "en": "Hey, what is this on the table?",
     "situation": "home",
-    "form": "¿qué es esto?",
+    "form": "qué es esto",
     "source": "ai",
     "meaning": 0
    },
@@ -7839,7 +9753,7 @@
     "es": "Amor, ¿qué es esto que compraste?",
     "en": "Love, what is this you bought?",
     "situation": "couple",
-    "form": "¿qué es esto?",
+    "form": "qué es esto",
     "source": "ai",
     "meaning": 0
    }
@@ -8619,15 +10533,6 @@
     "source": "tatoeba",
     "meaning": 1,
     "form": "mirar"
-   },
-   {
-    "id": "30962f189a",
-    "es": "Solo estoy mirando.",
-    "en": "I'm just watching.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "mirando",
-    "note": "**mirando** = *mirar* → the **-ing** form."
    },
    {
     "id": "6535ed0101",
@@ -9782,14 +11687,6 @@
     "id": "f68878cc67",
     "es": "Todavía le quiere.",
     "en": "She still loves him.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Todavía"
-   },
-   {
-    "id": "e9fe46d98f",
-    "es": "Todavía está aquí.",
-    "en": "He is still here.",
     "source": "tatoeba",
     "meaning": 0,
     "form": "Todavía"
@@ -14042,726 +15939,6 @@
   "exampleWord": "Al fin y al cabo"
  },
  {
-  "id": "de",
-  "spanish": "de",
-  "english": "about",
-  "partOfSpeech": "preposition",
-  "phonetic": "deh",
-  "example": "¿Cómo sabes de ella?",
-  "exampleTranslation": "How do you know about her?",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "de",
-  "otherMeanings": [
-   {
-    "english": "The name of the Latin script letter D/d",
-    "partOfSpeech": "noun (f.)",
-    "example": "No me acuerdo de tu nombre.",
-    "exampleTranslation": "I don't remember your name.",
-    "forms": "singular: la de\nplural: las des",
-    "exampleWord": "de"
-   }
-  ],
-  "phrases": [
-   {
-    "id": "b64cda9239",
-    "es": "Hablamos de la fiesta mañana.",
-    "en": "We're talking about the party tomorrow.",
-    "situation": "plans",
-    "form": "de",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "1658713fa2",
-    "es": "¿De qué quieres platicar?",
-    "en": "What do you want to talk about?",
-    "situation": "friends",
-    "form": "De",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "e61a3df8cf",
-    "es": "Mi mamá siempre habla de ti.",
-    "en": "My mom always talks about you.",
-    "situation": "family",
-    "form": "de",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "5f8e9bac1c",
-    "es": "No sé nada de él.",
-    "en": "I don't know anything about him at all.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "de"
-   },
-   {
-    "id": "72ebd23e40",
-    "es": "No sé nada de eso.",
-    "en": "I know nothing about that.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "de"
-   },
-   {
-    "id": "88b15ec358",
-    "es": "De eso no sé nada.",
-    "en": "I don't know anything about that.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "De"
-   },
-   {
-    "id": "b8ac0248b6",
-    "es": "Ya no me acuerdo de su nombre.",
-    "en": "I don't remember her name anymore.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "de"
-   },
-   {
-    "id": "b55dbc42f8",
-    "es": "¿Cuál es el nombre de él?",
-    "en": "What is his name?",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "de"
-   },
-   {
-    "id": "ccf5502304",
-    "es": "En este momento no me acuerdo de su nombre.",
-    "en": "I can't recall her name at the moment.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "de"
-   }
-  ]
- },
- {
-  "id": "que",
-  "spanish": "que",
-  "english": "that",
-  "partOfSpeech": "conjunction",
-  "phonetic": "keh",
-  "example": "¿A que sí?",
-  "exampleTranslation": "Isn't that right?",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "que",
-  "otherMeanings": [
-   {
-    "english": "than",
-    "partOfSpeech": "conjunction",
-    "example": "No tengo más que eso.",
-    "exampleTranslation": "I don't have more than that.",
-    "exampleWord": "que"
-   },
-   {
-    "english": "who",
-    "partOfSpeech": "pronoun",
-    "example": "Soy lo que soy.",
-    "exampleTranslation": "I am who I am.",
-    "exampleWord": "que"
-   }
-  ],
-  "phrases": [
-   {
-    "id": "28db3ec5f9",
-    "es": "Creo que ya llegó mi mamá.",
-    "en": "I think my mom already arrived.",
-    "situation": "family",
-    "form": "que",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "90cf8222b6",
-    "es": "Quiero que vengas conmigo.",
-    "en": "I want you to come with me.",
-    "situation": "couple",
-    "form": "que",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "d600044541",
-    "es": "Dice que está muy cansado hoy.",
-    "en": "He says he's very tired today.",
-    "situation": "feelings",
-    "form": "que",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "fea9019b59",
-    "es": "Esta pizza es mejor que la otra.",
-    "en": "This pizza is better than the other one.",
-    "situation": "food",
-    "form": "que",
-    "source": "ai",
-    "meaning": 1
-   },
-   {
-    "id": "c3ffaabff9",
-    "es": "Sé que no sé.",
-    "en": "I know that I do not know.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "que"
-   },
-   {
-    "id": "868e09f5ec",
-    "es": "¿Es todo lo que hay?",
-    "en": "Is it all that's there?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "que"
-   },
-   {
-    "id": "7ff58793d0",
-    "es": "No tengo más que eso.",
-    "en": "I don't have more than that.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "que"
-   },
-   {
-    "id": "75f84fb0a3",
-    "es": "Es mejor que nada.",
-    "en": "Better than nothing.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "que"
-   },
-   {
-    "id": "efa41a16d4",
-    "es": "Eres mejor que yo.",
-    "en": "You are better than me.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "que"
-   },
-   {
-    "id": "987c1c3b7f",
-    "es": "Estoy mejor que él.",
-    "en": "I'm better than him.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "que"
-   },
-   {
-    "id": "762b566f27",
-    "es": "Creo que sé quién es.",
-    "en": "I think I know who it is.",
-    "source": "tatoeba",
-    "meaning": 2,
-    "form": "que"
-   },
-   {
-    "id": "bff13318c1",
-    "es": "¡El que sabe, sabe!",
-    "en": "He who knows, knows.",
-    "source": "tatoeba",
-    "meaning": 2,
-    "form": "que"
-   },
-   {
-    "id": "2310bd9a13",
-    "es": "Soy el que lo hace mejor.",
-    "en": "I'm the one who does it best.",
-    "source": "tatoeba",
-    "meaning": 2,
-    "form": "que"
-   }
-  ]
- },
- {
-  "id": "a",
-  "spanish": "a",
-  "english": "Used to express indifference or sarcasm",
-  "partOfSpeech": "interjection",
-  "phonetic": "ah",
-  "example": "Él tomó el expreso con dirección a Tokio.",
-  "exampleTranslation": "He took the express for Tokyo.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "a",
-  "otherMeanings": [
-   {
-    "english": "bishop",
-    "partOfSpeech": "noun (m.)",
-    "example": "El Nuncio Papal está visitando a nuestro obispo.",
-    "exampleTranslation": "The Papal Nuncio is visiting our bishop.",
-    "forms": "singular: el a",
-    "exampleWord": "a"
-   }
-  ],
-  "phrases": [
-   {
-    "id": "d33194299e",
-    "es": "A él le encanta el sarcasmo.",
-    "en": "He likes sarcasm a lot.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "A"
-   },
-   {
-    "id": "b4d6e36393",
-    "es": "Veo a la muerte con indiferencia.",
-    "en": "I look at death with indifference.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "a"
-   },
-   {
-    "id": "83adab5683",
-    "es": "Saca a tus caballos antes de desarrollar los alfiles.",
-    "en": "Bring out your knights before developing the bishops.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "a"
-   }
-  ]
- },
- {
-  "id": "la",
-  "spanish": "la",
-  "english": "feminine singular definite article",
-  "partOfSpeech": "article",
-  "phonetic": "lah",
-  "example": "Los nombres de los árboles son siempre femeninos en latín.",
-  "exampleTranslation": "The names of trees are always feminine in Latin.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "forms": "m. & f.: la\nplural: los",
-  "exampleWord": "Los",
-  "exampleNote": "**los** = *la* → the **plural** form.",
-  "phrases": [
-   {
-    "id": "c020d8b207",
-    "es": "Cierra la puerta, por favor.",
-    "en": "Close the door, please.",
-    "situation": "home",
-    "form": "la",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "a401ce325f",
-    "es": "Me gusta la comida de tu mamá.",
-    "en": "I like your mom's food.",
-    "situation": "food",
-    "form": "la",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "229abaf90b",
-    "es": "La casa está muy bonita.",
-    "en": "The house looks very nice.",
-    "situation": "home",
-    "form": "La",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "98da536884",
-    "es": "¿Dónde dejaste la llave?",
-    "en": "Where did you leave the key?",
-    "situation": "everyday",
-    "form": "la",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "5e65d129e2",
-    "es": "El singular de \"data\" es \"datum\".",
-    "en": "The singular of 'data' is 'datum'.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "El",
-    "note": "**el** = *la* → the **masculine** form."
-   },
-   {
-    "id": "570d4c2d15",
-    "es": "El genitivo singular de \"rosa\" es \"rosae\".",
-    "en": "The genitive singular of \"rosa\" is \"rosae\".",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "El",
-    "note": "**el** = *la* → the **masculine** form."
-   },
-   {
-    "id": "6aee15c286",
-    "es": "Los sustantivos rusos pueden ser masculinos, femeninos o neutros.",
-    "en": "Russian nouns can be masculine, feminine, or neuter.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Los",
-    "note": "**los** = *la* → the **plural** form."
-   }
-  ]
- },
- {
-  "id": "el",
-  "spanish": "el",
-  "english": "masculine singular definite article",
-  "partOfSpeech": "article",
-  "phonetic": "ehl",
-  "example": "El disfrute, aunque masculino, es independiente del género.",
-  "exampleTranslation": "Enjoyment, despite being a masculine word in gendered languages, is independent of gender.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "forms": "masculine: el\nfeminine: la\nplural: las\nneuter: lo",
-  "exampleWord": "El",
-  "phrases": [
-   {
-    "id": "827cfd05e6",
-    "es": "El café está caliente.",
-    "en": "The coffee is hot.",
-    "situation": "food",
-    "form": "El",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "1b4e93609c",
-    "es": "Apaga el celular, mi amor.",
-    "en": "Turn off the phone, my love.",
-    "situation": "couple",
-    "form": "el",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "4b9201b1ca",
-    "es": "Hoy hace mucho frío en el parque.",
-    "en": "It's very cold at the park today.",
-    "situation": "weather",
-    "form": "el",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "fc106fd0f2",
-    "es": "¿Dónde está el baño?",
-    "en": "Where is the bathroom?",
-    "situation": "travel",
-    "form": "el",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "b91ae75d80",
-    "es": "El locutor de la radio tenía una voz masculina.",
-    "en": "The radio announcer had a masculine voice.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "la",
-    "note": "**la** = *el* → the **feminine** form."
-   },
-   {
-    "id": "9d9a2972be",
-    "es": "A los hombres les gusta verse masculinos.",
-    "en": "Men like to look masculine.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "los",
-    "note": "**los** = *el* → the **plural** form."
-   },
-   {
-    "id": "2f94f0aa40",
-    "es": "Prefieren a las mujeres masculinas.",
-    "en": "They prefer masculine women.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "las",
-    "note": "**las** = *el* → the **feminine plural** form."
-   }
-  ]
- },
- {
-  "id": "y",
-  "spanish": "y",
-  "english": "well",
-  "partOfSpeech": "conjunction",
-  "phonetic": "ee",
-  "example": "Bueno, ¿y qué le pasó a ella?",
-  "exampleTranslation": "Well, what happened to her?",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "y",
-  "phrases": [
-   {
-    "id": "c5ea4dcea1",
-    "es": "¿Y tú qué quieres hacer?",
-    "en": "And what do you want to do?",
-    "situation": "plans",
-    "form": "Y",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "ce21bb8392",
-    "es": "Hoy hace bueno y mañana también lo hará.",
-    "en": "It's nice out today, and will be tomorrow as well.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "y"
-   },
-   {
-    "id": "f6ab3ae73f",
-    "es": "Él trabaja bien y rápido.",
-    "en": "He works quickly and well.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "y"
-   },
-   {
-    "id": "74ef38c169",
-    "es": "Y sin embargo, también lo contrario es siempre verdadero.",
-    "en": "And yet, the contrary is always true as well.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Y"
-   }
-  ]
- },
- {
-  "id": "en",
-  "spanish": "en",
-  "english": "in, at, on",
-  "partOfSpeech": "preposition",
-  "phonetic": "ehn",
-  "example": "en un bus",
-  "exampleTranslation": "on/in a bus",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "en",
-  "phrases": [
-   {
-    "id": "fe6576bdaf",
-    "es": "Estoy en casa.",
-    "en": "I'm at home.",
-    "situation": "home",
-    "form": "en",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "0af955c449",
-    "es": "Nos vemos en el restaurante.",
-    "en": "See you at the restaurant.",
-    "situation": "plans",
-    "form": "en",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "fca7335989",
-    "es": "Mi celular está en la mesa.",
-    "en": "My phone is on the table.",
-    "situation": "everyday",
-    "form": "en",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "b437025d86",
-    "es": "Trabajo en una oficina cerca.",
-    "en": "I work in an office nearby.",
-    "situation": "work",
-    "form": "en",
-    "source": "ai",
-    "meaning": 0
-   }
-  ]
- },
- {
-  "id": "un",
-  "spanish": "un",
-  "english": "an",
-  "partOfSpeech": "article",
-  "phonetic": "oon",
-  "example": "Es la una.",
-  "exampleTranslation": "It's one o'clock.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "forms": "masculine: un\nfeminine: una\nplural: unas",
-  "exampleWord": "una",
-  "exampleNote": "**una** = *un* → the **feminine** form.",
-  "phrases": [
-   {
-    "id": "69c66a95e7",
-    "es": "Quiero un café, por favor.",
-    "en": "I'd like a coffee, please.",
-    "situation": "food",
-    "form": "un",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "43050edb67",
-    "es": "Tengo un perro muy bonito.",
-    "en": "I have a very cute dog.",
-    "situation": "friends",
-    "form": "un",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "07ce9753d5",
-    "es": "Dame un minuto, ya voy.",
-    "en": "Give me a minute, I'm coming.",
-    "situation": "everyday",
-    "form": "un",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "b423e66c68",
-    "es": "Es un día muy bonito.",
-    "en": "It's a very nice day.",
-    "situation": "weather",
-    "form": "un",
-    "source": "ai",
-    "meaning": 0
-   }
-  ]
- },
- {
-  "id": "por",
-  "spanish": "por",
-  "english": "why?",
-  "partOfSpeech": "interjection",
-  "phonetic": "pohr",
-  "example": "¿Por qué no?",
-  "exampleTranslation": "Why not?",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "Por",
-  "otherMeanings": [
-   {
-    "english": "about",
-    "partOfSpeech": "preposition",
-    "example": "¿Qué tal mañana por la noche?",
-    "exampleTranslation": "How about tomorrow night?",
-    "exampleWord": "por"
-   },
-   {
-    "english": "through, out, via",
-    "partOfSpeech": "preposition",
-    "example": "He pasado por mucho.",
-    "exampleTranslation": "I've been through a lot.",
-    "exampleWord": "por"
-   }
-  ],
-  "phrases": [
-   {
-    "id": "74d911798b",
-    "es": "Te llamo por teléfono más tarde.",
-    "en": "I'll call you by phone later.",
-    "situation": "plans",
-    "form": "por",
-    "source": "ai",
-    "meaning": 2
-   },
-   {
-    "id": "58aca51b91",
-    "es": "Estoy preocupada por mi mamá.",
-    "en": "I'm worried about my mom.",
-    "situation": "family",
-    "form": "por",
-    "source": "ai",
-    "meaning": 1
-   },
-   {
-    "id": "ee34221d79",
-    "es": "¿Pero por qué?",
-    "en": "But why?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "por"
-   },
-   {
-    "id": "1a9ce710e1",
-    "es": "¿Es por eso?",
-    "en": "Is that why?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "por"
-   },
-   {
-    "id": "1c61005101",
-    "es": "¿Por qué yo?",
-    "en": "Why me?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Por"
-   },
-   {
-    "id": "4d2a41c3ae",
-    "es": "Me siento muy mal por eso.",
-    "en": "I feel awful about that.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "por"
-   },
-   {
-    "id": "5807bce754",
-    "es": "¡Ellos están por volver!",
-    "en": "They're about to return!",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "por"
-   },
-   {
-    "id": "07ae9cbfe0",
-    "es": "¿Por qué sabes tanto de mí?",
-    "en": "Why do you know so much about me?",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "Por"
-   },
-   {
-    "id": "52065f95d8",
-    "es": "¿Podemos pasar por aquí?",
-    "en": "Can we go through here?",
-    "source": "tatoeba",
-    "meaning": 2,
-    "form": "por"
-   },
-   {
-    "id": "c6206987e4",
-    "es": "No sabes por lo que hemos pasado.",
-    "en": "You don't know what we've been through.",
-    "source": "tatoeba",
-    "meaning": 2,
-    "form": "por"
-   },
-   {
-    "id": "4863c4a575",
-    "es": "Por la noche no me gusta salir solo.",
-    "en": "I don't like going out by myself at night.",
-    "source": "tatoeba",
-    "meaning": 2,
-    "form": "Por"
-   }
-  ]
- },
- {
   "id": "haber",
   "spanish": "haber",
   "english": "to have",
@@ -14831,349 +16008,6 @@
     "meaning": 0,
     "form": "he",
     "note": "**he** = *haber* → the **present** tense for **I** (yo). It can also be a **command** to **you** (tú) — same spelling."
-   }
-  ]
- },
- {
-  "id": "que-2",
-  "spanish": "qué",
-  "english": "what",
-  "partOfSpeech": "determiner",
-  "phonetic": "keh",
-  "example": "Pero ¿qué es?",
-  "exampleTranslation": "But what is it?",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "qué",
-  "otherMeanings": [
-   {
-    "english": "how",
-    "partOfSpeech": "adverb",
-    "example": "¿Yo qué sé?",
-    "exampleTranslation": "How should I know?",
-    "exampleWord": "qué"
-   }
-  ],
-  "phrases": [
-   {
-    "id": "f6046b720e",
-    "es": "¿Qué quieres cenar hoy?",
-    "en": "What do you want for dinner today?",
-    "situation": "food",
-    "form": "Qué",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "fd1f7f944b",
-    "es": "¿Qué hora es?",
-    "en": "What time is it?",
-    "situation": "everyday",
-    "form": "Qué",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "64f8554138",
-    "es": "¿Qué haces este fin de semana?",
-    "en": "What are you doing this weekend?",
-    "situation": "plans",
-    "form": "Qué",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "419e7cfe50",
-    "es": "¡Qué rico huele!",
-    "en": "How good it smells!",
-    "situation": "home",
-    "form": "Qué",
-    "source": "ai",
-    "meaning": 1
-   },
-   {
-    "id": "cf16ff4224",
-    "es": "¿Qué está bien?",
-    "en": "What's good?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Qué"
-   },
-   {
-    "id": "a6e7768f43",
-    "es": "¿Qué es eso?",
-    "en": "What is it?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Qué"
-   },
-   {
-    "id": "b6f85093b4",
-    "es": "¿Qué es esto?",
-    "en": "What is this?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Qué"
-   },
-   {
-    "id": "f23785f320",
-    "es": "¿Qué te parece?",
-    "en": "How about it?",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "Qué"
-   },
-   {
-    "id": "c95d49415e",
-    "es": "Hola, ¿qué tal?",
-    "en": "Hello, how are you?",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "qué"
-   },
-   {
-    "id": "ed905ccb39",
-    "es": "¡Hola! ¿Qué tal?",
-    "en": "Hi! How are you?",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "Qué"
-   }
-  ]
- },
- {
-  "id": "una",
-  "spanish": "una",
-  "english": "one",
-  "partOfSpeech": "pronoun",
-  "phonetic": "OO-nah",
-  "example": "Es la una.",
-  "exampleTranslation": "It's one o'clock.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "una",
-  "phrases": [
-   {
-    "id": "ab0aab9655",
-    "es": "Quiero una taza de café.",
-    "en": "I want a cup of coffee.",
-    "situation": "food",
-    "form": "una",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "fa1d79655e",
-    "es": "Tengo una pregunta.",
-    "en": "I have a question.",
-    "situation": "school",
-    "form": "una",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "03bb77f660",
-    "es": "Espera una hora, por favor.",
-    "en": "Wait an hour, please.",
-    "situation": "plans",
-    "form": "una",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "e86f6de39c",
-    "es": "Necesito una camisa nueva.",
-    "en": "I need a new shirt.",
-    "situation": "shopping",
-    "form": "una",
-    "source": "ai",
-    "meaning": 0
-   }
-  ]
- },
- {
-  "id": "los",
-  "spanish": "los",
-  "english": "plural masculine or neuter pronoun",
-  "partOfSpeech": "pronoun",
-  "phonetic": "lohs",
-  "example": "A los hombres les gusta verse masculinos.",
-  "exampleTranslation": "Men like to look masculine.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "los",
-  "phrases": [
-   {
-    "id": "836bd5a1b2",
-    "es": "Los quiero mucho a todos.",
-    "en": "I love you all very much.",
-    "situation": "family",
-    "form": "Los",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "0c1fc04e2b",
-    "es": "El pene es uno de los órganos sexuales masculinos.",
-    "en": "The penis is one of the masculine sexual organs.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "los"
-   },
-   {
-    "id": "13cec2eef1",
-    "es": "A los hombres les gusta lucir varoniles.",
-    "en": "Men like to look masculine.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "los"
-   },
-   {
-    "id": "6aee15c286",
-    "es": "Los sustantivos rusos pueden ser masculinos, femeninos o neutros.",
-    "en": "Russian nouns can be masculine, feminine, or neuter.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Los"
-   }
-  ]
- },
- {
-  "id": "te",
-  "spanish": "te",
-  "english": "yourself",
-  "partOfSpeech": "pronoun",
-  "phonetic": "teh",
-  "example": "Te harás daño.",
-  "exampleTranslation": "You will hurt yourself.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "Te",
-  "otherMeanings": [
-   {
-    "english": "The name of the Latin script letter T/t",
-    "partOfSpeech": "noun (f.)",
-    "example": "¿Quién te dijo mi nombre?",
-    "exampleTranslation": "Who told you my name?",
-    "forms": "singular: la te\nplural: las tes",
-    "exampleWord": "te"
-   }
-  ],
-  "phrases": [
-   {
-    "id": "22d88dc911",
-    "es": "Siéntate, la comida ya está lista.",
-    "en": "Sit down, the food is ready.",
-    "situation": "home",
-    "form": "Siéntate",
-    "source": "ai",
-    "meaning": 0,
-    "note": "**Siéntate** = *sentarse* → command for **you** (tú), with *te* attached: sit yourself down"
-   },
-   {
-    "id": "a34e34ebd3",
-    "es": "¿Te sientes orgulloso de ti mismo?",
-    "en": "Are you proud of yourself?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Te"
-   },
-   {
-    "id": "d3f34fd10b",
-    "es": "Te amas a ti mismo.",
-    "en": "You love yourself.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Te"
-   },
-   {
-    "id": "fb97346d60",
-    "es": "Te amas a ti misma.",
-    "en": "You love yourself.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Te"
-   },
-   {
-    "id": "2f393bccd1",
-    "es": "Su nombre comienza con una T y termina en M.",
-    "en": "His name begins with a T and ends with an M.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "T",
-    "note": "**t** = *te* → a form."
-   },
-   {
-    "id": "8416671ec4",
-    "es": "¿Cómo te llamas?",
-    "en": "What is your name?",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "te"
-   },
-   {
-    "id": "8869a5a02e",
-    "es": "¿Te llamas Tom?",
-    "en": "Is your name Tom?",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "Te"
-   }
-  ]
- },
- {
-  "id": "con",
-  "spanish": "con",
-  "english": "with",
-  "partOfSpeech": "preposition",
-  "phonetic": "kohn",
-  "example": "Con eso tengo.",
-  "exampleTranslation": "That will do.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "Con",
-  "phrases": [
-   {
-    "id": "02835124db",
-    "es": "¿Quieres café con leche?",
-    "en": "Do you want coffee with milk?",
-    "situation": "food",
-    "form": "con",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "ff61009984",
-    "es": "Voy con mi mamá al mercado.",
-    "en": "I'm going with my mom to the market.",
-    "situation": "family",
-    "form": "con",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "d2b52fbed2",
-    "es": "Ven conmigo, por favor.",
-    "en": "Come with me, please.",
-    "situation": "couple",
-    "form": "conmigo",
-    "source": "ai",
-    "meaning": 0,
-    "note": "**conmigo** = *con* + *mí* → \"with me\""
-   },
-   {
-    "id": "85ed83841e",
-    "es": "Hablo con mi jefe mañana.",
-    "en": "I'm talking with my boss tomorrow.",
-    "situation": "work",
-    "form": "con",
-    "source": "ai",
-    "meaning": 0
    }
   ]
  },
@@ -15413,133 +16247,6 @@
   ]
  },
  {
-  "id": "las",
-  "spanish": "las",
-  "english": "feminine plural definite article",
-  "partOfSpeech": "article",
-  "phonetic": "lahs",
-  "example": "Ya son las 7.",
-  "exampleTranslation": "It's already seven.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "las",
-  "phrases": [
-   {
-    "id": "f50df79a8b",
-    "es": "Las llaves están en la mesa.",
-    "en": "The keys are on the table.",
-    "situation": "home",
-    "form": "Las",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "4df0d78a86",
-    "es": "Nos vemos a las cinco.",
-    "en": "See you at five.",
-    "situation": "plans",
-    "form": "las",
-    "source": "ai",
-    "meaning": 0
-   }
-  ]
- },
- {
-  "id": "yo",
-  "spanish": "yo",
-  "english": "Freud's concept of the ego",
-  "partOfSpeech": "noun (m.)",
-  "phonetic": "yoh",
-  "example": "¿Por qué yo?",
-  "exampleTranslation": "Why me?",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "forms": "singular: el yo\nplural: los yos",
-  "exampleWord": "yo",
-  "phrases": [
-   {
-    "id": "9ddd36bef5",
-    "es": "El yo es parte de la mente.",
-    "en": "The ego is part of the mind.",
-    "situation": "school",
-    "form": "yo",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "bbde52435d",
-    "es": "Freud habló del yo y del ello.",
-    "en": "Freud talked about the ego and the id.",
-    "situation": "school",
-    "form": "yo",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "98af0a3eb9",
-    "es": "Mi maestro explicó qué es el yo.",
-    "en": "My teacher explained what the ego is.",
-    "situation": "school",
-    "form": "yo",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "b23490f393",
-    "es": "¿Qué es el yo en psicología?",
-    "en": "What is the ego in psychology?",
-    "situation": "school",
-    "form": "yo",
-    "source": "ai",
-    "meaning": 0
-   }
-  ]
- },
- {
-  "id": "del",
-  "spanish": "del",
-  "english": "of the, from the",
-  "partOfSpeech": "contraction",
-  "phonetic": "dehl",
-  "example": "Es el día del Señor.",
-  "exampleTranslation": "It's the day of the Lord.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "del",
-  "phrases": [
-   {
-    "id": "0ea0814e55",
-    "es": "Es el celular del niño.",
-    "en": "It's the boy's cell phone.",
-    "situation": "family",
-    "form": "del",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "98d501cedd",
-    "es": "Vengo del trabajo.",
-    "en": "I'm coming from work.",
-    "situation": "work",
-    "form": "del",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "7d94120d82",
-    "es": "Me gusta el sabor del café.",
-    "en": "I like the taste of the coffee.",
-    "situation": "food",
-    "form": "del",
-    "source": "ai",
-    "meaning": 0
-   }
-  ]
- },
- {
   "id": "como",
   "spanish": "como",
   "english": "like, about",
@@ -15639,54 +16346,6 @@
   ]
  },
  {
-  "id": "al",
-  "spanish": "al",
-  "english": "upon",
-  "partOfSpeech": "contraction",
-  "phonetic": "ahl",
-  "example": "Al entrar al cuarto, ella se cayó.",
-  "exampleTranslation": "Upon entering the room, she fell down.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "Al",
-  "phrases": [
-   {
-    "id": "86bee546dd",
-    "es": "Llámame al llegar a casa.",
-    "en": "Call me upon getting home.",
-    "situation": "texting",
-    "form": "al",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "5a72a524a0",
-    "es": "Tuvo ganas de llorar al oír eso.",
-    "en": "She felt like crying upon hearing that.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "al"
-   },
-   {
-    "id": "5cd966470d",
-    "es": "Al oír las noticias se puso a llorar.",
-    "en": "Upon hearing the news, she burst out crying.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Al"
-   },
-   {
-    "id": "18a6f7c240",
-    "es": "Al llegar al aeropuerto, llamó a su mujer por teléfono.",
-    "en": "Upon arriving at the airport, he made a phone call to his wife.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Al"
-   }
-  ]
- },
- {
   "id": "ese-2",
   "spanish": "ese",
   "english": "that",
@@ -15754,136 +16413,6 @@
     "meaning": 0,
     "form": "esas",
     "note": "**esas** = *ese* → the **feminine plural** form."
-   }
-  ]
- },
- {
-  "id": "le",
-  "spanish": "le",
-  "english": "to him, for him",
-  "partOfSpeech": "pronoun",
-  "phonetic": "leh",
-  "example": "Le quiero mucho.",
-  "exampleTranslation": "I like him very much.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "Le",
-  "otherMeanings": [
-   {
-    "english": "to you, for you",
-    "partOfSpeech": "pronoun",
-    "example": "¿Qué le parece?",
-    "exampleTranslation": "What do you think of it?",
-    "exampleWord": "le"
-   },
-   {
-    "english": "to her, for her",
-    "partOfSpeech": "pronoun",
-    "example": "A él le gusta ella.",
-    "exampleTranslation": "He likes her.",
-    "exampleWord": "le"
-   }
-  ],
-  "phrases": [
-   {
-    "id": "1f362ffd32",
-    "es": "Le mando un mensaje a mi novio.",
-    "en": "I'm sending my boyfriend a message.",
-    "situation": "texting",
-    "form": "Le",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "2b18efe758",
-    "es": "¿Le ayudo en algo, señora?",
-    "en": "Can I help you with something, ma'am?",
-    "situation": "shopping",
-    "form": "Le",
-    "source": "ai",
-    "meaning": 1
-   },
-   {
-    "id": "bef0e6bc2e",
-    "es": "Le compro flores a ella.",
-    "en": "I'm buying flowers for her.",
-    "situation": "couple",
-    "form": "Le",
-    "source": "ai",
-    "meaning": 2
-   },
-   {
-    "id": "79b39f0efc",
-    "es": "Ya no le quiero.",
-    "en": "I do not love him any longer.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "le"
-   },
-   {
-    "id": "23d7910135",
-    "es": "Ya no le creo.",
-    "en": "I don't believe him any longer.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "le"
-   },
-   {
-    "id": "1ad7d51731",
-    "es": "Ella le quiere.",
-    "en": "She loves him.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "le"
-   },
-   {
-    "id": "7928940e3a",
-    "es": "¿Sabe que le quieres?",
-    "en": "Does he know that you love him?",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "le"
-   },
-   {
-    "id": "1bd2b9b6cf",
-    "es": "Así que tú también le quieres.",
-    "en": "So, you like him too.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "le"
-   },
-   {
-    "id": "8dd8aae2e9",
-    "es": "¿Le gusta estar solo?",
-    "en": "Do you like to be alone?",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "Le"
-   },
-   {
-    "id": "581c704c80",
-    "es": "A ella le gusta ella.",
-    "en": "She likes her.",
-    "source": "tatoeba",
-    "meaning": 2,
-    "form": "le"
-   },
-   {
-    "id": "80b0907168",
-    "es": "Le dijo que la quería.",
-    "en": "He told her that he loved her.",
-    "source": "tatoeba",
-    "meaning": 2,
-    "form": "Le"
-   },
-   {
-    "id": "e76ecf4e37",
-    "es": "Eso es lo que le dije.",
-    "en": "That's what I told her.",
-    "source": "tatoeba",
-    "meaning": 2,
-    "form": "le"
    }
   ]
  },
@@ -15964,75 +16493,6 @@
     "meaning": 0,
     "form": "eso",
     "note": "**eso** = *éste* → a form."
-   }
-  ]
- },
- {
-  "id": "tu",
-  "spanish": "tú",
-  "english": "you",
-  "partOfSpeech": "pronoun",
-  "phonetic": "too",
-  "example": "Bien. ¿Y tú?",
-  "exampleTranslation": "Fine. And you?",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "tú",
-  "phrases": [
-   {
-    "id": "87eadf06d9",
-    "es": "¿Y tú qué quieres comer?",
-    "en": "And what do you want to eat?",
-    "situation": "food",
-    "form": "tú",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "10ebb55b82",
-    "es": "Tú sí sabes cocinar.",
-    "en": "You really do know how to cook.",
-    "situation": "home",
-    "form": "Tú",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "75ed90202d",
-    "es": "Primero tú, yo espero.",
-    "en": "You first, I'll wait.",
-    "situation": "everyday",
-    "form": "tú",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "8044f9bc45",
-    "es": "Ya te tengo.",
-    "en": "You're mine now.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "te",
-    "note": "**te** = *tú* → a form."
-   },
-   {
-    "id": "ef8c343719",
-    "es": "Creo en ti.",
-    "en": "I believe in you.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "ti",
-    "note": "**ti** = *tú* → a form."
-   },
-   {
-    "id": "74b1c89182",
-    "es": "¿Puedo hablar contigo?",
-    "en": "Can I have a word with you?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "contigo",
-    "note": "**contigo** = *tú* → a form."
    }
   ]
  },
@@ -16454,81 +16914,6 @@
   ]
  },
  {
-  "id": "nos",
-  "spanish": "nos",
-  "english": "ourselves",
-  "partOfSpeech": "pronoun",
-  "phonetic": "nohs",
-  "example": "Todos nos debemos hacer la misma pregunta.",
-  "exampleTranslation": "We must all ask ourselves the same question.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "nos",
-  "phrases": [
-   {
-    "id": "4d08c82d40",
-    "es": "Nos vemos mañana en la escuela.",
-    "en": "See you tomorrow at school.",
-    "situation": "school",
-    "form": "Nos",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "ae6abbc600",
-    "es": "Nos queremos mucho.",
-    "en": "We love each other a lot.",
-    "situation": "couple",
-    "form": "Nos",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "c547f811ba",
-    "es": "Hoy nos quedamos en casa.",
-    "en": "Today we're staying home.",
-    "situation": "plans",
-    "form": "nos",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "661b833668",
-    "es": "Nos vamos a las seis.",
-    "en": "We're leaving at six.",
-    "situation": "travel",
-    "form": "Nos",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "75f555fe06",
-    "es": "Realmente nos hemos divertido.",
-    "en": "We really enjoyed ourselves.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "nos"
-   },
-   {
-    "id": "c07e91a679",
-    "es": "Nos tenemos que cuidar.",
-    "en": "We need to care of ourselves.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Nos"
-   },
-   {
-    "id": "1267ff02c1",
-    "es": "Nos lo pasamos bien en la fiesta anoche.",
-    "en": "We enjoyed ourselves at the party last night.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Nos"
-   }
-  ]
- },
- {
   "id": "como-2",
   "spanish": "cómo",
   "english": "how?",
@@ -16633,46 +17018,6 @@
     "source": "tatoeba",
     "meaning": 1,
     "form": "Cómo"
-   }
-  ]
- },
- {
-  "id": "o",
-  "spanish": "o",
-  "english": "either … or",
-  "partOfSpeech": "conjunction",
-  "phonetic": "oh",
-  "example": "Estás conmigo o contra mí.",
-  "exampleTranslation": "You're either with me or you're against me.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "o",
-  "phrases": [
-   {
-    "id": "822070765c",
-    "es": "Elige uno u otro.",
-    "en": "Choose either one or the other.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "u",
-    "note": "**u** = *o* → a form."
-   },
-   {
-    "id": "7696d39973",
-    "es": "Está con nosotros o contra nosotros.",
-    "en": "You are either with us, or against us.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "o"
-   },
-   {
-    "id": "1e8b363095",
-    "es": "O tú tienes razón o la tiene él.",
-    "en": "Either you are right or he is.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "O"
    }
   ]
  },
@@ -17413,85 +17758,6 @@
   ]
  },
  {
-  "id": "usted",
-  "spanish": "usted",
-  "english": "you",
-  "partOfSpeech": "pronoun",
-  "phonetic": "oos-TEHD",
-  "example": "¿Cómo es usted?",
-  "exampleTranslation": "What do you look like?",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "forms": "m. & f.: usted\nplural: ustedes",
-  "exampleWord": "usted",
-  "phrases": [
-   {
-    "id": "9a77d79588",
-    "es": "¿Cómo está usted, señora?",
-    "en": "How are you, ma'am?",
-    "situation": "everyday",
-    "form": "usted",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "9366859e26",
-    "es": "Usted primero, por favor.",
-    "en": "You first, please.",
-    "situation": "everyday",
-    "form": "Usted",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "4fb6dc4479",
-    "es": "¿Usted quiere agua, señor?",
-    "en": "Do you want water, sir?",
-    "situation": "food",
-    "form": "Usted",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "f811023ce8",
-    "es": "Ustedes pasan primero, yo espero.",
-    "en": "You all go first, I'll wait.",
-    "situation": "friends",
-    "form": "Ustedes",
-    "source": "ai",
-    "meaning": 0,
-    "note": "**ustedes** = *usted* → the **plural** form."
-   },
-   {
-    "id": "331e8c078b",
-    "es": "¿Cómo están ustedes?",
-    "en": "How do you do?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "ustedes",
-    "note": "**ustedes** = *usted* → the **plural** form."
-   },
-   {
-    "id": "dc16b1a815",
-    "es": "¿Está Ud. hablando conmigo?",
-    "en": "Are you speaking to me?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Ud",
-    "note": "**ud** = *usted* → a form."
-   },
-   {
-    "id": "ef280fca90",
-    "es": "¿Cómo está usted?",
-    "en": "How do you do?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "usted"
-   }
-  ]
- },
- {
   "id": "hombre",
   "spanish": "hombre",
   "english": "man",
@@ -17896,14 +18162,6 @@
     "source": "tatoeba",
     "meaning": 0,
     "form": "dos"
-   },
-   {
-    "id": "801b444868",
-    "es": "¡Uno, dos, tres!",
-    "en": "One, two, three!",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "dos"
    }
   ]
  },
@@ -18148,7 +18406,7 @@
   ]
  },
  {
-  "id": "mi",
+  "id": "mi-2",
   "spanish": "mí",
   "english": "me",
   "partOfSpeech": "pronoun",
@@ -18158,45 +18416,7 @@
   "level": "novice",
   "kind": "word",
   "source": "dictionary",
-  "exampleWord": "mí",
-  "phrases": [
-   {
-    "id": "4094d1fc43",
-    "es": "¿Quieres venir conmigo o sin mí?",
-    "en": "Do you want to come with me or without me?",
-    "situation": "plans",
-    "form": "mí",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "6b623bd51b",
-    "es": "Este regalo es para mí.",
-    "en": "This gift is for me.",
-    "situation": "family",
-    "form": "mí",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "6fb92ee0d7",
-    "es": "A mí me gusta el café.",
-    "en": "I like coffee.",
-    "situation": "food",
-    "form": "mí",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "5f03d2f454",
-    "es": "¿Piensas en mí?",
-    "en": "Do you think about me?",
-    "situation": "couple",
-    "form": "mí",
-    "source": "ai",
-    "meaning": 0
-   }
-  ]
+  "exampleWord": "mí"
  },
  {
   "id": "hace",
@@ -18673,81 +18893,6 @@
     "source": "tatoeba",
     "meaning": 2,
     "form": "sobre"
-   }
-  ]
- },
- {
-  "id": "sin",
-  "spanish": "sin",
-  "english": "without",
-  "partOfSpeech": "preposition",
-  "phonetic": "seen",
-  "example": "No soy nada sin ella.",
-  "exampleTranslation": "I'm nothing without her.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "sin",
-  "phrases": [
-   {
-    "id": "c218b5d206",
-    "es": "Quiero un café sin azúcar.",
-    "en": "I want a coffee without sugar.",
-    "situation": "food",
-    "form": "sin",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "dcc0fd110f",
-    "es": "No puedo vivir sin ti.",
-    "en": "I can't live without you.",
-    "situation": "couple",
-    "form": "sin",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "9f0a674c72",
-    "es": "Salí de la casa sin celular.",
-    "en": "I left the house without my phone.",
-    "situation": "everyday",
-    "form": "sin",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "5f2364467b",
-    "es": "Hoy es un día sin lluvia.",
-    "en": "Today is a day without rain.",
-    "situation": "weather",
-    "form": "sin",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "d201f3dc46",
-    "es": "Todo es mejor sin ti.",
-    "en": "Everything is better without you.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "sin"
-   },
-   {
-    "id": "89db9feff5",
-    "es": "Sin ti no soy nada.",
-    "en": "Without you I am nothing.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Sin"
-   },
-   {
-    "id": "6d5e92fd3d",
-    "es": "Sin ti no estoy bien.",
-    "en": "Without you, I am not well.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Sin"
    }
   ]
  },
@@ -19552,63 +19697,6 @@
     "meaning": 0,
     "form": "mato",
     "note": "**mato** = *matar* → the **present** tense for **I** (yo)."
-   }
-  ]
- },
- {
-  "id": "ni",
-  "spanish": "ni",
-  "english": "Used in emphatic negations, not even",
-  "partOfSpeech": "adverb",
-  "phonetic": "nee",
-  "example": "No había ni dios.",
-  "exampleTranslation": "There was not a bloody soul.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "ni",
-  "phrases": [
-   {
-    "id": "ef1be66fb9",
-    "es": "No tengo ni un peso.",
-    "en": "I don't have even one peso.",
-    "situation": "shopping",
-    "form": "ni",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "22fccf7e44",
-    "es": "Hoy no quiero ni cocinar.",
-    "en": "Today I don't even want to cook.",
-    "situation": "food",
-    "form": "ni",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
-    "id": "736624af53",
-    "es": "Ni él sabía la verdad.",
-    "en": "Not even he knew the truth.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Ni"
-   },
-   {
-    "id": "12771fcc77",
-    "es": "Ni siquiera lo siento",
-    "en": "I'm not even sorry.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "Ni"
-   },
-   {
-    "id": "6ad09c09e9",
-    "es": "Él no es tu amigo ni mi amigo.",
-    "en": "He is not your friend or my friend.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "ni"
    }
   ]
  },
@@ -20817,19 +20905,6 @@
   ]
  },
  {
-  "id": "les",
-  "spanish": "les",
-  "english": "the",
-  "partOfSpeech": "article",
-  "phonetic": "lehs",
-  "example": "Les estudiantes están prestando atención a la clase.",
-  "exampleTranslation": "The students are paying attention to the class.",
-  "level": "novice",
-  "kind": "word",
-  "source": "dictionary",
-  "exampleWord": "Les"
- },
- {
   "id": "mio",
   "spanish": "mío",
   "english": "mine",
@@ -21765,15 +21840,6 @@
   ],
   "phrases": [
    {
-    "id": "18868dc138",
-    "es": "Te quiero tanto.",
-    "en": "I love you so much.",
-    "situation": "couple",
-    "form": "tanto",
-    "source": "ai",
-    "meaning": 0
-   },
-   {
     "id": "d48a07409f",
     "es": "Hay tanta gente en el mercado.",
     "en": "There are so many people at the market.",
@@ -22084,14 +22150,6 @@
     "id": "bbd55a4379",
     "es": "Te veo luego.",
     "en": "I'll see you later.",
-    "source": "tatoeba",
-    "meaning": 1,
-    "form": "luego"
-   },
-   {
-    "id": "3e56220616",
-    "es": "¡Te veo luego!",
-    "en": "See you later!",
     "source": "tatoeba",
     "meaning": 1,
     "form": "luego"
@@ -22463,14 +22521,6 @@
     "id": "7e4426133b",
     "es": "No tengo tres.",
     "en": "I don't have three.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "tres"
-   },
-   {
-    "id": "801b444868",
-    "es": "¡Uno, dos, tres!",
-    "en": "One, two, three!",
     "source": "tatoeba",
     "meaning": 0,
     "form": "tres"
@@ -26327,14 +26377,6 @@
     "note": "**maneras** = *manera* → the **plural** form."
    },
    {
-    "id": "1268b6465a",
-    "es": "¿No hay otra manera?",
-    "en": "Is there no other way?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "manera"
-   },
-   {
     "id": "32de597c4b",
     "es": "Debe haber una manera.",
     "en": "There has to be a way.",
@@ -28817,14 +28859,6 @@
     "source": "tatoeba",
     "meaning": 0,
     "form": "Año"
-   },
-   {
-    "id": "cc1832905f",
-    "es": "Feliz año nuevo.",
-    "en": "Happy New Year!",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "año"
    }
   ]
  },
@@ -45119,14 +45153,6 @@
     "form": "detrás"
    },
    {
-    "id": "0702aa6f9f",
-    "es": "Mira detrás de ti.",
-    "en": "Look behind you.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "detrás"
-   },
-   {
     "id": "1b69b4b78b",
     "es": "Hay alguien detrás mío.",
     "en": "Someone's behind me.",
@@ -45613,14 +45639,6 @@
     "form": "trato",
     "source": "ai",
     "meaning": 1
-   },
-   {
-    "id": "99d38b4bd0",
-    "es": "Tenemos un trato.",
-    "en": "We've got a deal.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "trato"
    },
    {
     "id": "4ac96388a3",
@@ -52919,14 +52937,6 @@
     "id": "6b653ba170",
     "es": "Era una broma.",
     "en": "It was a joke.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "broma"
-   },
-   {
-    "id": "ee9261f927",
-    "es": "Es una broma.",
-    "en": "It's a joke.",
     "source": "tatoeba",
     "meaning": 0,
     "form": "broma"
@@ -60620,14 +60630,6 @@
     "source": "tatoeba",
     "meaning": 0,
     "form": "nene"
-   },
-   {
-    "id": "e19b5f5972",
-    "es": "¡No llorés como un nene!",
-    "en": "Don't cry like a child!",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "nene"
    }
   ]
  },
@@ -64226,15 +64228,6 @@
     "en": "You speak nonsense, my friend.",
     "source": "tatoeba",
     "meaning": 0,
-    "form": "tonterías",
-    "note": "**tonterías** = *tontería* → the **plural** form."
-   },
-   {
-    "id": "9066dcd7a7",
-    "es": "No digas tonterías.",
-    "en": "Don't say crazy things.",
-    "source": "tatoeba",
-    "meaning": 1,
     "form": "tonterías",
     "note": "**tonterías** = *tontería* → the **plural** form."
    },
@@ -69519,14 +69512,6 @@
     "note": "**ruidos** = *ruido* → the **plural** form."
    },
    {
-    "id": "b81031a810",
-    "es": "¡No hagas ruido!",
-    "en": "Don't make any noise!",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "ruido"
-   },
-   {
     "id": "a13ba86fab",
     "es": "Ella hizo ruido.",
     "en": "She made noise.",
@@ -70769,14 +70754,6 @@
     "meaning": 0,
     "form": "criminales",
     "note": "**criminales** = *criminal* → the **feminine plural** form."
-   },
-   {
-    "id": "26073e2048",
-    "es": "¿Eres un criminal?",
-    "en": "Are you a criminal?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "criminal"
    },
    {
     "id": "62a01ebc97",
@@ -74083,14 +74060,6 @@
     "meaning": 0,
     "form": "pájaros",
     "note": "**pájaros** = *pájaro* → the **plural** form."
-   },
-   {
-    "id": "5a408e3d73",
-    "es": "Es un pájaro.",
-    "en": "It is a bird.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "pájaro"
    },
    {
     "id": "a48434702f",
@@ -90805,14 +90774,6 @@
     "meaning": 0,
     "form": "románticas",
     "note": "**románticas** = *romántico* → the **feminine plural** form."
-   },
-   {
-    "id": "65e915cb25",
-    "es": "Es muy romántico.",
-    "en": "It's very romantic.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "romántico"
    }
   ]
  },
@@ -92512,14 +92473,6 @@
     "id": "b67e8dfd50",
     "es": "Es lunes hoy.",
     "en": "It is Monday today.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "lunes"
-   },
-   {
-    "id": "9c518f1c7a",
-    "es": "¿Hoy es lunes?",
-    "en": "Is today Monday?",
     "source": "tatoeba",
     "meaning": 0,
     "form": "lunes"
@@ -99154,14 +99107,6 @@
     "form": "mayor"
    },
    {
-    "id": "7b00ef298c",
-    "es": "¡No soy tan mayor!",
-    "en": "I'm not that old!",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "mayor"
-   },
-   {
     "id": "0970eeea82",
     "es": "La organización se ocupa del bienestar de los mayores.",
     "en": "The organization is concerned with the welfare of the aged.",
@@ -100099,14 +100044,6 @@
     "id": "ceacf5e15b",
     "es": "Él es adorable.",
     "en": "He's adorable.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "adorable"
-   },
-   {
-    "id": "e7c9afef50",
-    "es": "Ella es adorable.",
-    "en": "She's adorable.",
     "source": "tatoeba",
     "meaning": 0,
     "form": "adorable"
@@ -109658,14 +109595,6 @@
     "note": "**fritos** = *frito* → the **plural** form."
    },
    {
-    "id": "ae2880aafb",
-    "es": "Mi cerebro está frito.",
-    "en": "My brain is fried.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "frito"
-   },
-   {
     "id": "58befd2785",
     "es": "Tom cocina pollo frito.",
     "en": "Tom cooks fried chicken.",
@@ -110966,14 +110895,6 @@
   "forms": "singular: el absurdo\nplural: los absurdos",
   "exampleWord": "absurdo",
   "phrases": [
-   {
-    "id": "ed4a43e185",
-    "es": "No seas absurdo.",
-    "en": "Don't be absurd.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "absurdo"
-   },
    {
     "id": "98b307cd3c",
     "es": "Eso es absurdo.",
@@ -124153,14 +124074,6 @@
    {
     "id": "38e33e3430",
     "es": "Tenga piedad de mí.",
-    "en": "Show pity on me.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "piedad"
-   },
-   {
-    "id": "0aedd1cdcb",
-    "es": "Tengan piedad de mí.",
     "en": "Show pity on me.",
     "source": "tatoeba",
     "meaning": 0,
@@ -163852,14 +163765,6 @@
     "note": "**picantes** = *picante* → the **feminine plural** form."
    },
    {
-    "id": "ce7a474666",
-    "es": "Es demasiado picante.",
-    "en": "It's too spicy.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "picante"
-   },
-   {
     "id": "e833603fa4",
     "es": "Me gusta el picante.",
     "en": "I like spicy.",
@@ -164022,14 +163927,6 @@
     "id": "61413b1d8b",
     "es": "Nací el 14 de febrero de 1960.",
     "en": "I was born on February 14, 1960.",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "febrero"
-   },
-   {
-    "id": "be10d13604",
-    "es": "Nací el 13 de febrero de 1987.",
-    "en": "I was born on February 13, 1987.",
     "source": "tatoeba",
     "meaning": 0,
     "form": "febrero"
@@ -190471,14 +190368,6 @@
     "source": "tatoeba",
     "meaning": 0,
     "form": "aceptable"
-   },
-   {
-    "id": "3f3ca4fab4",
-    "es": "¿Esto es aceptable?",
-    "en": "Is this acceptable?",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "aceptable"
    }
   ]
  },
@@ -195677,14 +195566,6 @@
   "forms": "m. & f.: natal\nplural: natales",
   "exampleWord": "natal",
   "phrases": [
-   {
-    "id": "6a3115274e",
-    "es": "¡Cómo me muero por ver mi tierra natal!",
-    "en": "How I long for a sight of my native land!",
-    "source": "tatoeba",
-    "meaning": 0,
-    "form": "natal"
-   },
    {
     "id": "64ecb77e08",
     "es": "Él se decidió a jamás regresar a su país natal.",

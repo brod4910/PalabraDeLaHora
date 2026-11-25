@@ -43,6 +43,14 @@ SITUATIONS = {"home", "food", "shopping", "work", "travel", "texting", "family",
 FILLER = {"to", "a", "an", "the", "of", "be", "is", "it", "one", "or", "and", "in", "on", "for", "with", "as"}
 WORD = re.compile(r"[a-záéíóúüñ]+", re.IGNORECASE)
 VERB_END = re.compile(r"(ar|er|ir|ír)(se)?$")
+# Dictionary text that describes a word instead of translating it ("Used to express…",
+# "The name of the Latin script letter T", "Freud's concept of the ego", "plural masculine pronoun").
+DESCRIPTION = re.compile(r"^(Used|Said|Expresses|Indicates|Denotes|Introduces|Refers|Describes|The name of|Name of|"
+                         r"The letter|Letter)\b|\b(concept of|definite article)\b|\b\w+ (pronoun|particle)$|script letter")
+# The words a beginner meets first. Each must be in the deck as a card of its own.
+CORE_WORDS = ("y o a de en con por para sin el la los las un una al del que qué me te se lo le les nos mi tu su "
+              "yo tú él ella nosotros usted ustedes muy no sí ni hay pero porque cuando como más bien aquí "
+              "este ese esto eso todo nada algo ser estar tener ir hacer poder querer decir").split()
 FORM_ENDINGS = ("ado", "ada", "ados", "adas", "ido", "ida", "idos", "idas", "aron", "ieron", "amos", "emos",
                 "imos", "aste", "iste", "ando", "iendo")
 
@@ -105,14 +113,19 @@ def check_deck(deck: list[dict], r: Report) -> dict:
                   "fold into the verb if the meaning is just the verb's)", looks_like_forms)
 
     bad_meanings, untranslated = [], []
-    function_pos = ("preposition", "conjunction", "article", "determiner", "pronoun", "number", "adverb")
+    function_pos = ("preposition", "conjunction", "article", "determiner", "pronoun", "number", "adverb", "contraction")
     for c in deck:
         for m in [c["english"]] + [x["english"] for x in c.get("otherMeanings") or []]:
             content = [t for t in re.findall(r"[a-z]+", m.lower()) if t not in FILLER]
             t = m.strip()
-            if (len(t) == 1 and t.isalpha()) or (t.isupper() and len(t) <= 2) or \
-               (len(t) <= 2 and not c["partOfSpeech"].startswith(function_pos) and t.lower() not in FILLER):
+            interjection = c["partOfSpeech"].startswith("interjection")
+            if ((len(t) == 1 and t.isalpha() and t not in ("I", "a")) or
+                    (not interjection and not c["partOfSpeech"].startswith(function_pos)
+                     and fold(t) == fold(c["spanish"]) and len(t) <= 2 and t.islower())):
+                # he / re / go = letter, note and game names. TV, CD, OK and oh / ah are fine.
                 bad_meanings.append(f"`{c['spanish']}` ({c['partOfSpeech']}) → “{m}” looks like a letter or musical note")
+            elif DESCRIPTION.search(m):
+                bad_meanings.append(f"`{c['spanish']}` ({c['partOfSpeech']}) → “{m}” describes the word instead of translating it")
             elif not content and not c["partOfSpeech"].startswith(function_pos):
                 # de = "of", y = "and" are fine; a noun or verb meaning "the" is not.
                 bad_meanings.append(f"`{c['spanish']}` ({c['partOfSpeech']}) → “{m}” is only filler words")
@@ -121,6 +134,20 @@ def check_deck(deck: list[dict], r: Report) -> dict:
             elif len(m) > 45:
                 bad_meanings.append(f"`{c['spanish']}` → “{m}” is very long")
     r.add("error", "Suspicious meanings", bad_meanings)
+
+    have = {c["spanish"].lower() for c in deck}
+    r.add("error", "Core beginner words missing from the deck", [f"`{w}`" for w in CORE_WORDS if w not in have])
+
+    # A rare verb that took a common word's sentences: amigar's example is "amigo", historiar's is
+    # "historia", puntar's is "punto". The highlighted word is a card of its own.
+    stolen = []
+    for c in deck:
+        ew = (c.get("exampleWord") or "").lower()
+        if (c["partOfSpeech"].startswith("verb") and c.get("source") == "dictionary" and ew and ew != c["spanish"].lower()
+                and ew in have and not words.get(ew, {}).get("partOfSpeech", "").startswith("verb")):
+            stolen.append(f"`{c['spanish']}` ({c['level']}, {c['english']}) — example uses “{ew}”, which is its own card")
+    r.add("warn", "Verb examples that use a form which is also another word (amigar → amigo, besar → beso; "
+                  "rare verbs should not be cards, common ones need a clearer example)", stolen)
     r.add("warn", "Meaning same as the Spanish word (fine for cognates like idea or hotel; "
                   "wrong for false matches like son = son)", untranslated)
 

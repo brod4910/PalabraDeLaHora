@@ -182,6 +182,15 @@ juntos | juntos | juntas | -
 SPECIAL = {
     "uno, dos, tres": "on its own: uno\nbefore a noun: un perro\nfeminine: una casa",
     "embarazada": "singular: embarazada\nplural: embarazadas",
+    "el": "masculine: el\nfeminine: la\nplural: los / las", "la": "masculine: el\nfeminine: la\nplural: los / las", "los": "masculine: el\nfeminine: la\nplural: los / las", "las": "masculine: el\nfeminine: la\nplural: los / las",
+    "un": "masculine: un\nfeminine: una\nplural: unos / unas", "una": "masculine: un\nfeminine: una\nplural: unos / unas",
+    "mi": "singular: mi\nplural: mis", "tu": "singular: tu\nplural: tus", "su": "singular: su\nplural: sus",
+    "él": "he: él\nshe: ella\nthey: ellos / ellas",
+    "nosotros": "masculine: nosotros\nfeminine: nosotras",
+    "lo": "him / it: lo\nher / it: la\nthem: los / las",
+    "le": "one person: le\nmore than one: les", "les": "one person: le\nmore than one: les",
+    "hay": "now: hay\nbefore: había\nwill be: habrá",
+    "esto": "this: esto\nthat: eso\nthat (far): aquello", "eso": "this: esto\nthat: eso\nthat (far): aquello",
 }
 
 # Key forms for a word's *second* meaning (index into otherMeanings), when it's a different part of speech.

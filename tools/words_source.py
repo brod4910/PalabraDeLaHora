@@ -275,7 +275,11 @@ def slug(s):
 
 out = []
 def add(es, en, pos, ph, ex, exen, pat, tip, level):
-    d = dict(id=slug(es), spanish=es, english=en, partOfSpeech=pos, phonetic=ph,
+    base, n, taken = slug(es), 2, {x["id"] for x in out}
+    cid = base
+    while cid in taken:                     # que / qué, tu / tú, el / él
+        cid = f"{base}-{n}"; n += 1
+    d = dict(id=cid, spanish=es, english=en, partOfSpeech=pos, phonetic=ph,
              example=ex, exampleTranslation=exen, pattern=pat,
              level=level, kind="phrase" if pos in PHRASE_POS else "word", source="curated")
     if tip: d["tip"] = tip

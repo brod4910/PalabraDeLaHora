@@ -6,6 +6,49 @@
 
 NEW = r"""
 ## novice
+#! Core little words (closed class). Wiktionary describes these instead of translating them
+#! ("Used to express…", "plural masculine or neuter pronoun"), so the importer can't build good
+#! cards for them — and they're the first words a beginner needs.
+y | and | conjunction | ee | Quiero tacos y agua. | I want tacos and water. | this + y + that | Before a word starting with an i sound it becomes e: padres e hijos.
+o | or | conjunction | oh | ¿Café o té? | Coffee or tea? | this + o + that | Before a word starting with an o sound it becomes u: siete u ocho.
+a | to / at | preposition | ah | Vamos a la playa. | Let's go to the beach. | ir a + place  ·  a las + hour = at … o'clock | Also before a person after many verbs, with no English word: Llamo a mi mamá.
+de | of / from | preposition | deh | Soy de México. | I'm from Mexico. | ser de + place  ·  la casa de Ana = Ana's house | Spanish has no 's: Ana's house = la casa de Ana.
+en | in / on / at | preposition | ehn | Estoy en casa. | I'm at home. | estar en + place | One word for in, on and at: en la mesa = on the table.
+con | with | preposition | kohn | Voy con mi hermana. | I'm going with my sister. | con + person / thing | With me = conmigo, with you = contigo.
+por | for / because of | preposition | pohr | Gracias por todo. | Thanks for everything. | Gracias por + noun  ·  por la mañana = in the morning | ¿Por qué? = why?  ·  porque = because.
+para | for / in order to | preposition | PAH-rah | Esto es para ti. | This is for you. | para + person  ·  para + infinitive = in order to | para = for a person or a purpose; por = because of.
+sin | without | preposition | seen | Un café sin azúcar, por favor. | A coffee without sugar, please. | sin + noun
+el | the | article | ehl | El perro está en la casa. | The dog is in the house. | el + masculine noun | Él with an accent means he.
+la | the | article | lah | La comida está lista. | The food is ready. | la + feminine noun | Before a verb it means her / it: La veo = I see her.
+los | the | article | lohs | Los niños están en la escuela. | The kids are at school. | los + masculine or mixed plural noun | Before a verb it means them: Los veo = I see them.
+las | the | article | lahs | Las tortillas están calientes. | The tortillas are hot. | las + feminine plural noun | Before a verb it means them: Las compro = I buy them.
+un | a / an | article | oon | Tengo un perro. | I have a dog. | un + masculine noun | On its own, one is uno: ¿Cuántos? — Uno.
+una | a / an / one | article | OO-nah | Tengo una pregunta. | I have a question. | una + feminine noun | Also the number one: una hora = one hour.
+al | to the | contraction | ahl | Vamos al parque. | Let's go to the park. | a + el = al | Only with el: a la casa stays two words.
+del | of the / from the | contraction | dehl | Vengo del trabajo. | I'm coming from work. | de + el = del | Only with el: de la casa stays two words.
+que | that | conjunction | keh | Creo que sí. | I think so. | creo que + sentence = I think that … | Without an accent it joins ideas; with one, qué means what.
+qué | what | pronoun | keh | ¿Qué quieres comer? | What do you want to eat? | ¿Qué + verb? | ¡Qué bonito! = How pretty!
+me | me / myself | pronoun | meh | ¿Me ayudas? | Will you help me? | me + verb | It goes before the verb: Me gusta = I like it.
+te | you / yourself | pronoun | teh | Te extraño. | I miss you. | te + verb | With an accent, té means tea.
+se | himself / herself / themselves | pronoun | seh | Se llama Sofía. | Her name is Sofía. | se + verb | Many verbs come with se: se llama, se fue (he left).
+lo | it / him | pronoun | loh | No lo sé. | I don't know. | lo + verb | Lo que = what: Lo que quieras = whatever you want.
+le | to him / to her / to you (usted) | pronoun | leh | Le doy un regalo. | I'm giving him a gift. | le + verb | The rest of the sentence tells you who: Le escribo a mi mamá.
+les | to them / to you all | pronoun | lehs | ¿Les gusta la comida? | Do you all like the food? | les + verb | Les gusta = they like it, or you all like it.
+nos | us / ourselves | pronoun | nohs | Nos vemos mañana. | See you tomorrow. | nos + verb | Nos vemos is literally we see each other.
+mi | my | determiner | mee | Mi casa es tu casa. | My house is your house. | mi + noun | With an accent, mí means me: para mí = for me.
+tu | your | determiner | too | ¿Cómo está tu mamá? | How's your mom? | tu + noun | With an accent, tú means you: ¿Y tú?
+su | his / her / their / your (usted) | determiner | soo | Su casa es muy bonita. | Her house is very pretty. | su + noun | One word for his, her and their: the context tells you which.
+yo | I | pronoun | yoh | Yo cocino hoy. | I'm cooking today. | yo + verb | Often left out: Cocino hoy means the same.
+tú | you | pronoun | too | ¿Y tú? | And you? | tú + verb | The casual you, for friends and family. With strangers: usted.
+él | he / him | pronoun | ehl | Él es mi hermano. | He's my brother. | él + verb | Without an accent, el means the.
+nosotros | we / us | pronoun | noh-SOH-trohs | Nosotros vamos mañana. | We're going tomorrow. | nosotros + verb | A group of only women says nosotras.
+usted | you (formal) | pronoun | oos-TEHD | ¿Cómo está usted? | How are you? | usted + él / ella verb form | For older people and strangers.
+ustedes | you all | pronoun | oos-TEH-dehs | ¿Ustedes quieren café? | Do you all want coffee? | ustedes + ellos verb form | In Mexico this is the only plural you; vosotros is used in Spain.
+muy | very | adverb | mooy | Estoy muy cansada. | I'm very tired. | muy + adjective | With a noun, use mucho: mucho trabajo = a lot of work.
+ni | not even / nor | conjunction | nee | No tengo ni idea. | I have no idea. | ni … ni … = neither … nor … | Ni modo = oh well (very Mexican).
+hay | there is / there are | verb | eye | ¿Hay café? | Is there coffee? | Hay + noun  ·  ¿Hay …? = Is there …? | Same word for one or many: hay un perro, hay dos perros.
+esto | this | pronoun | EHS-toh | ¿Cuánto cuesta esto? | How much is this? | esto on its own, no noun after it | With a noun, use este / esta: este libro.
+eso | that | pronoun | EH-soh | ¿Qué es eso? | What's that? | eso on its own, no noun after it | ¡Eso! = That's it! Exactly!
 sí | yes | adverb | see | Sí, claro. | Yes, of course. | Sí + claro / Sí, por favor | With an accent it means yes; si without one means if.
 no | no / not | adverb | noh | No hablo mucho español. | I don't speak much Spanish. | No goes right before the verb
 bien | well / fine | adverb | byehn | Estoy bien, gracias. | I'm fine, thanks. | Estoy bien  ·  Muy bien = very well
