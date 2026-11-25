@@ -76,7 +76,7 @@ Words tagged vulgar, offensive or derogatory in Wiktionary are skipped, along wi
 
 ## Adding words
 
-Add lines to `tools/new_words.py` under the right `## level` heading, then run `python3 tools/words_source.py`. It writes `tools/curated.json` and re-merges `Shared/words.json`, keeping any dictionary cards you've imported. The format is pipe-delimited: `spanish | english | part of speech | phonetic | example | translation | pattern | tip?`. Use `phrase` or `idiom` as the part of speech to make an entry an everyday-phrase card. You can also edit the JSON by hand: `tip` is optional, and `id` must be unique and URL-safe.
+Key forms for hand-written cards live in `tools/curated_forms.py`. These are conjugation, article/plural and adjective-ending tables, checked by hand. Any word missing there falls back to the dictionary's forms once you've imported. Add lines to `tools/new_words.py` under the right `## level` heading, then run `python3 tools/words_source.py`. It writes `tools/curated.json` and re-merges `Shared/words.json`, keeping any dictionary cards you've imported. The format is pipe-delimited: `spanish | english | part of speech | phonetic | example | translation | pattern | tip?`. Use `phrase` or `idiom` as the part of speech to make an entry an everyday-phrase card. You can also edit the JSON by hand: `tip` is optional, and `id` must be unique and URL-safe.
 
 ## Things worth knowing
 

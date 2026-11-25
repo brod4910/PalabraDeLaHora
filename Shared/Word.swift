@@ -65,8 +65,10 @@ struct Word: Codable, Identifiable, Hashable, Sendable {
     let phonetic: String
     let example: String
     let exampleTranslation: String
-    /// How to build a sentence with the word (or its key forms, for dictionary-generated cards).
+    /// How to build a sentence with the word (hand-written cards).
     let pattern: String?
+    /// Key forms, one "label: value" per line (yo: tengo / plural: las casas). Shown as a table.
+    let forms: String?
     let tip: String?
     let level: Level
     let kind: Kind
@@ -82,6 +84,7 @@ struct Word: Codable, Identifiable, Hashable, Sendable {
         example: "Quiero un café, por favor.",
         exampleTranslation: "I want a coffee, please.",
         pattern: "Quiero + noun  ·  Quiero + infinitive",
+        forms: "yo: quiero\ntú: quieres\nél / ella: quiere\npast (yo): quise",
         tip: "“Te quiero” is the warm, everyday way to say I love you.",
         level: .novice,
         kind: .word,

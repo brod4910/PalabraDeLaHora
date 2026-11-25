@@ -21,24 +21,26 @@ struct PatternRow: Hashable {
 }
 
 extension Word {
-    /// Dictionary cards store "label: value" lines (yo: tengo, plural: las casas). Hand-written
-    /// patterns separate alternatives with "·"; each alternative becomes its own line.
+    /// "How to use it": hand-written patterns separate alternatives with "·"; each becomes a line.
     var patternRows: [PatternRow] {
         guard let pattern, !pattern.isEmpty else { return [] }
-        if pattern.contains("\n") {
-            return pattern.split(separator: "\n").map { line in
-                let line = String(line)
-                if let r = line.range(of: ": ") {
-                    return PatternRow(label: String(line[..<r.lowerBound]), value: String(line[r.upperBound...]))
-                }
-                return PatternRow(label: nil, value: line)
-            }
-        }
         return pattern
             .components(separatedBy: "·")
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty }
             .map { PatternRow(label: nil, value: $0) }
+    }
+
+    /// "Key forms": "label: value" lines → a two-column table.
+    var formRows: [PatternRow] {
+        guard let forms, !forms.isEmpty else { return [] }
+        return forms.split(separator: "\n").map { line in
+            let line = String(line)
+            if let r = line.range(of: ": ") {
+                return PatternRow(label: String(line[..<r.lowerBound]), value: String(line[r.upperBound...]))
+            }
+            return PatternRow(label: nil, value: line)
+        }
     }
 }
 

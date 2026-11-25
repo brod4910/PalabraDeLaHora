@@ -20,7 +20,7 @@ Per card:
   spanish / english / partOfSpeech  ← Wiktionary (most common sense; vulgar/offensive words skipped)
   phonetic                          ← generated from Spanish spelling (it's regular), e.g. keh-REHR
   example / exampleTranslation      ← Tatoeba (fallback: Wiktionary usage examples)
-  pattern ("Key forms")             ← Wiktionary inflections, one "label: value" per line:
+  forms ("Key forms")               ← Wiktionary inflections, one "label: value" per line:
                                       yo: tengo / tú: tienes / él / ella: tiene / past (yo): tuve,
                                       singular: la casa / plural: las casas, adjective endings
   level                             ← frequency rank: ≤600 novice, ≤1500 beginner, ≤3000 intermediate, else fluent
@@ -641,7 +641,7 @@ def build(args) -> list[dict]:
             "source": "dictionary",
         }
         if forms := key_forms(entry, lemma):
-            card["pattern"] = forms
+            card["forms"] = forms
         cards.append(card)
 
     print(f"Generated {len(cards):,} cards. Skipped: " + ", ".join(f"{v:,} {k}" for k, v in skipped.items()))
@@ -651,9 +651,18 @@ def build(args) -> list[dict]:
 def merge() -> None:
     curated = json.loads(CURATED.read_text(encoding="utf-8")) if CURATED.exists() else []
     generated = json.loads(GENERATED.read_text(encoding="utf-8")) if GENERATED.exists() else []
+    sys.path.insert(0, str(TOOLS))
+    from curated_forms import FORMS as CURATED_FORMS
+
+    generated_forms = {g["spanish"].lower(): g["forms"] for g in generated if g.get("forms")}
     deck, ids = [], set()
     curated_words = {c["spanish"].lower() for c in curated}
+    with_forms = 0
     for c in curated:
+        # Key forms: hand-checked table first, then the dictionary's, if the word was imported.
+        forms = CURATED_FORMS.get(c["spanish"]) or generated_forms.get(c["spanish"].lower())
+        if forms:
+            c = {**c, "forms": forms}; with_forms += 1
         deck.append(c); ids.add(c["id"])
     added = 0
     for g in generated:
@@ -667,7 +676,8 @@ def merge() -> None:
     by_level = defaultdict(int)
     for c in deck:
         by_level[c["level"]] += 1
-    print(f"Shared/words.json: {len(deck):,} cards ({len(curated)} curated + {added:,} from the dictionary) — "
+    print(f"Shared/words.json: {len(deck):,} cards ({len(curated)} curated, {with_forms} with key forms, "
+          f"+ {added:,} from the dictionary) — "
           + ", ".join(f"{k} {v:,}" for k, v in by_level.items()))
 
 

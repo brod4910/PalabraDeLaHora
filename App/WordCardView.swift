@@ -26,18 +26,24 @@ struct WordCardView: View {
                     .padding(.top, 4)
                 }
             }
-            if !word.patternRows.isEmpty {
-                let rows = word.patternRows
+            if !word.formRows.isEmpty {
+                let rows = word.formRows
                 let spoken = rows.compactMap(\.spokenText)
                 let playAll: (() -> Void)? = spoken.isEmpty ? nil : {
                     Task { await speaker.say(spoken.map { Speaker.Part.spanish($0, pause: 0.5) }) }
                 }
-                section(title: word.source == "dictionary" ? "Key forms" : "How to use it",
-                        systemImage: "puzzlepiece.extension.fill",
-                        playAll: playAll) {
+                section(title: "Key forms", systemImage: "tablecells", playAll: playAll) {
                     PatternView(rows: rows, onSpeak: { row in
                         if let text = row.spokenText { speaker.speak(text) }
                     })
+                    Text("Tap a form to hear it.")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
+            }
+            if !word.patternRows.isEmpty {
+                section(title: "How to use it", systemImage: "puzzlepiece.extension.fill") {
+                    PatternView(rows: word.patternRows)
                 }
             }
             if let tip = word.tip {

@@ -220,12 +220,13 @@ private struct LargeView: View {
                     .opacity(0.85)
             }
 
-            if !word.patternRows.isEmpty {
+            let rows = word.formRows.isEmpty ? word.patternRows : word.formRows
+            if !rows.isEmpty {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(word.source == "dictionary" ? "KEY FORMS" : "HOW TO USE IT")
+                    Text(word.formRows.isEmpty ? "HOW TO USE IT" : "KEY FORMS")
                         .font(.system(size: 10, weight: .heavy, design: .rounded))
                         .tracking(0.8).opacity(0.75)
-                    PatternView(rows: word.patternRows,
+                    PatternView(rows: rows,
                                 labelFont: .system(size: 11, weight: .medium, design: .rounded),
                                 valueFont: .system(size: 13, weight: .semibold, design: .rounded),
                                 labelStyle: AnyShapeStyle(Color.white.opacity(0.75)),
