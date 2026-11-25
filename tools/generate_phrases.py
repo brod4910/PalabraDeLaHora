@@ -339,8 +339,11 @@ def process_batch(batch: list[dict], args, checker: Checker, deck_words: set[str
             seen.add(key)
             pid = dict_tools.phrase_id(ph["es"])
             situation = ph.get("situation") if ph.get("situation") in SITUATIONS else "everyday"
+            form = (ph.get("form") or "").strip().strip("¿?¡!.,;: ") or None
+            if form and not dict_tools.find_in_sentence(ph["es"], form):
+                form = None
             clean = {"id": pid, "es": ph["es"].strip(), "en": ph["en"].strip(), "situation": situation,
-                     "form": (ph.get("form") or "").strip() or None, "source": "ai",
+                     "form": form, "source": "ai",
                      "meaning": int(ph.get("meaning") or 0)}
             if (note := checker.note_for(card, ph)):
                 clean["note"] = note

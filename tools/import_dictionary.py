@@ -571,10 +571,14 @@ def form_tags(e: dict) -> dict[str, list[set[str]]]:
         all_tags[f["form"].lower()].append(tags)
         if not tags & FOREIGN_FORM_TAGS:
             out[f["form"].lower()].append(tags)
-    # Keep a form even if its only readings are the filtered ones (better than nothing).
-    for form, options in all_tags.items():
-        out.setdefault(form, options)
+    # Forms whose only readings are vos/archaic (bebé, comé) are left out entirely: in Mexican
+    # Spanish they're other words (bebé = baby) and would attract mismatched example sentences.
     return out
+
+
+def usable_forms(e: dict) -> set[str]:
+    """Spelled forms of a word, minus vos-only / archaic-only ones."""
+    return set(form_tags(e))
 
 
 def person_of(tags: set[str]) -> str | None:
@@ -888,8 +892,10 @@ def build(args) -> list[dict]:
         return None
 
     def spanish_forms(lemma: str, entry: dict) -> set[str]:
+        tagged = usable_forms(entry)
         return {lemma} | {f.get("form", "").lower() for f in entry.get("forms", []) or []
-                          if f.get("form") and " " not in f["form"]}
+                          if f.get("form") and " " not in f["form"]
+                          and (f["form"].lower() in tagged or not set(f.get("tags", [])) - META_TAGS)}
 
     def candidate_meanings(lemma: str) -> list[dict]:
         out: list[dict] = []
@@ -900,6 +906,9 @@ def build(args) -> list[dict]:
                 if sense_tags(sense) & (WEAK_TAGS | BLOCKED_TAGS):
                     continue
                 gloss = clean_gloss(sense["glosses"][-1])
+                if len(gloss) <= 2 or re.search(r"\b(musical note|note of the scale|letter of the alphabet|name of the letter)\b",
+                                                gloss, re.IGNORECASE):
+                    continue                        # la = "A" (note), mi = "E", ese = "the letter S"
                 # Glosses made only of filler words ("the", "to be") can't be counted in sentences,
                 # since nearly every English sentence has "the". They get no usage count instead of all of it.
                 kws = keywords(gloss)
@@ -997,7 +1006,9 @@ def build(args) -> list[dict]:
             if not m["example"]:
                 m["example"] = wiktionary_example(m["sense"])
         # Most-used meaning first; Wiktionary's order breaks ties.
-        meanings.sort(key=lambda m: (-m["count"], m["order"]))
+        # Most-used first; ties (often 0, e.g. "the" can't be counted) go to function words, then
+        # Wiktionary's order, so la = "the" beats the musical note "A".
+        meanings.sort(key=lambda m: (-m["count"], m["entry"].get("pos") not in FUNCTION_POS, m["order"]))
         primary = meanings[0]
         if not primary["example"] and len(meanings) == 1:
             # Only one meaning, so any sentence with the word is safe to use.
@@ -1133,13 +1144,28 @@ def merge() -> None:
                     if line.strip() and not line.startswith("#")}
     real = {g["spanish"].lower(): g.get("phrases", []) for g in generated}
     with_phrases = 0
+
+    def same_text(s: str) -> str:            # "Sólo estoy mirando." == "Solo estoy mirando"
+        return " ".join(tokens(strip_accents(s)))
+
+    def fix_form(ph: dict) -> dict:
+        """Phrase cards come back with the whole phrase as "form", punctuation included
+        ("¿Cómo estás?"), which can't be highlighted inside "¿Cómo estás hoy?". Trim it."""
+        form = ph.get("form")
+        if not form or find_in_sentence(ph["es"], form):
+            return ph
+        core = form.strip("¿?¡!.,;: ")
+        if core and find_in_sentence(ph["es"], core):
+            return {**ph, "form": find_in_sentence(ph["es"], core)}
+        return {k: v for k, v in ph.items() if k != "form"}
+
     for i, c in enumerate(deck):
-        merged, seen = [], {c["example"].strip().lower()}
+        merged, seen = [], {same_text(c["example"])}
         for ph in ai.get(c["id"], []) + real.get(c["spanish"].lower(), []):
-            if ph["id"] in rejected or ph["es"].strip().lower() in seen:
+            if ph["id"] in rejected or same_text(ph["es"]) in seen:
                 continue
-            seen.add(ph["es"].strip().lower())
-            merged.append(ph)
+            seen.add(same_text(ph["es"]))
+            merged.append(fix_form(ph))
         deck[i] = {**c, "phrases": merged} if merged else {k: v for k, v in c.items() if k != "phrases"}
         with_phrases += bool(merged)
 

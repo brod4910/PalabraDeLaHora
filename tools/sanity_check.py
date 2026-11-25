@@ -87,28 +87,42 @@ def check_deck(deck: list[dict], r: Report) -> dict:
     stems = defaultdict(list)
     for v in verbs:
         stems[fold(VERB_END.sub("", v))].append(v)
+    def keys(text: str) -> set[str]:
+        return {t[:4] for t in re.findall(r"[a-z]+", text.lower()) if t not in FILLER and len(t) > 2}
+
     looks_like_forms = []
     for w, c in words.items():
         if w in verbs or c.get("source") == "curated":
             continue
         for end in FORM_ENDINGS:
             if fold(w).endswith(end) and (base := stems.get(fold(w)[: -len(end)])):
-                looks_like_forms.append(f"`{w}` ({c['english']}) — looks like a form of {', '.join(base)}")
+                # Only when the meaning just restates the verb (comido "eaten" ↔ comer "eat"):
+                # comida "food" and llamada "call" are real nouns.
+                if any(keys(c["english"]) & keys(words[b]["english"]) for b in base):
+                    looks_like_forms.append(f"`{w}` ({c['english']}) — looks like a form of {', '.join(base)}")
                 break
-    r.add("warn", "Cards that look like a form of another card's verb (should usually fold into the verb)",
-          looks_like_forms)
+    r.add("info", "Participle-like cards (fine as adjectives like casado or preocupado; "
+                  "fold into the verb if the meaning is just the verb's)", looks_like_forms)
 
-    bad_meanings = []
+    bad_meanings, untranslated = [], []
+    function_pos = ("preposition", "conjunction", "article", "determiner", "pronoun", "number", "adverb")
     for c in deck:
         for m in [c["english"]] + [x["english"] for x in c.get("otherMeanings") or []]:
             content = [t for t in re.findall(r"[a-z]+", m.lower()) if t not in FILLER]
-            if not content:
-                bad_meanings.append(f"`{c['spanish']}` → “{m}” is only filler words")
+            t = m.strip()
+            if (len(t) == 1 and t.isalpha()) or (t.isupper() and len(t) <= 2) or \
+               (len(t) <= 2 and not c["partOfSpeech"].startswith(function_pos) and t.lower() not in FILLER):
+                bad_meanings.append(f"`{c['spanish']}` ({c['partOfSpeech']}) → “{m}” looks like a letter or musical note")
+            elif not content and not c["partOfSpeech"].startswith(function_pos):
+                # de = "of", y = "and" are fine; a noun or verb meaning "the" is not.
+                bad_meanings.append(f"`{c['spanish']}` ({c['partOfSpeech']}) → “{m}” is only filler words")
             elif fold(m) == fold(c["spanish"]) and c["kind"] == "word":
-                bad_meanings.append(f"`{c['spanish']}` → “{m}” is untranslated")
+                untranslated.append(f"`{c['spanish']}` ({c['partOfSpeech']}) → “{m}”")
             elif len(m) > 45:
                 bad_meanings.append(f"`{c['spanish']}` → “{m}” is very long")
     r.add("error", "Suspicious meanings", bad_meanings)
+    r.add("warn", "Meaning same as the Spanish word (fine for cognates like idea or hotel; "
+                  "wrong for false matches like son = son)", untranslated)
 
     example_issues = []
     for c in deck:
@@ -158,11 +172,11 @@ def check_deck(deck: list[dict], r: Report) -> dict:
     for c in deck:
         seen = set()
         for p in c.get("phrases") or []:
-            key = fold(p["es"])
+            key = " ".join(tokens(fold(p["es"])))
             if key in seen:
                 phrase_issues.append(f"`{c['spanish']}`: duplicate phrase “{p['es']}”")
             seen.add(key)
-            if p.get("form") and not contains(p["es"], p["form"]):
+            if p.get("form") and not contains(p["es"], p["form"]) and not contains(p["es"], p["form"].strip("¿?¡!.,")):
                 phrase_issues.append(f"`{c['spanish']}`: form “{p['form']}” not in “{p['es']}” ({p['id']})")
             if len(tokens(p["es"])) > 12:
                 phrase_issues.append(f"`{c['spanish']}`: long phrase ({len(tokens(p['es']))} words) “{p['es']}”")
