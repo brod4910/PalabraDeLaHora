@@ -77,6 +77,42 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
         }
     }
 
+    /// One piece of a mixed-language prompt, e.g. English "How do you say" + Spanish answer.
+    struct Part {
+        let text: String
+        /// BCP-47 language; nil = the learner's chosen Spanish voice.
+        var language: String? = nil
+        var pause: TimeInterval = 0.25
+
+        static func english(_ text: String, pause: TimeInterval = 0.25) -> Part { Part(text: text, language: "en-US", pause: pause) }
+        static func spanish(_ text: String, pause: TimeInterval = 0.25) -> Part { Part(text: text, language: nil, pause: pause) }
+    }
+
+    /// Speaks the parts in order (each in its own voice) and returns when done or stopped.
+    func say(_ parts: [Part]) async {
+        await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+            DispatchQueue.main.async {
+                self.activateAudioSession()
+                self.resumeContinuation()
+                if self.synthesizer.isSpeaking { self.synthesizer.stopSpeaking(at: .immediate) }
+                var last: AVSpeechUtterance?
+                for part in parts where !part.text.isEmpty {
+                    let u = AVSpeechUtterance(string: part.text)
+                    let language = part.language ?? AppSettings.voice.rawValue
+                    u.voice = Self.bestVoice(for: language)
+                    let multiplier = part.language == nil ? Float(AppSettings.speechRate) : 1.0
+                    u.rate = AVSpeechUtteranceDefaultSpeechRate * multiplier
+                    u.postUtteranceDelay = part.pause
+                    self.synthesizer.speak(u)
+                    last = u
+                }
+                guard let last else { c.resume(); return }
+                self.lastUtterance = last
+                self.finishContinuation = c
+            }
+        }
+    }
+
     func stop() {
         synthesizer.stopSpeaking(at: .immediate)
     }

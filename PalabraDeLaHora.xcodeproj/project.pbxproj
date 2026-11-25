@@ -51,6 +51,10 @@
 			isa = PBXBuildFile;
 			fileRef = BCB1B913B39A17CBF12497BB;
 		};
+		529A04ED28583177CB8F82CF = {
+			isa = PBXBuildFile;
+			fileRef = C61060B64A7BCE0C40EC73BA;
+		};
 		570B9C97EEB41071908E6CF8 = {
 			isa = PBXBuildFile;
 			fileRef = 03877EA907195997FB960C4C;
@@ -289,6 +293,12 @@
 			path = AppSettings.swift;
 			sourceTree = "<group>";
 		};
+		C61060B64A7BCE0C40EC73BA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = SpeechListener.swift;
+			sourceTree = "<group>";
+		};
 		E136A6DC0223E5DAD0C741DB = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.swift;
@@ -342,6 +352,7 @@
 				B7966B02B119277DB9FC1A6E,
 				8B1488007FB128F94A4D13E2,
 				FE9B504A10B4DC9F62750808,
+				C61060B64A7BCE0C40EC73BA,
 				94A7866494CE207ED144A111,
 				020A8A095C38D02BB4F892A3,
 				C2B3B50E19269B90296A3A8A,
@@ -522,6 +533,7 @@
 				F8676B6325FE079E07AEF3E8,
 				EB0D1783DAA28BCD203C3375,
 				432C8335E20DDC531D6608A3,
+				529A04ED28583177CB8F82CF,
 				733F06BA8102CCFB35AE46F7,
 				5F065D6603029EC1ED9A4AF4,
 				3766CF7477FABE1511CC4CE6,
@@ -623,6 +635,8 @@
 				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Palabra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Palabra listens to your spoken answers during verbal quizzes.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Palabra uses speech recognition to check your spoken answers in verbal quizzes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -652,6 +666,8 @@
 				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Palabra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Palabra listens to your spoken answers during verbal quizzes.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Palabra uses speech recognition to check your spoken answers in verbal quizzes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

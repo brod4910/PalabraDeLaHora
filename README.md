@@ -31,7 +31,7 @@ iOS 17+, Xcode 15+ (built against the Xcode 16 project format). No third-party d
 | Settings: cadence, accent (MX/ES/US), speech speed, notifications, reshuffle | `App/SettingsView.swift` |
 | **Levels** (Novice A1 → Fluent B2–C1) and **focus** (words + phrases / everyday phrases / vocabulary) | `Shared/Word.swift` (`WordBank.deck`) |
 | **"Learn the next word now"**: skip ahead without waiting. The widget, notifications and "Coming up" all shift with it | `App/ContentView.swift` (`Rotation.skipAhead`) |
-| **Optional quizzes** on seen words: meaning, reverse, listening, fill-in-the-blank; missed words come back sooner | `App/QuizView.swift`, `Shared/LearningProgress.swift` |
+| **Optional quizzes** on seen words, freshly shuffled each run. **Written**: multiple choice, fill in the blank, type it (with accent keys). **Verbal**: hands-free; it asks out loud and checks her spoken answer with speech recognition. Results let her review missed words or quiz again on just those | `App/QuizView.swift`, `App/SpeechListener.swift`, `Shared/LearningProgress.swift` |
 | 284-card deck: 205 words + 79 everyday phrases and idioms, tagged by level | `Shared/words.json` (source: `tools/words_source.py`, `tools/new_words.py`) |
 
 ## How the schedule works
