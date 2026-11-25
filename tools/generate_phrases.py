@@ -62,7 +62,7 @@ REJECTED = dict_tools.TOOLS / "phrases_rejected.txt"
 
 API_URL = os.environ.get("PALABRA_API_URL", "https://api.anthropic.com/v1/messages")
 API_VERSION = "2023-06-01"
-PROMPT_VERSION = 1
+PROMPT_VERSION = 2
 
 # USD per million tokens (input, output) — platform.claude.com/docs/en/about-claude/pricing
 PRICES = {
@@ -93,11 +93,17 @@ For EACH word below, write {n} different everyday phrases that use the word with
 
 Rules:
 - 3 to 9 words each. Things people actually say out loud or text.
-- Use the word itself in the phrase (any form of it is fine). Use the meaning indicated by "meaning" (0 = first meaning listed).
+- Use the word itself in the phrase (any form of it is fine).
+- Meanings: use meaning 0 (the main, most common one) for most phrases. Use another listed meaning for at
+  most ONE phrase, and only if it is common in everyday speech. Set "meaning" to the one you used.
+  Don't use the word inside a fixed expression that hides its meaning (e.g. "qué tal" for tal, "por supuesto" for supuesto).
 - Spread phrases across different situations, chosen from: {situations}.
 - Level "novice" or "beginner": mostly present tense, the infinitive, and simple tú commands; at most one past-tense phrase; only very common words.
 - Level "intermediate"/"fluent": any tense, still natural and common.
 - Vary the form of the word across phrases when it naturally has forms (yo / tú / nosotros, a command…).
+- Sound like a native speaker of this variety. No Spain-only usage (vosotros, vuestro, vale, venga, coger),
+  no literary or archaic words (mas = but, he aquí), and no word-for-word calques of English.
+- Prefer what a native would actually say, e.g. "¿Ya comiste?" not "¿Ya estás comido?"; "poner la mesa"; "una llamada".
 - No real people's names, brands, or sensitive or explicit content.
 - "en": a natural English translation (not word-for-word).
 - "form": the exact word form as it appears in the phrase (copy it, including accents and attached pronouns).
@@ -371,6 +377,22 @@ def cache_path(card_id: str, args) -> pathlib.Path:
     return CACHE / f"{card_id}.json"
 
 
+def signature(card: dict) -> str:
+    """Changes when the card's word, meanings or level change → its phrases are regenerated."""
+    meanings = [card["english"]] + [m["english"] for m in card.get("otherMeanings") or []]
+    return json.dumps([PROMPT_VERSION, card["spanish"], card["level"], meanings], ensure_ascii=False)
+
+
+def is_current(card: dict, args) -> bool:
+    path = cache_path(card["id"], args)
+    if not path.exists():
+        return False
+    try:
+        return json.loads(path.read_text(encoding="utf-8")).get("signature") == signature(card)
+    except (json.JSONDecodeError, OSError):
+        return False
+
+
 def estimate(cards: list[dict], args) -> float:
     per_word_in = 260 + 90 * args.per_word            # prompt share + review input
     per_word_out = 90 * args.per_word + 15 * args.per_word
@@ -417,7 +439,7 @@ def main() -> None:
     deck = json.loads(dict_tools.DECK.read_text(encoding="utf-8"))
     levels = set(args.levels.split(","))
     CACHE.mkdir(parents=True, exist_ok=True)
-    todo = [c for c in deck if c["level"] in levels and (args.redo or not cache_path(c["id"], args).exists())]
+    todo = [c for c in deck if c["level"] in levels and (args.redo or not is_current(c, args))]
     # Most useful first: novice before fluent, then deck order (frequency).
     order = {"novice": 0, "beginner": 1, "intermediate": 2, "fluent": 3}
     todo.sort(key=lambda c: order.get(c["level"], 9))
@@ -474,9 +496,11 @@ def main() -> None:
             except Exception as err:      # keep going; failed words are retried next run
                 print(f"\n  batch failed ({', '.join(c['spanish'] for c in batch)}): {err}")
                 continue
+            by_id = {c["id"]: c for c in batch}
             for cid, phrases in out.items():
                 cache_path(cid, args).write_text(json.dumps(
-                    {"version": PROMPT_VERSION, "model": args.model, "phrases": phrases}, ensure_ascii=False), encoding="utf-8")
+                    {"version": PROMPT_VERSION, "signature": signature(by_id[cid]), "model": args.model,
+                     "phrases": phrases}, ensure_ascii=False), encoding="utf-8")
                 kept += len(phrases)
             for cid, es, reason in usage["dropped"]:
                 log.write(f"{cid}\t{es}\t{reason}\n")
@@ -492,11 +516,15 @@ def main() -> None:
 
 def finish(deck: list[dict]) -> None:
     phrases = {}
+    cards = {c["id"]: c for c in deck}
     for f in sorted(CACHE.glob("*.json")) if CACHE.exists() else []:
         data = json.loads(f.read_text(encoding="utf-8"))
-        if data.get("phrases"):
+        card = cards.get(f.stem)
+        # Skip phrases for cards that no longer exist or whose meanings changed since they were
+        # written. Phrases from before signatures existed stay until that word is regenerated.
+        if card and data.get("phrases") and data.get("signature") in (None, signature(card)):
             phrases[f.stem] = data["phrases"]
-    if phrases:
+    if phrases or OUTPUT.exists():
         OUTPUT.write_text(json.dumps(phrases, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
         write_review(deck, phrases)
         print(f"{sum(len(v) for v in phrases.values()):,} phrases for {len(phrases):,} words → "

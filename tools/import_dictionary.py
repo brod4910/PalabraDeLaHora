@@ -72,7 +72,18 @@ TATOEBA_FULL = {
 PHRASES_PER_MEANING = 3   # extra real sentences kept per meaning for "Everyday phrases"
 LEVEL_CUTOFFS = [(600, "novice"), (1500, "beginner"), (3000, "intermediate")]
 BLOCKED_TAGS = {"vulgar", "offensive", "derogatory", "slur", "ethnic", "pejorative", "sexual"}
-WEAK_TAGS = {"obsolete", "archaic", "rare", "dated", "historical", "uncommon", "nonstandard", "misspelling"}
+WEAK_TAGS = {"regional", "obsolete", "archaic", "rare", "dated", "historical", "uncommon", "nonstandard",
+             "misspelling", "literary", "poetic", "formal", "slang", "jargon", "euphemistic"}
+# Senses tagged only for other countries are skipped (the app teaches Mexican / Latin American Spanish).
+REGION_TAGS = {"spain", "peninsular", "argentina", "rioplatense", "uruguay", "chile", "peru", "colombia",
+               "venezuela", "cuba", "caribbean", "puerto-rico", "dominican-republic", "andalusia",
+               "canary-islands", "philippines", "equatorial-guinea", "bolivia", "ecuador", "paraguay",
+               "central-america", "costa-rica", "honduras", "nicaragua", "panama", "el-salvador", "guatemala",
+               "andes", "southern-cone"}
+HOME_REGION_TAGS = {"mexico", "latin-america", "us", "united-states"}
+FUNCTION_POS = {"prep", "conj", "adv", "pron", "det", "article", "num"}
+# Never a card for Mexican Spanish learners: Spain-only "you all" words.
+SKIP_WORDS = {"vosotros", "vosotras", "vuestro", "vuestra", "vuestros", "vuestras", "os"}
 POS_LABELS = {
     "verb": "verb", "noun": "noun", "adj": "adjective", "adv": "adverb", "pron": "pronoun",
     "prep": "preposition", "conj": "conjunction", "intj": "interjection", "num": "number",
@@ -339,9 +350,13 @@ def load_entries(subset: pathlib.Path) -> dict[str, list[dict]]:
 
 
 def sense_tags(sense: dict) -> set[str]:
-    tags = set(sense.get("tags", []))
+    tags = {t.lower() for t in sense.get("tags", [])}
     for raw in sense.get("raw_tags", []) or []:
         tags.update(raw.lower().split())
+        tags.add(raw.lower().replace(" ", "-"))
+    # A sense used only in other countries (e.g. tagged Spain, Argentina) counts as weak here.
+    if tags & REGION_TAGS and not tags & HOME_REGION_TAGS:
+        tags.add("regional")
     return tags
 
 
@@ -382,7 +397,7 @@ def clean_gloss(g: str) -> str:
     return g
 
 
-STOPWORDS = {"to", "a", "an", "the", "of", "one", "be", "or", "and", "in", "on", "for", "with", "as", "at",
+STOPWORDS = {"having", "being", "to", "a", "an", "the", "of", "one", "be", "or", "and", "in", "on", "for", "with", "as", "at",
              "by", "from", "something", "someone", "oneself", "somebody", "etc", "used", "very", "some", "any"}
 
 
@@ -540,12 +555,25 @@ CLITIC_MEANING = {
 CLITIC_ORDER = sorted(CLITIC_MEANING, key=len, reverse=True)
 
 
+# Readings that don't exist in Mexican Spanish (Argentine "vos" forms like mentí, escribí as
+# commands) or are archaic. They're ignored when explaining a form.
+FOREIGN_FORM_TAGS = {"vos", "voseo", "vos-form", "archaic", "obsolete", "dated", "rare"}
+VERB_ENDING = re.compile(r"(ar|er|ir|ír)(se)?$")
+
+
 def form_tags(e: dict) -> dict[str, list[set[str]]]:
     out: dict[str, list[set[str]]] = defaultdict(list)
+    all_tags: dict[str, list[set[str]]] = defaultdict(list)
     for f in e.get("forms", []) or []:
         tags = set(f.get("tags", [])) - META_TAGS
-        if f.get("form") and tags:
+        if not f.get("form") or not tags:
+            continue
+        all_tags[f["form"].lower()].append(tags)
+        if not tags & FOREIGN_FORM_TAGS:
             out[f["form"].lower()].append(tags)
+    # Keep a form even if its only readings are the filtered ones (better than nothing).
+    for form, options in all_tags.items():
+        out.setdefault(form, options)
     return out
 
 
@@ -572,6 +600,12 @@ def describe(tags: set[str]) -> str:
     if "future" in tags: return f"the **future** tense{who} (*will …*)"
     if "conditional" in tags: return f"the **conditional**{who} (*would …*)"
     if "present" in tags: return f"the **present** tense{who}"
+    # Nouns, adjectives, determiners
+    if "feminine" in tags and "plural" in tags: return "the **feminine plural** form"
+    if "masculine" in tags and "plural" in tags: return "the **plural** form"
+    if "feminine" in tags: return "the **feminine** form"
+    if "plural" in tags: return "the **plural** form"
+    if "masculine" in tags: return "the **masculine** form"
     return "a form" + who
 
 
@@ -615,12 +649,16 @@ def split_clitics(t: str, lemma: str, ft: dict[str, list[set[str]]]):
                 stem, clitics = stem[: -len(second)], [second, first]
                 break
         base = strip_accents(stem) if strip_accents(stem) in ft or strip_accents(stem) == lemma else stem
+        # Pronouns attach only to verbs, and only to the infinitive, the -ing form or a command:
+        # aquella is not aquel + la, and mataste is not matas + te.
+        if not VERB_ENDING.search(lemma):
+            return None
         if base == lemma:
             return (base, clitics, {"infinitive"}, [{"infinitive"}])
         if base in ft:
-            # Pronouns only attach to commands, infinitives and -ing forms.
-            options = [o for o in ft[base] if o & {"imperative", "gerund", "infinitive"}] or ft[base]
-            return (base, clitics, min(options, key=tag_rank), options)
+            options = [o for o in ft[base] if o & {"imperative", "gerund", "infinitive"}]
+            if options:
+                return (base, clitics, min(options, key=tag_rank), options)
     return None
 
 
@@ -633,9 +671,16 @@ def explain(surface: str, lemma: str, analysis) -> str | None:
         parts = " + ".join(f"*{c}* ({CLITIC_MEANING[c]})" for c in clitics)
         base_desc = "the basic *to …* form" if base == lemma else describe(tags)
         return f"**{word}** = *{base}* ({base_desc}) + {parts}."
+    # Same spelling for present and past with "we" (conseguimos = we get / we got).
+    person = person_of(tags)
+    if ("present" in tags and "indicative" in tags and person
+            and any("preterite" in o and person_of(o) == person for o in options)):
+        return (f"**{word}** = *{lemma}* → the **present** or the **past** tense for {person}. "
+                f"Both are spelled the same, so the rest of the sentence tells you which.")
     text = f"**{word}** = *{lemma}* → {describe(tags)}."
-    # Same spelling, other reading (mira = he looks / Look!)
-    if "imperative" not in tags and any("imperative" in o and "negative" not in o for o in options):
+    # Same spelling, other reading (mira = he looks / Look!), only for a real tú command.
+    if "imperative" not in tags and any("imperative" in o and "negative" not in o and "second-person" in o
+                                        and "singular" in o for o in options):
         text += " It can also be a **command** to **you** (tú) — same spelling."
     return text
 
@@ -755,25 +800,13 @@ def build(args) -> list[dict]:
         entries = load_entries(subset)
     print(f"Wiktionary: {sum(len(v) for v in entries.values()):,} entries for {len(entries):,} headwords")
 
-    # 2. Lemmatize the frequency list: credit each form's count to its dictionary headword.
-    lemma_count: dict[str, int] = defaultdict(int)
-    for w, count in freq:
-        es = entries.get(w, [])
-        if any(lemma_senses(e) and e.get("pos") in POS_LABELS for e in es):
-            lemma_count[w] += count
-        else:
-            for t in dict.fromkeys(t for e in es for t in form_of_targets(e)):
-                lemma_count[t] += count
-                break
-    ranked = sorted(lemma_count.items(), key=lambda kv: -kv[1])
-
     blocked = {w for w, es in entries.items() if is_blocked(es)}
     blocked_forms = set(blocked)
     for w, es in entries.items():
         if any(t in blocked for e in es for t in form_of_targets(e)):
             blocked_forms.add(w)
 
-    # 3. Example sentences, indexed by word form (short sentences only).
+    # 2. Example sentences, indexed by word form (short sentences only).
     pairs = [] if args.no_tatoeba else load_tatoeba(args)
     print(f"Tatoeba: {len(pairs):,} Spanish–English sentence pairs")
     index: dict[str, list[int]] = defaultdict(list)
@@ -786,6 +819,62 @@ def build(args) -> list[dict]:
         scored.append((difficulty + 40 * len(toks), es_text, en_text, set(re.findall(r"[a-z]+", en_text.lower()))))
         for t in set(toks):
             index[t].append(len(scored) - 1)
+
+    # 3. Lemmatize the frequency list: credit each form's count to its dictionary word.
+    #
+    # Many frequent forms also have a rare dictionary entry of their own: comido ("fed"),
+    # acabo (a noun), deja, dije, venga, nueva ("news"), son (a music style). Those are counted as
+    # forms of their main word (comer, acabar, dejar, decir, venir, nuevo, ser) unless real
+    # sentences show the separate meaning is actually common (como = like, para = for, querido = dear).
+    def best_target(targets: list[str]) -> str:
+        # viva/vivas are forms of both vivir and (rare) vivar → choose the more frequent word.
+        return min(dict.fromkeys(targets), key=lambda t: (form_rank.get(t, 10**9), targets.index(t)))
+
+    def gloss_keywords(word: str) -> set[str]:
+        out: set[str] = set()
+        for e in entries.get(word, []):
+            for sense in lemma_senses(e)[:3]:
+                out |= set(keywords(clean_gloss(sense["glosses"][-1])))
+        return out
+
+    def own_usage_share(w: str, own_entries: list[dict], targets: list[str]) -> tuple[float, int]:
+        kws: set[str] = set()
+        for e in own_entries:
+            for sense in lemma_senses(e)[:3]:
+                if not sense_tags(sense) & (WEAK_TAGS | BLOCKED_TAGS):
+                    kws |= set(keywords(clean_gloss(sense["glosses"][-1])))
+        # Ignore words that just restate the main word's meaning: comido "having eaten" ≈ comer "eat".
+        base = {k for t in targets for k in gloss_keywords(t)}
+        kws = {k for k in kws if not any(k[:3] == b[:3] for b in base)}
+        variants = set().union(*(english_variants(k) for k in kws)) if kws else set()
+        hits = index.get(w, [])
+        if not hits:
+            return 0.0, 0
+        return sum(1 for k in hits if scored[k][3] & variants) / len(hits), len(hits)
+
+    folded: dict[str, str] = {}
+    lemma_count: dict[str, int] = defaultdict(int)
+    for w, count in freq:
+        es = entries.get(w, [])
+        own = [e for e in es if lemma_senses(e) and e.get("pos") in POS_LABELS]
+        targets = [t for e in es for t in form_of_targets(e) if t != w]
+        if own and targets:
+            function_word = any(e.get("pos") in FUNCTION_POS for e in own)
+            all_weak = all(sense_tags(sn) & (WEAK_TAGS | BLOCKED_TAGS) for e in own for sn in lemma_senses(e))
+            share, seen = own_usage_share(w, own, targets)
+            keep_own = not all_weak and (function_word or (seen >= 5 and share >= 0.3))
+            if not keep_own:
+                folded[w] = best_target(targets)
+                lemma_count[folded[w]] += count
+                continue
+        if own:
+            lemma_count[w] += count
+        elif targets:
+            lemma_count[best_target(targets)] += count
+    ranked = sorted(lemma_count.items(), key=lambda kv: -kv[1])
+    if folded:
+        sample = ", ".join(f"{w}→{t}" for w, t in list(folded.items())[:8])
+        print(f"Counted {len(folded):,} words as forms of their main word instead of separate cards ({sample}, …)")
 
     # A word can have several meanings (cuarto = room / fourth / quarter). Each meaning gets its own
     # example: a sentence only counts for a meaning if its *English translation* uses that meaning
@@ -811,11 +900,15 @@ def build(args) -> list[dict]:
                 if sense_tags(sense) & (WEAK_TAGS | BLOCKED_TAGS):
                     continue
                 gloss = clean_gloss(sense["glosses"][-1])
-                kws = keywords(gloss) or re.findall(r"[a-z]+", gloss.lower())[:1]   # "the", "to be"
-                if not gloss or len(gloss) > 40 or not kws:
+                # Glosses made only of filler words ("the", "to be") can't be counted in sentences,
+                # since nearly every English sentence has "the". They get no usage count instead of all of it.
+                kws = keywords(gloss)
+                if not gloss or len(gloss) > 40:
                     continue
-                if any(set(kws) & set(m["kws"]) for m in out):
+                if kws and any(set(kws) & set(m["kws"]) for m in out):
                     continue                        # same idea worded differently
+                if not kws and any(m["gloss"].lower() == gloss.lower() for m in out):
+                    continue
                 out.append({"gloss": gloss, "kws": kws, "entry": e, "sense": sense})
         return out
 
@@ -824,7 +917,7 @@ def build(args) -> list[dict]:
         few more real sentences (different forms first) for the card's "Everyday phrases".
         "Easiest" = common vocabulary, short, and the simplest form of the word (plain form or
         present tense beats past tenses, commands, subjunctive and attached pronouns)."""
-        variants = set().union(*(english_variants(k) for k in meaning["kws"][:3]))
+        variants = set().union(*(english_variants(k) for k in meaning["kws"][:3])) if meaning["kws"] else set()
         cands, count = [], 0
         for form in spanish_forms(lemma, meaning["entry"]):
             penalty = beginner_penalty(analyze(form, lemma, meaning["entry"]), novice)
@@ -891,6 +984,8 @@ def build(args) -> list[dict]:
             break
         if lemma in blocked:
             skipped["vulgar/offensive"] += 1; continue
+        if lemma in SKIP_WORDS:
+            skipped["not used in Mexican Spanish"] += 1; continue
         meanings = candidate_meanings(lemma)
         if not meanings:
             skipped["no usable definition"] += 1; continue
@@ -913,9 +1008,10 @@ def build(args) -> list[dict]:
         if not primary["example"]:
             skipped["no matching example sentence"] += 1; continue
 
-        # Other meanings: real usage (≥3% as many sentences as the main meaning) or a dictionary example.
+        # Other meanings only when real sentences use them (≥2, and ≥5% as often as the main one).
+        # This keeps out rare dictionary senses like sitio = "siege" or cabeza = "guy".
         others = [m for m in meanings[1:]
-                  if m["example"] and (m["count"] >= max(1, 0.03 * primary["count"]) or m["count"] == 0)][:2]
+                  if m["example"] and m["count"] >= max(2, 0.05 * primary["count"])][:2]
 
         card = {
             "id": slug(lemma), "spanish": lemma, "english": primary["gloss"],
