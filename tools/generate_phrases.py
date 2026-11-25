@@ -22,6 +22,14 @@ What it does, per batch of words:
   4. Beginner notes ("**quitaste** = *quitar* → past tense for you") are computed by the same
      analyzer the importer uses when Wiktionary data is cached, otherwise taken from the model.
 
+Two ways to run it:
+  --backend api          (default) Anthropic API with ANTHROPIC_API_KEY. Claude Max plans include
+                         monthly API credits for this — link a Console organization in claude.ai
+                         Settings › Billing, then create a key in that organization.
+  --backend claude-code  Through Claude Code on this Mac (`claude -p`), signed in with your Claude
+                         plan. Uses your plan's usage limits instead of API credits; slower, and a
+                         big run may hit a session limit — just re-run later, it continues.
+
 Results are cached per word (tools/.cache/phrases/), so re-runs only pay for new words.
 Outputs:
   tools/phrases.json          → committed; merged into Shared/words.json by import_dictionary.py
@@ -36,6 +44,8 @@ import json
 import os
 import pathlib
 import re
+import shutil
+import subprocess
 import sys
 import time
 import urllib.error
@@ -147,6 +157,42 @@ def call_claude(model: str, system: str, prompt: str, max_tokens: int, api_key: 
     raise RuntimeError("Anthropic API: too many retries")
 
 
+class UsageLimitReached(RuntimeError):
+    """Claude Code reported the plan's usage limit — stop and resume later."""
+
+
+def call_claude_code(model: str, system: str, prompt: str) -> tuple[dict, dict]:
+    """Same request through Claude Code's print mode, signed in with your Claude plan."""
+    env = {k: v for k, v in os.environ.items() if k != "ANTHROPIC_API_KEY"}   # else it bills the API key
+    cmd = ["claude", "-p", "--output-format", "json", "--model", model, "--max-turns", "1"]
+    full_prompt = f"{system}\n\n{prompt}\n\nReply with the JSON only. Do not use any tools."
+    for attempt in range(3):
+        proc = subprocess.run(cmd, input=full_prompt, capture_output=True, text=True, env=env, timeout=600)
+        out = proc.stdout.strip()
+        try:
+            envelope = json.loads(out) if out else {}
+        except json.JSONDecodeError:
+            envelope = {"is_error": True, "result": out}
+        text = envelope.get("result", "") if isinstance(envelope, dict) else ""
+        if proc.returncode == 0 and not envelope.get("is_error"):
+            return parse_json(text), envelope.get("usage", {})
+        message = (text or proc.stderr or "").strip()
+        if re.search(r"usage limit|hit your limit|limit reached|resets? (at|in)", message, re.IGNORECASE):
+            raise UsageLimitReached(message[:200])
+        if attempt < 2:
+            time.sleep(10 * (attempt + 1))
+            continue
+        raise RuntimeError(f"claude -p failed: {message[:300]}")
+    raise RuntimeError("claude -p: too many retries")
+
+
+def ask(args, system: str, prompt: str, max_tokens: int, api_key: str | None, model: str | None = None) -> tuple[dict, dict]:
+    model = model or args.model
+    if args.backend == "claude-code":
+        return call_claude_code(model, system, prompt)
+    return call_claude(model, system, prompt, max_tokens, api_key)
+
+
 def parse_json(text: str) -> dict:
     text = text.strip()
     if text.startswith("```"):
@@ -249,12 +295,11 @@ def describe_card(card: dict, n: int) -> dict:
     return d
 
 
-def process_batch(batch: list[dict], args, checker: Checker, deck_words: set[str], api_key: str) -> tuple[dict, dict]:
+def process_batch(batch: list[dict], args, checker: Checker, deck_words: set[str], api_key: str | None) -> tuple[dict, dict]:
     variety = VARIETIES[args.variety]
     prompt = GENERATE.format(variety=variety, n=args.per_word, situations=", ".join(SITUATIONS),
                              words=json.dumps([describe_card(c, args.per_word) for c in batch], ensure_ascii=False, indent=1))
-    result, usage1 = call_claude(args.model, SYSTEM, prompt, max_tokens=350 * args.per_word * len(batch) + 500,
-                                 api_key=api_key)
+    result, usage1 = ask(args, SYSTEM, prompt, max_tokens=350 * args.per_word * len(batch) + 500, api_key=api_key)
     by_id = {c["id"]: c for c in batch}
     candidates, dropped = [], []
     for w in result.get("words", []):
@@ -285,9 +330,9 @@ def process_batch(batch: list[dict], args, checker: Checker, deck_words: set[str
         items = [{"pid": ph["id"], "word": by_id[cid]["spanish"],
                   "meaning": ([by_id[cid]["english"]] + [m["english"] for m in by_id[cid].get("otherMeanings") or []])[min(ph["meaning"], len(by_id[cid].get("otherMeanings") or []))],
                   "es": ph["es"], "en": ph["en"], "note": ph.get("note", "")} for cid, ph in candidates]
-        verdicts, usage2 = call_claude(args.review_model or args.model, "Return only JSON.",
-                                       REVIEW_PROMPT.format(variety_short=args.variety, items=json.dumps(items, ensure_ascii=False, indent=1)),
-                                       max_tokens=60 * len(items) + 300, api_key=api_key)
+        verdicts, usage2 = ask(args, "Return only JSON.",
+                               REVIEW_PROMPT.format(variety_short=args.variety, items=json.dumps(items, ensure_ascii=False, indent=1)),
+                               max_tokens=60 * len(items) + 300, api_key=api_key, model=args.review_model or args.model)
         ok = {v["pid"] for v in verdicts.get("verdicts", []) if v.get("ok") is True}
         reasons = {v["pid"]: v.get("reason", "") for v in verdicts.get("verdicts", [])}
         kept = []
@@ -340,7 +385,10 @@ def main() -> None:
     ap.add_argument("--limit", type=int, help="at most this many words this run")
     ap.add_argument("--per-word", type=int, default=4)
     ap.add_argument("--batch", type=int, default=8, help="words per API call")
-    ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--workers", type=int, help="parallel requests (default 4 for api, 2 for claude-code)")
+    ap.add_argument("--backend", choices=["api", "claude-code"], default="api",
+                    help="api = Anthropic API key (Max plans include monthly API credits); "
+                         "claude-code = `claude -p` signed in with your plan (uses plan usage limits)")
     ap.add_argument("--model", default="claude-sonnet-5-5")
     ap.add_argument("--review-model", help="model for the review pass (default: same as --model)")
     ap.add_argument("--no-review", action="store_true", help="skip the second check pass (not recommended)")
@@ -360,15 +408,27 @@ def main() -> None:
     if args.limit:
         todo = todo[: args.limit]
 
-    cost = estimate(todo, args)
-    print(f"{len(todo):,} words to write phrases for ({args.per_word} each, model {args.model}). "
-          f"Estimated cost ≈ ${cost:,.2f}")
+    workers = args.workers or (2 if args.backend == "claude-code" else 4)
+    if args.backend == "claude-code":
+        print(f"{len(todo):,} words to write phrases for ({args.per_word} each, model {args.model}) "
+              f"through Claude Code — uses your Claude plan's usage limits, no API charges.")
+    else:
+        print(f"{len(todo):,} words to write phrases for ({args.per_word} each, model {args.model}). "
+              f"Estimated cost ≈ ${estimate(todo, args):,.2f} (Max plans' monthly API credits cover this)")
     if args.dry_run or not todo:
         finish(deck)
         return
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        sys.exit("Set ANTHROPIC_API_KEY first (console.anthropic.com → API keys).")
+    api_key = None
+    if args.backend == "claude-code":
+        if not shutil.which("claude"):
+            sys.exit("Claude Code isn't installed (https://docs.claude.com/en/docs/claude-code/overview), "
+                     "or use --backend api.")
+        if os.environ.get("ANTHROPIC_API_KEY"):
+            print("  Note: ANTHROPIC_API_KEY is set; it's ignored for this run so Claude Code uses your plan.")
+    else:
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            sys.exit("Set ANTHROPIC_API_KEY first (platform.claude.com → API keys), or use --backend claude-code.")
     if not args.yes and input("Continue? [y/N] ").strip().lower() != "y":
         return
 
@@ -379,12 +439,22 @@ def main() -> None:
     batches = [todo[i:i + args.batch] for i in range(0, len(todo), args.batch)]
     spent_in = spent_out = kept = dropped_total = 0
     drop_log = dict_tools.CACHE / "phrases_dropped.tsv"
-    with futures.ThreadPoolExecutor(max_workers=args.workers) as pool, open(drop_log, "a", encoding="utf-8") as log:
+    stopped = False
+    with futures.ThreadPoolExecutor(max_workers=workers) as pool, open(drop_log, "a", encoding="utf-8") as log:
         jobs = {pool.submit(process_batch, b, args, checker, deck_words, api_key): b for b in batches}
         for n, job in enumerate(futures.as_completed(jobs), 1):
             batch = jobs[job]
             try:
                 out, usage = job.result()
+            except UsageLimitReached as err:
+                if not stopped:
+                    print(f"\n  Claude plan usage limit reached ({err}). Saving progress — re-run later to continue.")
+                    stopped = True
+                    for other in jobs:
+                        other.cancel()
+                continue
+            except futures.CancelledError:
+                continue
             except Exception as err:      # keep going; failed words are retried next run
                 print(f"\n  batch failed ({', '.join(c['spanish'] for c in batch)}): {err}")
                 continue
@@ -396,9 +466,10 @@ def main() -> None:
                 log.write(f"{cid}\t{es}\t{reason}\n")
             dropped_total += len(usage["dropped"])
             spent_in += usage["input"]; spent_out += usage["output"]
-            pin, pout = PRICES.get(args.model, (0, 0))
-            print(f"\r  {n}/{len(batches)} batches · {kept:,} phrases kept · {dropped_total:,} dropped · "
-                  f"${(spent_in * pin + spent_out * pout) / 1e6:,.2f}", end="", flush=True)
+            pin, pout = PRICES.get(args.model, (0, 0)) if args.backend == "api" else (0, 0)
+            spent = f" · ${(spent_in * pin + spent_out * pout) / 1e6:,.2f}" if args.backend == "api" else ""
+            print(f"\r  {n}/{len(batches)} batches · {kept:,} phrases kept · {dropped_total:,} dropped{spent}",
+                  end="", flush=True)
     print(f"\nDropped phrases and reasons: {drop_log.relative_to(ROOT)}")
     finish(deck)
 
