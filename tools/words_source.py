@@ -145,7 +145,7 @@ W = [
   "Buenas noches, mi amor.", "Good night, my love.",
   "por la noche = at night  ·  esta noche = tonight",
   None),
- ("mañana", "tomorrow / morning", "noun / adverb", "mah-NYAH-nah",
+ ("mañana", "tomorrow / morning", "adverb", "mah-NYAH-nah",
   "Nos vemos mañana por la mañana.", "See you tomorrow morning.",
   "mañana = tomorrow  ·  la mañana = the morning",
   None),

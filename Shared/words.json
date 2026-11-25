@@ -537,7 +537,7 @@
   "id": "manana",
   "spanish": "mañana",
   "english": "tomorrow",
-  "partOfSpeech": "noun / adverb",
+  "partOfSpeech": "adverb",
   "phonetic": "mah-NYAH-nah",
   "example": "Nos vemos mañana.",
   "exampleTranslation": "See you tomorrow.",
@@ -550,10 +550,10 @@
     "english": "morning (la mañana)",
     "partOfSpeech": "noun (f.)",
     "example": "Corro por la mañana.",
-    "exampleTranslation": "I go running in the morning."
+    "exampleTranslation": "I go running in the morning.",
+    "forms": "singular: la mañana\nplural: las mañanas"
    }
-  ],
-  "forms": "singular: la mañana\nplural: las mañanas"
+  ]
  },
  {
   "id": "amor",
@@ -883,7 +883,8 @@
   "pattern": "¿Cuánto cuesta + singular? · ¿Cuánto cuestan + plural?",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "forms": "masculine: cuánto\nfeminine: cuánta\nplural: cuántos / cuántas"
  },
  {
   "id": "por-favor",
@@ -1101,7 +1102,8 @@
   "pattern": "verb + mucho  ·  mucho / mucha + noun",
   "level": "novice",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "forms": "masculine: mucho\nfeminine: mucha\nplural: muchos / muchas"
  },
  {
   "id": "mas",
@@ -1128,7 +1130,8 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
-  "tip": "Uno becomes un before a masculine noun: un perro."
+  "tip": "Uno becomes un before a masculine noun: un perro.",
+  "forms": "on its own: uno\nbefore a noun: un perro\nfeminine: una casa"
  },
  {
   "id": "hora",
@@ -2046,7 +2049,8 @@
   "pattern": "todo el día = all day",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "forms": "masculine: todo\nfeminine: toda\nplural: todos / todas"
  },
  {
   "id": "cada",
@@ -2130,7 +2134,7 @@
   "id": "tarde",
   "spanish": "tarde",
   "english": "late",
-  "partOfSpeech": "adverb / noun",
+  "partOfSpeech": "adverb",
   "phonetic": "TAHR-deh",
   "example": "Llego tarde, lo siento.",
   "exampleTranslation": "I'm running late, sorry.",
@@ -2143,7 +2147,8 @@
     "english": "afternoon (la tarde)",
     "partOfSpeech": "noun (f.)",
     "example": "Nos vemos esta tarde.",
-    "exampleTranslation": "See you this afternoon."
+    "exampleTranslation": "See you this afternoon.",
+    "forms": "singular: la tarde\nplural: las tardes"
    }
   ]
  },
@@ -2420,7 +2425,8 @@
   "pattern": "verb + juntos",
   "level": "beginner",
   "kind": "word",
-  "source": "curated"
+  "source": "curated",
+  "forms": "masculine: juntos\nfeminine: juntas"
  },
  {
   "id": "me-gustaria",
@@ -3715,7 +3721,8 @@
   "level": "fluent",
   "kind": "word",
   "source": "curated",
-  "tip": "False friend! Embarrassed = avergonzado/a, or me da vergüenza."
+  "tip": "False friend! Embarrassed = avergonzado/a, or me da vergüenza.",
+  "forms": "singular: embarazada\nplural: embarazadas"
  },
  {
   "id": "verguenza",

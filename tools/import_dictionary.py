@@ -419,13 +419,59 @@ def noun_gender(e: dict) -> str | None:
     return None
 
 
+CLITICS = ("me ", "te ", "se ", "nos ", "os ")
+
+
 def find_form(e: dict, required: set[str], forbidden: set[str] = frozenset()) -> str | None:
     for f in e.get("forms", []) or []:
         tags = set(f.get("tags", []))
         form = f.get("form", "")
-        if required <= tags and not (tags & forbidden) and form and " " not in form and form != "-":
+        if not form or form == "-" or not required <= tags or tags & forbidden:
+            continue
+        # One word, or a reflexive form like "me acuerdo".
+        if " " not in form or (form.startswith(CLITICS) and form.count(" ") == 1):
             return form
     return None
+
+
+HEAD_FORM = re.compile(
+    r"\b(masculine plural|feminine plural|masculine singular|feminine singular|neuter|feminine|masculine|plural)"
+    r"\s+([a-záéíóúüñ]+)", re.IGNORECASE)
+
+
+def head_forms(e: dict) -> dict[str, str]:
+    """Forms listed only in the headword line, e.g.
+    "este (feminine esta, masculine plural estos, feminine plural estas, neuter esto)"."""
+    out: dict[str, str] = {}
+    for h in e.get("head_templates", []) or []:
+        for m in HEAD_FORM.finditer(h.get("expansion", "")):
+            out.setdefault(m.group(1).lower(), m.group(2))
+    return out
+
+
+def gendered_rows(e: dict, word: str) -> list[tuple[str, str]]:
+    """masculine / feminine / plural (/ neuter) for adjectives, determiners, articles, pronouns, numbers."""
+    h = head_forms(e)
+    fem = (find_form(e, {"feminine", "singular"}) or find_form(e, {"feminine"}, {"plural"})
+           or h.get("feminine singular") or h.get("feminine"))
+    mpl = find_form(e, {"masculine", "plural"}) or h.get("masculine plural")
+    fpl = find_form(e, {"feminine", "plural"}) or h.get("feminine plural")
+    pl = find_form(e, {"plural"}, {"feminine", "masculine"}) or h.get("plural")
+    neuter = find_form(e, {"neuter"}) or h.get("neuter")
+    rows: list[tuple[str, str]] = []
+    if fem and fem != word:
+        rows = [("masculine", word), ("feminine", fem)]
+        plurals = [x for x in dict.fromkeys((mpl, fpl)) if x] or ([pl] if pl else [])
+        if plurals:
+            rows.append(("plural", " / ".join(plurals)))
+    elif mpl or pl:
+        rows = [("m. & f.", word), ("plural", mpl or pl)]
+    if neuter and neuter != word and rows:
+        rows.append(("neuter", neuter))
+    return rows
+
+
+KEY_FORM_POS = {"verb", "noun", "adj", "det", "article", "pron", "num"}
 
 
 def key_forms(e: dict, word: str) -> str | None:
@@ -443,23 +489,24 @@ def key_forms(e: dict, word: str) -> str | None:
             if past:
                 rows.append(("past (yo)", past))
     elif pos == "noun":
+        h = head_forms(e)
         g = noun_gender(e)
-        plural = find_form(e, {"plural"})
-        article, plural_article = {"m.": ("el", "los"), "f.": ("la", "las"), "m./f.": ("el / la", "los / las")}.get(g or "", ("", ""))
-        if article:
-            rows.append(("singular", f"{article} {word}"))
-        if plural and plural != word:
-            rows.append(("plural", f"{plural_article} {plural}".strip()))
-    elif pos == "adj":
-        fem = find_form(e, {"feminine", "singular"}) or find_form(e, {"feminine"}, {"plural"})
-        mpl = find_form(e, {"masculine", "plural"}) or find_form(e, {"plural"}, {"feminine"})
-        fpl = find_form(e, {"feminine", "plural"})
+        plural = find_form(e, {"plural"}, {"feminine"}) or h.get("plural")
+        fem = find_form(e, {"feminine"}, {"plural"}) or h.get("feminine")        # amigo → amiga
+        fem_pl = find_form(e, {"feminine", "plural"}) or h.get("feminine plural")
         if fem and fem != word:
-            rows = [("masculine", word), ("feminine", fem)]
-            if mpl or fpl:
-                rows.append(("plural", " / ".join(x for x in (mpl, fpl) if x)))
-        elif mpl:
-            rows = [("m. & f.", word), ("plural", mpl)]
+            rows.append(("singular", f"el {word} / la {fem}"))
+            if plural:
+                rows.append(("plural", f"los {plural}" + (f" / las {fem_pl}" if fem_pl else "")))
+        else:
+            article, plural_article = {"m.": ("el", "los"), "f.": ("la", "las"),
+                                       "m./f.": ("el / la", "los / las")}.get(g or "", ("", ""))
+            if article:
+                rows.append(("singular", f"{article} {word}"))
+            if plural and plural != word:
+                rows.append(("plural", f"{plural_article} {plural}".strip()))
+    elif pos in ("adj", "det", "article", "pron", "num"):
+        rows = gendered_rows(e, word)
     return "\n".join(f"{label}: {value}" for label, value in rows) or None
 
 
@@ -705,6 +752,19 @@ def build(args) -> list[dict]:
                 card["otherMeanings"].append(om)
         cards.append(card)
 
+    # Sweep: which cards that *could* change form ended up without key forms?
+    changeable = {"verb", "noun", "adjective", "determiner", "article", "pronoun", "number"}
+    missing = [c for c in cards if not c.get("forms") and c["partOfSpeech"].split(" ")[0] in changeable]
+    report = CACHE / "missing_key_forms.txt"
+    report.write_text("\n".join(f'{c["spanish"]}\t{c["partOfSpeech"]}\t{c["english"]}' for c in missing) + "\n",
+                      encoding="utf-8")
+    by_pos = defaultdict(int)
+    for c in missing:
+        by_pos[c["partOfSpeech"].split(" ")[0]] += 1
+    with_forms = sum(1 for c in cards if c.get("forms"))
+    print(f"Key forms: {with_forms:,} of {len(cards):,} cards. Without (verbs/nouns/adjectives/etc. only): "
+          + (", ".join(f"{v} {k}" for k, v in sorted(by_pos.items(), key=lambda kv: -kv[1])) or "none")
+          + f"  → list in {report.relative_to(ROOT)}")
     print(f"Generated {len(cards):,} cards. Skipped: " + ", ".join(f"{v:,} {k}" for k, v in skipped.items()))
     return cards
 
@@ -713,7 +773,7 @@ def merge() -> None:
     curated = json.loads(CURATED.read_text(encoding="utf-8")) if CURATED.exists() else []
     generated = json.loads(GENERATED.read_text(encoding="utf-8")) if GENERATED.exists() else []
     sys.path.insert(0, str(TOOLS))
-    from curated_forms import FORMS as CURATED_FORMS
+    from curated_forms import FORMS as CURATED_FORMS, MEANING_FORMS
 
     generated_forms = {g["spanish"].lower(): g["forms"] for g in generated if g.get("forms")}
     deck, ids = [], set()
@@ -724,6 +784,10 @@ def merge() -> None:
         forms = CURATED_FORMS.get(c["spanish"]) or generated_forms.get(c["spanish"].lower())
         if forms:
             c = {**c, "forms": forms}; with_forms += 1
+        if c.get("otherMeanings"):
+            c = {**c, "otherMeanings": [
+                {**m, "forms": MEANING_FORMS[(c["spanish"], i)]} if (c["spanish"], i) in MEANING_FORMS else m
+                for i, m in enumerate(c["otherMeanings"])]}
         deck.append(c); ids.add(c["id"])
     added = 0
     for g in generated:

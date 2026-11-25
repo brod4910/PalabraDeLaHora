@@ -113,7 +113,6 @@ comida | la comida | las comidas
 tiempo | el tiempo | los tiempos
 día | el día | los días
 noche | la noche | las noches
-mañana | la mañana | las mañanas
 amor | el amor | los amores
 familia | la familia | las familias
 amigo | el amigo / la amiga | los amigos / las amigas
@@ -173,7 +172,23 @@ emocionado | emocionado | emocionada | emocionados / emocionadas
 agradecido | agradecido | agradecida | agradecidos / agradecidas
 agotado | agotado | agotada | agotados / agotadas
 sensible | sensible | = | sensibles
+cuánto | cuánto | cuánta | cuántos / cuántas
+mucho | mucho | mucha | muchos / muchas
+todo | todo | toda | todos / todas
+juntos | juntos | juntas | -
 """
+
+# Words that don't fit the tables above.
+SPECIAL = {
+    "uno, dos, tres": "on its own: uno\nbefore a noun: un perro\nfeminine: una casa",
+    "embarazada": "singular: embarazada\nplural: embarazadas",
+}
+
+# Key forms for a word's *second* meaning (index into otherMeanings), when it's a different part of speech.
+MEANING_FORMS = {
+    ("mañana", 0): "singular: la mañana\nplural: las mañanas",
+    ("tarde", 0): "singular: la tarde\nplural: las tardes",
+}
 
 
 def _rows(block):
@@ -194,7 +209,11 @@ def build() -> dict[str, str]:
         if plural != "-": lines.append(f"plural: {plural}")
         forms[word] = "\n".join(lines)
     for word, m, f, pl in _rows(ADJECTIVES):
-        forms[word] = f"m. & f.: {m}\nplural: {pl}" if f == "=" else f"masculine: {m}\nfeminine: {f}\nplural: {pl}"
+        lines = [f"m. & f.: {m}"] if f == "=" else [f"masculine: {m}", f"feminine: {f}"]
+        if pl != "-":
+            lines.append(f"plural: {pl}")
+        forms[word] = "\n".join(lines)
+    forms.update(SPECIAL)
     return forms
 
 

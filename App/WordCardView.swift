@@ -20,6 +20,13 @@ struct WordCardView: View {
                 exampleBlock(word.example, word.exampleTranslation)
             }
             formsSection(word.formRows, title: "Key forms")
+            if word.formRows.isEmpty && word.neverChangesForm {
+                section(title: "Key forms", systemImage: "tablecells") {
+                    Text("**\(word.spanish)** never changes — same form for masculine, feminine, singular and plural.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
             if !word.patternRows.isEmpty {
                 section(title: "How to use it", systemImage: "puzzlepiece.extension.fill") {
                     PatternView(rows: word.patternRows)

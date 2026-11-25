@@ -90,7 +90,7 @@ nada | nothing | pronoun | NAH-dah | No pasa nada. | No worries. / It's nothing.
 alguien | someone | pronoun | AHL-gyehn | Alguien está en la puerta. | Someone is at the door. | Alguien + verb
 nadie | nobody | pronoun | NAH-dyeh | No hay nadie en casa. | Nobody's home. | No + verb + nadie
 temprano | early | adverb | tehm-PRAH-noh | Mañana me levanto temprano. | Tomorrow I'm getting up early. | levantarse temprano = get up early
-tarde | late / afternoon | adverb / noun | TAHR-deh | Llego tarde, lo siento. | I'm running late, sorry. | tarde = late  ·  la tarde = the afternoon
+tarde | late / afternoon | adverb | TAHR-deh | Llego tarde, lo siento. | I'm running late, sorry. | tarde = late  ·  la tarde = the afternoon
 todavía | still / yet | adverb | toh-dah-BEE-ah | Todavía no he comido. | I haven't eaten yet. | todavía no = not yet
 ya | already / now | adverb | yah | Ya llegué. | I'm here. (I've arrived.) | ya no = not anymore
 después | after / later | adverb | dehs-PWEHS | Después de cenar, vemos una película. | After dinner, we'll watch a movie. | después de + infinitive

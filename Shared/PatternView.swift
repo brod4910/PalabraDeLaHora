@@ -33,6 +33,16 @@ extension Word {
 
     /// "Key forms": "label: value" lines → a two-column table.
     var formRows: [PatternRow] { PatternRow.rows(fromForms: forms) }
+
+    /// Single words whose part of speech never inflects (adverbs, conjunctions, prepositions…),
+    /// so an empty Key forms section is expected rather than missing data.
+    var neverChangesForm: Bool {
+        guard kind == .word else { return false }
+        let pos = partOfSpeech.lowercased()
+        let invariable = ["adverb", "conjunction", "preposition", "interjection", "question word"]
+        let invariablePronouns: Set<String> = ["algo", "nada", "alguien", "nadie", "cada", "qué", "quién"]
+        return invariable.contains { pos.hasPrefix($0) } || invariablePronouns.contains(spanish)
+    }
 }
 
 extension Meaning {
