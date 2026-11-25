@@ -1,0 +1,708 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1FA207B9761973B629E6DB16 = {
+			isa = PBXBuildFile;
+			fileRef = 2ADB1AD68DE779C2DDFE7691;
+		};
+		3766CF7477FABE1511CC4CE6 = {
+			isa = PBXBuildFile;
+			fileRef = C393BF19D8473F0058CF5870;
+		};
+		38098A69CA3303DDF3067265 = {
+			isa = PBXBuildFile;
+			fileRef = 4D3B9340B20651CD3E227132;
+		};
+		38F3ABDA8871D5B4BE599FDB = {
+			isa = PBXBuildFile;
+			fileRef = 63B7BF8F31A1E2EFCA1FCBBF;
+		};
+		3D800404944775AE3B3C7CCB = {
+			isa = PBXBuildFile;
+			fileRef = BCB1B913B39A17CBF12497BB;
+		};
+		3FA41A18CD7812497AF56B5F = {
+			isa = PBXBuildFile;
+			fileRef = E136A6DC0223E5DAD0C741DB;
+		};
+		4402B7390E829C0D7AF79695 = {
+			isa = PBXBuildFile;
+			fileRef = 764C03B97302C5AF1E18DC27;
+		};
+		4FEE1F2A0C7AAE5F08EA08CA = {
+			isa = PBXBuildFile;
+			fileRef = BCB1B913B39A17CBF12497BB;
+		};
+		570B9C97EEB41071908E6CF8 = {
+			isa = PBXBuildFile;
+			fileRef = 03877EA907195997FB960C4C;
+			settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); };
+		};
+		5AB1488CF2DF62E402F6908B = {
+			isa = PBXBuildFile;
+			fileRef = ED114806AA50021AE38B944E;
+		};
+		5F065D6603029EC1ED9A4AF4 = {
+			isa = PBXBuildFile;
+			fileRef = 2799A6634A5474094B7404AA;
+		};
+		6FE30C35C518C83E247EAFD0 = {
+			isa = PBXBuildFile;
+			fileRef = 780EED58566ECFA78B446FBB;
+		};
+		733F06BA8102CCFB35AE46F7 = {
+			isa = PBXBuildFile;
+			fileRef = 94A7866494CE207ED144A111;
+		};
+		7711CBAB1AA433C56B54D0D4 = {
+			isa = PBXBuildFile;
+			fileRef = 43CE4703619D66F0FAE9C7FC;
+		};
+		8228D95C9E0E1AE0B7D01532 = {
+			isa = PBXBuildFile;
+			fileRef = 020A8A095C38D02BB4F892A3;
+		};
+		A744C27FCB47AA4F5C2D2862 = {
+			isa = PBXBuildFile;
+			fileRef = C393BF19D8473F0058CF5870;
+		};
+		C4A6F45C1179EEF1924989DA = {
+			isa = PBXBuildFile;
+			fileRef = 780EED58566ECFA78B446FBB;
+		};
+		C5B1D75306B8A0E82AD0E3E9 = {
+			isa = PBXBuildFile;
+			fileRef = 2799A6634A5474094B7404AA;
+		};
+		D2859354E45DE6E7C138BB54 = {
+			isa = PBXBuildFile;
+			fileRef = 4D3B9340B20651CD3E227132;
+		};
+		DCCC1A6A2BCC039F79D7C4FF = {
+			isa = PBXBuildFile;
+			fileRef = E136A6DC0223E5DAD0C741DB;
+		};
+		EB0D1783DAA28BCD203C3375 = {
+			isa = PBXBuildFile;
+			fileRef = 8B1488007FB128F94A4D13E2;
+		};
+		EF226052074D41BB128EA919 = {
+			isa = PBXBuildFile;
+			fileRef = 2ADB1AD68DE779C2DDFE7691;
+		};
+		F39FAAF4550DB7CB0F7B7A08 = {
+			isa = PBXBuildFile;
+			fileRef = 77785EA85531B45658A79F9A;
+		};
+		F50CF10F19F38E44BDC3C7D8 = {
+			isa = PBXBuildFile;
+			fileRef = 474D561A6719DC8B23DCBFD7;
+		};
+		F8676B6325FE079E07AEF3E8 = {
+			isa = PBXBuildFile;
+			fileRef = B7966B02B119277DB9FC1A6E;
+		};
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B978D3110952DBE23C5C8A80 = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46F86FAA6BBF9AC94A7E4595;
+			proxyType = 1;
+			remoteGlobalIDString = 39617C7C4E19172AAA0E575F;
+			remoteInfo = PalabraWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		821BE2999B0918590B3E5482 = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				570B9C97EEB41071908E6CF8,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		020A8A095C38D02BB4F892A3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = folder.assetcatalog;
+			path = Assets.xcassets;
+			sourceTree = "<group>";
+		};
+		03877EA907195997FB960C4C = {
+			isa = PBXFileReference;
+			explicitFileType = "wrapper.app-extension";
+			includeInIndex = 0;
+			path = PalabraWidgetExtension.appex;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		165EE1BEA255F2CE8456AD0C = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.entitlements;
+			path = PalabraWidgetExtension.entitlements;
+			sourceTree = "<group>";
+		};
+		2799A6634A5474094B7404AA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = Word.swift;
+			sourceTree = "<group>";
+		};
+		2ADB1AD68DE779C2DDFE7691 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = Theme.swift;
+			sourceTree = "<group>";
+		};
+		43CE4703619D66F0FAE9C7FC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PalabraWidgetBundle.swift;
+			sourceTree = "<group>";
+		};
+		474D561A6719DC8B23DCBFD7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ContentView.swift;
+			sourceTree = "<group>";
+		};
+		4D3B9340B20651CD3E227132 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = SpeakWordIntent.swift;
+			sourceTree = "<group>";
+		};
+		5CE36DFF156109F4336E703F = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			path = Info.plist;
+			sourceTree = "<group>";
+		};
+		63B7BF8F31A1E2EFCA1FCBBF = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WordCardView.swift;
+			sourceTree = "<group>";
+		};
+		764C03B97302C5AF1E18DC27 = {
+			isa = PBXFileReference;
+			lastKnownFileType = folder.assetcatalog;
+			path = Assets.xcassets;
+			sourceTree = "<group>";
+		};
+		77785EA85531B45658A79F9A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PalabraApp.swift;
+			sourceTree = "<group>";
+		};
+		780EED58566ECFA78B446FBB = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.json;
+			path = words.json;
+			sourceTree = "<group>";
+		};
+		7D8A0F2FA426BFABA4070CC6 = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			path = PalabraDeLaHora.app;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7E069165862689FE5F293965 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.entitlements;
+			path = PalabraDeLaHora.entitlements;
+			sourceTree = "<group>";
+		};
+		8B1488007FB128F94A4D13E2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = SettingsView.swift;
+			sourceTree = "<group>";
+		};
+		94A7866494CE207ED144A111 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = NotificationScheduler.swift;
+			sourceTree = "<group>";
+		};
+		B7966B02B119277DB9FC1A6E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = ReviewView.swift;
+			sourceTree = "<group>";
+		};
+		BCB1B913B39A17CBF12497BB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = Speaker.swift;
+			sourceTree = "<group>";
+		};
+		C2B3B50E19269B90296A3A8A = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			path = Info.plist;
+			sourceTree = "<group>";
+		};
+		C393BF19D8473F0058CF5870 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = AppSettings.swift;
+			sourceTree = "<group>";
+		};
+		E136A6DC0223E5DAD0C741DB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = WordSchedule.swift;
+			sourceTree = "<group>";
+		};
+		ED114806AA50021AE38B944E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = PalabraWidget.swift;
+			sourceTree = "<group>";
+		};
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4D3D1712112DCF78B1788E36 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1A7FD12C992ECBB23B92CB6 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		22EE43E5F9A80405E6DFEACD = {
+			isa = PBXGroup;
+			children = (
+				77785EA85531B45658A79F9A,
+				474D561A6719DC8B23DCBFD7,
+				63B7BF8F31A1E2EFCA1FCBBF,
+				B7966B02B119277DB9FC1A6E,
+				8B1488007FB128F94A4D13E2,
+				94A7866494CE207ED144A111,
+				020A8A095C38D02BB4F892A3,
+				C2B3B50E19269B90296A3A8A,
+				7E069165862689FE5F293965,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		6986E8ABF2BA75FD324C4787 = {
+			isa = PBXGroup;
+			children = (
+				43CE4703619D66F0FAE9C7FC,
+				ED114806AA50021AE38B944E,
+				764C03B97302C5AF1E18DC27,
+				5CE36DFF156109F4336E703F,
+				165EE1BEA255F2CE8456AD0C,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		8241ED42B56CC1DA7F726566 = {
+			isa = PBXGroup;
+			children = (
+				7D8A0F2FA426BFABA4070CC6,
+				03877EA907195997FB960C4C,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A2772EB5676ED2B691193947 = {
+			isa = PBXGroup;
+			children = (
+				22EE43E5F9A80405E6DFEACD,
+				6986E8ABF2BA75FD324C4787,
+				C64F91A36BC1DFFBFBF7BCE4,
+				8241ED42B56CC1DA7F726566,
+			);
+			sourceTree = "<group>";
+		};
+		C64F91A36BC1DFFBFBF7BCE4 = {
+			isa = PBXGroup;
+			children = (
+				2799A6634A5474094B7404AA,
+				C393BF19D8473F0058CF5870,
+				E136A6DC0223E5DAD0C741DB,
+				BCB1B913B39A17CBF12497BB,
+				4D3B9340B20651CD3E227132,
+				2ADB1AD68DE779C2DDFE7691,
+				780EED58566ECFA78B446FBB,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		39617C7C4E19172AAA0E575F = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57B0FFA400C8D0BB29186F1C;
+			buildPhases = (
+				092B18792F465A9AE1B14D6E,
+				B1A7FD12C992ECBB23B92CB6,
+				38AC7771E573FCFD176E9CF9,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PalabraWidgetExtension;
+			productName = PalabraWidgetExtension;
+			productReference = 03877EA907195997FB960C4C;
+			productType = "com.apple.product-type.app-extension";
+		};
+		BDF8FD657A7B639996D0CE0F = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 77C599EC9088CB9C6AE70722;
+			buildPhases = (
+				2248DA68B4E0FFE648AE4774,
+				4D3D1712112DCF78B1788E36,
+				D6CE66B27A1766F29EDB556A,
+				821BE2999B0918590B3E5482,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F7E0E96CE4331405EE707AAB,
+			);
+			name = PalabraDeLaHora;
+			productName = PalabraDeLaHora;
+			productReference = 7D8A0F2FA426BFABA4070CC6;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46F86FAA6BBF9AC94A7E4595 = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					BDF8FD657A7B639996D0CE0F = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					39617C7C4E19172AAA0E575F = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = AC4D63F12EBBDCB32DFBA89F;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A2772EB5676ED2B691193947;
+			productRefGroup = 8241ED42B56CC1DA7F726566;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BDF8FD657A7B639996D0CE0F,
+				39617C7C4E19172AAA0E575F,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		38AC7771E573FCFD176E9CF9 = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4402B7390E829C0D7AF79695,
+				6FE30C35C518C83E247EAFD0,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6CE66B27A1766F29EDB556A = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8228D95C9E0E1AE0B7D01532,
+				C4A6F45C1179EEF1924989DA,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		092B18792F465A9AE1B14D6E = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7711CBAB1AA433C56B54D0D4,
+				5AB1488CF2DF62E402F6908B,
+				C5B1D75306B8A0E82AD0E3E9,
+				A744C27FCB47AA4F5C2D2862,
+				3FA41A18CD7812497AF56B5F,
+				4FEE1F2A0C7AAE5F08EA08CA,
+				D2859354E45DE6E7C138BB54,
+				EF226052074D41BB128EA919,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2248DA68B4E0FFE648AE4774 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F39FAAF4550DB7CB0F7B7A08,
+				F50CF10F19F38E44BDC3C7D8,
+				38F3ABDA8871D5B4BE599FDB,
+				F8676B6325FE079E07AEF3E8,
+				EB0D1783DAA28BCD203C3375,
+				733F06BA8102CCFB35AE46F7,
+				5F065D6603029EC1ED9A4AF4,
+				3766CF7477FABE1511CC4CE6,
+				DCCC1A6A2BCC039F79D7C4FF,
+				3D800404944775AE3B3C7CCB,
+				38098A69CA3303DDF3067265,
+				1FA207B9761973B629E6DB16,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F7E0E96CE4331405EE707AAB = {
+			isa = PBXTargetDependency;
+			target = 39617C7C4E19172AAA0E575F;
+			targetProxy = B978D3110952DBE23C5C8A80;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		03E09CFA6F3B6CA7574DF724 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PALABRA_BUNDLE_ID = com.example.palabra;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		64709C05FD3E8D2FCB9AC2AD = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				PALABRA_BUNDLE_ID = com.example.palabra;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7815FE68B1FCC71E72965519 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/PalabraDeLaHora.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Palabra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PALABRA_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		9366874050E403499E5B0D5C = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/PalabraDeLaHora.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Palabra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PALABRA_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		BCD4D6F72671AC1D477EA79D = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = Widget/PalabraWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Palabra Widget";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PALABRA_BUNDLE_ID).widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E373EFD8B0B036508765006D = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = Widget/PalabraWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Palabra Widget";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PALABRA_BUNDLE_ID).widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		57B0FFA400C8D0BB29186F1C = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCD4D6F72671AC1D477EA79D,
+				E373EFD8B0B036508765006D,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		77C599EC9088CB9C6AE70722 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9366874050E403499E5B0D5C,
+				7815FE68B1FCC71E72965519,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AC4D63F12EBBDCB32DFBA89F = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64709C05FD3E8D2FCB9AC2AD,
+				03E09CFA6F3B6CA7574DF724,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 46F86FAA6BBF9AC94A7E4595;
+}
