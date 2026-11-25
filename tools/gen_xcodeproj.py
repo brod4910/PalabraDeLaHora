@@ -28,9 +28,9 @@ FILETYPES = {
 
 groups = {
     "Shared": ["Word.swift", "AppSettings.swift", "WordSchedule.swift", "Speaker.swift",
-               "SpeakWordIntent.swift", "SlowSpeech.swift", "LearningProgress.swift", "PatternView.swift", "Theme.swift", "words.json"],
+               "SpeakWordIntent.swift", "SlowSpeech.swift", "LearningProgress.swift", "PatternView.swift", "LivePhraseStore.swift", "Theme.swift", "words.json"],
     "App": ["PalabraApp.swift", "ContentView.swift", "WordCardView.swift", "ReviewView.swift",
-            "SettingsView.swift", "QuizView.swift", "SpeechListener.swift", "NotificationScheduler.swift", "Assets.xcassets", "Info.plist",
+            "SettingsView.swift", "QuizView.swift", "SpeechListener.swift", "PhrasesView.swift", "LiveGenerator.swift", "NotificationScheduler.swift", "Assets.xcassets", "Info.plist",
             "PalabraDeLaHora.entitlements"],
     "Widget": ["PalabraWidgetBundle.swift", "PalabraWidget.swift", "Assets.xcassets", "Info.plist",
                "PalabraWidgetExtension.entitlements"],

@@ -33,7 +33,7 @@ struct PalabraApp: App {
 final class AppRouter: ObservableObject {
     static let shared = AppRouter()
 
-    enum Tab: Hashable { case today, review, quiz, settings }
+    enum Tab: Hashable { case today, review, phrases, quiz, settings }
 
     @Published var tab: Tab = .today
     /// A word to present (from a widget tap or a notification) — may not be the current word.

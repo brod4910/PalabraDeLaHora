@@ -49,6 +49,8 @@ CACHE = TOOLS / ".cache"
 CURATED = TOOLS / "curated.json"
 GENERATED = TOOLS / "generated.json"
 DECK = ROOT / "Shared" / "words.json"
+PHRASES = TOOLS / "phrases.json"
+REJECTED_PHRASES = TOOLS / "phrases_rejected.txt"
 
 FREQ_URL = "https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/es/es_50k.txt"
 KAIKKI_URLS = [
@@ -67,6 +69,7 @@ TATOEBA_FULL = {
     "links": "https://downloads.tatoeba.org/exports/links.tar.bz2",
 }
 
+PHRASES_PER_MEANING = 3   # extra real sentences kept per meaning for "Everyday phrases"
 LEVEL_CUTOFFS = [(600, "novice"), (1500, "beginner"), (3000, "intermediate")]
 BLOCKED_TAGS = {"vulgar", "offensive", "derogatory", "slur", "ethnic", "pejorative", "sexual"}
 WEAK_TAGS = {"obsolete", "archaic", "rare", "dated", "historical", "uncommon", "nonstandard", "misspelling"}
@@ -111,6 +114,11 @@ def open_text(path: pathlib.Path):
 
 
 # ─────────────────────────────────────────────────────────────── text helpers
+
+def phrase_id(spanish: str) -> str:
+    import hashlib
+    return hashlib.sha1(spanish.strip().lower().encode("utf-8")).hexdigest()[:10]
+
 
 def slug(s: str) -> str:
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()
@@ -811,24 +819,45 @@ def build(args) -> list[dict]:
                 out.append({"gloss": gloss, "kws": kws, "entry": e, "sense": sense})
         return out
 
-    def support(lemma: str, meaning: dict, novice: bool) -> tuple[int, tuple[str, str] | None, str | None]:
-        """How many sentence pairs use this meaning, the easiest one, and the word form it uses.
+    def support(lemma: str, meaning: dict, novice: bool):
+        """How many sentence pairs use this meaning, the easiest one, the word form it uses, and a
+        few more real sentences (different forms first) for the card's "Everyday phrases".
         "Easiest" = common vocabulary, short, and the simplest form of the word (plain form or
         present tense beats past tenses, commands, subjunctive and attached pronouns)."""
         variants = set().union(*(english_variants(k) for k in meaning["kws"][:3]))
-        best, count = None, 0
+        cands, count = [], 0
         for form in spanish_forms(lemma, meaning["entry"]):
             penalty = beginner_penalty(analyze(form, lemma, meaning["entry"]), novice)
             for k in index.get(form, []):
                 if not (scored[k][3] & variants):
                     continue
                 count += 1
-                cand = (scored[k][0] + penalty, k, form)
-                if best is None or cand < best:
-                    best = cand
-        if not best:
-            return count, None, None
-        return count, (scored[best[1]][1], scored[best[1]][2]), best[2]
+                cands.append((scored[k][0] + penalty, k, form))
+        if not cands:
+            return count, None, None, []
+        cands.sort()
+        best = cands[0]
+        extras, seen_sentences, seen_forms = [], {best[1]}, {best[2]}
+        for pass_ in (0, 1):                      # first a new form each, then anything left
+            for score, k, form in cands[1:]:
+                if len(extras) >= PHRASES_PER_MEANING or k in seen_sentences:
+                    continue
+                if pass_ == 0 and form in seen_forms:
+                    continue
+                extras.append((scored[k][1], scored[k][2], form))
+                seen_sentences.add(k); seen_forms.add(form)
+        return count, (scored[best[1]][1], scored[best[1]][2]), best[2], extras
+
+    def phrase_entries(lemma: str, entry: dict, extras, meaning_index: int) -> list[dict]:
+        out = []
+        for es_text, en_text, form in extras:
+            ph = {"id": phrase_id(es_text), "es": es_text, "en": en_text, "source": "tatoeba", "meaning": meaning_index}
+            if (analysis := analyze(form, lemma, entry)):
+                ph["form"] = find_in_sentence(es_text, form) or form
+                if (note := explain(ph["form"], lemma, analysis)):
+                    ph["note"] = note
+            out.append(ph)
+        return out
 
     def annotate(target: dict, lemma: str, entry: dict, sentence: str, form: str | None) -> None:
         """Highlights the word in the example; explains it and adds it to Key forms if it's a
@@ -868,7 +897,7 @@ def build(args) -> list[dict]:
 
         novice = level_for(rank) in ("novice", "beginner")
         for order, m in enumerate(meanings):
-            m["count"], m["example"], m["form"] = support(lemma, m, novice)
+            m["count"], m["example"], m["form"], m["extras"] = support(lemma, m, novice)
             m["order"] = order
             if not m["example"]:
                 m["example"] = wiktionary_example(m["sense"])
@@ -910,6 +939,11 @@ def build(args) -> list[dict]:
                 if not om.get("forms"):
                     om.pop("forms", None)
                 card["otherMeanings"].append(om)
+        phrases = phrase_entries(lemma, primary["entry"], primary.get("extras", []), 0)
+        for i, m in enumerate(others, 1):
+            phrases += phrase_entries(lemma, m["entry"], m.get("extras", []), i)
+        if phrases:
+            card["phrases"] = phrases
         cards.append(card)
 
     # Sweep: which cards that *could* change form ended up without key forms?
@@ -993,12 +1027,32 @@ def merge() -> None:
         while g["id"] in ids:              # e.g. "como" vs "cómo" share a slug
             g = {**g, "id": f"{base}-{n}"}; n += 1
         deck.append(g); ids.add(g["id"]); added += 1
+
+    # Everyday phrases: AI-written ones (tools/phrases.json, from generate_phrases.py) first, then
+    # real Tatoeba sentences from the import. Hand-written cards also get the import's sentences.
+    ai = json.loads(PHRASES.read_text(encoding="utf-8")) if PHRASES.exists() else {}
+    rejected = set()
+    if REJECTED_PHRASES.exists():
+        rejected = {line.strip() for line in REJECTED_PHRASES.read_text(encoding="utf-8").splitlines()
+                    if line.strip() and not line.startswith("#")}
+    real = {g["spanish"].lower(): g.get("phrases", []) for g in generated}
+    with_phrases = 0
+    for i, c in enumerate(deck):
+        merged, seen = [], {c["example"].strip().lower()}
+        for ph in ai.get(c["id"], []) + real.get(c["spanish"].lower(), []):
+            if ph["id"] in rejected or ph["es"].strip().lower() in seen:
+                continue
+            seen.add(ph["es"].strip().lower())
+            merged.append(ph)
+        deck[i] = {**c, "phrases": merged} if merged else {k: v for k, v in c.items() if k != "phrases"}
+        with_phrases += bool(merged)
+
     DECK.write_text(json.dumps(deck, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     by_level = defaultdict(int)
     for c in deck:
         by_level[c["level"]] += 1
     print(f"Shared/words.json: {len(deck):,} cards ({len(curated)} curated, {with_forms} with key forms, "
-          f"+ {added:,} from the dictionary) — "
+          f"+ {added:,} from the dictionary; {with_phrases:,} with everyday phrases) — "
           + ", ".join(f"{k} {v:,}" for k, v in by_level.items()))
 
 

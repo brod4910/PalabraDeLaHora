@@ -13,6 +13,9 @@ struct ContentView: View {
             ReviewView()
                 .tabItem { Label("Review", systemImage: "rectangle.stack.fill") }
                 .tag(AppRouter.Tab.review)
+            PhrasebookView()
+                .tabItem { Label("Phrases", systemImage: "bubble.left.and.bubble.right.fill") }
+                .tag(AppRouter.Tab.phrases)
             if quizzesEnabled {
                 QuizHomeView()
                     .tabItem { Label("Quiz", systemImage: "checkmark.seal.fill") }

@@ -40,6 +40,29 @@ iOS 17+, Xcode 15+ (built against the Xcode 16 project format). No third-party d
 
 Since the word for any moment can be computed, the widget pre-builds the next 24 timeline entries. It flips on time without spending its reload budget, and the app, widget and notifications always agree. The seed and the start date live in the App Group's `UserDefaults`, and the "Seen" list is derived from them, so nothing has to be synced.
 
+## Everyday phrases
+
+Every card has an **Everyday phrases** section with short, natural things people say with the word. Each phrase has a situation (🏠 at home, 🍽️ food, 💬 texting, ❤️ couple…), the word highlighted, Play/Slow buttons, and a beginner note for new forms. The **Phrases** tab (Phrasebook) collects every phrase from the words she has seen, by word or by situation, with search and ⭐ favorites. Verbal "repeat after me" and fill-in-the-blank quizzes use phrases too, and the medium/large widget can show a **phrase of the hour** (Settings › Widget).
+
+Phrases come from three places:
+
+1. **Real sentences**: `import_dictionary.py` keeps up to 3 extra Tatoeba sentences per meaning. They're picked for varied forms and simplest first, and are labelled 📖 Real sentence.
+2. **AI-written, checked offline**: `tools/generate_phrases.py` (Anthropic API):
+   ```bash
+   export ANTHROPIC_API_KEY=sk-ant-...
+   python3 tools/generate_phrases.py --dry-run          # word count + estimated cost
+   python3 tools/generate_phrases.py --levels novice    # start with Novice words
+   python3 tools/generate_phrases.py                    # everything not done yet
+   ```
+   For each batch of words, Claude writes 4 phrases per word with a situation, a translation and the form used. Each phrase is then checked locally:
+   - the word must really be in the phrase
+   - every Spanish word must exist (no invented words or typos)
+   - the vocabulary must fit the card's level
+   - it must be short and not a duplicate
+
+   A second Claude pass then reviews grammar, naturalness, translation and meaning, and drops anything it doesn't approve. Beginner notes come from the same analyzer as the importer. Results are cached per word, so re-runs only pay for new words. It defaults to Claude Sonnet 5.5 (≈ $25–30 for ~5,000 words); `--model claude-haiku-5-5` costs about a twentieth of that. Novice phrases are listed in `tools/phrases_review.md`. To drop a phrase, put its id in `tools/phrases_rejected.txt` and run `python3 tools/import_dictionary.py --merge-only`.
+3. **Live on her phone**: Settings › AI phrases. Paste an Anthropic API key (stored in the iPhone's Keychain only) and every card gets a **Show me another** button. It writes a new phrase with Claude Haiku 5.5, runs the on-device checks, and saves the phrase to the Phrasebook marked NEW (not reviewed). This setup is fine for a personal app. For an App Store release, route requests through your own server instead of putting a key on the device.
+
 ## Levels
 
 The levels loosely follow CEFR, which is also how the Instituto Cervantes curriculum is organised:

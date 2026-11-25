@@ -8,6 +8,8 @@ struct WordEntry: TimelineEntry {
     let date: Date
     let word: Word
     let nextChange: Date
+    /// Phrase of the hour (when Settings › Widget shows a phrase is on).
+    var phrase: Phrase? = nil
 }
 
 struct WordProvider: TimelineProvider {
@@ -18,8 +20,9 @@ struct WordProvider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (WordEntry) -> Void) {
         let schedule = WordSchedule.current
         let now = Date()
-        completion(WordEntry(date: now, word: context.isPreview ? .sample : schedule.word(at: now),
-                             nextChange: schedule.nextChange(after: now)))
+        let word = context.isPreview ? Word.sample : schedule.word(at: now)
+        completion(WordEntry(date: now, word: word, nextChange: schedule.nextChange(after: now),
+                             phrase: phraseOfTheHour(word, position: schedule.position(at: now))))
     }
 
     /// Pre-computes the next 24 word changes. Each entry becomes active exactly at its date, so the
@@ -28,12 +31,23 @@ struct WordProvider: TimelineProvider {
         LearningProgress.catchUp() // record words shown while the app was closed
         let schedule = WordSchedule.current
         let now = Date()
-        var entries = [WordEntry(date: now, word: schedule.word(at: now), nextChange: schedule.nextChange(after: now))]
+        let current = schedule.word(at: now)
+        var entries = [WordEntry(date: now, word: current, nextChange: schedule.nextChange(after: now),
+                                 phrase: phraseOfTheHour(current, position: schedule.position(at: now)))]
         for item in schedule.upcoming(after: now, count: 24) {
             entries.append(WordEntry(date: item.date, word: item.word,
-                                     nextChange: schedule.nextChange(after: item.date)))
+                                     nextChange: schedule.nextChange(after: item.date),
+                                     phrase: phraseOfTheHour(item.word, position: schedule.position(at: item.date))))
         }
         completion(Timeline(entries: entries, policy: .atEnd))
+    }
+
+    /// A different phrase each time the word comes around, so repeats feel fresh.
+    private func phraseOfTheHour(_ word: Word, position: Int) -> Phrase? {
+        guard AppSettings.widgetShowsPhrase else { return nil }
+        let phrases = word.allPhrases
+        guard !phrases.isEmpty else { return nil }
+        return phrases[((position % phrases.count) + phrases.count) % phrases.count]
     }
 }
 
@@ -87,7 +101,7 @@ struct PalabraWidgetView: View {
                 .padding(18)
                 .containerBackground(for: .widget) { Theme.gradient }
         default:
-            MediumView(word: entry.word)
+            MediumView(word: entry.word, phrase: entry.phrase)
                 .padding(16)
                 .containerBackground(for: .widget) { Theme.gradient }
         }
@@ -107,9 +121,11 @@ private struct SpeakButton: View {
     let word: Word
     var includeSentence = true
     var label: String? = nil
+    /// When set, speaks this phrase (word + phrase) instead of the example sentence.
+    var phrase: Phrase? = nil
 
     var body: some View {
-        Button(intent: SpeakWordIntent(wordID: word.id, includeSentence: includeSentence)) {
+        Button(intent: SpeakWordIntent(wordID: word.id, includeSentence: includeSentence, phraseID: phrase?.id)) {
             if let label {
                 Label(label, systemImage: "speaker.wave.2.fill")
                     .font(.system(size: 12, weight: .semibold, design: .rounded))
@@ -158,12 +174,13 @@ private struct SmallView: View {
 
 private struct MediumView: View {
     let word: Word
+    var phrase: Phrase? = nil
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Header()
                 Spacer()
-                SpeakButton(word: word)
+                SpeakButton(word: word, phrase: phrase)
             }
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text(word.spanish)
@@ -179,10 +196,15 @@ private struct MediumView: View {
                 .opacity(0.95)
                 .lineLimit(1)
             Spacer(minLength: 0)
-            Text(highlighted(word.example, word: word.exampleWord))
+            if let phrase {
+                Text(phrase.contextLabel)
+                    .font(.system(size: 10, weight: .semibold, design: .rounded))
+                    .opacity(0.8)
+            }
+            Text(highlighted(phrase?.es ?? word.example, word: phrase?.form ?? word.exampleWord))
                 .font(.system(size: 14, weight: .medium, design: .serif).italic())
                 .lineLimit(2).minimumScaleFactor(0.8)
-            Text(word.exampleTranslation)
+            Text(phrase?.en ?? word.exampleTranslation)
                 .font(.system(size: 11, design: .rounded))
                 .opacity(0.8)
                 .lineLimit(1)
@@ -213,9 +235,14 @@ private struct LargeView: View {
             Divider().overlay(.white.opacity(0.4))
 
             VStack(alignment: .leading, spacing: 3) {
-                Text(highlighted(word.example, word: word.exampleWord))
+                if let phrase = entry.phrase {
+                    Text(phrase.contextLabel)
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .opacity(0.8)
+                }
+                Text(highlighted(entry.phrase?.es ?? word.example, word: entry.phrase?.form ?? word.exampleWord))
                     .font(.system(size: 18, weight: .medium, design: .serif).italic())
-                Text(word.exampleTranslation)
+                Text(entry.phrase?.en ?? word.exampleTranslation)
                     .font(.system(size: 13, design: .rounded))
                     .opacity(0.85)
             }
@@ -251,7 +278,8 @@ private struct LargeView: View {
 
             HStack {
                 SpeakButton(word: word, includeSentence: false, label: "Word")
-                SpeakButton(word: word, includeSentence: true, label: "Sentence")
+                SpeakButton(word: word, includeSentence: true, label: entry.phrase == nil ? "Sentence" : "Phrase",
+                            phrase: entry.phrase)
                 Spacer()
                 Text("Next ") + Text(entry.nextChange, style: .time)
             }

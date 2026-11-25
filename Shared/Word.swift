@@ -55,6 +55,77 @@ enum Focus: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
+/// When you'd say a phrase. Generated phrases pick one of these; real (Tatoeba) sentences have none.
+enum Situation: String, CaseIterable, Identifiable, Sendable {
+    case home, food, shopping, work, travel, texting, family, friends, couple, feelings, health, plans,
+         weather, school, everyday
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .home: "At home"
+        case .food: "Food & eating out"
+        case .shopping: "Shopping"
+        case .work: "At work"
+        case .travel: "Travel"
+        case .texting: "Texting"
+        case .family: "Family"
+        case .friends: "Friends"
+        case .couple: "Couple"
+        case .feelings: "Feelings"
+        case .health: "Health"
+        case .plans: "Making plans"
+        case .weather: "Weather"
+        case .school: "School"
+        case .everyday: "Everyday"
+        }
+    }
+
+    var emoji: String {
+        switch self {
+        case .home: "🏠"
+        case .food: "🍽️"
+        case .shopping: "🛍️"
+        case .work: "💼"
+        case .travel: "✈️"
+        case .texting: "💬"
+        case .family: "👨‍👩‍👧"
+        case .friends: "🧑‍🤝‍🧑"
+        case .couple: "❤️"
+        case .feelings: "💭"
+        case .health: "🩺"
+        case .plans: "📅"
+        case .weather: "☀️"
+        case .school: "📚"
+        case .everyday: "✨"
+        }
+    }
+}
+
+/// An everyday phrase that uses a card's word: AI-written ("ai"), a real sentence ("tatoeba"),
+/// or written on the phone with "Show me another" ("live").
+struct Phrase: Codable, Hashable, Identifiable, Sendable {
+    let id: String
+    let es: String
+    let en: String
+    let situation: String?
+    /// The word's form as it appears in `es` (highlighted).
+    let form: String?
+    /// Beginner note when `form` isn't the dictionary form (Markdown).
+    let note: String?
+    let source: String?
+    /// Which meaning of the word it uses (0 = the main one).
+    let meaning: Int?
+
+    /// nil for real sentences, which aren't tagged with a situation.
+    var situationInfo: Situation? { situation.flatMap(Situation.init(rawValue:)) }
+    var contextLabel: String {
+        if let s = situationInfo { return "\(s.emoji) \(s.label)" }
+        return source == "tatoeba" ? "📖 Real sentence" : "✨ Everyday"
+    }
+}
+
 /// An additional meaning of the same word (cuarto = room, also fourth), with its own example.
 struct Meaning: Codable, Hashable, Sendable {
     let english: String
@@ -94,6 +165,11 @@ struct Word: Codable, Identifiable, Hashable, Sendable {
     /// beginner, a plain-English note (Markdown) explaining it.
     let exampleWord: String?
     let exampleNote: String?
+    /// Everyday phrases bundled in the app (AI-written and real sentences).
+    let phrases: [Phrase]?
+
+    /// Bundled phrases plus any written on this phone with "Show me another".
+    var allPhrases: [Phrase] { (phrases ?? []) + LivePhraseStore.phrases(for: id) }
 
     var extraMeanings: [Meaning] { otherMeanings ?? [] }
 
@@ -120,7 +196,9 @@ struct Word: Codable, Identifiable, Hashable, Sendable {
                                 example: "Te quiero mucho.", exampleTranslation: "I love you so much.", forms: nil,
                                 exampleWord: "quiero", exampleNote: nil)],
         exampleWord: "Quiero",
-        exampleNote: nil
+        exampleNote: nil,
+        phrases: [Phrase(id: "sample1", es: "¿Quieres ver una película?", en: "Do you want to watch a movie?",
+                         situation: "couple", form: "Quieres", note: nil, source: "ai", meaning: 0)]
     )
 }
 

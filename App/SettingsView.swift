@@ -16,6 +16,11 @@ struct SettingsView: View {
     @AppStorage(AppSettings.Key.focus, store: AppSettings.defaults) private var focusRaw = Focus.everything.rawValue
     @AppStorage(AppSettings.Key.quizzesEnabled, store: AppSettings.defaults) private var quizzesEnabled = true
 
+    @AppStorage(AppSettings.Key.widgetShowsPhrase, store: AppSettings.defaults) private var widgetShowsPhrase = false
+    @AppStorage("liveModel") private var liveModel = LiveModel.haiku.rawValue
+    @State private var apiKeyInput = ""
+    @State private var hasAPIKey = APIKeyStore.hasKey
+
     @State private var confirmReshuffle = false
     @State private var confirmResetQuiz = false
 
@@ -102,6 +107,40 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Toggle("Widget shows a phrase", isOn: $widgetShowsPhrase)
+                } header: {
+                    Text("Widget")
+                } footer: {
+                    Text("Phrase of the hour: the medium and large widgets show an everyday phrase with the word instead of its example sentence.")
+                }
+
+                Section {
+                    if hasAPIKey {
+                        LabeledContent("Anthropic API key", value: "Saved on this iPhone")
+                        Picker("Model", selection: $liveModel) {
+                            ForEach(LiveModel.allCases) { Text($0.label).tag($0.rawValue) }
+                        }
+                        Button("Remove key", role: .destructive) {
+                            APIKeyStore.delete()
+                            hasAPIKey = false
+                        }
+                    } else {
+                        SecureField("Paste API key (sk-ant-…)", text: $apiKeyInput)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                        Button("Save key") {
+                            hasAPIKey = APIKeyStore.save(apiKeyInput)
+                            apiKeyInput = ""
+                        }
+                        .disabled(!apiKeyInput.hasPrefix("sk-"))
+                    }
+                } header: {
+                    Text("AI phrases")
+                } footer: {
+                    Text("Turns on “Show me another” on every card, which writes a fresh everyday phrase with Claude and saves it to the Phrasebook. The key is kept in this iPhone's Keychain only. Each phrase costs a small fraction of a cent with Haiku. Phrases written here aren't reviewed, so they're marked NEW.")
+                }
+
+                Section {
                     Toggle("Quizzes", isOn: $quizzesEnabled)
                     Button("Reset quiz progress", role: .destructive) { confirmResetQuiz = true }
                 } header: {
@@ -137,6 +176,7 @@ struct SettingsView: View {
             .onChange(of: levelRaw) { scheduleChanged() }
             .onChange(of: focusRaw) { scheduleChanged() }
             .onChange(of: includeEarlier) { scheduleChanged() }
+            .onChange(of: widgetShowsPhrase) { WidgetCenter.shared.reloadAllTimelines() }
             .onChange(of: cadenceRaw) { scheduleChanged() }
             .onChange(of: quietStart) { Task { await NotificationScheduler.reschedule() } }
             .onChange(of: quietEnd) { Task { await NotificationScheduler.reschedule() } }

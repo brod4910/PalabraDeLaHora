@@ -66,6 +66,7 @@ enum AppSettings {
         static let seenCursor = "seenCursor"
         static let quizStats = "quizStats"
         static let quizzesEnabled = "quizzesEnabled"
+        static let widgetShowsPhrase = "widgetShowsPhrase"
     }
 
     static var level: Level {
@@ -88,6 +89,12 @@ enum AppSettings {
     static var skipOffset: Int {
         get { defaults.integer(forKey: Key.skipOffset) }
         set { defaults.set(newValue, forKey: Key.skipOffset) }
+    }
+
+    /// Phrase of the hour on the medium/large widget.
+    static var widgetShowsPhrase: Bool {
+        get { defaults.bool(forKey: Key.widgetShowsPhrase) }
+        set { defaults.set(newValue, forKey: Key.widgetShowsPhrase) }
     }
 
     static var quizzesEnabled: Bool {

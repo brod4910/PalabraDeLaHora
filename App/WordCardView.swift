@@ -52,6 +52,9 @@ struct WordCardView: View {
                 }
             }
 
+            EverydayPhrasesSection(word: word)
+                .id(word.id)
+
             if let tip = word.tip {
                 section(title: "Tip", systemImage: "lightbulb.fill") {
                     Text(tip)

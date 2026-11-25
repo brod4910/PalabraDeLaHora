@@ -98,15 +98,23 @@ enum QuizBuilder {
         case .whatDoesItMean:
             return QuizQuestion(word: word, style: style, prompt: word.spanish, options: [], answer: word.english)
         case .repeatAfterMe:
-            return QuizQuestion(word: word, style: style, prompt: word.example, options: [], answer: word.example)
+            // Repeat a real everyday phrase when the card has some, otherwise its example.
+            let sentence = word.allPhrases.filter { $0.es.split(separator: " ").count <= 8 }.randomElement()?.es ?? word.example
+            return QuizQuestion(word: word, style: style, prompt: sentence, options: [], answer: sentence)
         }
     }
 
-    /// The example sentence with the word blanked out, when the word appears as-is.
+    /// A sentence (the example or one of the everyday phrases) with the word blanked out, when the
+    /// word appears as-is. Picks a random one, so the same word gets different sentences.
     static func blanked(_ word: Word) -> String? {
-        guard word.spanish.count > 2,
-              let range = word.example.range(of: word.spanish, options: [.caseInsensitive]) else { return nil }
-        return word.example.replacingCharacters(in: range, with: "_____")
+        guard word.spanish.count > 2 else { return nil }
+        let sentences = ([word.example] + word.allPhrases.map(\.es)).shuffled()
+        for sentence in sentences {
+            if let range = sentence.range(of: word.spanish, options: [.caseInsensitive]) {
+                return sentence.replacingCharacters(in: range, with: "_____")
+            }
+        }
+        return nil
     }
 
     private static func options(_ word: Word, _ field: KeyPath<Word, String>) -> [String] {
@@ -608,7 +616,7 @@ private struct VerbalQuestionView: View {
                     Text(question.word.spanish).font(.title2.bold())
                     Text(question.word.allMeanings).foregroundStyle(.secondary)
                     if question.style == .repeatAfterMe {
-                        Text(question.word.example).italic().multilineTextAlignment(.center).padding(.top, 4)
+                        Text(question.answer).italic().multilineTextAlignment(.center).padding(.top, 4)
                     }
                 }
                 .padding()
@@ -696,7 +704,7 @@ private struct VerbalQuestionView: View {
         switch question.style {
         case .sayIt: AnswerMatcher.matchesSpanish(spoken: text, target: question.word.spanish)
         case .whatDoesItMean: AnswerMatcher.matchesEnglish(spoken: text, english: question.word.allMeanings.replacingOccurrences(of: " · ", with: " / "))
-        case .repeatAfterMe: AnswerMatcher.overlap(spoken: text, sentence: question.word.example) >= 0.7
+        case .repeatAfterMe: AnswerMatcher.overlap(spoken: text, sentence: question.answer) >= 0.7
         default: false
         }
     }
@@ -708,7 +716,7 @@ private struct VerbalQuestionView: View {
         case .whatDoesItMean:
             [.english("What does this mean?", pause: 0.4), .spanish(question.word.spanish)]
         case .repeatAfterMe:
-            [.english("Repeat after me.", pause: 0.4), .spanish(question.word.example)]
+            [.english("Repeat after me.", pause: 0.4), .spanish(question.answer)]
         default:
             []
         }
@@ -722,7 +730,7 @@ private struct VerbalQuestionView: View {
         case .whatDoesItMean:
             return [.english("It means: \(QuizBuilder.spokenEnglish(question.word.allMeanings.replacingOccurrences(of: " · ", with: " / ")))")]
         case .repeatAfterMe:
-            return [.english("Listen once more.", pause: 0.3), .spanish(question.word.example)]
+            return [.english("Listen once more.", pause: 0.3), .spanish(question.answer)]
         default:
             return []
         }
