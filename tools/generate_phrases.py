@@ -479,9 +479,13 @@ def main() -> None:
         deck_words |= {v.lower() for v in dict_tools.form_values(c.get("forms"))}
     batches = [todo[i:i + args.batch] for i in range(0, len(todo), args.batch)]
     spent_in = spent_out = kept = dropped_total = 0
+    # One log per run (the previous run's is kept as phrases_dropped.prev.tsv) so the sanity check
+    # and the counts describe this run only.
     drop_log = dict_tools.CACHE / "phrases_dropped.tsv"
+    if drop_log.exists():
+        drop_log.replace(drop_log.with_name("phrases_dropped.prev.tsv"))
     stopped = False
-    with futures.ThreadPoolExecutor(max_workers=workers) as pool, open(drop_log, "a", encoding="utf-8") as log:
+    with futures.ThreadPoolExecutor(max_workers=workers) as pool, open(drop_log, "w", encoding="utf-8") as log:
         jobs = {pool.submit(process_batch, b, args, checker, deck_words, api_key): b for b in batches}
         for n, job in enumerate(futures.as_completed(jobs), 1):
             batch = jobs[job]
