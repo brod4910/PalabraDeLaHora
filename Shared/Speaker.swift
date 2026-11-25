@@ -25,15 +25,43 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
         if synthesizer.isSpeaking { synthesizer.stopSpeaking(at: .immediate) }
 
         let voice = Self.bestVoice(for: AppSettings.voice.rawValue)
-        let rate = AVSpeechUtteranceDefaultSpeechRate * Float(slow ? 0.6 : AppSettings.speechRate)
+        let normalRate = AVSpeechUtteranceDefaultSpeechRate * Float(AppSettings.speechRate)
+        // Slow is a fixed, clearly slower rate (not relative to the user's speed setting)…
+        let slowRate = AVSpeechUtteranceMinimumSpeechRate
+            + (AVSpeechUtteranceDefaultSpeechRate - AVSpeechUtteranceMinimumSpeechRate) * 0.35
+        let rate = max(AVSpeechUtteranceMinimumSpeechRate, min(slow ? slowRate : normalRate, AVSpeechUtteranceMaximumSpeechRate))
+
+        // …but `rate` alone is ignored by some voices / iOS builds, so slow mode also inserts real
+        // pauses: syllables for a word ("que · rer … querer"), word by word for a sentence.
+        var utterances: [AVSpeechUtterance] = []
         for (i, line) in lines.enumerated() {
-            let u = AVSpeechUtterance(string: line)
-            u.voice = voice
-            u.rate = max(AVSpeechUtteranceMinimumSpeechRate, min(rate, AVSpeechUtteranceMaximumSpeechRate))
-            u.postUtteranceDelay = i < lines.count - 1 ? 0.45 : 0
-            synthesizer.speak(u)
-            lastUtterance = u
+            let isLast = i == lines.count - 1
+            if slow {
+                if let u = AVSpeechUtterance(ssmlRepresentation: SlowSpeech.ssml(for: line)) {
+                    u.postUtteranceDelay = isLast ? 0 : 0.6
+                    utterances.append(u)
+                } else {
+                    // SSML unavailable: one utterance per chunk, with pauses between.
+                    let chunks = SlowSpeech.chunks(for: line)
+                    for (j, chunk) in chunks.enumerated() {
+                        let u = AVSpeechUtterance(string: chunk.text)
+                        let isFinalChunk = j == chunks.count - 1
+                        u.postUtteranceDelay = isFinalChunk ? (isLast ? 0 : 0.6) : chunk.pause
+                        utterances.append(u)
+                    }
+                }
+            } else {
+                let u = AVSpeechUtterance(string: line)
+                u.postUtteranceDelay = isLast ? 0 : 0.45
+                utterances.append(u)
+            }
         }
+        for u in utterances {
+            u.voice = voice
+            u.rate = rate
+            synthesizer.speak(u)
+        }
+        lastUtterance = utterances.last
     }
 
     func speak(_ text: String, slow: Bool = false) { speak([text], slow: slow) }

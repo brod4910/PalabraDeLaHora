@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A6E5436DE6E86F76CF364D0 = {
+			isa = PBXBuildFile;
+			fileRef = 5DA24B31B03DBD81341F38C4;
+		};
 		1FA207B9761973B629E6DB16 = {
 			isa = PBXBuildFile;
 			fileRef = 2ADB1AD68DE779C2DDFE7691;
@@ -67,6 +71,10 @@
 		8228D95C9E0E1AE0B7D01532 = {
 			isa = PBXBuildFile;
 			fileRef = 020A8A095C38D02BB4F892A3;
+		};
+		961D1D533DF8DBA4887097E0 = {
+			isa = PBXBuildFile;
+			fileRef = 5DA24B31B03DBD81341F38C4;
 		};
 		A744C27FCB47AA4F5C2D2862 = {
 			isa = PBXBuildFile;
@@ -188,6 +196,12 @@
 			isa = PBXFileReference;
 			lastKnownFileType = text.plist.xml;
 			path = Info.plist;
+			sourceTree = "<group>";
+		};
+		5DA24B31B03DBD81341F38C4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = SlowSpeech.swift;
 			sourceTree = "<group>";
 		};
 		63B7BF8F31A1E2EFCA1FCBBF = {
@@ -350,6 +364,7 @@
 				E136A6DC0223E5DAD0C741DB,
 				BCB1B913B39A17CBF12497BB,
 				4D3B9340B20651CD3E227132,
+				5DA24B31B03DBD81341F38C4,
 				2ADB1AD68DE779C2DDFE7691,
 				780EED58566ECFA78B446FBB,
 			);
@@ -465,6 +480,7 @@
 				3FA41A18CD7812497AF56B5F,
 				4FEE1F2A0C7AAE5F08EA08CA,
 				D2859354E45DE6E7C138BB54,
+				961D1D533DF8DBA4887097E0,
 				EF226052074D41BB128EA919,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,6 +500,7 @@
 				DCCC1A6A2BCC039F79D7C4FF,
 				3D800404944775AE3B3C7CCB,
 				38098A69CA3303DDF3067265,
+				1A6E5436DE6E86F76CF364D0,
 				1FA207B9761973B629E6DB16,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
