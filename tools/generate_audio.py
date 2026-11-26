@@ -23,6 +23,7 @@ Checking pronunciation (catches "sucedes" said as "sucodes"):
     open tools/.cache/audio/check.html                                 # worst first, with audio
     python3 tools/generate_audio.py --check --redo-flagged --voice Paloma   # re-record + re-check
     python3 tools/generate_audio.py --redo "sucedes" --voice Paloma    # re-record specific texts
+    python3 tools/generate_audio.py --redo "tener" --cut --voice Paloma   # say it in a sentence, cut it out
 
 --check sends each clip to Inworld speech-to-text (without telling it the expected text) and
 compares what it heard with what the clip should say. Clips that don't match are flagged.
@@ -45,8 +46,13 @@ import json
 import os
 import pathlib
 import sys
+import array
+import io
 import shutil
+import subprocess
+import tempfile
 import time
+import wave
 import unicodedata
 import urllib.error
 import urllib.request
@@ -242,8 +248,8 @@ def carrier_audio(voice: str, args, key: str) -> bytes:
     return path.read_bytes()
 
 
-def transcribe(audio: bytes, args, key: str) -> str:
-    body = {"transcribeConfig": {"modelId": "inworld/inworld-stt-1", "audioEncoding": "MP3",
+def transcribe(audio: bytes, args, key: str, encoding: str = "MP3") -> str:
+    body = {"transcribeConfig": {"modelId": "inworld/inworld-stt-1", "audioEncoding": encoding,
                                  "language": args.language.split("-")[0]},
             "audioData": {"content": base64.b64encode(audio).decode()}}
     data = request("/stt/v1/transcribe", key, body)
@@ -330,7 +336,7 @@ def check(voice: str, args, key: str) -> None:
     # Slow syllable clips aren't checked: speech-to-text hears separate syllables as letter names
     # ("ca · sa" → "K. S."), and they're made from the same text as the normal clip, which is.
     todo = [cid for cid, m in manifest.items() if cid not in results and (folder / m["file"]).exists()
-            and not m["kind"].startswith("slow-")]
+            and not m["kind"].startswith("slow-") and m["file"].endswith(".mp3")]
     print(f"{len(manifest):,} clips · {len(todo):,} to check (≈ ${len(todo) * 1.8 / 3600 * 0.15:.2f} at $0.15/hour)")
 
     def work(cid):
@@ -385,6 +391,57 @@ re-record with <code>--check --redo-flagged</code> or <code>--redo "text"</code>
           + f" → open {page.relative_to(ROOT)}")
 
 
+def record_in_carrier(text: str, voice: str, args, key: str) -> tuple[bytes, bytes, str]:
+    """Says the word inside the lead-in sentence, where voices pronounce it naturally, then cuts
+    the word out using Inworld's word timestamps. Returns (whole take as WAV, word as WAV, the
+    whole take's transcript for checking)."""
+    phrase = f"{CARRIER} {text.rstrip('.!?')}."
+    body = {"text": phrase, "voiceId": voice, "modelId": args.model, "language": args.language,
+            "timestampType": "WORD",
+            "audioConfig": {"audioEncoding": "LINEAR16", "sampleRateHertz": 24000, "speakingRate": 1.0}}
+    if args.model == "inworld-tts-2":
+        body["deliveryMode"] = "BALANCED"
+    data = request("/tts/v1/voice", key, body)
+    whole = base64.b64decode(data["audioContent"])
+    align = (data.get("timestampInfo") or {}).get("wordAlignment") or {}
+    starts, ends = align.get("wordStartTimeSeconds") or [], align.get("wordEndTimeSeconds") or []
+    n = len(lookup_key(text).split())
+    if len(starts) < n or len(ends) < n:
+        raise RuntimeError("no word timestamps in the response")
+    with wave.open(io.BytesIO(whole)) as w:
+        rate, width, channels = w.getframerate(), w.getsampwidth(), w.getnchannels()
+        frames = w.readframes(w.getnframes())
+    total = len(frames) // (width * channels) / rate
+    prev_end = ends[-n - 1] if len(ends) > n else 0.0
+    start = max(prev_end, starts[-n] - 0.06)
+    end = min(total, ends[-1] + 0.15)
+    samples = array.array("h", frames[int(start * rate) * width * channels: int(end * rate) * width * channels])
+    fade = min(int(0.012 * rate), len(samples) // 4)          # 12 ms fades: no clicks at the cut
+    for i in range(fade):
+        samples[i] = int(samples[i] * i / fade)
+        samples[-1 - i] = int(samples[-1 - i] * i / fade)
+    out = io.BytesIO()
+    with wave.open(out, "wb") as w:
+        w.setnchannels(channels); w.setsampwidth(width); w.setframerate(rate)
+        w.writeframes(samples.tobytes())
+    heard = transcribe(whole, args, key, encoding="LINEAR16")
+    return whole, out.getvalue(), heard
+
+
+def save_cut(folder: pathlib.Path, cid: str, wav: bytes) -> str:
+    """AAC .m4a with macOS afconvert (the app plays it like the mp3s); .wav where that's missing."""
+    if shutil.which("afconvert"):
+        with tempfile.TemporaryDirectory() as tmp:
+            src = pathlib.Path(tmp) / "cut.wav"
+            src.write_bytes(wav)
+            dest = folder / f"{cid}.m4a"
+            subprocess.run(["afconvert", "-f", "m4af", "-d", "aac", "-b", "48000", str(src), str(dest)],
+                           check=True, capture_output=True)
+            return dest.name
+    (folder / f"{cid}.wav").write_bytes(wav)
+    return f"{cid}.wav"
+
+
 def passes(m: dict, heard: str) -> tuple[bool, float]:
     rest = after_carrier(heard)
     if not latin(heard) or only_letters(rest) or len(sounds(m["text"])) <= 2:
@@ -393,7 +450,7 @@ def passes(m: dict, heard: str) -> tuple[bool, float]:
     return score >= (0.9 if len(lookup_key(m["text"]).split()) <= 2 else 0.8), score
 
 
-def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
+def redo(cids: list[str], voice: str, args, key: str, takes: int = 3, cut: bool = False) -> None:
     """Re-record clips in place (same file, so the app's index still points at them) and check
     each new take right away. A take that still sounds wrong (cliente → "diente") is tried again
     with another delivery and slightly different punctuation; the first take that passes is kept,
@@ -414,6 +471,8 @@ def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
         m = manifest[cid]
         slow = m["kind"].startswith("slow-")
         best = None
+        if cut and not slow:
+            return cid, slow, carrier_take(m)
         for delivery, variant in attempts[:takes]:
             text = slow_text(m["text"], args.slow_style, args.pause_ms) if slow else variant(m["text"])
             audio = synthesize({"text": text, "rate": m["rate"]}, voice,
@@ -426,7 +485,20 @@ def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
                 best = (ok, score, audio, heard)
             if ok:
                 break
+        if not best[0] and m["kind"] in ("word", "form"):
+            # Still wrong on its own (tener → "tené", el mal → "el mar"): say it in a sentence, cut it out.
+            take = carrier_take(m)
+            if take[0] or take[1] > best[1]:
+                best = take
         return cid, slow, best
+
+    def carrier_take(m):
+        try:
+            _, word_wav, heard = record_in_carrier(m["text"], voice, args, key)
+        except Exception as err:                     # noqa: BLE001 — e.g. no timestamps: give up on this method
+            return (False, 0.0, None, f"(cut failed: {err})")
+        ok, score = passes(m, heard)
+        return (ok, score, ("cut", word_wav), heard)
 
     still_off = []
     with futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
@@ -436,7 +508,14 @@ def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
             except Exception as err:                 # noqa: BLE001 — keep going
                 print("  error:", str(err)[:200]); continue
             m = manifest[cid]
-            (folder / m["file"]).write_bytes(audio)
+            if audio is None:
+                print(f"  still off: {m['text']}  {heard}"); continue
+            if isinstance(audio, tuple):              # a word cut out of a sentence
+                m["file"] = save_cut(folder, cid, audio[1])
+            else:
+                if not m["file"].endswith(".mp3"):     # replacing an earlier cut with a plain take
+                    m["file"] = f"{cid}.mp3"
+                (folder / m["file"]).write_bytes(audio)
             if heard:
                 results[cid] = heard
             else:
@@ -446,6 +525,7 @@ def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
             if len(cids) <= 30 or not ok:
                 label = "re-recorded (slow)" if slow else ("fixed" if ok else "still off — listen, or try --redo again")
                 print(f"  {label}: {m['text']}" + (f"  (heard “{after_carrier(heard)}”, {score:.2f})" if heard else ""), flush=True)
+    (folder / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     if len(cids) > 30:
         print(f"  {len(cids) - len(still_off):,} of {len(cids):,} re-recorded and passing"
               + (f"; still off: {', '.join(still_off[:20])}" if still_off else ""))
@@ -513,6 +593,8 @@ def main() -> None:
     ap.add_argument("--check", action="store_true", help="transcribe the clips and flag mispronounced ones")
     ap.add_argument("--redo-flagged", action="store_true", help="with --check: re-record the flagged clips, then check again")
     ap.add_argument("--redo", nargs="+", metavar="TEXT", help="re-record the clips for these texts (any kind)")
+    ap.add_argument("--cut", action="store_true",
+                    help="with --redo: say the word inside a sentence and cut it out (for words a voice won't say right on their own)")
     ap.add_argument("--redo-kind", nargs="+", choices=["word", "form", "sentence", "slow"],
                     help="re-record every clip of these kinds for --levels, with Spanish context, checking each take")
     ap.add_argument("--export", action="store_true",
@@ -536,7 +618,8 @@ def main() -> None:
         manifest = json.loads((AUDIO / voices[0] / "manifest.json").read_text(encoding="utf-8"))
         wanted = {lookup_key(t) for t in args.redo}
         redo([cid for cid, m in manifest.items() if lookup_key(m["text"]) in wanted
-              and (not m["kind"].startswith("slow-") or m["kind"] == f"slow-{args.slow_style}")], voices[0], args, key)
+              and (not m["kind"].startswith("slow-") or m["kind"] == f"slow-{args.slow_style}")
+              and not (args.cut and m["kind"].startswith("slow-"))], voices[0], args, key, cut=args.cut)
         print("Run --export again to update the app.")
         return
     if args.redo_kind:
@@ -645,14 +728,15 @@ def export(voice: str, args) -> None:
             index.setdefault(lookup_key(m["text"]), m["file"])
     APP_AUDIO.mkdir(parents=True, exist_ok=True)
     keep = set(index.values())
-    for old in APP_AUDIO.glob("*.mp3"):
+    for old in [*APP_AUDIO.glob("*.mp3"), *APP_AUDIO.glob("*.m4a"), *APP_AUDIO.glob("*.wav")]:
         if old.name not in keep:
             old.unlink()
     size = 0
     for name in keep:
         dest = APP_AUDIO / name
-        if not dest.exists():
-            shutil.copy2(AUDIO / voice / name, dest)
+        src = AUDIO / voice / name
+        if not dest.exists() or dest.stat().st_mtime < src.stat().st_mtime:
+            shutil.copy2(src, dest)
         size += dest.stat().st_size
     (APP_AUDIO / "index.json").write_text(json.dumps({"voice": voice, "clips": index}, ensure_ascii=False) + "\n",
                                           encoding="utf-8")
