@@ -17,6 +17,19 @@ syllable emphasized, like the written respelling (oh · por · too · nee · DAH
 three styles so you can pick: a written accent on the stressed syllable (cá · sa), *stars*
 around it, or plain.
 
+Checking pronunciation (catches "sucedes" said as "sucodes"):
+
+    python3 tools/generate_audio.py --check --voice Paloma            # transcribe every clip
+    open tools/.cache/audio/check.html                                 # worst first, with audio
+    python3 tools/generate_audio.py --check --redo-flagged --voice Paloma   # re-record + re-check
+    python3 tools/generate_audio.py --redo "sucedes" --voice Paloma    # re-record specific texts
+
+--check sends each clip to Inworld speech-to-text (without telling it the expected text) and
+compares what it heard with what the clip should say. Clips that don't match are flagged.
+Speech-to-text also mishears some correct clips (short words, names), so the page is for a quick
+listen; --redo-flagged re-records the flagged ones with a different delivery and checks again.
+After re-recording, run --export again.
+
 Standard library only. PALABRA_INWORLD_URL overrides the API URL (for tests).
 """
 from __future__ import annotations
@@ -24,6 +37,7 @@ from __future__ import annotations
 import argparse
 import base64
 import concurrent.futures as futures
+import difflib
 import hashlib
 import html
 import json
@@ -195,6 +209,98 @@ def clip_id(clip: dict, voice: str, args) -> str:
     return hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16]
 
 
+def transcribe(path: pathlib.Path, args, key: str) -> str:
+    body = {"transcribeConfig": {"modelId": "inworld/inworld-stt-1", "audioEncoding": "MP3",
+                                 "language": args.language},
+            "audioData": {"content": base64.b64encode(path.read_bytes()).decode()}}
+    data = request("/stt/v1/transcribe", key, body)
+    return (data.get("transcription") or {}).get("transcript", "")
+
+
+def heard_score(expected: str, heard: str) -> float:
+    """0–1: how closely the transcript matches the text, ignoring accents, case, punctuation and
+    spaces (so a slow 'su ce des' still matches 'sucedes')."""
+    def flat(t: str) -> str:
+        return dict_tools.strip_accents(lookup_key(t)).replace(" ", "")
+    a, b = flat(expected), flat(heard)
+    if not a or not b:
+        return 0.0
+    return difflib.SequenceMatcher(None, a, b).ratio()
+
+
+def check(voice: str, args, key: str) -> None:
+    folder = AUDIO / voice
+    manifest_path = folder / "manifest.json"
+    if not manifest_path.exists():
+        sys.exit(f"No recordings for {voice} yet.")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    results_path = folder / "check.json"
+    results = json.loads(results_path.read_text(encoding="utf-8")) if results_path.exists() else {}
+    todo = [cid for cid, m in manifest.items() if cid not in results and (folder / m["file"]).exists()
+            and (not m["kind"].startswith("slow-") or m["kind"] == f"slow-{args.slow_style}")]
+    print(f"{len(manifest):,} clips · {len(todo):,} to check (≈ ${len(todo) * 1.8 / 3600 * 0.15:.2f} at $0.15/hour)")
+
+    def work(cid):
+        return cid, transcribe(folder / manifest[cid]["file"], args, key)
+
+    done = 0
+    with futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
+        for fut in futures.as_completed([pool.submit(work, c) for c in todo]):
+            try:
+                cid, heard = fut.result()
+                results[cid] = heard
+            except Exception as err:            # noqa: BLE001
+                print("  error:", str(err)[:200])
+            done += 1
+            if done % 100 == 0:
+                print(f"  {done:,}/{len(todo):,} checked", flush=True)
+                results_path.write_text(json.dumps(results, ensure_ascii=False) + "\n", encoding="utf-8")
+    results_path.write_text(json.dumps(results, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    rows = []
+    for cid, heard in results.items():
+        m = manifest.get(cid)
+        if not m:
+            continue
+        score = heard_score(m["text"], heard)
+        # Short texts get a stricter bar: one wrong letter in "sucedes" is the whole problem.
+        bar = 0.9 if len(lookup_key(m["text"]).replace(" ", "")) <= 8 else 0.8
+        if score < bar:
+            rows.append((score, cid, m, heard))
+    rows.sort(key=lambda r: r[0])
+    (folder / "flagged.json").write_text(json.dumps([cid for _, cid, _, _ in rows]) + "\n", encoding="utf-8")
+    page = AUDIO / "check.html"
+    page.write_text("""<!doctype html><meta charset="utf-8"><title>Palabra · pronunciation check</title>
+<style>body{font:15px -apple-system,system-ui;max-width:860px;margin:24px auto;padding:0 16px}
+td{padding:6px 8px;border-bottom:1px solid #eee;vertical-align:top}.s{color:#999}audio{height:30px}</style>
+<h1>Pronunciation check · """ + html.escape(voice) + f"""</h1>
+<p>{len(rows):,} of {len(results):,} clips didn't match what speech-to-text heard. Listen to the worst ones;
+re-record with <code>--check --redo-flagged</code> or <code>--redo "text"</code>.</p><table>
+<tr><th>score</th><th>should say</th><th>heard</th><th>kind</th><th></th></tr>
+""" + "\n".join(f'<tr><td class="s">{sc:.2f}</td><td>{html.escape(m["text"])}</td><td>{html.escape(h or "(nothing)")}</td>'
+                f'<td class="s">{m["kind"]}</td><td><audio controls preload="none" src="{html.escape(voice)}/{m["file"]}"></audio></td></tr>'
+                for sc, cid, m, h in rows) + "</table>", encoding="utf-8")
+    print(f"{len(rows):,} flagged of {len(results):,} → open {page.relative_to(ROOT)}")
+
+
+def redo(cids: list[str], voice: str, args, key: str) -> None:
+    """Re-record clips in place (same file, so the app's index still points at them) with a
+    different delivery, which gives the model another take."""
+    folder = AUDIO / voice
+    manifest = json.loads((folder / "manifest.json").read_text(encoding="utf-8"))
+    results_path = folder / "check.json"
+    results = json.loads(results_path.read_text(encoding="utf-8")) if results_path.exists() else {}
+    retry = argparse.Namespace(**{**vars(args), "delivery": "BALANCED"})
+    for cid in cids:
+        m = manifest[cid]
+        text = m["text"] if not m["kind"].startswith("slow-") else slow_text(m["text"], args.slow_style, args.pause_ms)
+        audio = synthesize({"text": text, "rate": m["rate"]}, voice, retry, key)
+        (folder / m["file"]).write_bytes(audio)
+        results.pop(cid, None)
+        print(f"  re-recorded: {m['text']}")
+    results_path.write_text(json.dumps(results, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
 def list_voices(key: str) -> None:
     data = request("/voices/v1/voices", key)
     voices = data.get("voices", data if isinstance(data, list) else [])
@@ -253,6 +359,9 @@ def main() -> None:
     ap.add_argument("--bitrate", type=int, default=48000, help="MP3 bits per second (32000 is enough for voice)")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--list-voices", action="store_true")
+    ap.add_argument("--check", action="store_true", help="transcribe the clips and flag mispronounced ones")
+    ap.add_argument("--redo-flagged", action="store_true", help="with --check: re-record the flagged clips, then check again")
+    ap.add_argument("--redo", nargs="+", metavar="TEXT", help="re-record the clips for these texts (any kind)")
     ap.add_argument("--export", action="store_true",
                     help="copy this voice's recorded clips into App/Audio/ for the app (records nothing)")
     ap.add_argument("--dry-run", action="store_true", help="count characters and cost, call nothing")
@@ -269,6 +378,20 @@ def main() -> None:
         sys.exit("Set INWORLD_API_KEY first (export INWORLD_API_KEY=...). It is never printed or saved.")
     if args.list_voices:
         list_voices(key)
+        return
+    if args.redo:
+        manifest = json.loads((AUDIO / voices[0] / "manifest.json").read_text(encoding="utf-8"))
+        wanted = {lookup_key(t) for t in args.redo}
+        redo([cid for cid, m in manifest.items() if lookup_key(m["text"]) in wanted], voices[0], args, key)
+        print("Run --export again to update the app.")
+        return
+    if args.check:
+        check(voices[0], args, key)
+        if args.redo_flagged:
+            flagged = json.loads((AUDIO / voices[0] / "flagged.json").read_text(encoding="utf-8"))
+            redo(flagged, voices[0], args, key)
+            check(voices[0], args, key)
+            print("Run --export again to update the app.")
         return
 
     deck = json.loads(DECK.read_text(encoding="utf-8"))

@@ -68,6 +68,7 @@ enum AppSettings {
         static let quizzesEnabled = "quizzesEnabled"
         static let widgetShowsPhrase = "widgetShowsPhrase"
         static let useRecordedVoice = "useRecordedVoice"
+        static let quizSounds = "quizSounds"
     }
 
     static var level: Level {
@@ -123,6 +124,12 @@ enum AppSettings {
     static var useRecordedVoice: Bool {
         get { defaults.object(forKey: Key.useRecordedVoice) as? Bool ?? true }
         set { defaults.set(newValue, forKey: Key.useRecordedVoice) }
+    }
+
+    /// Chime / tone sounds in quizzes. On by default.
+    static var quizSoundsEnabled: Bool {
+        get { defaults.object(forKey: Key.quizSounds) as? Bool ?? true }
+        set { defaults.set(newValue, forKey: Key.quizSounds) }
     }
 
     static var speechRate: Double {

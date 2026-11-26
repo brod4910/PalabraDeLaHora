@@ -111,6 +111,7 @@ enum QuizBuilder {
 
 struct QuizHomeView: View {
     @AppStorage("quizMode", store: AppSettings.defaults) private var modeRaw = QuizMode.written.rawValue
+    @AppStorage(AppSettings.Key.quizSounds, store: AppSettings.defaults) private var soundsOn = true
 
     @State private var run: QuizRun?
     @State private var refresh = UUID()
@@ -141,6 +142,9 @@ struct QuizHomeView: View {
                         Text(mode.summary)
                             .font(.footnote)
                             .foregroundStyle(.secondary)
+
+                        Toggle("Sounds", isOn: $soundsOn)
+                            .font(.subheadline)
 
                         Button {
                             Task { await start(with: seen) }
@@ -307,6 +311,7 @@ struct QuizSessionView: View {
                     .font(.largeTitle.bold())
                     .padding(.top, 24)
                 Text("\(score) of \(total) correct").font(.title3)
+                    .onAppear { QuizSounds.play(.complete) }
 
                 if !missed.isEmpty {
                     VStack(alignment: .leading, spacing: 10) {
@@ -440,6 +445,7 @@ private struct ChoiceQuestionView: View {
                     let correct = option == question.answer
                     withAnimation { chosen = option }
                     onResult(correct)
+                    QuizSounds.play(correct ? .correct : .wrong)
                     UINotificationFeedbackGenerator().notificationOccurred(correct ? .success : .error)
                 } label: {
                     HStack {
@@ -663,9 +669,10 @@ private struct SpeakQuestionView: View {
             let correct = AnswerMatcher.matchesSpanish(spoken: text, target: word.spanish)
             phase = correct ? .correct : .wrong
             onResult(correct)
+            QuizSounds.play(correct ? .correct : .wrong)
             UINotificationFeedbackGenerator().notificationOccurred(correct ? .success : .error)
-            // Hear the right answer in the Spanish voice either way.
-            try? await Task.sleep(for: .seconds(0.3))
+            // Hear the right answer in the Spanish voice either way, after the chime.
+            try? await Task.sleep(for: .seconds(0.7))
             guard !Task.isCancelled else { return }
             speaker.speak(word.spanish)
         }
