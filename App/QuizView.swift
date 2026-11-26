@@ -90,16 +90,21 @@ enum QuizBuilder {
         (distractors(for: word, by: field) + [word[keyPath: field]]).shuffled()
     }
 
-    /// Three distinct wrong answers of the same kind, preferring the same level so they're plausible.
+    /// Three distinct wrong answers, all from words she has already seen, so every choice is
+    /// something she has met (words of the same kind first: words with words, phrases with
+    /// phrases). Only if she has seen too few does it fall back to unseen words of her level.
     private static func distractors(for word: Word, by field: KeyPath<Word, String>) -> [String] {
-        let pool = WordBank.all.filter {
-            $0.id != word.id && $0.kind == word.kind
-                && $0.english != word.english && $0.spanish != word.spanish
+        let usable: (Word) -> Bool = {
+            $0.id != word.id && $0.english != word.english && $0.spanish != word.spanish
         }
-        let sameLevel = pool.filter { $0.level == word.level }.shuffled()
-        let others = pool.filter { $0.level != word.level }.shuffled()
+        let seen = LearningProgress.seenWords().filter(usable).shuffled()
+        let seenIDs = Set(seen.map(\.id))
+        let fallback = WordBank.all.filter { usable($0) && !seenIDs.contains($0.id) }
+            .sorted { ($0.level == word.level ? 0 : 1) < ($1.level == word.level ? 0 : 1) }
+        let ordered = seen.filter { $0.kind == word.kind } + seen.filter { $0.kind != word.kind }
+            + fallback.filter { $0.kind == word.kind }.shuffled()
         var result: [String] = []
-        for candidate in (sameLevel + others).map({ $0[keyPath: field] }) where !result.contains(candidate) {
+        for candidate in ordered.map({ $0[keyPath: field] }) where !result.contains(candidate) {
             result.append(candidate)
             if result.count == 3 { break }
         }
