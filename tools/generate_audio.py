@@ -788,10 +788,23 @@ def export(voice: str, args) -> None:
     if not manifest_path.exists():
         sys.exit(f"No recordings for {voice} yet — run without --export first.")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    # Only clips for text the deck still has: an old example sentence that a card no longer uses
+    # stays recorded (cached, free if it comes back) but isn't shipped in the app.
+    deck = json.loads(DECK.read_text(encoding="utf-8"))
+    current = {lookup_key(TEST_PHRASE)}
+    for card in deck:
+        current.add(lookup_key(card["spanish"]))
+        current |= {lookup_key(s) for s in [card.get("example")] + [m.get("example") for m in card.get("otherMeanings") or []]
+                    + [p["es"] for p in card.get("phrases") or []] if s}
+        current |= {lookup_key(f) for f in key_forms(card)}
     index: dict[str, str] = {}
+    unused = 0
     for cid, m in manifest.items():
         src = AUDIO / voice / m["file"]
         if not src.exists():
+            continue
+        if lookup_key(m["text"]) not in current:
+            unused += 1
             continue
         if m["kind"].startswith("slow-"):
             if m["kind"] != f"slow-{args.slow_style}":
@@ -813,8 +826,9 @@ def export(voice: str, args) -> None:
         size += dest.stat().st_size
     (APP_AUDIO / "index.json").write_text(json.dumps({"voice": voice, "clips": index}, ensure_ascii=False) + "\n",
                                           encoding="utf-8")
-    print(f"App/Audio: {len(keep):,} clips ({size / 1e6:.1f} MB) for {len(index):,} texts, voice {voice}. "
-          "Build the app in Xcode to bundle them.")
+    print(f"App/Audio: {len(keep):,} clips ({size / 1e6:.1f} MB) for {len(index):,} texts, voice {voice}"
+          + (f" ({unused:,} recorded clips the deck no longer uses were left out)" if unused else "")
+          + ". Build the app in Xcode to bundle them.")
 
 
 def group(jobs) -> dict[str, list[tuple[dict, dict, str]]]:
