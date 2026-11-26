@@ -353,11 +353,10 @@ def check(voice: str, args, key: str) -> None:
             unclear += 1
             rows.append((-1.0, cid, m, rest))
             continue
-        score = heard_score(m["text"], rest)
         # Words and short phrases get a stricter bar: one wrong letter in "sucedes" is the whole problem.
-        bar = 0.9 if len(lookup_key(m["text"]).split()) <= 2 else 0.8
-        if score < bar:
-            rows.append((score, cid, m, heard))
+        ok, score = passes(m, heard)
+        if not ok:
+            rows.append((score, cid, m, rest))
     rows.sort(key=lambda r: (r[0] < 0, r[0]))
     (folder / "flagged.json").write_text(json.dumps([cid for sc, cid, _, _ in rows if sc >= 0]) + "\n", encoding="utf-8")
     page = AUDIO / "check.html"
@@ -377,21 +376,53 @@ re-record with <code>--check --redo-flagged</code> or <code>--redo "text"</code>
           + f" → open {page.relative_to(ROOT)}")
 
 
-def redo(cids: list[str], voice: str, args, key: str) -> None:
-    """Re-record clips in place (same file, so the app's index still points at them) with a
-    different delivery, which gives the model another take."""
+def passes(m: dict, heard: str) -> tuple[bool, float]:
+    rest = after_carrier(heard)
+    if not latin(heard) or only_letters(rest) or len(sounds(m["text"])) <= 2:
+        return True, 1.0                             # can't be judged: don't keep re-recording
+    score = heard_score(m["text"], rest)
+    return score >= (0.9 if len(lookup_key(m["text"]).split()) <= 2 else 0.8), score
+
+
+def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
+    """Re-record clips in place (same file, so the app's index still points at them) and check
+    each new take right away. A take that still sounds wrong (cliente → "diente") is tried again
+    with another delivery and slightly different punctuation; the first take that passes is kept,
+    otherwise the best one."""
     folder = AUDIO / voice
     manifest = json.loads((folder / "manifest.json").read_text(encoding="utf-8"))
     results_path = folder / "check.json"
     results = json.loads(results_path.read_text(encoding="utf-8")) if results_path.exists() else {}
-    retry = argparse.Namespace(**{**vars(args), "delivery": "BALANCED"})
+    if results.get("_version") != CHECK_VERSION:
+        results = {"_version": CHECK_VERSION}
+    lead_in = carrier_audio(voice, args, key)
+    attempts = [("BALANCED", lambda t: t), ("CREATIVE", lambda t: t.rstrip(".!?") + "."),
+                ("BALANCED", lambda t: t[:1].upper() + t[1:].rstrip(".!?") + "!")]
     for cid in cids:
         m = manifest[cid]
-        text = m["text"] if not m["kind"].startswith("slow-") else slow_text(m["text"], args.slow_style, args.pause_ms)
-        audio = synthesize({"text": text, "rate": m["rate"]}, voice, retry, key)
+        slow = m["kind"].startswith("slow-")
+        best = None
+        for delivery, variant in attempts[:takes]:
+            text = slow_text(m["text"], args.slow_style, args.pause_ms) if slow else variant(m["text"])
+            audio = synthesize({"text": text, "rate": m["rate"]}, voice,
+                               argparse.Namespace(**{**vars(args), "delivery": delivery}), key)
+            if slow:                                  # slow clips can't be checked: keep the new take
+                best = (True, 1.0, audio, ""); break
+            heard = transcribe(lead_in + strip_id3(audio), args, key)
+            ok, score = passes(m, heard)
+            if best is None or score > best[1]:
+                best = (ok, score, audio, heard)
+            if ok:
+                break
+        ok, score, audio, heard = best
         (folder / m["file"]).write_bytes(audio)
-        results.pop(cid, None)
-        print(f"  re-recorded: {m['text']}")
+        if heard:
+            results[cid] = heard
+        else:
+            results.pop(cid, None)
+        heard_text = after_carrier(heard) if heard else ""
+        label = "re-recorded (slow)" if slow else ("fixed" if ok else "still off — listen, or try --redo again")
+        print(f"  {label}: {m['text']}" + (f"  (heard “{heard_text}”, {score:.2f})" if heard else ""))
     results_path.write_text(json.dumps(results, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
@@ -476,7 +507,8 @@ def main() -> None:
     if args.redo:
         manifest = json.loads((AUDIO / voices[0] / "manifest.json").read_text(encoding="utf-8"))
         wanted = {lookup_key(t) for t in args.redo}
-        redo([cid for cid, m in manifest.items() if lookup_key(m["text"]) in wanted], voices[0], args, key)
+        redo([cid for cid, m in manifest.items() if lookup_key(m["text"]) in wanted
+              and (not m["kind"].startswith("slow-") or m["kind"] == f"slow-{args.slow_style}")], voices[0], args, key)
         print("Run --export again to update the app.")
         return
     if args.check:
