@@ -1,0 +1,36 @@
+# Words the dictionary import doesn't produce as cards (little words, reflexive verbs, multi-word
+# words). Just the word and its level: tools/generate_cards.py writes their cards.
+# word | level
+prometido | beginner
+los | novice
+las | novice
+me | novice
+les | novice
+nos | novice
+tu | novice
+su | novice
+ustedes | novice
+hay | novice
+esto | novice
+uno, dos, tres | novice
+fin de semana | beginner
+vacaciones | beginner
+juntos | beginner
+darse cuenta | intermediate
+acordarse | intermediate
+quedarse | intermediate
+preocuparse | intermediate
+enojarse | intermediate
+casarse | intermediate
+mudarse | intermediate
+sin embargo | intermediate
+por eso | intermediate
+quizás | intermediate
+ganas | intermediate
+arrepentirse | fluent
+enterarse | fluent
+madrugar | fluent
+convivir | fluent
+embarazada | fluent
+en cuanto | fluent
+con tal de que | fluent

@@ -69,6 +69,24 @@ Rules:
 Return JSON exactly: {{"phrases": [{{"spanish": "...", "english": "...", "example": "...", "example_en": "...",
 "pattern": "...", "tip": ""}}]}}"""
 
+# The hand-written phrase cards' expressions are rewritten as cards too (one "seed" batch per
+# level), so the generated cards can replace them.
+SEED = """Spanish variety: {variety}
+
+Write a learner card for EACH of these everyday expressions, keeping each expression as written:
+{expressions}
+They are for {level_guide}.
+
+- "spanish": the expression exactly as given.
+- "english": a natural meaning in a few words (not word-for-word).
+- "example": one short natural sentence (3–10 words) that contains the expression exactly, and
+  "example_en": its natural English translation.
+- "pattern": how to use it, under 12 words.
+- "tip": optional, under 15 words, only if useful. Else "".
+
+Return JSON exactly: {{"phrases": [{{"spanish": "...", "english": "...", "example": "...", "example_en": "...",
+"pattern": "...", "tip": ""}}]}}"""
+
 REVIEW = """You are a native {variety_short} Spanish speaker and a careful Spanish teacher. Check each
 everyday expression written for a learner at the given level. Approve it ("ok": true) only if ALL are true:
 1. People in Mexico really say it in everyday life (not Spain-only, rare, literary, vulgar or offensive).
@@ -92,14 +110,25 @@ def core(expression: str) -> str:
     return expression.replace("…", " ").replace("...", " ").strip(" ¿?¡!.,;:")
 
 
+def seeds(level: str) -> list[str]:
+    """The hand-written phrase cards' expressions at this level (to be replaced)."""
+    path = dict_tools.CURATED
+    curated = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
+    return [c["spanish"] for c in curated if c.get("kind") == "phrase" and c["level"] == level]
+
+
 def cache_path(level: str, situation: str) -> pathlib.Path:
     return CACHE / f"{level}-{situation}.json"
 
 
 def run_one(level: str, situation: str, avoid: list[str], args, checker: gp.Checker,
             deck_words: set[str], api_key: str | None) -> tuple[list[dict], list[tuple[str, str]]]:
-    prompt = GENERATE.format(variety=gp.VARIETIES[args.variety], n=args.per, situation=situation,
-                             level_guide=LEVEL_GUIDE[level], avoid=", ".join(avoid[:150]) or "(none)")
+    if situation == "seed":
+        prompt = SEED.format(variety=gp.VARIETIES[args.variety], level_guide=LEVEL_GUIDE[level],
+                             expressions="\n".join(f"- {e}" for e in seeds(level)))
+    else:
+        prompt = GENERATE.format(variety=gp.VARIETIES[args.variety], n=args.per, situation=situation,
+                                 level_guide=LEVEL_GUIDE[level], avoid=", ".join(avoid[:150]) or "(none)")
     result, _ = gp.ask(args, gp.SYSTEM, prompt, max_tokens=350 * args.per + 500, api_key=api_key)
     candidates, dropped = [], []
     for ph in result.get("phrases", []):
@@ -155,7 +184,8 @@ def main() -> None:
 
     deck = json.loads(dict_tools.DECK.read_text(encoding="utf-8"))
     situations = [s for s in gp.SITUATIONS]
-    todo = [(lv, s) for lv in args.levels for s in situations if args.redo or not cache_path(lv, s).exists()]
+    todo = [(lv, s) for lv in args.levels for s in (["seed"] if seeds(lv) else []) + situations
+            if args.redo or not cache_path(lv, s).exists()]
     print(f"{len(todo)} level × situation batches to write ({args.per} expressions each, model {args.model})"
           + (" through Claude Code — uses your Claude plan's limits." if args.backend == "claude-code" else "."))
     if args.dry_run or not todo:
@@ -208,7 +238,8 @@ def main() -> None:
 
 def finish(deck: list[dict]) -> None:
     """All cached cards → tools/phrase_cards.json (deduplicated), then merge into the deck."""
-    have = {same_text(core(c["spanish"])) for c in deck if c.get("source") != "ai" or c.get("kind") != "phrase"}
+    # Skip expressions that are word cards already; not the hand-written phrase cards, which these replace.
+    have = {same_text(core(c["spanish"])) for c in deck if c.get("kind") != "phrase"}
     order = {"novice": 0, "beginner": 1, "intermediate": 2, "fluent": 3}
     cards, seen = [], set()
     for path in sorted(CACHE.glob("*.json"), key=lambda p: (order.get(p.stem.split("-")[0], 9), p.stem)) if CACHE.exists() else []:

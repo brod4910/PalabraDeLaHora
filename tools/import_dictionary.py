@@ -51,6 +51,7 @@ GENERATED = TOOLS / "generated.json"
 DECK = ROOT / "Shared" / "words.json"
 PHRASES = TOOLS / "phrases.json"
 PHRASE_CARDS = TOOLS / "phrase_cards.json"     # everyday expressions from generate_phrase_cards.py
+CARDS = TOOLS / "cards.json"                   # written word cards from generate_cards.py
 REJECTED_PHRASES = TOOLS / "phrases_rejected.txt"
 
 FREQ_URL = "https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/es/es_50k.txt"
@@ -1390,10 +1391,57 @@ def merge() -> None:
                 extra.append({k: v for k, v in m.items() if v})
                 have |= keys
         return {**c, "otherMeanings": (c.get("otherMeanings") or []) + extra} if extra else c
+    def folded(text: str) -> str:
+        return " ".join(tokens(strip_accents(text.replace("…", " "))))
+
+    # Cards written by generate_cards.py (tools/cards.json) and everyday expressions from
+    # generate_phrase_cards.py (tools/phrase_cards.json) replace the hand-written cards: a
+    # hand-written card is only used for a word or expression that has neither yet.
+    written = json.loads(CARDS.read_text(encoding="utf-8")) if CARDS.exists() else {}
+    phrase_cards = json.loads(PHRASE_CARDS.read_text(encoding="utf-8")) if PHRASE_CARDS.exists() else []
+    replaced = set(written) | {folded(pc["spanish"]) for pc in phrase_cards}
+    curated_id = {c["spanish"].lower(): c["id"] for c in curated}
+
+    def with_written(base: dict, w: dict) -> dict:
+        """The dictionary card (key forms, level, real sentences) with the written meanings,
+        examples, "How to use it" and tip on top."""
+        m0, rest = w["meanings"][0], w["meanings"][1:]
+        card = {k: v for k, v in base.items()
+                if k not in ("english", "example", "exampleTranslation", "exampleWord", "exampleNote",
+                             "otherMeanings", "pattern", "tip")}
+        card["english"] = m0["english"]
+        if m0.get("partOfSpeech") and not card.get("partOfSpeech", "").startswith(m0["partOfSpeech"].split(" ")[0]):
+            card["partOfSpeech"] = m0["partOfSpeech"]
+        card.setdefault("partOfSpeech", m0.get("partOfSpeech") or "word")
+        card["example"], card["exampleTranslation"] = m0["example"], m0["exampleTranslation"]
+        # The dictionary's key forms belong to its part of speech: when the written meaning is
+        # another one (mi = "my", not the noun "mi"), use the written forms, or none.
+        family = lambda pos: (pos or "").split(" ")[0]
+        if w.get("forms"):
+            card["forms"] = w["forms"]
+        elif base.get("partOfSpeech") and family(base["partOfSpeech"]) != family(card["partOfSpeech"]):
+            card.pop("forms", None)
+        if w.get("pattern"):
+            card["pattern"] = w["pattern"]
+        if w.get("tip"):
+            card["tip"] = w["tip"]
+        if rest:
+            card["otherMeanings"] = [{k: v for k, v in m.items() if v} for m in rest]
+        card["source"] = "written"
+        note = (m0.get("exampleWord"), m0["exampleNote"]) if m0.get("exampleNote") else None
+        return annotate_curated_example(card, note) if note else _highlight(card, m0.get("exampleWord"))
+
+    def _highlight(card: dict, word: str | None) -> dict:
+        if word and find_in_sentence(card["example"], word):
+            return {**card, "exampleWord": find_in_sentence(card["example"], word)}
+        return annotate_curated_example(card, None)
+
     deck, ids = [], set()
-    curated_words = {c["spanish"].lower() for c in curated}
     with_forms = 0
+    used_curated = 0
     for c in curated:
+        if c["spanish"].lower() in replaced or folded(c["spanish"]) in replaced:
+            continue                       # replaced by a written card or a generated expression
         # Key forms: hand-checked table first, then the dictionary's, if the word was imported.
         forms = CURATED_FORMS.get(c["spanish"]) or generated_forms.get(c["spanish"].lower())
         if forms:
@@ -1404,35 +1452,47 @@ def merge() -> None:
             c = {**c, "otherMeanings": [
                 {**m, "forms": MEANING_FORMS[(c["spanish"], i)]} if (c["spanish"], i) in MEANING_FORMS else m
                 for i, m in enumerate(c["otherMeanings"])]}
-        deck.append(c); ids.add(c["id"])
-    added = 0
-    for g in generated:
-        if g["spanish"].lower() in curated_words:
-            continue                       # the hand-written card wins
-        base, n = g["id"], 2
-        while g["id"] in ids:              # e.g. "como" vs "cómo" share a slug
-            g = {**g, "id": f"{base}-{n}"}; n += 1
-        deck.append(g); ids.add(g["id"]); added += 1
+        deck.append(c); ids.add(c["id"]); used_curated += 1
+    curated_words = {c["spanish"].lower() for c in deck}
 
-    # Everyday expressions (¿qué onda?, ni modo…) from generate_phrase_cards.py, after the
-    # hand-written and dictionary cards; one that's already in the deck is skipped.
-    def folded(text: str) -> str:
-        return " ".join(tokens(strip_accents(text.replace("…", " "))))
+    def add(card: dict) -> None:
+        # Keep the hand-written card's id when replacing it, so seen words and favorites carry over.
+        base = curated_id.get(card["spanish"].lower(), card["id"])
+        card = {**card, "id": base}
+        n = 2
+        while card["id"] in ids:           # e.g. "como" vs "cómo" share a slug
+            card["id"] = f"{base}-{n}"; n += 1
+        deck.append(card); ids.add(card["id"])
+
+    added = written_used = 0
+    for g in generated:
+        word = g["spanish"].lower()
+        if word in curated_words:
+            continue                       # the hand-written card (not replaced yet) wins
+        if word in written:
+            g = with_written(g, written[word]); written_used += 1
+        add(g); added += 1
+    have = {g["spanish"].lower() for g in generated}
+    for word, w in written.items():        # words the import doesn't make (tools/extra_words.txt)
+        if word in have or word in curated_words:
+            continue
+        base = {"id": slug(w["spanish"]), "spanish": w["spanish"], "phonetic": respell(w["spanish"]),
+                "level": w["level"], "kind": "word"}
+        add(with_written(base, w)); written_used += 1
+
+    # Everyday expressions (¿qué onda?, ni modo…) from generate_phrase_cards.py; one that's
+    # already in the deck is skipped.
     in_deck = {folded(c["spanish"]) for c in deck}
-    phrase_cards = json.loads(PHRASE_CARDS.read_text(encoding="utf-8")) if PHRASE_CARDS.exists() else []
     added_phrases = 0
     for pc in phrase_cards:
         if folded(pc["spanish"]) in in_deck:
             continue
         card = {k: v for k, v in pc.items() if k != "situation"}
-        base, n = slug(pc["spanish"]) or "frase", 2
-        card["id"] = base
-        while card["id"] in ids:
-            card["id"] = f"{base}-{n}"; n += 1
+        card["id"] = curated_id.get(pc["spanish"].lower()) or slug(pc["spanish"]) or "frase"
         core = pc["spanish"].replace("…", " ").strip(" ¿?¡!.,;:")
         if (hit := find_in_sentence(card["example"], core)):
             card["exampleWord"] = hit
-        deck.append(card); ids.add(card["id"]); in_deck.add(folded(pc["spanish"])); added_phrases += 1
+        add(card); in_deck.add(folded(pc["spanish"])); added_phrases += 1
 
     # Everyday phrases: AI-written ones (tools/phrases.json, from generate_phrases.py) first, then
     # real Tatoeba sentences from the import. Hand-written cards also get the import's sentences.
@@ -1472,8 +1532,9 @@ def merge() -> None:
     by_level = defaultdict(int)
     for c in deck:
         by_level[c["level"]] += 1
-    print(f"Shared/words.json: {len(deck):,} cards ({len(curated)} curated, {with_forms} with key forms, "
-          f"+ {added:,} from the dictionary, + {added_phrases:,} everyday expressions; {with_phrases:,} with everyday phrases) — "
+    print(f"Shared/words.json: {len(deck):,} cards ({used_curated} hand-written still used, {with_forms} with key forms, "
+          f"+ {added:,} from the dictionary ({written_used:,} written), + {added_phrases:,} everyday expressions; "
+          f"{with_phrases:,} with everyday phrases) — "
           + ", ".join(f"{k} {v:,}" for k, v in by_level.items()))
 
 

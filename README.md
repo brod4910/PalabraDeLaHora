@@ -166,3 +166,18 @@ python3 tools/generate_phrase_cards.py --backend claude-code --levels novice   #
 python3 tools/generate_phrases.py --backend claude-code --levels novice        # everyday phrases for them
 python3 tools/generate_audio.py --levels novice --voice Paloma                 # record the new ones
 ```
+
+## Written cards (replacing the hand-written ones)
+
+`tools/generate_cards.py` writes every word card's learner content with Claude: the everyday Mexican
+meaning(s) (correcting the dictionary where it's wrong), a simple example for each, "How to use it",
+an optional tip, and key forms where the dictionary has none or the wrong ones. Words come from the
+dictionary import plus `tools/extra_words.txt`. Each card is checked (example uses the word at its
+level, grammar notes from the analyzer, native es-MX review); rejected ones keep their old card.
+`generate_phrase_cards.py` also rewrites the hand-written phrase cards. The merge reports how many
+hand-written cards are still used; once that's 0 they can be deleted.
+
+```bash
+python3 tools/generate_cards.py --backend claude-code --levels novice
+python3 tools/generate_phrase_cards.py --backend claude-code --levels novice
+```
