@@ -274,3 +274,34 @@ dest = ROOT / f"{APP}.xcodeproj" / "project.pbxproj"
 dest.parent.mkdir(exist_ok=True)
 dest.write_text("\n".join(out))
 print("wrote", dest.relative_to(ROOT), f"({len(o)} objects)")
+
+# A shared scheme for the app, so `xcodebuild -scheme PalabraDeLaHora` (tools/testflight.sh) works
+# on any Mac, not only after Xcode has made its own per-user schemes.
+app_target = oid("target", APP)
+scheme = f"""<?xml version="1.0" encoding="UTF-8"?>
+<Scheme LastUpgradeVersion = "1600" version = "1.7">
+   <BuildAction parallelizeBuildables = "YES" buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry buildForTesting = "YES" buildForRunning = "YES" buildForProfiling = "YES"
+                           buildForArchiving = "YES" buildForAnalyzing = "YES">
+            <BuildableReference BuildableIdentifier = "primary" BlueprintIdentifier = "{app_target}"
+               BuildableName = "{APP}.app" BlueprintName = "{APP}" ReferencedContainer = "container:{APP}.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <LaunchAction buildConfiguration = "Debug" launchStyle = "0" useCustomWorkingDirectory = "NO"
+                 ignoresPersistentStateOnLaunch = "NO" debugDocumentVersioning = "YES" allowLocationSimulation = "YES">
+      <BuildableProductRunnable runnableDebuggingMode = "0">
+         <BuildableReference BuildableIdentifier = "primary" BlueprintIdentifier = "{app_target}"
+            BuildableName = "{APP}.app" BlueprintName = "{APP}" ReferencedContainer = "container:{APP}.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+   <ArchiveAction buildConfiguration = "Release" revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
+"""
+scheme_path = ROOT / f"{APP}.xcodeproj" / "xcshareddata" / "xcschemes" / f"{APP}.xcscheme"
+scheme_path.parent.mkdir(parents=True, exist_ok=True)
+scheme_path.write_text(scheme)
