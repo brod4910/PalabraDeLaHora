@@ -1,4 +1,42 @@
 {
+ "a": [
+  {
+   "id": "d337d62031",
+   "es": "Voy a la tienda.",
+   "en": "I'm going to the store.",
+   "situation": "shopping",
+   "form": "a",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "4df0d78a86",
+   "es": "Nos vemos a las cinco.",
+   "en": "See you at five.",
+   "situation": "plans",
+   "form": "a",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "f80f42cb94",
+   "es": "Te llamo a la hora de comer.",
+   "en": "I'll call you at lunchtime.",
+   "situation": "work",
+   "form": "a",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "ca8c3456a8",
+   "es": "Vamos a casa de mi mamá.",
+   "en": "We're going to my mom's house.",
+   "situation": "family",
+   "form": "a",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "abajo": [
   {
    "id": "1689c19fe9",
@@ -322,22 +360,14 @@
  ],
  "adios": [
   {
-   "id": "52c3e0af39",
-   "es": "Nos vemos mañana, ¡adiós!",
-   "en": "See you tomorrow, bye!",
-   "situation": "friends",
-   "form": "adiós",
+   "id": "8be9848b9e",
+   "es": "No me gustan los adioses.",
+   "en": "I don't like goodbyes.",
+   "situation": "feelings",
+   "form": "adioses",
    "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "1c365c8d1a",
-   "es": "Le dije adiós a mi jefe.",
-   "en": "I said goodbye to my boss.",
-   "situation": "work",
-   "form": "adiós",
-   "source": "ai",
-   "meaning": 0
+   "meaning": 0,
+   "note": "**adioses** = *adiós* → the **plural** form."
   }
  ],
  "afuera": [
@@ -407,6 +437,47 @@
    "meaning": 0
   }
  ],
+ "agradecer": [
+  {
+   "id": "3843d26f27",
+   "es": "Quiero agradecer tu ayuda.",
+   "en": "I want to thank you for your help.",
+   "situation": "everyday",
+   "form": "agradecer",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "3f88c9e33d",
+   "es": "Te agradezco mucho el regalo.",
+   "en": "I'm very grateful to you for the gift.",
+   "situation": "family",
+   "form": "agradezco",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**agradezco** = *agradecer* → the **present** tense for **I** (yo)."
+  },
+  {
+   "id": "aa993a94ed",
+   "es": "Agradecemos la comida, estuvo deliciosa.",
+   "en": "We're grateful for the food, it was delicious.",
+   "situation": "food",
+   "form": "Agradecemos",
+   "source": "ai",
+   "meaning": 1,
+   "note": "**agradecemos** = *agradecer* → the **present** tense for **we** (nosotros)."
+  },
+  {
+   "id": "f74a4934ca",
+   "es": "Mi mamá siempre agradece todo.",
+   "en": "My mom is always grateful for everything.",
+   "situation": "family",
+   "form": "agradece",
+   "source": "ai",
+   "meaning": 1,
+   "note": "**agradece** = *agradecer* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+  }
+ ],
  "agua": [
   {
    "id": "53466ceb99",
@@ -443,18 +514,6 @@
    "form": "agua",
    "source": "ai",
    "meaning": 0
-  }
- ],
- "aguar": [
-  {
-   "id": "5700f00d90",
-   "es": "¿Por qué aguas el refresco?",
-   "en": "Why do you water down the soda?",
-   "situation": "friends",
-   "form": "aguas",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**aguas** = *aguar* → the **present** tense for **you** (tú)."
   }
  ],
  "ah": [
@@ -602,10 +661,37 @@
  ],
  "al": [
   {
-   "id": "86bee546dd",
-   "es": "Llámame al llegar a casa.",
-   "en": "Call me upon getting home.",
-   "situation": "texting",
+   "id": "39594454fc",
+   "es": "Vamos al mercado.",
+   "en": "Let's go to the market.",
+   "situation": "shopping",
+   "form": "al",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "c44e0969f7",
+   "es": "Voy al trabajo en carro.",
+   "en": "I go to work by car.",
+   "situation": "work",
+   "form": "al",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "89e0b51939",
+   "es": "¿Quieres ir al cine?",
+   "en": "Do you want to go to the movies?",
+   "situation": "plans",
+   "form": "al",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "ef8241b545",
+   "es": "Llévame al doctor, por favor.",
+   "en": "Take me to the doctor, please.",
+   "situation": "health",
    "form": "al",
    "source": "ai",
    "meaning": 0
@@ -645,34 +731,43 @@
  ],
  "alguno": [
   {
-   "id": "409c0ff81c",
-   "es": "Algunos dicen que va a llover.",
-   "en": "Some people say it's going to rain.",
-   "situation": "weather",
+   "id": "6ca805f568",
+   "es": "¿Tienes alguna duda?",
+   "en": "Do you have any questions?",
+   "situation": "school",
+   "form": "alguna",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**alguna** = *alguno* → the **feminine** form."
+  },
+  {
+   "id": "dacc2f486c",
+   "es": "¿Hay alguna tienda cerca?",
+   "en": "Is there a store nearby?",
+   "situation": "travel",
+   "form": "alguna",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**alguna** = *alguno* → the **feminine** form."
+  },
+  {
+   "id": "8be6966c31",
+   "es": "Algunos días estoy muy cansada.",
+   "en": "Some days I'm very tired.",
+   "situation": "feelings",
    "form": "Algunos",
    "source": "ai",
    "meaning": 0,
    "note": "**algunos** = *alguno* → the **plural** form."
   },
   {
-   "id": "19c532fcf7",
-   "es": "¿Alguna de estas camisas te gusta?",
-   "en": "Do you like any of these shirts?",
-   "situation": "shopping",
-   "form": "Alguna",
+   "id": "c3993175e4",
+   "es": "¿Alguno de ustedes quiere agua?",
+   "en": "Does any of you want water?",
+   "situation": "home",
+   "form": "Alguno",
    "source": "ai",
-   "meaning": 0,
-   "note": "**alguna** = *alguno* → the **feminine** form."
-  },
-  {
-   "id": "da31441f95",
-   "es": "Algunas de mis primas vienen mañana.",
-   "en": "Some of my cousins are coming tomorrow.",
-   "situation": "family",
-   "form": "Algunas",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**algunas** = *alguno* → the **feminine plural** form."
+   "meaning": 0
   }
  ],
  "alla": [
@@ -827,8 +922,7 @@
    "situation": "friends",
    "form": "amiga",
    "source": "ai",
-   "meaning": 0,
-   "note": "**amiga** = *amigo* → feminine form, for a female friend."
+   "meaning": 0
   },
   {
    "id": "42ed776d13",
@@ -837,8 +931,7 @@
    "situation": "plans",
    "form": "amigos",
    "source": "ai",
-   "meaning": 0,
-   "note": "**amigos** = plural of *amigo* → more than one friend."
+   "meaning": 0
   },
   {
    "id": "ac21476b53",
@@ -1206,28 +1299,19 @@
    "meaning": 0
   },
   {
-   "id": "acdee6385f",
-   "es": "Las llaves están arriba de la mesa.",
-   "en": "The keys are on top of the table.",
-   "situation": "home",
-   "form": "arriba",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "48cf7a5847",
-   "es": "Vamos para arriba, ya es tarde.",
-   "en": "Let's go upstairs, it's late.",
-   "situation": "couple",
-   "form": "arriba",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "d9260ddca2",
-   "es": "¡Arriba! ¡Ya es hora de levantarse!",
-   "en": "Up! It's time to get up!",
+   "id": "0bfa1b8c27",
+   "es": "Los niños duermen arriba.",
+   "en": "The kids are sleeping upstairs.",
    "situation": "family",
+   "form": "arriba",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "f873ced2c3",
+   "es": "Pon las llaves arriba del refrigerador.",
+   "en": "Put the keys on top of the fridge.",
+   "situation": "home",
    "form": "arriba",
    "source": "ai",
    "meaning": 1
@@ -1335,38 +1419,38 @@
  ],
  "asi": [
   {
-   "id": "4efaac97f5",
-   "es": "¿Así está bien?",
-   "en": "Is it okay like this?",
+   "id": "2788e0706b",
+   "es": "Hazlo así, es más fácil.",
+   "en": "Do it like this, it's easier.",
    "situation": "home",
-   "form": "Así",
+   "form": "así",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "48c671f513",
-   "es": "No, no lo cortes así.",
-   "en": "No, don't cut it like that.",
+   "id": "9b58069b06",
+   "es": "¿Así está bien la sopa?",
+   "en": "Is the soup okay like this?",
    "situation": "food",
-   "form": "así",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "d0a1488067",
-   "es": "Así me gusta, gracias.",
-   "en": "I like it like this, thanks.",
-   "situation": "couple",
    "form": "Así",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "d726b5dadb",
-   "es": "Hazlo así, es fácil.",
-   "en": "Do it like this, it's easy.",
-   "situation": "school",
+   "id": "00acbd74b3",
+   "es": "No me hables así, por favor.",
+   "en": "Don't talk to me like that, please.",
+   "situation": "couple",
    "form": "así",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "5098cd34f5",
+   "es": "Así me gusta, con mucho limón.",
+   "en": "That's how I like it, with lots of lime.",
+   "situation": "food",
+   "form": "Así",
    "source": "ai",
    "meaning": 0
   }
@@ -1440,47 +1524,6 @@
    "source": "ai",
    "meaning": 1,
    "note": "**asustes** = *asustar* → a **don't-do-it command** to **you** (tú)."
-  }
- ],
- "atacar": [
-  {
-   "id": "ede57cc522",
-   "es": "Ese perro ataca si te acercas.",
-   "en": "That dog attacks if you get close.",
-   "situation": "everyday",
-   "form": "ataca",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**ataca** = *atacar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  },
-  {
-   "id": "a2e6ff3b2f",
-   "es": "No ataques a tu hermano.",
-   "en": "Don't attack your brother.",
-   "situation": "family",
-   "form": "ataques",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**ataques** = *atacar* → a **don't-do-it command** to **you** (tú)."
-  },
-  {
-   "id": "fefcd9483f",
-   "es": "Los mosquitos me atacan de noche.",
-   "en": "Mosquitoes attack me at night.",
-   "situation": "health",
-   "form": "atacan",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**atacan** = *atacar* → the **present** tense for **they** (ellos / ellas) or *ustedes*."
-  },
-  {
-   "id": "f5faa31eeb",
-   "es": "Vamos a atacar el problema juntos.",
-   "en": "Let's tackle the problem together.",
-   "situation": "work",
-   "form": "atacar",
-   "source": "ai",
-   "meaning": 0
   }
  ],
  "atras": [
@@ -1628,27 +1671,27 @@
    "meaning": 0
   },
   {
-   "id": "0b3a050a02",
-   "es": "Gracias por la ayuda, mi amor.",
-   "en": "Thanks for the help, my love.",
+   "id": "aca4b0c95b",
+   "es": "¿Quieres ayuda con la cena?",
+   "en": "Do you want help with dinner?",
+   "situation": "food",
+   "form": "ayuda",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "90b76ecc7f",
+   "es": "Gracias por tu ayuda, amor.",
+   "en": "Thanks for your help, love.",
    "situation": "couple",
    "form": "ayuda",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "8e66d7f3fc",
-   "es": "¿Quieres ayuda con la tarea?",
-   "en": "Do you want help with homework?",
-   "situation": "school",
-   "form": "ayuda",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "4d4cab0313",
-   "es": "Mi familia me da mucha ayuda.",
-   "en": "My family gives me a lot of help.",
+   "id": "589b6cb143",
+   "es": "Mi mamá necesita ayuda con el celular.",
+   "en": "My mom needs help with her phone.",
    "situation": "family",
    "form": "ayuda",
    "source": "ai",
@@ -1769,47 +1812,6 @@
    "note": "**baja** = *bajo* → the **feminine** form."
   }
  ],
- "banar": [
-  {
-   "id": "38a2dd74e4",
-   "es": "Voy a bañar al perro hoy.",
-   "en": "I'm going to bathe the dog today.",
-   "situation": "home",
-   "form": "bañar",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "39808c359a",
-   "es": "Mamá baña al bebé en la noche.",
-   "en": "Mom bathes the baby at night.",
-   "situation": "family",
-   "form": "baña",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**baña** = *bañar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  },
-  {
-   "id": "d79749ca1e",
-   "es": "¿Ya bañaste a los niños?",
-   "en": "Did you already bathe the kids?",
-   "situation": "family",
-   "form": "bañaste",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**bañaste** = *bañar* → the **past** tense for **you** (tú) (a finished action)."
-  },
-  {
-   "id": "741054891f",
-   "es": "Nosotros bañamos al perro los domingos.",
-   "en": "We bathe the dog on Sundays.",
-   "situation": "everyday",
-   "form": "bañamos",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**bañamos** = *bañar* → the **present** or the **past** tense for **we** (nosotros). Both are spelled the same, so the rest of the sentence tells you which."
-  }
- ],
  "bano": [
   {
    "id": "fc106fd0f2",
@@ -1821,31 +1823,31 @@
    "meaning": 0
   },
   {
-   "id": "43bdbf8665",
-   "es": "Voy al baño un momento.",
-   "en": "I'm going to the bathroom for a moment.",
+   "id": "94dfb1a0a4",
+   "es": "Voy al baño, ya vengo.",
+   "en": "I'm going to the bathroom, I'll be right back.",
    "situation": "everyday",
    "form": "baño",
    "source": "ai",
-   "meaning": 2
+   "meaning": 0
   },
   {
-   "id": "3a57db4bac",
-   "es": "Voy a darme un baño.",
-   "en": "I'm going to take a bath.",
-   "situation": "home",
-   "form": "baño",
-   "source": "ai",
-   "meaning": 1
-  },
-  {
-   "id": "eb65bb8517",
-   "es": "Necesito limpiar el baño hoy.",
-   "en": "I need to clean the bathroom today.",
+   "id": "97e69274c1",
+   "es": "Limpia el baño, por favor.",
+   "en": "Clean the bathroom, please.",
    "situation": "home",
    "form": "baño",
    "source": "ai",
    "meaning": 0
+  },
+  {
+   "id": "49102bbb88",
+   "es": "Necesito un baño caliente.",
+   "en": "I need a hot bath.",
+   "situation": "health",
+   "form": "baño",
+   "source": "ai",
+   "meaning": 1
   }
  ],
  "basta": [
@@ -2004,48 +2006,6 @@
    "note": "**bebo** = *beber* → the **present** tense for **I** (yo)."
   }
  ],
- "besar": [
-  {
-   "id": "afcb01772c",
-   "es": "Quiero besarte mucho.",
-   "en": "I want to kiss you a lot.",
-   "situation": "couple",
-   "form": "besarte",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**besarte** = *besar* (the basic *to …* form) + *te* (you / yourself)."
-  },
-  {
-   "id": "2e5e1cb815",
-   "es": "Mi mamá me besa en la frente.",
-   "en": "My mom kisses me on the forehead.",
-   "situation": "family",
-   "form": "besa",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**besa** = *besar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  },
-  {
-   "id": "c4d400d0c4",
-   "es": "Bésame, mi amor.",
-   "en": "Kiss me, my love.",
-   "situation": "couple",
-   "form": "Bésame",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**bésame** = *besa* (a **command** to **you** (tú)) + *me* (me / myself)."
-  },
-  {
-   "id": "d5b72e6b4a",
-   "es": "Los niños besan al abuelito.",
-   "en": "The kids kiss grandpa.",
-   "situation": "family",
-   "form": "besan",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**besan** = *besar* → the **present** tense for **they** (ellos / ellas) or *ustedes*."
-  }
- ],
  "bien": [
   {
    "id": "f729883717",
@@ -2166,37 +2126,37 @@
  ],
  "boca": [
   {
-   "id": "9225ea726c",
-   "es": "Abre la boca, por favor.",
-   "en": "Open your mouth, please.",
-   "situation": "health",
+   "id": "362f870a8b",
+   "es": "Te espero en la boca del metro.",
+   "en": "I'll wait for you at the metro entrance.",
+   "situation": "plans",
    "form": "boca",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "90d42019f9",
-   "es": "No hables con la boca llena.",
-   "en": "Don't talk with your mouth full.",
+   "id": "3df1ee25a0",
+   "es": "La boca de la cueva es grande.",
+   "en": "The mouth of the cave is big.",
+   "situation": "travel",
+   "form": "boca",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "6cb4772662",
+   "es": "Cuidado con la boca de la botella.",
+   "en": "Careful with the mouth of the bottle.",
    "situation": "food",
    "form": "boca",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "776a048e96",
-   "es": "Me duele la boca.",
-   "en": "My mouth hurts.",
-   "situation": "health",
-   "form": "boca",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "e95a982b7f",
-   "es": "Cierra la boca, hace mucho frío.",
-   "en": "Close your mouth, it's very cold.",
-   "situation": "weather",
+   "id": "a0b1fa8841",
+   "es": "La boca del túnel está cerrada.",
+   "en": "The tunnel entrance is closed.",
+   "situation": "travel",
    "form": "boca",
    "source": "ai",
    "meaning": 0
@@ -2300,8 +2260,7 @@
    "situation": "plans",
    "form": "buen",
    "source": "ai",
-   "meaning": 0,
-   "note": "**buen** = *bueno* → short form before a masculine singular noun."
+   "meaning": 0
   },
   {
    "id": "74d3b5e82b",
@@ -2449,47 +2408,6 @@
    "form": "café",
    "source": "ai",
    "meaning": 0
-  }
- ],
- "calmar": [
-  {
-   "id": "2a68574342",
-   "es": "Tienes que calmarte un poco.",
-   "en": "You need to calm down a bit.",
-   "situation": "feelings",
-   "form": "calmarte",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**calmarte** = *calmar* (the basic *to …* form) + *te* (you / yourself)."
-  },
-  {
-   "id": "569d714ac8",
-   "es": "Respira para calmar los nervios.",
-   "en": "Breathe to calm your nerves.",
-   "situation": "health",
-   "form": "calmar",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "dcf64ad27a",
-   "es": "Cálmate, todo está bien.",
-   "en": "Calm down, everything is fine.",
-   "situation": "couple",
-   "form": "Cálmate",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**cálmate** = *calma* (a **command** to **you** (tú)) + *te* (you / yourself)."
-  },
-  {
-   "id": "f15f26722f",
-   "es": "Un té me calma mucho.",
-   "en": "A tea calms me a lot.",
-   "situation": "home",
-   "form": "calma",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**calma** = *calmar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
   }
  ],
  "cama": [
@@ -2860,44 +2778,6 @@
    "meaning": 0
   }
  ],
- "cargo": [
-  {
-   "id": "4d8fc28b37",
-   "es": "Yo me hago cargo de la cena.",
-   "en": "I'll take charge of dinner.",
-   "situation": "home",
-   "form": "cargo",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "5f737117ae",
-   "es": "Mi hermana tiene un cargo importante.",
-   "en": "My sister has an important position.",
-   "situation": "work",
-   "form": "cargo",
-   "source": "ai",
-   "meaning": 1
-  },
-  {
-   "id": "0cea11667f",
-   "es": "Hay un cargo extra en la cuenta.",
-   "en": "There's an extra charge on the bill.",
-   "situation": "shopping",
-   "form": "cargo",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "88ec983e7f",
-   "es": "Mis papás se hacen cargo del perro.",
-   "en": "My parents take care of the dog.",
-   "situation": "family",
-   "form": "cargo",
-   "source": "ai",
-   "meaning": 0
-  }
- ],
  "casa": [
   {
    "id": "71e3ddddc0",
@@ -2934,87 +2814,6 @@
    "form": "casa",
    "source": "ai",
    "meaning": 0
-  }
- ],
- "causar": [
-  {
-   "id": "321ecfb582",
-   "es": "No quiero causar problemas.",
-   "en": "I don't want to cause problems.",
-   "situation": "everyday",
-   "form": "causar",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "f78757ed88",
-   "es": "La lluvia causa mucho tráfico.",
-   "en": "The rain causes a lot of traffic.",
-   "situation": "weather",
-   "form": "causa",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**causa** = *causar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  },
-  {
-   "id": "4767a0a779",
-   "es": "Me causa risa cuando haces eso.",
-   "en": "It makes me laugh when you do that.",
-   "situation": "couple",
-   "form": "causa",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**causa** = *causar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  },
-  {
-   "id": "8323901225",
-   "es": "Esa comida me causa dolor de estómago.",
-   "en": "That food gives me a stomachache.",
-   "situation": "health",
-   "form": "causa",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**causa** = *causar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  }
- ],
- "cenar": [
-  {
-   "id": "f6046b720e",
-   "es": "¿Qué quieres cenar hoy?",
-   "en": "What do you want for dinner today?",
-   "situation": "food",
-   "form": "cenar",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "50f83a903a",
-   "es": "Vamos a cenar con mis papás.",
-   "en": "We're going to have dinner with my parents.",
-   "situation": "family",
-   "form": "cenar",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "95fa4a1ab8",
-   "es": "Nosotros cenamos a las ocho.",
-   "en": "We eat dinner at eight.",
-   "situation": "home",
-   "form": "cenamos",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**cenamos** = *cenar* → the **present** or the **past** tense for **we** (nosotros). Both are spelled the same, so the rest of the sentence tells you which."
-  },
-  {
-   "id": "49872554d0",
-   "es": "¿Ya cenaste, amor?",
-   "en": "Have you had dinner yet, love?",
-   "situation": "couple",
-   "form": "cenaste",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**cenaste** = *cenar* → the **past** tense for **you** (tú) (a finished action)."
   }
  ],
  "cerrar": [
@@ -3319,8 +3118,7 @@
    "situation": "food",
    "form": "comiste",
    "source": "ai",
-   "meaning": 0,
-   "note": "**comiste** = *comer* → past tense for **you** (tú)"
+   "meaning": 0
   },
   {
    "id": "3f3386a5ca",
@@ -3329,8 +3127,7 @@
    "situation": "home",
    "form": "como",
    "source": "ai",
-   "meaning": 0,
-   "note": "**como** = *comer* → **I** (yo) form, present tense"
+   "meaning": 0
   },
   {
    "id": "cca91533db",
@@ -3348,8 +3145,7 @@
    "situation": "family",
    "form": "Comemos",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Comemos** = *comer* → present tense for **we** (nosotros)"
+   "meaning": 0
   }
  ],
  "comida": [
@@ -3388,6 +3184,27 @@
    "form": "comida",
    "source": "ai",
    "meaning": 0
+  }
+ ],
+ "comido": [
+  {
+   "id": "051c26dc11",
+   "es": "Voy comido, no te preocupes.",
+   "en": "I've already eaten, don't worry.",
+   "situation": "plans",
+   "form": "comido",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "5f5a6de8b3",
+   "es": "Llegamos comidos, no tenemos hambre.",
+   "en": "We arrived already fed, we're not hungry.",
+   "situation": "friends",
+   "form": "comidos",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**comidos** = *comido* → the **plural** form."
   }
  ],
  "como-2": [
@@ -3459,38 +3276,38 @@
  ],
  "como": [
   {
-   "id": "d017613d97",
-   "es": "Cocinas como tu mamá.",
-   "en": "You cook like your mom.",
-   "situation": "food",
+   "id": "04de746cf7",
+   "es": "¿Cómo estás hoy, mi amor?",
+   "en": "How are you today, my love?",
+   "situation": "couple",
+   "form": "Cómo",
+   "source": "ai",
+   "meaning": 2
+  },
+  {
+   "id": "5aa5947760",
+   "es": "Eres tan dulce como tu mamá.",
+   "en": "You're as sweet as your mom.",
+   "situation": "family",
    "form": "como",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "3ecfc5f14c",
-   "es": "Llego como a las ocho.",
-   "en": "I'll arrive at about eight.",
+   "id": "d5e1b0e7e3",
+   "es": "Llego como a las cinco.",
+   "en": "I'll arrive at about five.",
    "situation": "plans",
    "form": "como",
    "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "798dba4510",
-   "es": "Es como mi hermana para mí.",
-   "en": "She's like a sister to me.",
-   "situation": "friends",
-   "form": "como",
-   "source": "ai",
-   "meaning": 0
+   "meaning": 1
   }
  ],
  "companero": [
   {
    "id": "a47c9c9da3",
    "es": "Mi compañero de trabajo es muy amable.",
-   "en": "My coworker is very nice.",
+   "en": "My coworker is very kind.",
    "situation": "work",
    "form": "compañero",
    "source": "ai",
@@ -3507,24 +3324,23 @@
    "note": "**compañera** = *compañero* → the **feminine** form."
   },
   {
-   "id": "e0bd02fa4f",
-   "es": "Mis compañeros me ayudan mucho.",
-   "en": "My coworkers help me a lot.",
-   "situation": "work",
+   "id": "f593eea076",
+   "es": "Mis compañeros llegan tarde hoy.",
+   "en": "My coworkers are arriving late today.",
+   "situation": "everyday",
    "form": "compañeros",
    "source": "ai",
    "meaning": 0,
    "note": "**compañeros** = *compañero* → the **plural** form."
   },
   {
-   "id": "4eab8b8196",
-   "es": "Somos compañeros de equipo desde niños.",
-   "en": "We've been teammates since we were kids.",
-   "situation": "friends",
-   "form": "compañeros",
+   "id": "d7069450f4",
+   "es": "Eres mi compañero de vida.",
+   "en": "You are my life partner.",
+   "situation": "couple",
+   "form": "compañero",
    "source": "ai",
-   "meaning": 2,
-   "note": "**compañeros** = *compañero* → the **plural** form."
+   "meaning": 1
   }
  ],
  "comprar": [
@@ -3593,8 +3409,7 @@
    "situation": "couple",
    "form": "conmigo",
    "source": "ai",
-   "meaning": 0,
-   "note": "**conmigo** = *con* + *mí* → \"with me\""
+   "meaning": 0
   },
   {
    "id": "85ed83841e",
@@ -3690,37 +3505,37 @@
  ],
  "conmigo": [
   {
-   "id": "437523a01d",
-   "es": "¿Quieres venir conmigo?",
-   "en": "Do you want to come with me?",
-   "situation": "plans",
-   "form": "conmigo",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "502ffda384",
-   "es": "Ven conmigo al mercado.",
-   "en": "Come with me to the market.",
+   "id": "ceefe48d63",
+   "es": "¿Vienes conmigo al mercado?",
+   "en": "Are you coming with me to the market?",
    "situation": "shopping",
    "form": "conmigo",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "5bf6664163",
-   "es": "Platica conmigo, por favor.",
-   "en": "Talk to me, please.",
-   "situation": "couple",
+   "id": "576af3d052",
+   "es": "Siéntate conmigo, por favor.",
+   "en": "Sit with me, please.",
+   "situation": "home",
    "form": "conmigo",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "9261cbd3be",
-   "es": "Mi mamá no está enojada conmigo.",
-   "en": "My mom isn't mad at me.",
-   "situation": "feelings",
+   "id": "a066cf5057",
+   "es": "Mi mamá quiere hablar conmigo.",
+   "en": "My mom wants to talk to me.",
+   "situation": "family",
+   "form": "conmigo",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "6e0c2f2c9a",
+   "es": "¿Quieres cenar conmigo hoy?",
+   "en": "Do you want to have dinner with me today?",
+   "situation": "couple",
    "form": "conmigo",
    "source": "ai",
    "meaning": 0
@@ -4036,28 +3851,28 @@
    "meaning": 0
   },
   {
-   "id": "b65cf7fff0",
-   "es": "Me duele el corazón.",
-   "en": "My heart hurts.",
+   "id": "2215af1165",
+   "es": "Mi corazón late muy rápido.",
+   "en": "My heart is beating very fast.",
    "situation": "health",
    "form": "corazón",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "2215af1165",
-   "es": "Mi corazón late muy rápido.",
-   "en": "My heart is beating very fast.",
-   "situation": "feelings",
+   "id": "9f156c3da7",
+   "es": "Mi abuela tiene un corazón grande.",
+   "en": "My grandma has a big heart.",
+   "situation": "family",
    "form": "corazón",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "052ba364f6",
-   "es": "Gracias de corazón, de verdad.",
-   "en": "Thank you from the heart, truly.",
-   "situation": "friends",
+   "id": "b7c4d4e99d",
+   "es": "Gracias, corazón, eres muy lindo.",
+   "en": "Thanks, sweetheart, you're very sweet.",
+   "situation": "couple",
    "form": "corazón",
    "source": "ai",
    "meaning": 0
@@ -4241,7 +4056,7 @@
    "form": "Creamos",
    "source": "ai",
    "meaning": 0,
-   "note": "**creamos** = *crear* → the **present** tense for **we** (nosotros)."
+   "note": "**creamos** = *crear* → the **present** or the **past** tense for **we** (nosotros). Both are spelled the same, so the rest of the sentence tells you which."
   },
   {
    "id": "db9c4298a9",
@@ -4497,31 +4312,32 @@
    "situation": "food",
    "form": "cuenta",
    "source": "ai",
-   "meaning": 1
+   "meaning": 0
   },
   {
-   "id": "25ab0e8752",
-   "es": "Yo pago la cuenta hoy.",
-   "en": "I'll pay the bill today.",
-   "situation": "couple",
+   "id": "844ed11a11",
+   "es": "¿Puedes pagar la cuenta?",
+   "en": "Can you pay the bill?",
+   "situation": "food",
    "form": "cuenta",
    "source": "ai",
-   "meaning": 1
+   "meaning": 0
   },
   {
-   "id": "4c2208a786",
-   "es": "¿Me puedes dividir la cuenta?",
-   "en": "Can you split the bill for me?",
-   "situation": "friends",
-   "form": "cuenta",
+   "id": "e2c15dbef4",
+   "es": "Tengo que pagar las cuentas hoy.",
+   "en": "I have to pay the bills today.",
+   "situation": "home",
+   "form": "cuentas",
    "source": "ai",
-   "meaning": 1
+   "meaning": 0,
+   "note": "**cuentas** = *cuenta* → the **plural** form."
   },
   {
-   "id": "52424b9209",
-   "es": "Tengo una cuenta en el banco.",
-   "en": "I have an account at the bank.",
-   "situation": "work",
+   "id": "535345c074",
+   "es": "Ayúdame con la cuenta, por favor.",
+   "en": "Help me with the bill, please.",
+   "situation": "everyday",
    "form": "cuenta",
    "source": "ai",
    "meaning": 0
@@ -4729,7 +4545,7 @@
    "form": "daños",
    "source": "ai",
    "meaning": 0,
-   "note": "**daños** = *daño* → a form."
+   "note": "**daños** = *daño* → the **plural** form."
   },
   {
    "id": "42fd3a94df",
@@ -4823,29 +4639,38 @@
  ],
  "de": [
   {
-   "id": "b64cda9239",
-   "es": "Hablamos de la fiesta mañana.",
-   "en": "We're talking about the party tomorrow.",
-   "situation": "plans",
+   "id": "3e617b2cfb",
+   "es": "Soy de Estados Unidos.",
+   "en": "I'm from the United States.",
+   "situation": "everyday",
    "form": "de",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "1658713fa2",
-   "es": "¿De qué quieres platicar?",
-   "en": "What do you want to talk about?",
-   "situation": "friends",
-   "form": "De",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "e61a3df8cf",
-   "es": "Mi mamá siempre habla de ti.",
-   "en": "My mom always talks about you.",
+   "id": "4f5c60bb61",
+   "es": "Es la casa de mi abuela.",
+   "en": "It's my grandmother's house.",
    "situation": "family",
    "form": "de",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "b5760dc35c",
+   "es": "Quiero un vaso de agua.",
+   "en": "I want a glass of water.",
+   "situation": "food",
+   "form": "de",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "55a384b51f",
+   "es": "¿De dónde es tu familia?",
+   "en": "Where is your family from?",
+   "situation": "friends",
+   "form": "De",
    "source": "ai",
    "meaning": 0
   }
@@ -5006,27 +4831,36 @@
  ],
  "del": [
   {
-   "id": "0ea0814e55",
-   "es": "Es el celular del niño.",
-   "en": "It's the boy's cell phone.",
+   "id": "d1b42c7f16",
+   "es": "Es la casa del abuelo.",
+   "en": "It's grandpa's house.",
    "situation": "family",
    "form": "del",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "98d501cedd",
-   "es": "Vengo del trabajo.",
-   "en": "I'm coming from work.",
-   "situation": "work",
+   "id": "ce4a36ab19",
+   "es": "Soy del norte de México.",
+   "en": "I'm from the north of Mexico.",
+   "situation": "everyday",
+   "form": "del",
+   "source": "ai",
+   "meaning": 1
+  },
+  {
+   "id": "ae5ee849ca",
+   "es": "¿Dónde está el celular del niño?",
+   "en": "Where is the boy's cell phone?",
+   "situation": "home",
    "form": "del",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "7d94120d82",
-   "es": "Me gusta el sabor del café.",
-   "en": "I like the taste of the coffee.",
+   "id": "7b8238657b",
+   "es": "Me gusta el sabor del pan.",
+   "en": "I like the taste of the bread.",
    "situation": "food",
    "form": "del",
    "source": "ai",
@@ -5527,17 +5361,6 @@
    "meaning": 0
   }
  ],
- "diez": [
-  {
-   "id": "cca2c09832",
-   "es": "Saqué diez en el examen.",
-   "en": "I got an A (a ten) on the exam.",
-   "situation": "school",
-   "form": "diez",
-   "source": "ai",
-   "meaning": 0
-  }
- ],
  "diferente": [
   {
    "id": "0a72eeaa12",
@@ -5601,6 +5424,35 @@
    "en": "My mom sends me money",
    "situation": "family",
    "form": "dinero",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
+ "disculpa": [
+  {
+   "id": "917dea3f17",
+   "es": "Te debo una disculpa, mi amor.",
+   "en": "I owe you an apology, my love.",
+   "situation": "couple",
+   "form": "disculpa",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "6d371244e8",
+   "es": "Disculpa, llegué tarde al trabajo.",
+   "en": "Sorry, I got to work late.",
+   "situation": "work",
+   "form": "Disculpa",
+   "source": "ai",
+   "meaning": 2
+  },
+  {
+   "id": "e0b4b57353",
+   "es": "Mi hermano pide una disculpa.",
+   "en": "My brother is asking for an apology.",
+   "situation": "family",
+   "form": "disculpa",
    "source": "ai",
    "meaning": 0
   }
@@ -5705,7 +5557,7 @@
    "form": "divertida",
    "source": "ai",
    "meaning": 0,
-   "note": "**divertida** = *divertido* → a form."
+   "note": "**divertida** = *divertido* → the **feminine** form."
   },
   {
    "id": "2e3e186566",
@@ -5715,7 +5567,7 @@
    "form": "divertida",
    "source": "ai",
    "meaning": 0,
-   "note": "**divertida** = *divertido* → a form."
+   "note": "**divertida** = *divertido* → the **feminine** form."
   },
   {
    "id": "24107c86af",
@@ -5725,7 +5577,7 @@
    "form": "divertidos",
    "source": "ai",
    "meaning": 0,
-   "note": "**divertidos** = *divertido* → a form."
+   "note": "**divertidos** = *divertido* → the **plural** form."
   }
  ],
  "divertir": [
@@ -6097,28 +5949,19 @@
  ],
  "e": [
   {
-   "id": "cb0972816d",
-   "es": "Mi nombre empieza con e.",
-   "en": "My name starts with E.",
+   "id": "753f6d33e2",
+   "es": "Hablo español e inglés.",
+   "en": "I speak Spanish and English.",
    "situation": "everyday",
    "form": "e",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "315950bb18",
-   "es": "Falta una e en esta palabra.",
-   "en": "This word is missing an e.",
-   "situation": "school",
-   "form": "e",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "5bc0abd693",
-   "es": "La e es una vocal.",
-   "en": "The e is a vowel.",
-   "situation": "school",
+   "id": "18510216c3",
+   "es": "Es un lugar bonito e interesante.",
+   "en": "It's a pretty and interesting place.",
+   "situation": "travel",
    "form": "e",
    "source": "ai",
    "meaning": 0
@@ -6162,39 +6005,77 @@
    "meaning": 1
   }
  ],
+ "el-2": [
+  {
+   "id": "f93d366c51",
+   "es": "Él es mi esposo.",
+   "en": "He is my husband.",
+   "situation": "couple",
+   "form": "Él",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "ae8de989f3",
+   "es": "Él trabaja hoy hasta las seis.",
+   "en": "He works today until six.",
+   "situation": "work",
+   "form": "Él",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "b8e5ff30b7",
+   "es": "¿Él también viene a comer?",
+   "en": "Is he coming to eat too?",
+   "situation": "food",
+   "form": "Él",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "6e979b691e",
+   "es": "Es para él, no para mí.",
+   "en": "It's for him, not for me.",
+   "situation": "family",
+   "form": "él",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "el": [
   {
-   "id": "827cfd05e6",
-   "es": "El café está caliente.",
-   "en": "The coffee is hot.",
-   "situation": "food",
+   "id": "4a90e3307e",
+   "es": "El carro está afuera.",
+   "en": "The car is outside.",
+   "situation": "everyday",
    "form": "El",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "1b4e93609c",
-   "es": "Apaga el celular, mi amor.",
-   "en": "Turn off the phone, my love.",
-   "situation": "couple",
+   "id": "c6d457fe12",
+   "es": "¿Dónde está el celular?",
+   "en": "Where is the phone?",
+   "situation": "home",
    "form": "el",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "4b9201b1ca",
-   "es": "Hoy hace mucho frío en el parque.",
-   "en": "It's very cold at the park today.",
+   "id": "b49ffa3788",
+   "es": "Me gusta el café con leche.",
+   "en": "I like coffee with milk.",
+   "situation": "food",
+   "form": "el",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "d29aebb0a0",
+   "es": "Hoy el clima está muy bonito.",
+   "en": "Today the weather is very nice.",
    "situation": "weather",
-   "form": "el",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "fc106fd0f2",
-   "es": "¿Dónde está el baño?",
-   "en": "Where is the bathroom?",
-   "situation": "travel",
    "form": "el",
    "source": "ai",
    "meaning": 0
@@ -6287,28 +6168,28 @@
    "meaning": 0
   },
   {
+   "id": "f50df79a8b",
+   "es": "Las llaves están en la mesa.",
+   "en": "The keys are on the table.",
+   "situation": "home",
+   "form": "en",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "9e1cdc6b1a",
+   "es": "Mi hermano trabaja en un banco.",
+   "en": "My brother works at a bank.",
+   "situation": "work",
+   "form": "en",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
    "id": "0af955c449",
    "es": "Nos vemos en el restaurante.",
    "en": "See you at the restaurant.",
    "situation": "plans",
-   "form": "en",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "fca7335989",
-   "es": "Mi celular está en la mesa.",
-   "en": "My phone is on the table.",
-   "situation": "everyday",
-   "form": "en",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "b437025d86",
-   "es": "Trabajo en una oficina cerca.",
-   "en": "I work in an office nearby.",
-   "situation": "work",
    "form": "en",
    "source": "ai",
    "meaning": 0
@@ -6323,7 +6204,7 @@
    "form": "encanta",
    "source": "ai",
    "meaning": 0,
-   "note": "**encanta** = *encantar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "note": "**encanta** = *encantar* → the **present** tense for **he / she** (él / ella) or formal *usted*."
   },
   {
    "id": "473d2dfd73",
@@ -6333,7 +6214,7 @@
    "form": "encanta",
    "source": "ai",
    "meaning": 0,
-   "note": "**encanta** = *encantar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "note": "**encanta** = *encantar* → the **present** tense for **he / she** (él / ella) or formal *usted*."
   },
   {
    "id": "a447555919",
@@ -6697,6 +6578,45 @@
    "note": "**escapa** = *escapar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
   }
  ],
+ "escolar": [
+  {
+   "id": "4e34a35e04",
+   "es": "Ya empieza el ciclo escolar.",
+   "en": "The school year is starting.",
+   "situation": "school",
+   "form": "escolar",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "fb561884fe",
+   "es": "Necesito comprar útiles escolares.",
+   "en": "I need to buy school supplies.",
+   "situation": "shopping",
+   "form": "escolares",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**escolares** = *escolar* → the **plural** form."
+  },
+  {
+   "id": "3653dd6edc",
+   "es": "El uniforme escolar es azul.",
+   "en": "The school uniform is blue.",
+   "situation": "school",
+   "form": "escolar",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "fd330da7b6",
+   "es": "Hoy hay un festival escolar.",
+   "en": "Today there's a school festival.",
+   "situation": "plans",
+   "form": "escolar",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "esconder": [
   {
    "id": "a6a5c2a462",
@@ -6847,6 +6767,44 @@
    "meaning": 0
   }
  ],
+ "eso": [
+  {
+   "id": "861124177c",
+   "es": "Eso es muy lindo.",
+   "en": "That's very nice.",
+   "situation": "feelings",
+   "form": "Eso",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "70552c4df6",
+   "es": "¿Eso quieres comer?",
+   "en": "Is that what you want to eat?",
+   "situation": "food",
+   "form": "Eso",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "707ec59758",
+   "es": "Me gusta eso.",
+   "en": "I like that.",
+   "situation": "shopping",
+   "form": "eso",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "98a0e3a815",
+   "es": "Eso no me gusta nada.",
+   "en": "I don't like that at all.",
+   "situation": "everyday",
+   "form": "Eso",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "especial": [
   {
    "id": "199a6d46ee",
@@ -6980,8 +6938,7 @@
    "situation": "couple",
    "form": "estás",
    "source": "ai",
-   "meaning": 0,
-   "note": "**estás** = *estar* → present tense for **you** (tú)"
+   "meaning": 0
   },
   {
    "id": "7665604a4f",
@@ -6990,8 +6947,7 @@
    "situation": "feelings",
    "form": "Estoy",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Estoy** = *estar* → present tense for **I** (yo)"
+   "meaning": 0
   },
   {
    "id": "bf4c04ac5d",
@@ -7000,8 +6956,7 @@
    "situation": "family",
    "form": "está",
    "source": "ai",
-   "meaning": 0,
-   "note": "**está** = *estar* → present tense for **she** (ella)"
+   "meaning": 0
   },
   {
    "id": "e36e1563d5",
@@ -7010,8 +6965,7 @@
    "situation": "texting",
    "form": "Estamos",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Estamos** = *estar* → present tense for **we** (nosotros)"
+   "meaning": 0
   }
  ],
  "este-2": [
@@ -7093,44 +7047,42 @@
    "meaning": 0
   }
  ],
- "estudiar": [
+ "esto": [
   {
-   "id": "b517c9edbd",
-   "es": "Tengo que estudiar para el examen.",
-   "en": "I have to study for the exam.",
-   "situation": "school",
-   "form": "estudiar",
+   "id": "8da1f518e6",
+   "es": "¿Cuánto cuesta esto?",
+   "en": "How much does this cost?",
+   "situation": "shopping",
+   "form": "esto",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "2b0447fb9d",
-   "es": "Estudio español todos los días.",
-   "en": "I study Spanish every day.",
-   "situation": "school",
-   "form": "Estudio",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**estudio** = *estudiar* → the **present** tense for **I** (yo)."
-  },
-  {
-   "id": "c2f27dd367",
-   "es": "¿Quieres estudiar conmigo esta noche?",
-   "en": "Do you want to study with me tonight?",
-   "situation": "friends",
-   "form": "estudiar",
+   "id": "7ff93400a0",
+   "es": "Esto está muy rico.",
+   "en": "This is very tasty.",
+   "situation": "food",
+   "form": "Esto",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "4c5035d785",
-   "es": "Mi hermana estudia medicina en la ciudad.",
-   "en": "My sister studies medicine in the city.",
-   "situation": "family",
-   "form": "estudia",
+   "id": "b6f85093b4",
+   "es": "¿Qué es esto?",
+   "en": "What is this?",
+   "situation": "everyday",
+   "form": "esto",
    "source": "ai",
-   "meaning": 0,
-   "note": "**estudia** = *estudiar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "meaning": 0
+  },
+  {
+   "id": "4e7da20622",
+   "es": "Mira esto, mi amor.",
+   "en": "Look at this, my love.",
+   "situation": "couple",
+   "form": "esto",
+   "source": "ai",
+   "meaning": 0
   }
  ],
  "estupido": [
@@ -7240,7 +7192,7 @@
    "form": "existe",
    "source": "ai",
    "meaning": 0,
-   "note": "**existe** = *existir* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "note": "**existe** = *existir* → the **present** tense for **he / she** (él / ella) or formal *usted*."
   }
  ],
  "explicar": [
@@ -7509,31 +7461,32 @@
    "meaning": 0
   },
   {
-   "id": "8d3622e820",
-   "es": "No me gusta tu forma de hablar.",
-   "en": "I don't like the way you talk.",
-   "situation": "couple",
-   "form": "forma",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "f249ef88db",
-   "es": "Hay otra forma de hacerlo.",
-   "en": "There's another way to do it.",
+   "id": "ebe3fe6d0b",
+   "es": "¿Hay otra forma de hacerlo?",
+   "en": "Is there another way to do it?",
    "situation": "work",
    "form": "forma",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "c487858459",
-   "es": "Me encanta la forma de esta taza.",
-   "en": "I love the shape of this cup.",
-   "situation": "home",
+   "id": "c5c505d9c7",
+   "es": "Me gusta tu forma de cocinar.",
+   "en": "I like the way you cook.",
+   "situation": "couple",
    "form": "forma",
    "source": "ai",
-   "meaning": 1
+   "meaning": 0
+  },
+  {
+   "id": "c05a82e244",
+   "es": "Las formas de las galletas son bonitas.",
+   "en": "The shapes of the cookies are pretty.",
+   "situation": "food",
+   "form": "formas",
+   "source": "ai",
+   "meaning": 1,
+   "note": "**formas** = *forma* → the **plural** form."
   }
  ],
  "forzar": [
@@ -7618,31 +7571,81 @@
  ],
  "frente": [
   {
-   "id": "05df091dce",
-   "es": "Estoy frente a la casa.",
-   "en": "I'm in front of the house.",
-   "situation": "plans",
+   "id": "72c3c64429",
+   "es": "Siéntate al frente, por favor.",
+   "en": "Sit at the front, please.",
+   "situation": "school",
    "form": "frente",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "4fdf70de96",
-   "es": "El carro está al frente.",
-   "en": "The car is at the front.",
-   "situation": "travel",
+   "id": "42d6a943cb",
+   "es": "Estaciona el carro al frente.",
+   "en": "Park the car in the front.",
+   "situation": "home",
    "form": "frente",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "c10dee2b12",
-   "es": "Te doy un beso en la frente.",
-   "en": "I'll give you a kiss on the forehead.",
-   "situation": "couple",
+   "id": "875b15c65c",
+   "es": "El frente de la casa está sucio.",
+   "en": "The front of the house is dirty.",
+   "situation": "home",
    "form": "frente",
    "source": "ai",
-   "meaning": 1
+   "meaning": 0
+  },
+  {
+   "id": "35162c6495",
+   "es": "La tienda está al frente.",
+   "en": "The store is up front.",
+   "situation": "shopping",
+   "form": "frente",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
+ "frio": [
+  {
+   "id": "102014abb6",
+   "es": "Hoy hace mucho frío afuera.",
+   "en": "It's very cold outside today.",
+   "situation": "weather",
+   "form": "frío",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "f8f99f47db",
+   "es": "La sopa está fría.",
+   "en": "The soup is cold.",
+   "situation": "food",
+   "form": "fría",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**fría** = *frío* → the **feminine** form."
+  },
+  {
+   "id": "bffd85fff5",
+   "es": "Tengo las manos frías.",
+   "en": "My hands are cold.",
+   "situation": "health",
+   "form": "frías",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**frías** = *frío* → the **feminine plural** form."
+  },
+  {
+   "id": "ba1a90dff5",
+   "es": "Quiero un agua fría, por favor.",
+   "en": "I'd like a cold water, please.",
+   "situation": "shopping",
+   "form": "fría",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**fría** = *frío* → the **feminine** form."
   }
  ],
  "fuego": [
@@ -8056,8 +8059,7 @@
    "situation": "everyday",
    "form": "gusta",
    "source": "ai",
-   "meaning": 0,
-   "note": "**gusta** = *gustar* → with *me* it means 'I like' (it pleases me)"
+   "meaning": 0
   },
   {
    "id": "9c5f21ce02",
@@ -8066,8 +8068,7 @@
    "situation": "food",
    "form": "gusta",
    "source": "ai",
-   "meaning": 0,
-   "note": "**gusta** = *gustar* → with *te* it means 'you like'"
+   "meaning": 0
   },
   {
    "id": "95cca4627c",
@@ -8076,8 +8077,7 @@
    "situation": "family",
    "form": "gusta",
    "source": "ai",
-   "meaning": 0,
-   "note": "**gusta** = *gustar* → with *le* it means 'he / she likes'"
+   "meaning": 0
   },
   {
    "id": "7d737dc33a",
@@ -8086,40 +8086,46 @@
    "situation": "couple",
    "form": "gusta",
    "source": "ai",
-   "meaning": 0,
-   "note": "**gusta** = *gustar* → with *nos* it means 'we like'"
+   "meaning": 0
   }
  ],
  "haber": [
   {
-   "id": "67f1d63210",
-   "es": "¿Has visto mi celular?",
-   "en": "Have you seen my phone?",
-   "situation": "home",
-   "form": "Has",
+   "id": "09a3436068",
+   "es": "Va a haber mucha gente.",
+   "en": "There are going to be a lot of people.",
+   "situation": "plans",
+   "form": "haber",
    "source": "ai",
-   "meaning": 0,
-   "note": "**has** = *haber* → the **present** tense for **you** (tú)."
+   "meaning": 0
   },
   {
-   "id": "8fcefdb2af",
-   "es": "Mi mamá ya ha llegado.",
-   "en": "My mom has already arrived.",
-   "situation": "family",
-   "form": "ha",
+   "id": "31937e982f",
+   "es": "Puede haber lluvia mañana.",
+   "en": "There might be rain tomorrow.",
+   "situation": "weather",
+   "form": "haber",
    "source": "ai",
-   "meaning": 0,
-   "note": "**ha** = *haber* → the **present** tense for **he / she** (él / ella) or formal *usted*."
+   "meaning": 0
   },
   {
-   "id": "f4b4c52c96",
-   "es": "Hemos terminado el trabajo.",
-   "en": "We have finished the work.",
-   "situation": "work",
-   "form": "Hemos",
+   "id": "fb1db1ce94",
+   "es": "Tiene que haber otra manera.",
+   "en": "There has to be another way.",
+   "situation": "everyday",
+   "form": "haber",
    "source": "ai",
-   "meaning": 0,
-   "note": "**hemos** = *haber* → the **present** tense for **we** (nosotros)."
+   "meaning": 0
+  },
+  {
+   "id": "a3acbfc8c7",
+   "es": "Nunca he comido tamales.",
+   "en": "I've never eaten tamales.",
+   "situation": "food",
+   "form": "he",
+   "source": "ai",
+   "meaning": 1,
+   "note": "**he** = *haber* → the **present** tense for **I** (yo)."
   }
  ],
  "habitacion": [
@@ -8169,8 +8175,7 @@
    "situation": "everyday",
    "form": "Hablo",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Hablo** = *hablar* → **I** (yo) form, present tense"
+   "meaning": 0
   },
   {
    "id": "f2f44f7e6a",
@@ -8179,8 +8184,7 @@
    "situation": "friends",
    "form": "Hablas",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Hablas** = *hablar* → present tense for **you** (tú)"
+   "meaning": 0
   },
   {
    "id": "1b3b47d79d",
@@ -8189,8 +8193,7 @@
    "situation": "family",
    "form": "habla",
    "source": "ai",
-   "meaning": 0,
-   "note": "**habla** = *hablar* → present tense for **he / she** (él / ella)"
+   "meaning": 0
   },
   {
    "id": "811302342d",
@@ -8434,6 +8437,83 @@
    "meaning": 1
   }
  ],
+ "hay": [
+  {
+   "id": "3825bb368c",
+   "es": "¿Hay leche en el refri?",
+   "en": "Is there milk in the fridge?",
+   "situation": "home",
+   "form": "hay",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "011d89d128",
+   "es": "Hoy hay mucho tráfico.",
+   "en": "There's a lot of traffic today.",
+   "situation": "travel",
+   "form": "hay",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "2bb97ea4fc",
+   "es": "No hay problema, mi amor.",
+   "en": "No problem, my love.",
+   "situation": "couple",
+   "form": "hay",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "38b50840a1",
+   "es": "¿Hay una tienda cerca de aquí?",
+   "en": "Is there a store near here?",
+   "situation": "shopping",
+   "form": "hay",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
+ "he": [
+  {
+   "id": "f3582e0fa4",
+   "es": "La he es una letra hebrea.",
+   "en": "The he is a Hebrew letter.",
+   "situation": "school",
+   "form": "he",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "af1269f881",
+   "es": "Mira, esta es la he.",
+   "en": "Look, this is the he.",
+   "situation": "school",
+   "form": "he",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "472d026f56",
+   "es": "¿Cómo se escribe la he?",
+   "en": "How do you write the he?",
+   "situation": "school",
+   "form": "he",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "29a96b0e4a",
+   "es": "Las hes se ven parecidas.",
+   "en": "The hes look similar.",
+   "situation": "school",
+   "form": "hes",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**hes** = *he* → the **plural** form."
+  }
+ ],
  "hecho": [
   {
    "id": "87e0cf77cd",
@@ -8530,8 +8610,7 @@
    "situation": "family",
    "form": "hermana",
    "source": "ai",
-   "meaning": 0,
-   "note": "**hermana** = *hermano* → feminine form, sister"
+   "meaning": 0
   },
   {
    "id": "5dd2451805",
@@ -8540,8 +8619,7 @@
    "situation": "everyday",
    "form": "hermanos",
    "source": "ai",
-   "meaning": 0,
-   "note": "**hermanos** = *hermano* → plural, brothers or siblings"
+   "meaning": 0
   },
   {
    "id": "a6037fe7f2",
@@ -8648,8 +8726,7 @@
    "situation": "school",
    "form": "hija",
    "source": "ai",
-   "meaning": 0,
-   "note": "**hija** = *hijo* → feminine form, daughter"
+   "meaning": 0
   },
   {
    "id": "2ffacc327c",
@@ -8658,8 +8735,7 @@
    "situation": "family",
    "form": "hijos",
    "source": "ai",
-   "meaning": 0,
-   "note": "**hijos** = *hijo* → plural, children (sons and daughters)"
+   "meaning": 0
   },
   {
    "id": "c0d33c8c8c",
@@ -8673,18 +8749,28 @@
  ],
  "historia": [
   {
-   "id": "750962608a",
-   "es": "Cuéntame una historia antes de dormir.",
-   "en": "Tell me a story before sleeping.",
+   "id": "ee82552cf8",
+   "es": "Cuéntame una historia, por favor.",
+   "en": "Tell me a story, please.",
    "situation": "family",
    "form": "historia",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "ae8f3ddd1e",
-   "es": "Tu historia me hizo reír mucho.",
-   "en": "Your story made me laugh a lot.",
+   "id": "01205a5771",
+   "es": "Mi abuela tiene muchas historias.",
+   "en": "My grandmother has many stories.",
+   "situation": "family",
+   "form": "historias",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**historias** = *historia* → the **plural** form."
+  },
+  {
+   "id": "4d441af757",
+   "es": "Esa historia es muy divertida.",
+   "en": "That story is very funny.",
    "situation": "friends",
    "form": "historia",
    "source": "ai",
@@ -8694,15 +8780,6 @@
    "id": "5041eef82f",
    "es": "Me gusta la historia de México.",
    "en": "I like the history of Mexico.",
-   "situation": "school",
-   "form": "historia",
-   "source": "ai",
-   "meaning": 1
-  },
-  {
-   "id": "959da9ae4c",
-   "es": "Mañana tengo examen de historia.",
-   "en": "Tomorrow I have a history exam.",
    "situation": "school",
    "form": "historia",
    "source": "ai",
@@ -8812,8 +8889,7 @@
    "situation": "travel",
    "form": "hora",
    "source": "ai",
-   "meaning": 1,
-   "note": "**hora** = *hora* → here it means a length of time, one hour."
+   "meaning": 1
   }
  ],
  "hoy": [
@@ -8856,42 +8932,42 @@
  ],
  "humano": [
   {
-   "id": "4f6341ad35",
-   "es": "Todos somos humanos, cometemos errores.",
-   "en": "We're all human, we make mistakes.",
+   "id": "c627f0bda0",
+   "es": "Eres humano, todos nos equivocamos.",
+   "en": "You're only human, we all make mistakes.",
    "situation": "feelings",
+   "form": "humano",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "f416c7848c",
+   "es": "Los humanos necesitamos dormir bien.",
+   "en": "We humans need to sleep well.",
+   "situation": "health",
    "form": "humanos",
    "source": "ai",
    "meaning": 0,
-   "note": "**humanos** = *humano* → a form."
+   "note": "**humanos** = *humano* → the **plural** form."
   },
   {
-   "id": "c3852b01c2",
-   "es": "Es normal, eres humano.",
-   "en": "It's normal, you're human.",
-   "situation": "couple",
+   "id": "706efc1e29",
+   "es": "Fue un error humano, nada más.",
+   "en": "It was just a human error.",
+   "situation": "work",
    "form": "humano",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "79c782fe0f",
-   "es": "El cuerpo humano es increíble.",
-   "en": "The human body is amazing.",
-   "situation": "school",
-   "form": "humano",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "1ae72c71bf",
-   "es": "Ella es muy humana con todos.",
-   "en": "She's very human (kind) with everyone.",
-   "situation": "friends",
+   "id": "83bde68884",
+   "es": "Ella es una persona muy humana.",
+   "en": "She is a very kind, humane person.",
+   "situation": "family",
    "form": "humana",
    "source": "ai",
    "meaning": 0,
-   "note": "**humana** = *humano* → a form."
+   "note": "**humana** = *humano* → the **feminine** form."
   }
  ],
  "idea": [
@@ -9121,29 +9197,49 @@
    "meaning": 0
   }
  ],
+ "jamas": [
+  {
+   "id": "3153786372",
+   "es": "Jamás tomo café por la noche.",
+   "en": "I never drink coffee at night.",
+   "situation": "food",
+   "form": "jamás",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "0afa983284",
+   "es": "Jamás te voy a olvidar.",
+   "en": "I will never forget you.",
+   "situation": "couple",
+   "form": "Jamás",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "cb269f6186",
+   "es": "Mi mamá jamás llega tarde.",
+   "en": "My mom never arrives late.",
+   "situation": "family",
+   "form": "jamás",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "jefe": [
   {
    "id": "d6992bda8b",
    "es": "Mi jefe es muy amable.",
-   "en": "My boss is very kind.",
+   "en": "My boss is very nice.",
    "situation": "work",
    "form": "jefe",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "7987d6fd33",
-   "es": "Hoy hablo con mi jefe.",
-   "en": "Today I'm talking to my boss.",
-   "situation": "work",
-   "form": "jefe",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "8e36d10629",
-   "es": "Mi jefa me da permiso.",
-   "en": "My boss gives me permission.",
+   "id": "cb46c37105",
+   "es": "Mi jefa me llama mañana.",
+   "en": "My boss calls me tomorrow.",
    "situation": "work",
    "form": "jefa",
    "source": "ai",
@@ -9159,6 +9255,15 @@
    "source": "ai",
    "meaning": 0,
    "note": "**jefes** = *jefe* → the **plural** form."
+  },
+  {
+   "id": "1c0bedb129",
+   "es": "¿Hablaste con tu jefe?",
+   "en": "Did you talk to your boss?",
+   "situation": "work",
+   "form": "jefe",
+   "source": "ai",
+   "meaning": 0
   }
  ],
  "joven": [
@@ -9245,8 +9350,7 @@
    "situation": "family",
    "form": "juegan",
    "source": "ai",
-   "meaning": 0,
-   "note": "**juegan** = *jugar* → present tense for **they** (ellos)"
+   "meaning": 0
   },
   {
    "id": "27bf6c4ddb",
@@ -9255,8 +9359,7 @@
    "situation": "couple",
    "form": "Jugamos",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Jugamos** = *jugar* → present tense for **we** (nosotros)"
+   "meaning": 0
   }
  ],
  "junto": [
@@ -9288,6 +9391,47 @@
    "source": "ai",
    "meaning": 0,
    "note": "**juntos** = *junto* → the **plural** form."
+  }
+ ],
+ "jurar": [
+  {
+   "id": "5d3470c0c5",
+   "es": "Te lo juro, no fui yo.",
+   "en": "I swear, it wasn't me.",
+   "situation": "friends",
+   "form": "juro",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**juro** = *jurar* → the **present** tense for **I** (yo)."
+  },
+  {
+   "id": "8731567a82",
+   "es": "Juro que te quiero mucho.",
+   "en": "I swear I love you a lot.",
+   "situation": "couple",
+   "form": "Juro",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**juro** = *jurar* → the **present** tense for **I** (yo)."
+  },
+  {
+   "id": "d62cd660f5",
+   "es": "¿Me lo juras?",
+   "en": "Do you swear?",
+   "situation": "texting",
+   "form": "juras",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**juras** = *jurar* → the **present** tense for **you** (tú)."
+  },
+  {
+   "id": "eefa22bd8c",
+   "es": "No quiero jurar, pero creo que sí.",
+   "en": "I don't want to swear, but I think so.",
+   "situation": "everyday",
+   "form": "jurar",
+   "source": "ai",
+   "meaning": 0
   }
  ],
  "justo": [
@@ -9368,37 +9512,37 @@
  ],
  "la": [
   {
-   "id": "c020d8b207",
-   "es": "Cierra la puerta, por favor.",
-   "en": "Close the door, please.",
+   "id": "529c3244b9",
+   "es": "Pon la mesa, por favor.",
+   "en": "Set the table, please.",
    "situation": "home",
    "form": "la",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "a401ce325f",
-   "es": "Me gusta la comida de tu mamá.",
-   "en": "I like your mom's food.",
+   "id": "e58b1ba92b",
+   "es": "¿Dónde está la leche?",
+   "en": "Where is the milk?",
    "situation": "food",
    "form": "la",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "229abaf90b",
-   "es": "La casa está muy bonita.",
-   "en": "The house looks very nice.",
-   "situation": "home",
-   "form": "La",
+   "id": "944dda7009",
+   "es": "Me gusta la casa de mi mamá.",
+   "en": "I like my mom's house.",
+   "situation": "family",
+   "form": "la",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "98da536884",
-   "es": "¿Dónde dejaste la llave?",
-   "en": "Where did you leave the key?",
-   "situation": "everyday",
+   "id": "e04eeb385f",
+   "es": "Te llamo en la noche.",
+   "en": "I'll call you tonight.",
+   "situation": "plans",
    "form": "la",
    "source": "ai",
    "meaning": 0
@@ -9520,24 +9664,42 @@
    "form": "largas",
    "source": "ai",
    "meaning": 0,
-   "note": "**largas** = *largo* → a form."
+   "note": "**largas** = *largo* → the **feminine plural** form."
   }
  ],
  "las": [
+  {
+   "id": "58119571b9",
+   "es": "Nos vemos a las ocho.",
+   "en": "See you at eight.",
+   "situation": "plans",
+   "form": "las",
+   "source": "ai",
+   "meaning": 0
+  },
   {
    "id": "f50df79a8b",
    "es": "Las llaves están en la mesa.",
    "en": "The keys are on the table.",
    "situation": "home",
-   "form": "Las",
+   "form": "las",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "4df0d78a86",
-   "es": "Nos vemos a las cinco.",
-   "en": "See you at five.",
-   "situation": "plans",
+   "id": "464cfd2e6e",
+   "es": "Me gustan las fresas.",
+   "en": "I like strawberries.",
+   "situation": "food",
+   "form": "las",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "d99e882007",
+   "es": "Compra las tortillas, por favor.",
+   "en": "Buy the tortillas, please.",
+   "situation": "shopping",
    "form": "las",
    "source": "ai",
    "meaning": 0
@@ -9545,31 +9707,31 @@
  ],
  "le": [
   {
-   "id": "1f362ffd32",
-   "es": "Le mando un mensaje a mi novio.",
-   "en": "I'm sending my boyfriend a message.",
-   "situation": "texting",
+   "id": "cf3f37d72d",
+   "es": "Le doy un regalo a mi hermana.",
+   "en": "I give my sister a gift.",
+   "situation": "family",
    "form": "Le",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "2b18efe758",
-   "es": "¿Le ayudo en algo, señora?",
-   "en": "Can I help you with something, ma'am?",
-   "situation": "shopping",
-   "form": "Le",
+   "id": "9ee06b62b4",
+   "es": "Dile que ya llegué.",
+   "en": "Tell him I already arrived.",
+   "situation": "texting",
+   "form": "Dile",
    "source": "ai",
-   "meaning": 1
+   "meaning": 0
   },
   {
-   "id": "bef0e6bc2e",
-   "es": "Le compro flores a ella.",
-   "en": "I'm buying flowers for her.",
-   "situation": "couple",
+   "id": "e3e66b7aec",
+   "es": "Le gusta el pan dulce.",
+   "en": "He likes sweet bread.",
+   "situation": "food",
    "form": "Le",
    "source": "ai",
-   "meaning": 2
+   "meaning": 0
   }
  ],
  "leer": [
@@ -9589,8 +9751,7 @@
    "situation": "texting",
    "form": "Lees",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Lees** = *leer* → you read (tú)"
+   "meaning": 0
   },
   {
    "id": "adb997ff4b",
@@ -9599,8 +9760,7 @@
    "situation": "food",
    "form": "Leo",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Leo** = *leer* → **I** read (yo)"
+   "meaning": 0
   },
   {
    "id": "ce65b5a48c",
@@ -9609,8 +9769,7 @@
    "situation": "school",
    "form": "lee",
    "source": "ai",
-   "meaning": 0,
-   "note": "**lee** = *leer* → he/she reads (él/ella)"
+   "meaning": 0
   }
  ],
  "lejos": [
@@ -9651,11 +9810,49 @@
    "meaning": 0
   }
  ],
+ "les": [
+  {
+   "id": "7568a05254",
+   "es": "Les doy la cena a los niños.",
+   "en": "I give the kids dinner.",
+   "situation": "food",
+   "form": "Les",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "6ae74e1320",
+   "es": "Les gusta la playa.",
+   "en": "They like the beach.",
+   "situation": "travel",
+   "form": "Les",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "35cd051b2b",
+   "es": "Dales las gracias, por favor.",
+   "en": "Give them thanks, please.",
+   "situation": "friends",
+   "form": "Dales",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "levantar": [
   {
-   "id": "0c850dc8a2",
-   "es": "Levanta la mano si tienes preguntas.",
-   "en": "Raise your hand if you have questions.",
+   "id": "68f361ca84",
+   "es": "Ayúdame a levantar la caja.",
+   "en": "Help me lift the box.",
+   "situation": "home",
+   "form": "levantar",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "7ac2459dae",
+   "es": "Levanta la mano, por favor.",
+   "en": "Raise your hand, please.",
    "situation": "school",
    "form": "Levanta",
    "source": "ai",
@@ -9663,23 +9860,24 @@
    "note": "**levanta** = *levantar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
   },
   {
-   "id": "945aa29f6c",
-   "es": "Ayúdame a levantar esta caja.",
-   "en": "Help me lift this box.",
-   "situation": "home",
-   "form": "levantar",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "b5cc24f094",
-   "es": "No levantes eso, está muy pesado.",
-   "en": "Don't lift that, it's very heavy.",
-   "situation": "health",
-   "form": "levantes",
+   "id": "da06984b4c",
+   "es": "Mi papá levanta pesas en la mañana.",
+   "en": "My dad lifts weights in the morning.",
+   "situation": "family",
+   "form": "levanta",
    "source": "ai",
    "meaning": 0,
-   "note": "**levantes** = *levantar* → a **don't-do-it command** to **you** (tú)."
+   "note": "**levanta** = *levantar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+  },
+  {
+   "id": "40776ba018",
+   "es": "Levantamos la mesa entre los dos.",
+   "en": "We lift the table together, the two of us.",
+   "situation": "couple",
+   "form": "Levantamos",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**levantamos** = *levantar* → the **present** or the **past** tense for **we** (nosotros). Both are spelled the same, so the rest of the sentence tells you which."
   }
  ],
  "ley": [
@@ -9769,7 +9967,7 @@
    "form": "libres",
    "source": "ai",
    "meaning": 0,
-   "note": "**libres** = *libre* → a form."
+   "note": "**libres** = *libre* → the **plural** form."
   }
  ],
  "libro": [
@@ -9811,6 +10009,44 @@
    "note": "**libros** = *libro* → the **plural** form."
   }
  ],
+ "lista": [
+  {
+   "id": "a94e044701",
+   "es": "Tengo una lista de compras.",
+   "en": "I have a shopping list.",
+   "situation": "shopping",
+   "form": "lista",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "4cfeb6fced",
+   "es": "Pon el pan en la lista.",
+   "en": "Put the bread on the list.",
+   "situation": "food",
+   "form": "lista",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "2d2ac221bb",
+   "es": "Mándame la lista por mensaje.",
+   "en": "Text me the list.",
+   "situation": "texting",
+   "form": "lista",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "0afba59432",
+   "es": "Ya casi termino la lista.",
+   "en": "I'm almost done with the list.",
+   "situation": "work",
+   "form": "lista",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "llama": [
   {
    "id": "a04c580ee9",
@@ -9847,25 +10083,43 @@
    "form": "llamas",
    "source": "ai",
    "meaning": 1,
-   "note": "**llamas** = *llama* → a form."
+   "note": "**llamas** = *llama* → the **plural** form."
   }
  ],
- "llamado": [
+ "llamada": [
   {
-   "id": "d80b56d72c",
-   "es": "Es un restaurante llamado La Palma.",
-   "en": "It's a restaurant called La Palma.",
-   "situation": "food",
-   "form": "llamado",
+   "id": "b55b3bccdb",
+   "es": "Tengo una llamada importante ahora.",
+   "en": "I have an important call right now.",
+   "situation": "work",
+   "form": "llamada",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "60e9e879e7",
-   "es": "Tengo un perro llamado Max.",
-   "en": "I have a dog called Max.",
-   "situation": "home",
-   "form": "llamado",
+   "id": "285d8194cf",
+   "es": "Espero tu llamada esta noche.",
+   "en": "I'm waiting for your call tonight.",
+   "situation": "couple",
+   "form": "llamada",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "c37f3e9fd6",
+   "es": "Tengo una llamada perdida de mamá.",
+   "en": "I have a missed call from Mom.",
+   "situation": "family",
+   "form": "llamada",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "411169dfad",
+   "es": "Fue una llamada muy corta.",
+   "en": "It was a very short call.",
+   "situation": "texting",
+   "form": "llamada",
    "source": "ai",
    "meaning": 0
   }
@@ -10028,13 +10282,78 @@
    "meaning": 0
   }
  ],
+ "lo": [
+  {
+   "id": "9bde8a52be",
+   "es": "Lo quiero mucho.",
+   "en": "I love him a lot.",
+   "situation": "family",
+   "form": "Lo",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "b479d9da88",
+   "es": "Lo tengo en mi celular.",
+   "en": "I have it on my phone.",
+   "situation": "texting",
+   "form": "Lo",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "558c902c4c",
+   "es": "No lo sé.",
+   "en": "I don't know.",
+   "situation": "everyday",
+   "form": "lo",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "bc3d6fe686",
+   "es": "Cómpralo en el súper.",
+   "en": "Buy it at the supermarket.",
+   "situation": "shopping",
+   "form": "Cómpralo",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "los": [
   {
-   "id": "836bd5a1b2",
-   "es": "Los quiero mucho a todos.",
-   "en": "I love you all very much.",
+   "id": "d9ee31564f",
+   "es": "Los niños están en la escuela.",
+   "en": "The kids are at school.",
+   "situation": "school",
+   "form": "los",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "04cfd308d0",
+   "es": "Me encantan los tacos.",
+   "en": "I love tacos.",
+   "situation": "food",
+   "form": "los",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "3e5a49f06f",
+   "es": "Lava los platos, por favor.",
+   "en": "Wash the dishes, please.",
+   "situation": "home",
+   "form": "los",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "8b1c2afef7",
+   "es": "Los domingos vemos a mis papás.",
+   "en": "On Sundays we see my parents.",
    "situation": "family",
-   "form": "Los",
+   "form": "los",
    "source": "ai",
    "meaning": 0
   }
@@ -10281,46 +10600,6 @@
    "form": "mal",
    "source": "ai",
    "meaning": 0
-  }
- ],
- "maldecir": [
-  {
-   "id": "ea1be47875",
-   "es": "No quiero maldecir a nadie.",
-   "en": "I don't want to curse anyone.",
-   "situation": "feelings",
-   "form": "maldecir",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "f39571eee3",
-   "es": "Mi abuela dice que no se debe maldecir.",
-   "en": "My grandma says you shouldn't curse.",
-   "situation": "family",
-   "form": "maldecir",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "e8d3465c0c",
-   "es": "Siempre maldices cuando manejas.",
-   "en": "You always curse when you drive.",
-   "situation": "couple",
-   "form": "maldices",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**maldices** = *maldecir* → the **present** tense for **you** (tú)."
-  },
-  {
-   "id": "fb7bdef169",
-   "es": "Maldigo el tráfico de esta ciudad.",
-   "en": "I curse the traffic in this city.",
-   "situation": "travel",
-   "form": "Maldigo",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**maldigo** = *maldecir* → the **present** tense for **I** (yo)."
   }
  ],
  "malo": [
@@ -10787,7 +11066,7 @@
    "form": "mayores",
    "source": "ai",
    "meaning": 0,
-   "note": "**mayores** = *mayor* → a form."
+   "note": "**mayores** = *mayor* → the **plural** form."
   },
   {
    "id": "5a511d897b",
@@ -10824,6 +11103,44 @@
    "en": "Good afternoon, my name is Kate. I have an appointment.",
    "situation": "health",
    "form": "me llamo",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
+ "me": [
+  {
+   "id": "aace0b98b9",
+   "es": "Me gusta mucho esta casa.",
+   "en": "I really like this house.",
+   "situation": "home",
+   "form": "Me",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "b870f0964e",
+   "es": "Me llamo Ana.",
+   "en": "My name is Ana.",
+   "situation": "everyday",
+   "form": "Me",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "b5ffe713d4",
+   "es": "Llámame cuando llegues.",
+   "en": "Call me when you arrive.",
+   "situation": "travel",
+   "form": "Llámame",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "567167dd5f",
+   "es": "Me duele la cabeza.",
+   "en": "My head hurts.",
+   "situation": "health",
+   "form": "Me",
    "source": "ai",
    "meaning": 0
   }
@@ -11113,16 +11430,7 @@
    "meaning": 1
   }
  ],
- "mi": [
-  {
-   "id": "4094d1fc43",
-   "es": "¿Quieres venir conmigo o sin mí?",
-   "en": "Do you want to come with me or without me?",
-   "situation": "plans",
-   "form": "mí",
-   "source": "ai",
-   "meaning": 0
-  },
+ "mi-2": [
   {
    "id": "6b623bd51b",
    "es": "Este regalo es para mí.",
@@ -11133,22 +11441,70 @@
    "meaning": 0
   },
   {
-   "id": "6fb92ee0d7",
-   "es": "A mí me gusta el café.",
-   "en": "I like coffee.",
+   "id": "8a0612a8a1",
+   "es": "A mí también me gusta.",
+   "en": "I like it too.",
+   "situation": "friends",
+   "form": "mí",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "44499e4535",
+   "es": "Para mí, un café, por favor.",
+   "en": "A coffee for me, please.",
    "situation": "food",
    "form": "mí",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "5f03d2f454",
-   "es": "¿Piensas en mí?",
-   "en": "Do you think about me?",
+   "id": "b8af732066",
+   "es": "Piensa en mí, mi amor.",
+   "en": "Think of me, my love.",
    "situation": "couple",
    "form": "mí",
    "source": "ai",
    "meaning": 0
+  }
+ ],
+ "mi": [
+  {
+   "id": "14ed41c703",
+   "es": "Mi casa es tu casa.",
+   "en": "My house is your house.",
+   "situation": "home",
+   "form": "Mi",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "181acf9572",
+   "es": "Te presento a mi mamá.",
+   "en": "Let me introduce you to my mom.",
+   "situation": "family",
+   "form": "mi",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "03800053ee",
+   "es": "Mi celular no tiene batería.",
+   "en": "My phone is out of battery.",
+   "situation": "texting",
+   "form": "Mi",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "f03009e98e",
+   "es": "Mis amigos llegan a las ocho.",
+   "en": "My friends arrive at eight.",
+   "situation": "plans",
+   "form": "Mis",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**mis** = *mi* → the **plural** form."
   }
  ],
  "mil": [
@@ -11828,6 +12184,44 @@
    "meaning": 0
   }
  ],
+ "muy": [
+  {
+   "id": "73a50f60c7",
+   "es": "La comida está muy rica.",
+   "en": "The food is very tasty.",
+   "situation": "food",
+   "form": "muy",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "fce5b4dca4",
+   "es": "Hoy hace muy buen clima.",
+   "en": "The weather is very nice today.",
+   "situation": "weather",
+   "form": "muy",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "9a018964ec",
+   "es": "Estoy muy cansada hoy.",
+   "en": "I'm very tired today.",
+   "situation": "health",
+   "form": "muy",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "f8dba4f399",
+   "es": "Eres muy lindo conmigo.",
+   "en": "You're very sweet to me.",
+   "situation": "couple",
+   "form": "muy",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "necesitar": [
   {
    "id": "f75395a8c5",
@@ -11857,7 +12251,7 @@
    "form": "necesita",
    "source": "ai",
    "meaning": 0,
-   "note": "**necesita** = *necesitar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "note": "**necesita** = *necesitar* → the **present** tense for **he / she** (él / ella) or formal *usted*."
   },
   {
    "id": "5c7d8bc7d6",
@@ -11940,19 +12334,37 @@
  ],
  "ni": [
   {
-   "id": "ef1be66fb9",
-   "es": "No tengo ni un peso.",
-   "en": "I don't have even one peso.",
-   "situation": "shopping",
+   "id": "04e22ce2b0",
+   "es": "No tengo hambre ni sed.",
+   "en": "I'm not hungry or thirsty.",
+   "situation": "food",
    "form": "ni",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "22fccf7e44",
-   "es": "Hoy no quiero ni cocinar.",
-   "en": "Today I don't even want to cook.",
-   "situation": "food",
+   "id": "a9c1d2595f",
+   "es": "No quiero ni un poco.",
+   "en": "I don't want even a little.",
+   "situation": "everyday",
+   "form": "ni",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "dca9342f0a",
+   "es": "Hoy no tengo carro ni dinero.",
+   "en": "Today I have no car or money.",
+   "situation": "everyday",
+   "form": "ni",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "bb14c76bb5",
+   "es": "No me llamó ni me escribió.",
+   "en": "They didn't call me or text me.",
+   "situation": "texting",
    "form": "ni",
    "source": "ai",
    "meaning": 0
@@ -12164,18 +12576,6 @@
    "meaning": 0
   }
  ],
- "nombrar": [
-  {
-   "id": "48833d2a54",
-   "es": "Ella nombra todos los colores.",
-   "en": "She names all the colors.",
-   "situation": "school",
-   "form": "nombra",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**nombra** = *nombrar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  }
- ],
  "nos-vemos": [
   {
    "id": "864ec8e8f5",
@@ -12216,82 +12616,78 @@
  ],
  "nos": [
   {
-   "id": "4d08c82d40",
-   "es": "Nos vemos mañana en la escuela.",
-   "en": "See you tomorrow at school.",
-   "situation": "school",
-   "form": "Nos",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "ae6abbc600",
-   "es": "Nos queremos mucho.",
-   "en": "We love each other a lot.",
-   "situation": "couple",
-   "form": "Nos",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "c547f811ba",
-   "es": "Hoy nos quedamos en casa.",
-   "en": "Today we're staying home.",
+   "id": "c39e05ef2d",
+   "es": "Nos vemos mañana.",
+   "en": "See you tomorrow.",
    "situation": "plans",
-   "form": "nos",
+   "form": "Nos",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "661b833668",
-   "es": "Nos vamos a las seis.",
-   "en": "We're leaving at six.",
-   "situation": "travel",
+   "id": "2e208cc5c9",
+   "es": "Nos quedamos en casa hoy.",
+   "en": "We're staying home today.",
+   "situation": "home",
+   "form": "Nos",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "4e29ee9d7b",
+   "es": "¿Nos ayudas con la comida?",
+   "en": "Can you help us with the food?",
+   "situation": "food",
+   "form": "Nos",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "bee7a8cb79",
+   "es": "Nos vamos a las ocho.",
+   "en": "We leave at eight.",
+   "situation": "plans",
    "form": "Nos",
    "source": "ai",
    "meaning": 0
   }
  ],
- "notar": [
+ "nosotros": [
   {
-   "id": "c71fa49053",
-   "es": "¿Lo notas? Algo cambió aquí.",
-   "en": "Do you notice it? Something changed here.",
+   "id": "3af5ab96d3",
+   "es": "Nosotros vamos al cine hoy.",
+   "en": "We're going to the movies today.",
+   "situation": "plans",
+   "form": "Nosotros",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "f1548d3492",
+   "es": "Nosotros cocinamos, ustedes lavan los platos.",
+   "en": "We cook, you all wash the dishes.",
    "situation": "home",
-   "form": "notas",
+   "form": "Nosotros",
    "source": "ai",
-   "meaning": 0,
-   "note": "**notas** = *notar* → the **present** tense for **you** (tú)."
+   "meaning": 0
   },
   {
-   "id": "6d3b958652",
-   "es": "Noto que estás cansada hoy.",
-   "en": "I notice you're tired today.",
-   "situation": "couple",
-   "form": "Noto",
+   "id": "e9bb7c451c",
+   "es": "Nosotros vivimos cerca de aquí.",
+   "en": "We live close to here.",
+   "situation": "everyday",
+   "form": "Nosotros",
    "source": "ai",
-   "meaning": 0,
-   "note": "**noto** = *notar* → the **present** tense for **I** (yo)."
+   "meaning": 0
   },
   {
-   "id": "ca8af43db0",
-   "es": "Mi mamá nota todo.",
-   "en": "My mom notices everything.",
-   "situation": "family",
-   "form": "nota",
+   "id": "19d4d0d596",
+   "es": "Ven con nosotros a la playa.",
+   "en": "Come with us to the beach.",
+   "situation": "travel",
+   "form": "nosotros",
    "source": "ai",
-   "meaning": 0,
-   "note": "**nota** = *notar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  },
-  {
-   "id": "5ae06f2080",
-   "es": "Casi no se nota la diferencia.",
-   "en": "You can barely notice the difference.",
-   "situation": "shopping",
-   "form": "nota",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**nota** = *notar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "meaning": 0
   }
  ],
  "noticia": [
@@ -12481,6 +12877,84 @@
    "meaning": 0
   }
  ],
+ "o": [
+  {
+   "id": "9b2c40ce31",
+   "es": "¿Quieres café o té?",
+   "en": "Do you want coffee or tea?",
+   "situation": "food",
+   "form": "o",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "70cb9593f6",
+   "es": "¿Vamos hoy o mañana?",
+   "en": "Are we going today or tomorrow?",
+   "situation": "plans",
+   "form": "o",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "ca1abdc136",
+   "es": "Llámame o mándame un mensaje.",
+   "en": "Call me or send me a message.",
+   "situation": "texting",
+   "form": "o",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "4dcbecd8e5",
+   "es": "¿Estás cansada o tienes hambre?",
+   "en": "Are you tired or hungry?",
+   "situation": "feelings",
+   "form": "o",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
+ "obtener": [
+  {
+   "id": "a57ca2db59",
+   "es": "¿Dónde puedo obtener boletos?",
+   "en": "Where can I get tickets?",
+   "situation": "travel",
+   "form": "obtener",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "1f66000e55",
+   "es": "Quiero obtener un buen trabajo.",
+   "en": "I want to get a good job.",
+   "situation": "work",
+   "form": "obtener",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "297aee9829",
+   "es": "Siempre obtengo buenas notas en español.",
+   "en": "I always get good grades in Spanish.",
+   "situation": "school",
+   "form": "obtengo",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**obtengo** = *obtener* → the **present** tense for **I** (yo)."
+  },
+  {
+   "id": "b49ee291f8",
+   "es": "¿Cómo obtienes tu licencia de manejo?",
+   "en": "How do you get your driver's license?",
+   "situation": "everyday",
+   "form": "obtienes",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**obtienes** = *obtener* → the **present** tense for **you** (tú)."
+  }
+ ],
  "ocurrir": [
   {
    "id": "c62be9d558",
@@ -12490,7 +12964,7 @@
    "form": "ocurre",
    "source": "ai",
    "meaning": 0,
-   "note": "**ocurre** = *ocurrir* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "note": "**ocurre** = *ocurrir* → the **present** tense for **he / she** (él / ella) or formal *usted*."
   },
   {
    "id": "1e15664041",
@@ -12500,7 +12974,7 @@
    "form": "ocurre",
    "source": "ai",
    "meaning": 0,
-   "note": "**ocurre** = *ocurrir* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "note": "**ocurre** = *ocurrir* → the **present** tense for **he / she** (él / ella) or formal *usted*."
   },
   {
    "id": "ce13dab7b4",
@@ -12520,7 +12994,7 @@
    "form": "ocurre",
    "source": "ai",
    "meaning": 1,
-   "note": "**ocurre** = *ocurrir* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "note": "**ocurre** = *ocurrir* → the **present** tense for **he / she** (él / ella) or formal *usted*."
   }
  ],
  "odiar": [
@@ -12784,33 +13258,40 @@
  ],
  "ojo": [
   {
-   "id": "d8e9aab1b1",
-   "es": "Me duele el ojo.",
-   "en": "My eye hurts.",
-   "situation": "health",
+   "id": "2c0dea8a28",
+   "es": "¡Ojo! El piso está mojado.",
+   "en": "Watch out! The floor is wet.",
+   "situation": "home",
    "form": "ojo",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "9c56c54b5f",
-   "es": "Tienes los ojos muy bonitos.",
-   "en": "You have very pretty eyes.",
-   "situation": "couple",
-   "form": "ojos",
+   "id": "9c8c654786",
+   "es": "Ojo, hay mucho tráfico hoy.",
+   "en": "Heads up, there's a lot of traffic today.",
+   "situation": "travel",
+   "form": "ojo",
    "source": "ai",
-   "meaning": 0,
-   "note": "**ojos** = *ojo* → the **plural** form."
+   "meaning": 0
   },
   {
-   "id": "8136f28a5d",
-   "es": "Cierra los ojos, tengo una sorpresa.",
-   "en": "Close your eyes, I have a surprise.",
-   "situation": "family",
-   "form": "ojos",
+   "id": "9a6b20be54",
+   "es": "¡Ojo con la sartén, está caliente!",
+   "en": "Careful with the pan, it's hot!",
+   "situation": "food",
+   "form": "ojo",
    "source": "ai",
-   "meaning": 0,
-   "note": "**ojos** = *ojo* → the **plural** form."
+   "meaning": 0
+  },
+  {
+   "id": "785d97ed90",
+   "es": "Ojo, mañana no hay clases.",
+   "en": "Note this: there's no class tomorrow.",
+   "situation": "school",
+   "form": "ojo",
+   "source": "ai",
+   "meaning": 0
   }
  ],
  "ok": [
@@ -13171,6 +13652,44 @@
    "meaning": 2
   }
  ],
+ "para": [
+  {
+   "id": "714bb3304d",
+   "es": "Este regalo es para ti.",
+   "en": "This gift is for you.",
+   "situation": "couple",
+   "form": "para",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "7be0e4d58f",
+   "es": "Compro leche para el desayuno.",
+   "en": "I'm buying milk for breakfast.",
+   "situation": "shopping",
+   "form": "para",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "576fe389a4",
+   "es": "Estudio español para hablar con ustedes.",
+   "en": "I study Spanish to talk with you all.",
+   "situation": "school",
+   "form": "para",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "d78729033e",
+   "es": "¿Para qué hora es la cena?",
+   "en": "What time is dinner for?",
+   "situation": "food",
+   "form": "Para",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "parte": [
   {
    "id": "34422a0310",
@@ -13182,31 +13701,22 @@
    "meaning": 0
   },
   {
-   "id": "e423f3a835",
-   "es": "Esta parte de la película me encanta.",
-   "en": "I love this part of the movie.",
-   "situation": "couple",
+   "id": "9600f0c9f8",
+   "es": "Mi parte favorita es el final.",
+   "en": "My favorite part is the ending.",
+   "situation": "friends",
    "form": "parte",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "7177d1ed86",
-   "es": "Mi familia es parte de mi vida.",
-   "en": "My family is part of my life.",
+   "id": "8150ffe690",
+   "es": "Tu familia vive en otra parte.",
+   "en": "Your family lives somewhere else.",
    "situation": "family",
    "form": "parte",
    "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "2a9e354a15",
-   "es": "Me duele esta parte del brazo.",
-   "en": "This part of my arm hurts.",
-   "situation": "health",
-   "form": "parte",
-   "source": "ai",
-   "meaning": 0
+   "meaning": 1
   }
  ],
  "pasa": [
@@ -13218,7 +13728,7 @@
    "form": "pasas",
    "source": "ai",
    "meaning": 0,
-   "note": "**pasas** = *pasa* → a form."
+   "note": "**pasas** = *pasa* → the **plural** form."
   },
   {
    "id": "3c4e7219a9",
@@ -13228,7 +13738,7 @@
    "form": "pasas",
    "source": "ai",
    "meaning": 0,
-   "note": "**pasas** = *pasa* → a form."
+   "note": "**pasas** = *pasa* → the **plural** form."
   },
   {
    "id": "e5134a0e5d",
@@ -13238,7 +13748,7 @@
    "form": "pasas",
    "source": "ai",
    "meaning": 0,
-   "note": "**pasas** = *pasa* → a form."
+   "note": "**pasas** = *pasa* → the **plural** form."
   },
   {
    "id": "ec8ff38047",
@@ -13248,7 +13758,7 @@
    "form": "pasas",
    "source": "ai",
    "meaning": 0,
-   "note": "**pasas** = *pasa* → a form."
+   "note": "**pasas** = *pasa* → the **plural** form."
   }
  ],
  "pasado": [
@@ -13383,47 +13893,6 @@
    "note": "**paces** = *paz* → the **plural** form."
   }
  ],
- "pelear": [
-  {
-   "id": "2c4bb7085c",
-   "es": "No quiero pelear contigo.",
-   "en": "I don't want to fight with you.",
-   "situation": "couple",
-   "form": "pelear",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "311baf0c9e",
-   "es": "Mis hermanos siempre pelean.",
-   "en": "My siblings always fight.",
-   "situation": "family",
-   "form": "pelean",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**pelean** = *pelear* → the **present** tense for **they** (ellos / ellas) or *ustedes*."
-  },
-  {
-   "id": "0f80bc05b3",
-   "es": "No peleen, por favor.",
-   "en": "Don't fight, please.",
-   "situation": "home",
-   "form": "peleen",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**peleen** = *pelear* → a **command** to **they** (ellos / ellas) or *ustedes*."
-  },
-  {
-   "id": "9282a94590",
-   "es": "Nosotros nunca peleamos por dinero.",
-   "en": "We never fight about money.",
-   "situation": "couple",
-   "form": "peleamos",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**peleamos** = *pelear* → the **present** or the **past** tense for **we** (nosotros). Both are spelled the same, so the rest of the sentence tells you which."
-  }
- ],
  "pelicula": [
   {
    "id": "d4f8ba8ac1",
@@ -13465,40 +13934,31 @@
  ],
  "pena": [
   {
-   "id": "7e42aaccf2",
-   "es": "¡Qué pena! Lo siento mucho.",
-   "en": "What a pity! I'm so sorry.",
-   "situation": "friends",
+   "id": "17ce781989",
+   "es": "Qué pena, no puedo ir hoy.",
+   "en": "I'm sorry, I can't go today.",
+   "situation": "plans",
    "form": "pena",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "a25470e62e",
-   "es": "Es una pena que llueva hoy.",
-   "en": "It's a pity that it's raining today.",
+   "id": "b95b46f37a",
+   "es": "¡Qué pena que llueva hoy!",
+   "en": "What a pity it's raining today!",
    "situation": "weather",
    "form": "pena",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "5f75d1fcea",
-   "es": "Siento mucha pena por ella.",
-   "en": "I feel very sorry for her.",
-   "situation": "feelings",
+   "id": "845bb0a3e9",
+   "es": "Siento mucha pena por tu abuelo.",
+   "en": "I feel so much sorrow for your grandfather.",
+   "situation": "family",
    "form": "pena",
    "source": "ai",
-   "meaning": 2
-  },
-  {
-   "id": "69e1ff19d8",
-   "es": "¡Qué pena que no vengas!",
-   "en": "What a shame you're not coming!",
-   "situation": "plans",
-   "form": "pena",
-   "source": "ai",
-   "meaning": 0
+   "meaning": 1
   }
  ],
  "pequeno": [
@@ -13567,7 +14027,7 @@
    "form": "perdida",
    "source": "ai",
    "meaning": 0,
-   "note": "**perdida** = *perdido* → a form."
+   "note": "**perdida** = *perdido* → the **feminine** form."
   },
   {
    "id": "11622d56e4",
@@ -13577,7 +14037,7 @@
    "form": "perdidas",
    "source": "ai",
    "meaning": 0,
-   "note": "**perdidas** = *perdido* → a form."
+   "note": "**perdidas** = *perdido* → the **feminine plural** form."
   }
  ],
  "perdon": [
@@ -14118,22 +14578,22 @@
  ],
  "por": [
   {
-   "id": "74d911798b",
-   "es": "Te llamo por teléfono más tarde.",
-   "en": "I'll call you by phone later.",
-   "situation": "plans",
+   "id": "1a18fca36a",
+   "es": "Gracias por todo, mi amor.",
+   "en": "Thanks for everything, my love.",
+   "situation": "couple",
    "form": "por",
    "source": "ai",
-   "meaning": 2
+   "meaning": 0
   },
   {
-   "id": "58aca51b91",
-   "es": "Estoy preocupada por mi mamá.",
-   "en": "I'm worried about my mom.",
-   "situation": "family",
+   "id": "ce96f41464",
+   "es": "Estoy feliz por ti.",
+   "en": "I'm happy for you.",
+   "situation": "feelings",
    "form": "por",
    "source": "ai",
-   "meaning": 1
+   "meaning": 0
   }
  ],
  "porque": [
@@ -14657,41 +15117,40 @@
  ],
  "prueba": [
   {
-   "id": "4947d3a98c",
-   "es": "Mañana tengo una prueba en la escuela.",
-   "en": "Tomorrow I have a test at school.",
+   "id": "88df33ce89",
+   "es": "Mañana tengo una prueba de español.",
+   "en": "Tomorrow I have a Spanish test.",
    "situation": "school",
    "form": "prueba",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "ac91276fea",
-   "es": "¿Tienes pruebas de que llegó?",
-   "en": "Do you have proof that he arrived?",
-   "situation": "everyday",
-   "form": "pruebas",
-   "source": "ai",
-   "meaning": 1,
-   "note": "**pruebas** = *prueba* → a form."
-  },
-  {
-   "id": "e7ed883cc7",
-   "es": "Es una prueba muy fácil.",
-   "en": "It's a very easy quiz.",
+   "id": "894374d3f5",
+   "es": "¿Cómo te fue en la prueba?",
+   "en": "How did you do on the test?",
    "situation": "school",
    "form": "prueba",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "2db725a741",
-   "es": "Este trabajo es solo una prueba.",
-   "en": "This job is just a trial.",
-   "situation": "work",
+   "id": "336c263008",
+   "es": "Necesito una prueba de que pagaste.",
+   "en": "I need proof that you paid.",
+   "situation": "shopping",
    "form": "prueba",
    "source": "ai",
-   "meaning": 2
+   "meaning": 1
+  },
+  {
+   "id": "379e2d0b79",
+   "es": "Estudio mucho para la prueba.",
+   "en": "I study a lot for the test.",
+   "situation": "school",
+   "form": "prueba",
+   "source": "ai",
+   "meaning": 0
   }
  ],
  "pueblo": [
@@ -14735,36 +15194,36 @@
  ],
  "puede": [
   {
-   "id": "8636f19cc2",
-   "es": "Puede ser, no sé.",
-   "en": "It could be, I don't know.",
+   "id": "a9a6bdcc10",
+   "es": "Puede, pero no estoy segura.",
+   "en": "Could be, but I'm not sure.",
    "situation": "everyday",
    "form": "Puede",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "b1c5d24f41",
-   "es": "Puede que llueva hoy.",
-   "en": "It might rain today.",
+   "id": "9690360215",
+   "es": "¿Va a llover? Puede.",
+   "en": "Is it going to rain? Could be.",
    "situation": "weather",
    "form": "Puede",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "94860a2c6c",
-   "es": "Puede que llegue tarde.",
-   "en": "I might be late.",
+   "id": "b66e213096",
+   "es": "Puede que sí, puede que no.",
+   "en": "Maybe yes, maybe no.",
    "situation": "plans",
    "form": "Puede",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "fb14db120f",
-   "es": "Puede que mi mamá venga.",
-   "en": "My mom might come.",
+   "id": "1c2fc42d23",
+   "es": "¿Es de tu hermano? Puede.",
+   "en": "Is it your brother's? Could be.",
    "situation": "family",
    "form": "Puede",
    "source": "ai",
@@ -14875,7 +15334,7 @@
    "form": "puesta",
    "source": "ai",
    "meaning": 2,
-   "note": "**puesta** = *puesto* → a form."
+   "note": "**puesta** = *puesto* → the **feminine** form."
   },
   {
    "id": "b3875a6f17",
@@ -14889,39 +15348,49 @@
  ],
  "punto": [
   {
-   "id": "a1bc0e7d36",
-   "es": "Tienes un buen punto.",
-   "en": "You have a good point.",
-   "situation": "couple",
+   "id": "29ad09dbf8",
+   "es": "Ese es un buen punto.",
+   "en": "That's a good point.",
+   "situation": "friends",
    "form": "punto",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "20d48ac542",
-   "es": "No vamos a ir. Punto.",
-   "en": "We're not going. End of story.",
-   "situation": "family",
-   "form": "Punto",
+   "id": "ade0110756",
+   "es": "No voy a ir y punto.",
+   "en": "I'm not going, end of story.",
+   "situation": "everyday",
+   "form": "punto",
    "source": "ai",
    "meaning": 2
   },
   {
-   "id": "2e3f6776dd",
-   "es": "Ese punto es muy importante.",
-   "en": "That point is very important.",
-   "situation": "work",
-   "form": "punto",
+   "id": "754949fc4c",
+   "es": "Mi equipo tiene diez puntos.",
+   "en": "My team has ten points.",
+   "situation": "friends",
+   "form": "puntos",
    "source": "ai",
-   "meaning": 0
+   "meaning": 0,
+   "note": "**puntos** = *punto* → the **plural** form."
   }
  ],
  "que-2": [
   {
-   "id": "f6046b720e",
-   "es": "¿Qué quieres cenar hoy?",
-   "en": "What do you want for dinner today?",
+   "id": "cca91533db",
+   "es": "¿Qué quieres comer hoy?",
+   "en": "What do you want to eat today?",
    "situation": "food",
+   "form": "Qué",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "79b8876a41",
+   "es": "¿Qué haces?",
+   "en": "What are you doing?",
+   "situation": "texting",
    "form": "Qué",
    "source": "ai",
    "meaning": 0
@@ -14936,22 +15405,13 @@
    "meaning": 0
   },
   {
-   "id": "64f8554138",
-   "es": "¿Qué haces este fin de semana?",
-   "en": "What are you doing this weekend?",
+   "id": "837804e9f0",
+   "es": "¿Qué quieres hacer el sábado?",
+   "en": "What do you want to do on Saturday?",
    "situation": "plans",
    "form": "Qué",
    "source": "ai",
    "meaning": 0
-  },
-  {
-   "id": "419e7cfe50",
-   "es": "¡Qué rico huele!",
-   "en": "How good it smells!",
-   "situation": "home",
-   "form": "Qué",
-   "source": "ai",
-   "meaning": 1
   }
  ],
  "que-es-esto": [
@@ -15032,40 +15492,40 @@
  ],
  "que": [
   {
-   "id": "28db3ec5f9",
-   "es": "Creo que ya llegó mi mamá.",
-   "en": "I think my mom already arrived.",
-   "situation": "family",
-   "form": "que",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "90cf8222b6",
-   "es": "Quiero que vengas conmigo.",
-   "en": "I want you to come with me.",
+   "id": "18519e11fe",
+   "es": "Creo que tienes razón.",
+   "en": "I think that you're right.",
    "situation": "couple",
    "form": "que",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "d600044541",
-   "es": "Dice que está muy cansado hoy.",
-   "en": "He says he's very tired today.",
+   "id": "b70acc250d",
+   "es": "Quiero que vengas a cenar.",
+   "en": "I want you to come to dinner.",
+   "situation": "plans",
+   "form": "que",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "28419926ef",
+   "es": "Dice que está cansado.",
+   "en": "He says that he's tired.",
    "situation": "feelings",
    "form": "que",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "fea9019b59",
-   "es": "Esta pizza es mejor que la otra.",
-   "en": "This pizza is better than the other one.",
-   "situation": "food",
+   "id": "6cda91b85e",
+   "es": "Espero que te sientas mejor.",
+   "en": "I hope you feel better.",
+   "situation": "health",
    "form": "que",
    "source": "ai",
-   "meaning": 1
+   "meaning": 0
   }
  ],
  "queda": [
@@ -15194,44 +15654,13 @@
  ],
  "quien-2": [
   {
-   "id": "f8e0961b67",
-   "es": "¿Quién viene a la cena?",
-   "en": "Who's coming to dinner?",
-   "situation": "food",
-   "form": "Quién",
+   "id": "97de6966bb",
+   "es": "Ella es quien cocina en casa.",
+   "en": "She is the one who cooks at home.",
+   "situation": "home",
+   "form": "quien",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Quién** = *quien* → the accent is added in questions, meaning \"who\"."
-  },
-  {
-   "id": "2f3e3090f6",
-   "es": "No sé quién llamó.",
-   "en": "I don't know who called.",
-   "situation": "everyday",
-   "form": "quién",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**quién** = *quien* → the accent is added when \"who\" is part of a question or doubt."
-  },
-  {
-   "id": "c31200641b",
-   "es": "¿Con quién hablas?",
-   "en": "Who are you talking to?",
-   "situation": "friends",
-   "form": "quién",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**quién** = *quien* → the accent is added in questions, meaning \"who\"."
-  },
-  {
-   "id": "af1c76b577",
-   "es": "¿Quiénes van a la fiesta?",
-   "en": "Who's going to the party?",
-   "situation": "plans",
-   "form": "Quiénes",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**Quiénes** = *quien* → plural form, used when asking about several people."
+   "meaning": 0
   }
  ],
  "quien": [
@@ -15479,7 +15908,7 @@
    "form": "reales",
    "source": "ai",
    "meaning": 0,
-   "note": "**reales** = *real* → the **feminine plural** form."
+   "note": "**reales** = *real* → the **plural** form."
   }
  ],
  "realidad": [
@@ -15626,7 +16055,7 @@
    "form": "recuerdos",
    "source": "ai",
    "meaning": 0,
-   "note": "**recuerdos** = *recuerdo* → a form."
+   "note": "**recuerdos** = *recuerdo* → the **plural** form."
   },
   {
    "id": "a765a536f5",
@@ -15860,18 +16289,6 @@
    "meaning": 0
   }
  ],
- "resultar": [
-  {
-   "id": "3c8b5d4353",
-   "es": "Todo resulta bien al final.",
-   "en": "Everything works out in the end.",
-   "situation": "feelings",
-   "form": "resulta",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**resulta** = *resultar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  }
- ],
  "rey": [
   {
    "id": "30bcc0402a",
@@ -16098,40 +16515,78 @@
    "note": "**santa** = *santo* → the **feminine** form."
   }
  ],
+ "se": [
+  {
+   "id": "acc957d016",
+   "es": "Mi mamá se llama Rosa.",
+   "en": "My mom's name is Rosa.",
+   "situation": "family",
+   "form": "se",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "bd26f611c1",
+   "es": "Mi hermano se levanta temprano.",
+   "en": "My brother gets up early.",
+   "situation": "family",
+   "form": "se",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "b399d1c698",
+   "es": "Ella se baña en la noche.",
+   "en": "She showers at night.",
+   "situation": "home",
+   "form": "se",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "1b31a294fa",
+   "es": "Mis papás se van mañana.",
+   "en": "My parents leave tomorrow.",
+   "situation": "travel",
+   "form": "se",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "secreto": [
   {
-   "id": "5b91ecebbd",
-   "es": "Es un secreto, no le digas.",
-   "en": "It's a secret, don't tell her.",
-   "situation": "friends",
+   "id": "37ac6be8ef",
+   "es": "Es un lugar secreto.",
+   "en": "It's a secret place.",
+   "situation": "travel",
    "form": "secreto",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "1d90b27253",
-   "es": "Tengo un plan secreto para ti.",
-   "en": "I have a secret plan for you.",
-   "situation": "couple",
-   "form": "secreto",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "80e5dbcdac",
-   "es": "Mi receta secreta es muy fácil.",
-   "en": "My secret recipe is very easy.",
+   "id": "95756e9dd4",
+   "es": "Es una receta secreta de mi abuela.",
+   "en": "It's a secret recipe from my grandma.",
    "situation": "food",
    "form": "secreta",
    "source": "ai",
    "meaning": 0,
-   "note": "**secreta** = *secreto* → a form."
+   "note": "**secreta** = *secreto* → the **feminine** form."
   },
   {
-   "id": "1819ca09e8",
-   "es": "Es un regalo secreto para mamá.",
-   "en": "It's a secret gift for Mom.",
-   "situation": "family",
+   "id": "9b682ca108",
+   "es": "Es un plan secreto, no digas nada.",
+   "en": "It's a secret plan, don't say anything.",
+   "situation": "plans",
+   "form": "secreto",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "6fd0a5aafe",
+   "es": "Tienen un saludo secreto.",
+   "en": "They have a secret greeting.",
+   "situation": "friends",
    "form": "secreto",
    "source": "ai",
    "meaning": 0
@@ -16207,42 +16662,41 @@
  ],
  "seguro": [
   {
-   "id": "86d2294a3e",
-   "es": "¿Estás seguro de esto?",
-   "en": "Are you sure about this?",
-   "situation": "couple",
-   "form": "seguro",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "c94f0cc1ac",
-   "es": "Estoy segura, me lo dijo ella.",
-   "en": "I'm sure, she told me.",
-   "situation": "friends",
+   "id": "a9c3bdc839",
+   "es": "¿Estás segura de eso?",
+   "en": "Are you sure about that?",
+   "situation": "everyday",
    "form": "segura",
    "source": "ai",
    "meaning": 0,
    "note": "**segura** = *seguro* → the **feminine** form."
   },
   {
-   "id": "0acbd3c79a",
-   "es": "Aquí te sientes seguro.",
-   "en": "Here you feel safe.",
-   "situation": "home",
+   "id": "763c121eb6",
+   "es": "No estoy seguro todavía.",
+   "en": "I'm not sure yet.",
+   "situation": "plans",
    "form": "seguro",
    "source": "ai",
-   "meaning": 2
+   "meaning": 0
   },
   {
-   "id": "d74f5d2a60",
-   "es": "No estamos seguros de la hora.",
-   "en": "We're not sure about the time.",
-   "situation": "plans",
-   "form": "seguros",
+   "id": "c00e70297a",
+   "es": "Este barrio es muy seguro.",
+   "en": "This neighborhood is very safe.",
+   "situation": "everyday",
+   "form": "seguro",
    "source": "ai",
-   "meaning": 0,
-   "note": "**seguros** = *seguro* → the **plural** form."
+   "meaning": 1
+  },
+  {
+   "id": "411fcca3f0",
+   "es": "Sí, seguro, nos vemos mañana.",
+   "en": "Sure, see you tomorrow.",
+   "situation": "plans",
+   "form": "seguro",
+   "source": "ai",
+   "meaning": 0
   }
  ],
  "semana": [
@@ -16477,31 +16931,40 @@
    "note": "**sírvete** = *sirve* (a **command** to **you** (tú)) + *te* (you / yourself)."
   }
  ],
- "sexar": [
+ "sexo": [
   {
-   "id": "5a293f3a9b",
-   "es": "Hay que sexar a los pollitos.",
-   "en": "The chicks need to be sexed.",
+   "id": "70647e481b",
+   "es": "Escribe tu sexo en el formulario.",
+   "en": "Write your sex on the form.",
    "situation": "everyday",
-   "form": "sexar",
+   "form": "sexo",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "9b01791983",
-   "es": "Mi tío sabe sexar pollitos.",
-   "en": "My uncle knows how to sex chicks.",
+   "id": "328ea00f1f",
+   "es": "¿Quieren saber el sexo del bebé?",
+   "en": "Do you want to know the baby's sex?",
    "situation": "family",
-   "form": "sexar",
+   "form": "sexo",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "b97d79784e",
-   "es": "Hoy vamos a sexar a los patitos.",
-   "en": "Today we're going to sex the ducklings.",
-   "situation": "plans",
-   "form": "sexar",
+   "id": "1313047ecd",
+   "es": "Todavía no sé el sexo del bebé.",
+   "en": "I still don't know the baby's sex.",
+   "situation": "family",
+   "form": "sexo",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "e6b4eeaa7f",
+   "es": "El sexo de mi perro es macho.",
+   "en": "My dog's sex is male.",
+   "situation": "home",
+   "form": "sexo",
    "source": "ai",
    "meaning": 0
   }
@@ -16680,7 +17143,7 @@
    "form": "siguientes",
    "source": "ai",
    "meaning": 1,
-   "note": "**siguientes** = *siguiente* → the **feminine plural** form."
+   "note": "**siguientes** = *siguiente* → the **plural** form."
   }
  ],
  "simplemente": [
@@ -16864,43 +17327,40 @@
    "meaning": 0
   }
  ],
- "sitiar": [
+ "situacion": [
   {
-   "id": "9af62e80cd",
-   "es": "Los soldados quieren sitiar la ciudad.",
-   "en": "The soldiers want to besiege the city.",
+   "id": "fd42466dc4",
+   "es": "Es una situación difícil.",
+   "en": "It's a difficult situation.",
    "situation": "everyday",
-   "form": "sitiar",
+   "form": "situación",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "52e11e2ded",
-   "es": "El ejército sitia la ciudad.",
-   "en": "The army besieges the city.",
-   "situation": "school",
-   "form": "sitia",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**sitia** = *sitiar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  }
- ],
- "sitio": [
-  {
-   "id": "9dafe53b19",
-   "es": "El sitio de la ciudad fue muy largo.",
-   "en": "The siege of the city was very long.",
-   "situation": "school",
-   "form": "sitio",
+   "id": "2056f6259a",
+   "es": "¿Cómo está la situación en casa?",
+   "en": "How are things at home?",
+   "situation": "home",
+   "form": "situación",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "f67bf69f0e",
-   "es": "Leo sobre un sitio en mi libro de historia.",
-   "en": "I'm reading about a siege in my history book.",
-   "situation": "school",
-   "form": "sitio",
+   "id": "a11f171394",
+   "es": "No me gusta esta situación.",
+   "en": "I don't like this situation.",
+   "situation": "feelings",
+   "form": "situación",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "99d1fc3495",
+   "es": "Con esta situación, mejor nos quedamos.",
+   "en": "With this situation, we'd better stay.",
+   "situation": "plans",
+   "form": "situación",
    "source": "ai",
    "meaning": 0
   }
@@ -16981,47 +17441,6 @@
    "meaning": 0
   }
  ],
- "sonar-2": [
-  {
-   "id": "3a859b9710",
-   "es": "Sueño contigo todas las noches.",
-   "en": "I dream about you every night.",
-   "situation": "couple",
-   "form": "Sueño",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**sueño** = *soñar* → the **present** tense for **I** (yo)."
-  },
-  {
-   "id": "912b15e397",
-   "es": "Anoche soñé algo muy raro.",
-   "en": "Last night I dreamed something very strange.",
-   "situation": "everyday",
-   "form": "soñé",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**soñé** = *soñar* → the **past** tense for **I** (yo) (a finished action)."
-  },
-  {
-   "id": "34b0ef7f78",
-   "es": "¿Con qué sueñas?",
-   "en": "What do you dream about?",
-   "situation": "friends",
-   "form": "sueñas",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**sueñas** = *soñar* → the **present** tense for **you** (tú)."
-  },
-  {
-   "id": "ff9a711954",
-   "es": "Me gusta soñar con la playa.",
-   "en": "I like dreaming about the beach.",
-   "situation": "travel",
-   "form": "soñar",
-   "source": "ai",
-   "meaning": 0
-  }
- ],
  "sonar": [
   {
    "id": "3edc9ee627",
@@ -17052,6 +17471,45 @@
    "source": "ai",
    "meaning": 0,
    "note": "**suena** = *sonar* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+  }
+ ],
+ "su": [
+  {
+   "id": "b92b6cda67",
+   "es": "Su casa es muy bonita.",
+   "en": "Her house is very pretty.",
+   "situation": "home",
+   "form": "Su",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "877ca57e41",
+   "es": "Mi hermano y su novia vienen hoy.",
+   "en": "My brother and his girlfriend are coming today.",
+   "situation": "family",
+   "form": "su",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "ef48ab591e",
+   "es": "¿Cuál es su nombre, señora?",
+   "en": "What is your name, ma'am?",
+   "situation": "everyday",
+   "form": "su",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "c5f2a79303",
+   "es": "Sus hijos son muy simpáticos.",
+   "en": "Their kids are very nice.",
+   "situation": "friends",
+   "form": "Sus",
+   "source": "ai",
+   "meaning": 0,
+   "note": "**sus** = *su* → the **plural** form."
   }
  ],
  "subir": [
@@ -17103,7 +17561,7 @@
    "form": "sucede",
    "source": "ai",
    "meaning": 0,
-   "note": "**sucede** = *suceder* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "note": "**sucede** = *suceder* → the **present** tense for **he / she** (él / ella) or formal *usted*."
   },
   {
    "id": "bedbd16385",
@@ -17113,7 +17571,7 @@
    "form": "sucede",
    "source": "ai",
    "meaning": 0,
-   "note": "**sucede** = *suceder* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "note": "**sucede** = *suceder* → the **present** tense for **he / she** (él / ella) or formal *usted*."
   },
   {
    "id": "0be859b6f0",
@@ -17289,11 +17747,11 @@
    "situation": "plans",
    "form": "tampoco",
    "source": "ai",
-   "meaning": 1
+   "meaning": 0
   },
   {
-   "id": "dc43d3aec3",
-   "es": "No tengo hambre tampoco.",
+   "id": "f3c796c0ac",
+   "es": "Yo tampoco tengo hambre.",
    "en": "I'm not hungry either.",
    "situation": "food",
    "form": "tampoco",
@@ -17301,39 +17759,30 @@
    "meaning": 0
   },
   {
-   "id": "8cd20f2396",
-   "es": "Tampoco me gusta el café.",
-   "en": "I don't like coffee either.",
-   "situation": "everyday",
-   "form": "Tampoco",
+   "id": "2ca8667eb8",
+   "es": "Ella tampoco contesta el celular.",
+   "en": "She isn't answering her phone either.",
+   "situation": "texting",
+   "form": "tampoco",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "77466ed02f",
-   "es": "Ella tampoco sabe dónde está.",
-   "en": "She doesn't know where it is either.",
-   "situation": "friends",
+   "id": "c9dff029e7",
+   "es": "No tengo tiempo hoy tampoco.",
+   "en": "I don't have time today either.",
+   "situation": "everyday",
    "form": "tampoco",
    "source": "ai",
-   "meaning": 0
+   "meaning": 1
   }
  ],
  "tan": [
   {
-   "id": "fb0bc8ebee",
-   "es": "Está tan rico este café.",
-   "en": "This coffee is so good.",
-   "situation": "food",
-   "form": "tan",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "1ce41594c0",
-   "es": "¡Qué día tan bonito!",
-   "en": "What a beautiful day!",
-   "situation": "weather",
+   "id": "ed5c3646cb",
+   "es": "Estás tan bonita hoy.",
+   "en": "You look so pretty today.",
+   "situation": "couple",
    "form": "tan",
    "source": "ai",
    "meaning": 0
@@ -17348,10 +17797,19 @@
    "meaning": 0
   },
   {
-   "id": "5d9dd59a79",
-   "es": "Estoy tan feliz contigo.",
-   "en": "I'm so happy with you.",
-   "situation": "couple",
+   "id": "c19a4f515b",
+   "es": "Mi mamá es tan buena persona.",
+   "en": "My mom is such a good person.",
+   "situation": "family",
+   "form": "tan",
+   "source": "ai",
+   "meaning": 1
+  },
+  {
+   "id": "bca96e4a45",
+   "es": "¡Qué tarde es! Estoy tan cansada.",
+   "en": "It's so late! I'm so tired.",
+   "situation": "feelings",
    "form": "tan",
    "source": "ai",
    "meaning": 0
@@ -17368,6 +17826,15 @@
    "meaning": 0
   },
   {
+   "id": "db0bba64d1",
+   "es": "¿Por qué comes tanto?",
+   "en": "Why do you eat so much?",
+   "situation": "food",
+   "form": "tanto",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
    "id": "d48a07409f",
    "es": "Hay tanta gente en el mercado.",
    "en": "There are so many people at the market.",
@@ -17378,23 +17845,14 @@
    "note": "**tanta** = *tanto* → the **feminine** form."
   },
   {
-   "id": "f9fc653012",
-   "es": "No comas tantos dulces.",
-   "en": "Don't eat so many sweets.",
-   "situation": "health",
+   "id": "88b1e95b32",
+   "es": "Tengo tantos mensajes en el celular.",
+   "en": "I have so many messages on my phone.",
+   "situation": "texting",
    "form": "tantos",
    "source": "ai",
-   "meaning": 1,
+   "meaning": 0,
    "note": "**tantos** = *tanto* → the **plural** form."
-  },
-  {
-   "id": "3d0b27b195",
-   "es": "Tengo tanto trabajo hoy.",
-   "en": "I have so much work today.",
-   "situation": "work",
-   "form": "tanto",
-   "source": "ai",
-   "meaning": 0
   }
  ],
  "te-quiero": [
@@ -17437,14 +17895,40 @@
  ],
  "te": [
   {
-   "id": "22d88dc911",
-   "es": "Siéntate, la comida ya está lista.",
-   "en": "Sit down, the food is ready.",
+   "id": "1ce5aa380e",
+   "es": "Te quiero mucho.",
+   "en": "I love you very much.",
+   "situation": "couple",
+   "form": "Te",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "9b586da41b",
+   "es": "¿Te gusta el café?",
+   "en": "Do you like coffee?",
+   "situation": "food",
+   "form": "Te",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "caebca2999",
+   "es": "Te extraño.",
+   "en": "I miss you.",
+   "situation": "texting",
+   "form": "Te",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "c871c2ea1a",
+   "es": "Siéntate aquí, por favor.",
+   "en": "Sit here, please.",
    "situation": "home",
    "form": "Siéntate",
    "source": "ai",
-   "meaning": 0,
-   "note": "**Siéntate** = *sentarse* → command for **you** (tú), with *te* attached: sit yourself down"
+   "meaning": 0
   }
  ],
  "temer": [
@@ -17565,28 +18049,28 @@
  ],
  "tierra": [
   {
-   "id": "c003d41fbf",
-   "es": "Mi abuelo tiene tierra en el pueblo.",
-   "en": "My grandfather has land in the town.",
-   "situation": "family",
-   "form": "tierra",
-   "source": "ai",
-   "meaning": 1
-  },
-  {
-   "id": "68daaf03a1",
-   "es": "La Tierra es muy bonita desde el espacio.",
-   "en": "The Earth is very beautiful from space.",
+   "id": "1c0bac7303",
+   "es": "La Tierra es muy bonita.",
+   "en": "The Earth is very beautiful.",
    "situation": "everyday",
    "form": "Tierra",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "9f2d62d06a",
-   "es": "Hay mucha tierra en el carro.",
-   "en": "There's a lot of dirt in the car.",
-   "situation": "everyday",
+   "id": "22fe1dd239",
+   "es": "Mi abuelo tiene tierra para sembrar.",
+   "en": "My grandpa has land to plant on.",
+   "situation": "family",
+   "form": "tierra",
+   "source": "ai",
+   "meaning": 1
+  },
+  {
+   "id": "78d3755f37",
+   "es": "Mi familia es de esta tierra.",
+   "en": "My family is from this land.",
+   "situation": "family",
    "form": "tierra",
    "source": "ai",
    "meaning": 1
@@ -17901,31 +18385,78 @@
    "meaning": 0
   }
  ],
- "tu": [
+ "tu-2": [
   {
-   "id": "87eadf06d9",
-   "es": "¿Y tú qué quieres comer?",
-   "en": "And what do you want to eat?",
-   "situation": "food",
-   "form": "tú",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "10ebb55b82",
-   "es": "Tú sí sabes cocinar.",
-   "en": "You really do know how to cook.",
-   "situation": "home",
+   "id": "be69f76ca0",
+   "es": "¿Tú quieres ir al mercado?",
+   "en": "Do you want to go to the market?",
+   "situation": "shopping",
    "form": "Tú",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "75ed90202d",
-   "es": "Primero tú, yo espero.",
-   "en": "You first, I'll wait.",
+   "id": "e783d4b0d9",
+   "es": "Tú eres muy amable.",
+   "en": "You are very kind.",
+   "situation": "feelings",
+   "form": "Tú",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "affc430f5c",
+   "es": "¿Y tú, cómo estás?",
+   "en": "And you, how are you?",
    "situation": "everyday",
    "form": "tú",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "499f428bbe",
+   "es": "Tú manejas, yo pongo la música.",
+   "en": "You drive, I'll put on the music.",
+   "situation": "travel",
+   "form": "Tú",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
+ "tu": [
+  {
+   "id": "e0cb571532",
+   "es": "¿Dónde está tu carro?",
+   "en": "Where is your car?",
+   "situation": "travel",
+   "form": "tu",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "6592602100",
+   "es": "Tu comida huele muy rico.",
+   "en": "Your food smells so good.",
+   "situation": "food",
+   "form": "Tu",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "a609bcec4f",
+   "es": "¿Cómo está tu familia?",
+   "en": "How is your family?",
+   "situation": "family",
+   "form": "tu",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "6fb5031eec",
+   "es": "Tus llaves están en la mesa.",
+   "en": "Your keys are on the table.",
+   "situation": "home",
+   "form": "Tus",
    "source": "ai",
    "meaning": 0
   }
@@ -17971,77 +18502,76 @@
  ],
  "ultimo": [
   {
-   "id": "ab9ee27452",
-   "es": "Es el último pedazo de pastel.",
-   "en": "It's the last piece of cake.",
-   "situation": "food",
-   "form": "último",
-   "source": "ai",
-   "meaning": 1
-  },
-  {
-   "id": "f4bf533e55",
-   "es": "Esta es mi última semana de trabajo.",
-   "en": "This is my last week of work.",
-   "situation": "work",
-   "form": "última",
-   "source": "ai",
-   "meaning": 1,
-   "note": "**última** = *último* → the **feminine** form."
-  },
-  {
-   "id": "6168ad1049",
-   "es": "Tengo el último modelo de celular.",
-   "en": "I have the latest phone model.",
-   "situation": "shopping",
+   "id": "7e29ba9e44",
+   "es": "Es el último día de clases.",
+   "en": "It's the last day of classes.",
+   "situation": "school",
    "form": "último",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "4ec61f4ba1",
-   "es": "Es la última vez, te lo prometo.",
-   "en": "It's the last time, I promise.",
-   "situation": "couple",
+   "id": "47ad24b336",
+   "es": "¿Quién quiere el último taco?",
+   "en": "Who wants the last taco?",
+   "situation": "food",
+   "form": "último",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "863a689cbb",
+   "es": "Esta es la última vez, ¿sí?",
+   "en": "This is the last time, okay?",
+   "situation": "everyday",
    "form": "última",
    "source": "ai",
-   "meaning": 1,
+   "meaning": 0,
    "note": "**última** = *último* → the **feminine** form."
+  },
+  {
+   "id": "708713c8b4",
+   "es": "Mira mi último mensaje, por favor.",
+   "en": "Look at my latest message, please.",
+   "situation": "texting",
+   "form": "último",
+   "source": "ai",
+   "meaning": 1
   }
  ],
  "un": [
   {
    "id": "69c66a95e7",
    "es": "Quiero un café, por favor.",
-   "en": "I'd like a coffee, please.",
+   "en": "I want a coffee, please.",
    "situation": "food",
    "form": "un",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "43050edb67",
-   "es": "Tengo un perro muy bonito.",
-   "en": "I have a very cute dog.",
-   "situation": "friends",
+   "id": "a83323e63e",
+   "es": "Tengo un perro y un gato.",
+   "en": "I have a dog and a cat.",
+   "situation": "home",
    "form": "un",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "07ce9753d5",
-   "es": "Dame un minuto, ya voy.",
-   "en": "Give me a minute, I'm coming.",
-   "situation": "everyday",
-   "form": "un",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "b423e66c68",
-   "es": "Es un día muy bonito.",
-   "en": "It's a very nice day.",
+   "id": "9336075d22",
+   "es": "Hoy hace un día bonito.",
+   "en": "It's a nice day today.",
    "situation": "weather",
+   "form": "un",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "39c7340e9c",
+   "es": "Dame un abrazo.",
+   "en": "Give me a hug.",
+   "situation": "couple",
    "form": "un",
    "source": "ai",
    "meaning": 0
@@ -18049,40 +18579,40 @@
  ],
  "una": [
   {
-   "id": "ab0aab9655",
-   "es": "Quiero una taza de café.",
-   "en": "I want a cup of coffee.",
+   "id": "3210578a51",
+   "es": "Quiero una cerveza fría.",
+   "en": "I want a cold beer.",
    "situation": "food",
    "form": "una",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "fa1d79655e",
-   "es": "Tengo una pregunta.",
-   "en": "I have a question.",
-   "situation": "school",
+   "id": "d324a7bf9b",
+   "es": "Tengo una hermana en México.",
+   "en": "I have a sister in Mexico.",
+   "situation": "family",
    "form": "una",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "03bb77f660",
-   "es": "Espera una hora, por favor.",
-   "en": "Wait an hour, please.",
+   "id": "8e8d9f16eb",
+   "es": "Mándame una foto, por favor.",
+   "en": "Send me a photo, please.",
+   "situation": "texting",
+   "form": "una",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "444c9bc56c",
+   "es": "Espera una hora más.",
+   "en": "Wait one more hour.",
    "situation": "plans",
    "form": "una",
    "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "e86f6de39c",
-   "es": "Necesito una camisa nueva.",
-   "en": "I need a new shirt.",
-   "situation": "shopping",
-   "form": "una",
-   "source": "ai",
-   "meaning": 0
+   "meaning": 2
   }
  ],
  "unico": [
@@ -18256,112 +18786,79 @@
  ],
  "usted": [
   {
-   "id": "9a77d79588",
-   "es": "¿Cómo está usted, señora?",
-   "en": "How are you, ma'am?",
+   "id": "943c03f783",
+   "es": "¿Cómo está usted, señor?",
+   "en": "How are you, sir?",
    "situation": "everyday",
    "form": "usted",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "9366859e26",
-   "es": "Usted primero, por favor.",
-   "en": "You first, please.",
+   "id": "e36f0e7cf8",
+   "es": "Pase usted, por favor.",
+   "en": "Go ahead, please.",
    "situation": "everyday",
-   "form": "Usted",
+   "form": "usted",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "4fb6dc4479",
-   "es": "¿Usted quiere agua, señor?",
-   "en": "Do you want water, sir?",
+   "id": "bd8fd3cede",
+   "es": "¿Usted quiere algo de tomar?",
+   "en": "Would you like something to drink?",
    "situation": "food",
    "form": "Usted",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "f811023ce8",
-   "es": "Ustedes pasan primero, yo espero.",
-   "en": "You all go first, I'll wait.",
-   "situation": "friends",
+   "id": "938891def9",
+   "es": "Ustedes son muy amables.",
+   "en": "You all are very kind.",
+   "situation": "family",
    "form": "Ustedes",
    "source": "ai",
    "meaning": 0,
    "note": "**ustedes** = *usted* → the **plural** form."
   }
  ],
- "vale": [
+ "ustedes": [
   {
-   "id": "4ff35441b4",
-   "es": "Vale, nos vemos a las cinco.",
-   "en": "Okay, see you at five.",
-   "situation": "plans",
-   "form": "Vale",
+   "id": "dbfc71c2ff",
+   "es": "¿Ustedes quieren comer ahora?",
+   "en": "Do you all want to eat now?",
+   "situation": "food",
+   "form": "Ustedes",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "9851807b1e",
-   "es": "Vale, te mando mensaje al llegar.",
-   "en": "Okay, I'll text you when I arrive.",
-   "situation": "texting",
-   "form": "Vale",
+   "id": "8960dbb974",
+   "es": "Ustedes son muy buenos conmigo.",
+   "en": "You all are very good to me.",
+   "situation": "family",
+   "form": "Ustedes",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "e937ffea0a",
-   "es": "Tengo un vale para el súper.",
-   "en": "I have a voucher for the supermarket.",
-   "situation": "shopping",
-   "form": "vale",
-   "source": "ai",
-   "meaning": 2
-  }
- ],
- "valer": [
-  {
-   "id": "102948886a",
-   "es": "Esta bolsa vale cien pesos.",
-   "en": "This bag is worth a hundred pesos.",
-   "situation": "shopping",
-   "form": "vale",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**vale** = *valer* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  },
-  {
-   "id": "b08eee3986",
-   "es": "Tú vales mucho para mí.",
-   "en": "You mean a lot to me.",
-   "situation": "couple",
-   "form": "vales",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**vales** = *valer* → the **present** tense for **you** (tú)."
-  },
-  {
-   "id": "e26051968c",
-   "es": "Sí vale la pena ir.",
-   "en": "It's worth going.",
+   "id": "d73aa20e2f",
+   "es": "¿Ustedes vienen a la casa hoy?",
+   "en": "Are you all coming to the house today?",
    "situation": "plans",
-   "form": "vale",
+   "form": "ustedes",
    "source": "ai",
-   "meaning": 0,
-   "note": "**vale** = *valer* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "meaning": 0
   },
   {
-   "id": "22d85d0313",
-   "es": "¿Cuánto vale este carro?",
-   "en": "How much is this car worth?",
-   "situation": "shopping",
-   "form": "vale",
+   "id": "9e7b342e5c",
+   "es": "Gracias por todo, ustedes dos.",
+   "en": "Thanks for everything, you two.",
+   "situation": "friends",
+   "form": "ustedes",
    "source": "ai",
-   "meaning": 0,
-   "note": "**vale** = *valer* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
+   "meaning": 0
   }
  ],
  "veces": [
@@ -18574,47 +19071,6 @@
    "meaning": 0
   }
  ],
- "vestir": [
-  {
-   "id": "a098fb668d",
-   "es": "Voy a vestir al niño.",
-   "en": "I'm going to dress the little boy.",
-   "situation": "family",
-   "form": "vestir",
-   "source": "ai",
-   "meaning": 0
-  },
-  {
-   "id": "8b00a671d6",
-   "es": "Siempre me visto rápido en las mañanas.",
-   "en": "I always get dressed quickly in the mornings.",
-   "situation": "everyday",
-   "form": "visto",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**visto** = *vestir* → the **present** tense for **I** (yo)."
-  },
-  {
-   "id": "910d68d60f",
-   "es": "Ella se viste muy bonito.",
-   "en": "She dresses very nicely.",
-   "situation": "friends",
-   "form": "viste",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**viste** = *vestir* → the **present** tense for **he / she** (él / ella) or formal *usted*. It can also be a **command** to **you** (tú) — same spelling."
-  },
-  {
-   "id": "5843d16fd6",
-   "es": "Vístete, ya es tarde.",
-   "en": "Get dressed, it's already late.",
-   "situation": "home",
-   "form": "Vístete",
-   "source": "ai",
-   "meaning": 0,
-   "note": "**vístete** = *viste* (a **command** to **you** (tú)) + *te* (you / yourself)."
-  }
- ],
  "vez": [
   {
    "id": "5950500610",
@@ -18751,7 +19207,7 @@
    "form": "vistos",
    "source": "ai",
    "meaning": 0,
-   "note": "**vistos** = *visto* → a form."
+   "note": "**vistos** = *visto* → the **plural** form."
   }
  ],
  "vivir": [
@@ -18803,7 +19259,7 @@
    "form": "vivas",
    "source": "ai",
    "meaning": 0,
-   "note": "**vivas** = *vivo* → a form."
+   "note": "**vivas** = *vivo* → the **feminine plural** form."
   },
   {
    "id": "6c0d6b550e",
@@ -18846,6 +19302,44 @@
    "meaning": 0
   }
  ],
+ "voz": [
+  {
+   "id": "b0250c902d",
+   "es": "Tienes una voz muy bonita.",
+   "en": "You have a very pretty voice.",
+   "situation": "couple",
+   "form": "voz",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "244b7c6d65",
+   "es": "No tengo voz, estoy enfermo.",
+   "en": "I have no voice, I'm sick.",
+   "situation": "health",
+   "form": "voz",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "a2987584c3",
+   "es": "Baja la voz, el bebé duerme.",
+   "en": "Lower your voice, the baby is sleeping.",
+   "situation": "home",
+   "form": "voz",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "810bc491cd",
+   "es": "Mi papá tiene una voz fuerte.",
+   "en": "My dad has a loud voice.",
+   "situation": "family",
+   "form": "voz",
+   "source": "ai",
+   "meaning": 0
+  }
+ ],
  "vuelto": [
   {
    "id": "89be409d4b",
@@ -18877,48 +19371,75 @@
  ],
  "y": [
   {
-   "id": "c5ea4dcea1",
-   "es": "¿Y tú qué quieres hacer?",
-   "en": "And what do you want to do?",
-   "situation": "plans",
-   "form": "Y",
+   "id": "868a1d3454",
+   "es": "Pan y mantequilla, por favor.",
+   "en": "Bread and butter, please.",
+   "situation": "food",
+   "form": "y",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "b477371583",
+   "es": "Te quiero mucho y te extraño.",
+   "en": "I love you a lot and I miss you.",
+   "situation": "couple",
+   "form": "y",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "1b00e5ce95",
+   "es": "Mi mamá y mi papá llegan hoy.",
+   "en": "My mom and dad arrive today.",
+   "situation": "family",
+   "form": "y",
+   "source": "ai",
+   "meaning": 0
+  },
+  {
+   "id": "c2c0e1029c",
+   "es": "Hace frío y está lloviendo.",
+   "en": "It's cold and it's raining.",
+   "situation": "weather",
+   "form": "y",
    "source": "ai",
    "meaning": 0
   }
  ],
  "yo": [
   {
-   "id": "9ddd36bef5",
-   "es": "El yo es parte de la mente.",
-   "en": "The ego is part of the mind.",
-   "situation": "school",
-   "form": "yo",
+   "id": "db4f8a8495",
+   "es": "Yo quiero un café.",
+   "en": "I want a coffee.",
+   "situation": "food",
+   "form": "Yo",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "bbde52435d",
-   "es": "Freud habló del yo y del ello.",
-   "en": "Freud talked about the ego and the id.",
-   "situation": "school",
-   "form": "yo",
+   "id": "cbd1d80fa2",
+   "es": "Yo cocino hoy, tú descansa.",
+   "en": "I'm cooking today, you rest.",
+   "situation": "couple",
+   "form": "Yo",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "98af0a3eb9",
-   "es": "Mi maestro explicó qué es el yo.",
-   "en": "My teacher explained what the ego is.",
-   "situation": "school",
-   "form": "yo",
+   "id": "a9f8db3557",
+   "es": "Yo también estoy cansada.",
+   "en": "I'm tired too.",
+   "situation": "feelings",
+   "form": "Yo",
    "source": "ai",
    "meaning": 0
   },
   {
-   "id": "b23490f393",
-   "es": "¿Qué es el yo en psicología?",
-   "en": "What is the ego in psychology?",
-   "situation": "school",
+   "id": "29137741ef",
+   "es": "¿Quién, yo? No sé nada.",
+   "en": "Who, me? I don't know anything.",
+   "situation": "friends",
    "form": "yo",
    "source": "ai",
    "meaning": 0
