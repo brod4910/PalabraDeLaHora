@@ -70,6 +70,7 @@ struct TodayView: View {
     @AppStorage(AppSettings.Key.cadence, store: AppSettings.defaults) private var cadenceRaw = Cadence.hourly.rawValue
 
     @State private var skippedToday = 0
+    private static let top = "today-top"
 
     var body: some View {
         NavigationStack {
@@ -78,34 +79,41 @@ struct TodayView: View {
                 let schedule = WordSchedule.current
                 let word = schedule.word(at: context.date)
                 let next = schedule.nextChange(after: context.date)
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        WordCardView(word: word)
-                            .id(word.id)
-                            .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity),
-                                                    removal: .move(edge: .leading).combined(with: .opacity)))
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 20) {
+                            WordCardView(word: word)
+                                .id(word.id)
+                                .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity),
+                                                        removal: .move(edge: .leading).combined(with: .opacity)))
 
-                        Button {
-                            withAnimation(.snappy) { Rotation.skipAhead() }
-                            skippedToday += 1
-                        } label: {
-                            Label("Learn the next word now", systemImage: "forward.fill")
-                                .font(.headline)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 6)
+                            Button {
+                                withAnimation(.snappy) { Rotation.skipAhead() }
+                                skippedToday += 1
+                            } label: {
+                                Label("Learn the next word now", systemImage: "forward.fill")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 6)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .controlSize(.large)
+
+                            if skippedToday > 0 {
+                                Text("You've jumped ahead \(skippedToday) \(skippedToday == 1 ? "word" : "words") — the widget and notifications follow along.")
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
+
+                            NextUpView(nextChange: next, upcoming: schedule.upcoming(after: context.date, count: 3))
                         }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.large)
-
-                        if skippedToday > 0 {
-                            Text("You've jumped ahead \(skippedToday) \(skippedToday == 1 ? "word" : "words") — the widget and notifications follow along.")
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
-                        }
-
-                        NextUpView(nextChange: next, upcoming: schedule.upcoming(after: context.date, count: 3))
+                        .padding()
+                        .id(Self.top)
                     }
-                    .padding()
+                    // A new word (skipped ahead, or the hour changed) starts at the top of its card.
+                    .onChange(of: word.id) {
+                        withAnimation(.snappy) { proxy.scrollTo(Self.top, anchor: .top) }
+                    }
                 }
             }
             .navigationTitle("Palabra de la hora")

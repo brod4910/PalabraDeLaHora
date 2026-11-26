@@ -1026,6 +1026,16 @@ def build(args) -> list[dict]:
         return any(lemma_senses(e) and e.get("pos") in POS_LABELS and e.get("pos") != "verb"
                    for e in entries.get(form, []))
 
+    def command_only(form: str, lemma: str, entry: dict) -> bool:
+        a = analyze(form, lemma, entry)
+        return bool(a and not a[1] and all("imperative" in o for o in a[3]))
+
+    def after_non_command(sentence: str, form: str) -> bool:
+        """A command never follows a subject pronoun, "no" or an object pronoun: yo sé, no sé, lo sé."""
+        toks = tokens(sentence)
+        before = {"yo", "tú", "él", "ella", "usted", "no", "lo", "la", "le", "me", "te", "se", "nos", "les", "los", "las", "ya"}
+        return any(t == form and i and toks[i - 1] in before for i, t in enumerate(toks))
+
     def support(lemma: str, meaning: dict, novice: bool):
         """How many sentence pairs use this meaning, the easiest one, the word form it uses, and a
         few more real sentences (different forms first) for the card's "Everyday phrases".
@@ -1042,9 +1052,12 @@ def build(args) -> list[dict]:
             # Forms that are a different word of their own are used only when nothing else is.
             if form != lemma and is_verb and other_word(form):
                 penalty += 20_000
+            only_command = command_only(form, lemma, meaning["entry"])
             for k in index.get(form, []):
                 if not (scored[k][3] & variants):
                     continue
+                if only_command and after_non_command(scored[k][1], form):
+                    continue                  # "yo sé" is saber, not the command of ser
                 count += 1
                 cands.append((scored[k][0] + penalty, k, form))
                 for i, pv in enumerate(part_variants):
