@@ -101,7 +101,7 @@ claro | of course / sure | phrase | KLAH-roh | —¿Me ayudas? —¡Claro! | "Wi
 está bien | okay / that's fine | phrase | ehs-TAH byehn | Está bien, vamos. | Okay, let's go. | Está bien | Spain says vale; Mexico says sale or órale.
 ¿qué es esto? | what is this? | phrase | keh ehs EHS-toh | ¿Qué es esto? Huele delicioso. | What is this? It smells delicious. | ¿Qué es + esto / eso?
 la cuenta, por favor | the check, please | phrase | lah KWEHN-tah, pohr fah-BOHR | Disculpe, la cuenta, por favor. | Excuse me, the check, please. | Disculpe = excuse me (to a stranger)
-salud | cheers / bless you | phrase | sah-LOOD | ¡Salud! Por nosotros. | Cheers! To us. | ¡Salud! · Por + person = To …! | Also what you say when someone sneezes.
+salud | health | noun (f.) | sah-LOOD | La salud es lo más importante. | Health is the most important thing. | la salud  ·  ¡Salud! = Cheers! / Bless you! | Said with a toast and when someone sneezes.
 buen provecho | enjoy your meal | phrase | bwehn proh-BEH-choh | ¡Buen provecho! | Enjoy your meal! | ¡Buen provecho! | Said to people who are eating — even strangers.
 
 ## beginner
@@ -326,8 +326,49 @@ MEANINGS = {
     "agotado": ("exhausted", None, [
         ("sold out", None, "Las entradas están agotadas.", "The tickets are sold out."),
     ]),
-    "salud": ("cheers!", None, [
-        ("bless you! (after a sneeze)", None, "—¡Achú! —¡Salud!", "\"Achoo!\" \"Bless you!\""),
+    "salud": ("health", None, [
+        ("cheers! (a toast)", "interjection", "¡Salud! Por nosotros.", "Cheers! To us."),
+        ("bless you! (after a sneeze)", "interjection", "—¡Achú! —¡Salud!", "\"Achoo!\" \"Bless you!\""),
+    ]),
+    # Second meanings the dictionary has and a beginner hears every day.
+    "conocer": ("to know (people, places)", None, [
+        ("to meet (for the first time)", None, "Nos conocimos en una fiesta.", "We met at a party."),
+    ]),
+    "que": ("that", None, [
+        ("than (más … que)", None, "Mi hermano es más alto que yo.", "My brother is taller than me."),
+    ]),
+    "qué": ("what", None, [
+        ("how … ! (¡Qué …!)", "adverb", "¡Qué bonito!", "How pretty!"),
+    ]),
+    "se": ("himself / herself / themselves", None, [
+        ("each other", None, "Se quieren mucho.", "They love each other a lot."),
+    ]),
+    "no": ("no / not", None, [
+        ("right? (at the end of a sentence)", "tag question", "Vienes mañana, ¿no?", "You're coming tomorrow, right?"),
+    ]),
+    "más": ("more", None, [
+        ("else (¿algo más?)", None, "¿Algo más?", "Anything else?"),
+    ]),
+    "café": ("coffee", None, [
+        ("brown (the color)", "adjective", "Tiene los ojos cafés.", "She has brown eyes."),
+    ]),
+    "grande": ("big", None, [
+        ("old, grown-up (for people)", None, "Mi abuela ya está grande.", "My grandma is getting old."),
+    ]),
+    "traer": ("to bring", None, [
+        ("to wear, to have on", None, "Traes una camisa muy bonita.", "You're wearing a really nice shirt."),
+    ]),
+    "volver": ("to come back", None, [
+        ("to do again (volver a …)", None, "No lo vuelvo a hacer.", "I won't do it again."),
+    ]),
+    "pensar": ("to think", None, [
+        ("to plan to (pensar + verb)", None, "Pienso ir al súper mañana.", "I'm planning to go to the store tomorrow."),
+    ]),
+    "recordar": ("to remember", None, [
+        ("to remind", None, "Recuérdame llamar a mi mamá.", "Remind me to call my mom."),
+    ]),
+    "padre": ("father", None, [
+        ("cool, great (Mexico)", "adjective", "¡Qué padre tu casa!", "Your house is so cool!"),
     ]),
     "hora": ("time (of day)", None, [
         ("hour", None, "La película dura dos horas.", "The movie lasts two hours."),

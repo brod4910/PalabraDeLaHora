@@ -856,6 +856,13 @@
   "kind": "word",
   "source": "curated",
   "tip": "Mucho gusto en conocerte = Nice to meet you.",
+  "otherMeanings": [
+   {
+    "english": "to meet (for the first time)",
+    "example": "Nos conocimos en una fiesta.",
+    "exampleTranslation": "We met at a party."
+   }
+  ],
   "forms": "yo: conozco\ntú: conoces\nél / ella: conoce\nnosotros: conocemos\npast (yo): conocí",
   "exampleWord": "Conoces",
   "phrases": [
@@ -1452,6 +1459,13 @@
   "kind": "word",
   "source": "curated",
   "tip": "e → ie: pienso, piensas.",
+  "otherMeanings": [
+   {
+    "english": "to plan to (pensar + verb)",
+    "example": "Pienso ir al súper mañana.",
+    "exampleTranslation": "I'm planning to go to the store tomorrow."
+   }
+  ],
   "forms": "yo: pienso\ntú: piensas\nél / ella: piensa\nnosotros: pensamos\npast (yo): pensé",
   "exampleWord": "Pienso",
   "phrases": [
@@ -1806,6 +1820,13 @@
   "level": "beginner",
   "kind": "word",
   "source": "curated",
+  "otherMeanings": [
+   {
+    "english": "to remind",
+    "example": "Recuérdame llamar a mi mamá.",
+    "exampleTranslation": "Remind me to call my mom."
+   }
+  ],
   "forms": "yo: recuerdo\ntú: recuerdas\nél / ella: recuerda\nnosotros: recordamos\npast (yo): recordé",
   "exampleWord": "Recuerdas",
   "phrases": [
@@ -5231,6 +5252,13 @@
   "kind": "word",
   "source": "curated",
   "tip": "Without an accent it joins ideas; with one, qué means what.",
+  "otherMeanings": [
+   {
+    "english": "than (más … que)",
+    "example": "Mi hermano es más alto que yo.",
+    "exampleTranslation": "My brother is taller than me."
+   }
+  ],
   "exampleWord": "que",
   "phrases": [
    {
@@ -5332,6 +5360,14 @@
   "kind": "word",
   "source": "curated",
   "tip": "¡Qué bonito! = How pretty!",
+  "otherMeanings": [
+   {
+    "english": "how … ! (¡Qué …!)",
+    "partOfSpeech": "adverb",
+    "example": "¡Qué bonito!",
+    "exampleTranslation": "How pretty!"
+   }
+  ],
   "exampleWord": "Qué",
   "phrases": [
    {
@@ -5546,6 +5582,13 @@
   "kind": "word",
   "source": "curated",
   "tip": "Many verbs come with se: se llama, se fue (he left).",
+  "otherMeanings": [
+   {
+    "english": "each other",
+    "example": "Se quieren mucho.",
+    "exampleTranslation": "They love each other a lot."
+   }
+  ],
   "exampleWord": "Se",
   "phrases": [
    {
@@ -6762,6 +6805,14 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
+  "otherMeanings": [
+   {
+    "english": "right? (at the end of a sentence)",
+    "partOfSpeech": "tag question",
+    "example": "Vienes mañana, ¿no?",
+    "exampleTranslation": "You're coming tomorrow, right?"
+   }
+  ],
   "exampleWord": "No",
   "phrases": [
    {
@@ -7166,6 +7217,13 @@
   "kind": "word",
   "source": "curated",
   "tip": "Before a noun it becomes gran = great: un gran día.",
+  "otherMeanings": [
+   {
+    "english": "old, grown-up (for people)",
+    "example": "Mi abuela ya está grande.",
+    "exampleTranslation": "My grandma is getting old."
+   }
+  ],
   "forms": "m. & f.: grande\nplural: grandes",
   "exampleWord": "grande",
   "phrases": [
@@ -7778,6 +7836,13 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
+  "otherMeanings": [
+   {
+    "english": "else (¿algo más?)",
+    "example": "¿Algo más?",
+    "exampleTranslation": "Anything else?"
+   }
+  ],
   "exampleWord": "más",
   "phrases": [
    {
@@ -8103,6 +8168,14 @@
   "level": "novice",
   "kind": "word",
   "source": "curated",
+  "otherMeanings": [
+   {
+    "english": "brown (the color)",
+    "partOfSpeech": "adjective",
+    "example": "Tiene los ojos cafés.",
+    "exampleTranslation": "She has brown eyes."
+   }
+  ],
   "forms": "singular: el café\nplural: los cafés",
   "exampleWord": "café",
   "phrases": [
@@ -8275,6 +8348,14 @@
   "kind": "word",
   "source": "curated",
   "tip": "In Mexico, ¡qué padre! means how cool!",
+  "otherMeanings": [
+   {
+    "english": "cool, great (Mexico)",
+    "partOfSpeech": "adjective",
+    "example": "¡Qué padre tu casa!",
+    "exampleTranslation": "Your house is so cool!"
+   }
+  ],
   "forms": "singular: el padre\nplural: los padres",
   "exampleWord": "padre",
   "phrases": [
@@ -10264,25 +10345,32 @@
  {
   "id": "salud",
   "spanish": "salud",
-  "english": "cheers!",
-  "partOfSpeech": "phrase",
+  "english": "health",
+  "partOfSpeech": "noun (f.)",
   "phonetic": "sah-LOOD",
-  "example": "¡Salud! Por nosotros.",
-  "exampleTranslation": "Cheers! To us.",
-  "pattern": "¡Salud! · Por + person = To …!",
+  "example": "La salud es lo más importante.",
+  "exampleTranslation": "Health is the most important thing.",
+  "pattern": "la salud  ·  ¡Salud! = Cheers! / Bless you!",
   "level": "novice",
-  "kind": "phrase",
+  "kind": "word",
   "source": "curated",
-  "tip": "Also what you say when someone sneezes.",
+  "tip": "Said with a toast and when someone sneezes.",
   "otherMeanings": [
    {
+    "english": "cheers! (a toast)",
+    "partOfSpeech": "interjection",
+    "example": "¡Salud! Por nosotros.",
+    "exampleTranslation": "Cheers! To us."
+   },
+   {
     "english": "bless you! (after a sneeze)",
+    "partOfSpeech": "interjection",
     "example": "—¡Achú! —¡Salud!",
     "exampleTranslation": "\"Achoo!\" \"Bless you!\""
    }
   ],
-  "forms": "singular: la salud\nplural: las saludes",
-  "exampleWord": "Salud",
+  "forms": "singular: la salud",
+  "exampleWord": "La salud",
   "phrases": [
    {
     "id": "a65dbcdeb6",
@@ -10612,6 +10700,13 @@
   "kind": "word",
   "source": "curated",
   "tip": "o → ue: vuelvo.",
+  "otherMeanings": [
+   {
+    "english": "to do again (volver a …)",
+    "example": "No lo vuelvo a hacer.",
+    "exampleTranslation": "I won't do it again."
+   }
+  ],
   "forms": "yo: vuelvo\ntú: vuelves\nél / ella: vuelve\nnosotros: volvemos\npast (yo): volví",
   "exampleWord": "Vuelvo",
   "phrases": [
@@ -11303,6 +11398,13 @@
   "kind": "word",
   "source": "curated",
   "tip": "First person: traigo.",
+  "otherMeanings": [
+   {
+    "english": "to wear, to have on",
+    "example": "Traes una camisa muy bonita.",
+    "exampleTranslation": "You're wearing a really nice shirt."
+   }
+  ],
   "forms": "yo: traigo\ntú: traes\nél / ella: trae\nnosotros: traemos\npast (yo): traje",
   "exampleWord": "traes",
   "phrases": [

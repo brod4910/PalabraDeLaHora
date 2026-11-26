@@ -169,7 +169,14 @@
     "level": "beginner",
     "kind": "word",
     "source": "curated",
-    "tip": "Mucho gusto en conocerte = Nice to meet you."
+    "tip": "Mucho gusto en conocerte = Nice to meet you.",
+    "otherMeanings": [
+      {
+        "english": "to meet (for the first time)",
+        "example": "Nos conocimos en una fiesta.",
+        "exampleTranslation": "We met at a party."
+      }
+    ]
   },
   {
     "id": "estar",
@@ -301,7 +308,14 @@
     "level": "beginner",
     "kind": "word",
     "source": "curated",
-    "tip": "e → ie: pienso, piensas."
+    "tip": "e → ie: pienso, piensas.",
+    "otherMeanings": [
+      {
+        "english": "to plan to (pensar + verb)",
+        "example": "Pienso ir al súper mañana.",
+        "exampleTranslation": "I'm planning to go to the store tomorrow."
+      }
+    ]
   },
   {
     "id": "dormir",
@@ -369,7 +383,14 @@
     "pattern": "¿Recuerdas + noun?  ·  o → ue: recuerdo",
     "level": "beginner",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "to remind",
+        "example": "Recuérdame llamar a mi mamá.",
+        "exampleTranslation": "Remind me to call my mom."
+      }
+    ]
   },
   {
     "id": "viajar",
@@ -1139,7 +1160,14 @@
     "level": "novice",
     "kind": "word",
     "source": "curated",
-    "tip": "Without an accent it joins ideas; with one, qué means what."
+    "tip": "Without an accent it joins ideas; with one, qué means what.",
+    "otherMeanings": [
+      {
+        "english": "than (más … que)",
+        "example": "Mi hermano es más alto que yo.",
+        "exampleTranslation": "My brother is taller than me."
+      }
+    ]
   },
   {
     "id": "que-2",
@@ -1153,7 +1181,15 @@
     "level": "novice",
     "kind": "word",
     "source": "curated",
-    "tip": "¡Qué bonito! = How pretty!"
+    "tip": "¡Qué bonito! = How pretty!",
+    "otherMeanings": [
+      {
+        "english": "how … ! (¡Qué …!)",
+        "partOfSpeech": "adverb",
+        "example": "¡Qué bonito!",
+        "exampleTranslation": "How pretty!"
+      }
+    ]
   },
   {
     "id": "me",
@@ -1195,7 +1231,14 @@
     "level": "novice",
     "kind": "word",
     "source": "curated",
-    "tip": "Many verbs come with se: se llama, se fue (he left)."
+    "tip": "Many verbs come with se: se llama, se fue (he left).",
+    "otherMeanings": [
+      {
+        "english": "each other",
+        "example": "Se quieren mucho.",
+        "exampleTranslation": "They love each other a lot."
+      }
+    ]
   },
   {
     "id": "lo",
@@ -1474,7 +1517,15 @@
     "pattern": "No goes right before the verb",
     "level": "novice",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "right? (at the end of a sentence)",
+        "partOfSpeech": "tag question",
+        "example": "Vienes mañana, ¿no?",
+        "exampleTranslation": "You're coming tomorrow, right?"
+      }
+    ]
   },
   {
     "id": "bien",
@@ -1528,7 +1579,14 @@
     "level": "novice",
     "kind": "word",
     "source": "curated",
-    "tip": "Before a noun it becomes gran = great: un gran día."
+    "tip": "Before a noun it becomes gran = great: un gran día.",
+    "otherMeanings": [
+      {
+        "english": "old, grown-up (for people)",
+        "example": "Mi abuela ya está grande.",
+        "exampleTranslation": "My grandma is getting old."
+      }
+    ]
   },
   {
     "id": "pequeno",
@@ -1619,7 +1677,14 @@
     "pattern": "más + noun  ·  más + adjective + que = more … than",
     "level": "novice",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "else (¿algo más?)",
+        "example": "¿Algo más?",
+        "exampleTranslation": "Anything else?"
+      }
+    ]
   },
   {
     "id": "uno-dos-tres",
@@ -1693,7 +1758,15 @@
     "pattern": "Un + drink + por favor",
     "level": "novice",
     "kind": "word",
-    "source": "curated"
+    "source": "curated",
+    "otherMeanings": [
+      {
+        "english": "brown (the color)",
+        "partOfSpeech": "adjective",
+        "example": "Tiene los ojos cafés.",
+        "exampleTranslation": "She has brown eyes."
+      }
+    ]
   },
   {
     "id": "hermano",
@@ -1735,7 +1808,15 @@
     "level": "novice",
     "kind": "word",
     "source": "curated",
-    "tip": "In Mexico, ¡qué padre! means how cool!"
+    "tip": "In Mexico, ¡qué padre! means how cool!",
+    "otherMeanings": [
+      {
+        "english": "cool, great (Mexico)",
+        "partOfSpeech": "adjective",
+        "example": "¡Qué padre tu casa!",
+        "exampleTranslation": "Your house is so cool!"
+      }
+    ]
   },
   {
     "id": "hijo",
@@ -2155,19 +2236,26 @@
   {
     "id": "salud",
     "spanish": "salud",
-    "english": "cheers!",
-    "partOfSpeech": "phrase",
+    "english": "health",
+    "partOfSpeech": "noun (f.)",
     "phonetic": "sah-LOOD",
-    "example": "¡Salud! Por nosotros.",
-    "exampleTranslation": "Cheers! To us.",
-    "pattern": "¡Salud! · Por + person = To …!",
+    "example": "La salud es lo más importante.",
+    "exampleTranslation": "Health is the most important thing.",
+    "pattern": "la salud  ·  ¡Salud! = Cheers! / Bless you!",
     "level": "novice",
-    "kind": "phrase",
+    "kind": "word",
     "source": "curated",
-    "tip": "Also what you say when someone sneezes.",
+    "tip": "Said with a toast and when someone sneezes.",
     "otherMeanings": [
       {
+        "english": "cheers! (a toast)",
+        "partOfSpeech": "interjection",
+        "example": "¡Salud! Por nosotros.",
+        "exampleTranslation": "Cheers! To us."
+      },
+      {
         "english": "bless you! (after a sneeze)",
+        "partOfSpeech": "interjection",
         "example": "—¡Achú! —¡Salud!",
         "exampleTranslation": "\"Achoo!\" \"Bless you!\""
       }
@@ -2267,7 +2355,14 @@
     "level": "beginner",
     "kind": "word",
     "source": "curated",
-    "tip": "o → ue: vuelvo."
+    "tip": "o → ue: vuelvo.",
+    "otherMeanings": [
+      {
+        "english": "to do again (volver a …)",
+        "example": "No lo vuelvo a hacer.",
+        "exampleTranslation": "I won't do it again."
+      }
+    ]
   },
   {
     "id": "cambiar",
@@ -2435,7 +2530,14 @@
     "level": "beginner",
     "kind": "word",
     "source": "curated",
-    "tip": "First person: traigo."
+    "tip": "First person: traigo.",
+    "otherMeanings": [
+      {
+        "english": "to wear, to have on",
+        "example": "Traes una camisa muy bonita.",
+        "exampleTranslation": "You're wearing a really nice shirt."
+      }
+    ]
   },
   {
     "id": "poner",

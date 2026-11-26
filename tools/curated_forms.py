@@ -189,6 +189,7 @@ SPECIAL = {
     "nosotros": "masculine: nosotros\nfeminine: nosotras",
     "lo": "him / it: lo\nher / it: la\nthem: los / las",
     "le": "one person: le\nmore than one: les", "les": "one person: le\nmore than one: les",
+    "salud": "singular: la salud",
     "hay": "now: hay\nbefore: había\nwill be: habrá",
     "esto": "this: esto\nthat: eso\nthat (far): aquello", "eso": "this: esto\nthat: eso\nthat (far): aquello",
 }

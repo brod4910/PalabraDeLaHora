@@ -136,6 +136,23 @@ def check_deck(deck: list[dict], r: Report) -> dict:
     r.add("error", "Suspicious meanings", bad_meanings)
 
     have = {c["spanish"].lower() for c in deck}
+    # A hand-written card replaces the dictionary card for the same word, so any meaning the
+    # dictionary had and the hand-written card lacks never reaches the app (salud = health).
+    generated = ROOT / "tools" / "generated.json"
+    if generated.exists():
+        dictionary = {g["spanish"].lower(): g for g in json.loads(generated.read_text(encoding="utf-8"))}
+        lost = []
+        for c in deck:
+            g = dictionary.get(c["spanish"].lower())
+            if c.get("source") != "curated" or not g:
+                continue
+            known = keys(" ".join([c["english"]] + [m["english"] for m in c.get("otherMeanings") or []]))
+            for m in [{"english": g["english"], "partOfSpeech": g["partOfSpeech"]}] + (g.get("otherMeanings") or []):
+                if keys(m["english"]) and not keys(m["english"]) & known and not DESCRIPTION.search(m["english"]):
+                    lost.append(f"`{c['spanish']}` (hand-written: {c['english']}) lacks “{m['english']}” ({m['partOfSpeech']})")
+        r.add("warn", "Dictionary meanings missing from hand-written cards (add the real ones to MEANINGS in "
+                      "tools/new_words.py; ignore rare or wrong ones)", lost, limit=80)
+
     r.add("error", "Core beginner words missing from the deck", [f"`{w}`" for w in CORE_WORDS if w not in have])
 
     # A rare verb that took a common word's sentences: amigar's example is "amigo", historiar's is
