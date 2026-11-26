@@ -381,11 +381,13 @@ private struct ChoiceQuestionView: View {
 
                 prompt
 
-                choices
-
+                // The word in use, above the choices (after answering for listen / reverse,
+                // where the sentence would give the answer away).
                 if question.style == .meaning || answered {
                     exampleCard
                 }
+
+                choices
 
                 if answered {
                     Button(action: onNext) {

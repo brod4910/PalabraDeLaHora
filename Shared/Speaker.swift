@@ -43,7 +43,7 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
                 if slow, let url = RecordedVoice.url(for: line, slow: true) {
                     plan.append((url, 1.0, 0.6))
                 } else if let url = RecordedVoice.url(for: line) {
-                    plan.append((url, slow ? 0.7 : Self.recordingRate, slow ? 0.6 : 0.45))
+                    plan.append((url, slow ? Self.slowRecordingRate : 1.0, slow ? 0.6 : 0.45))
                 } else {
                     plan = []; break
                 }
@@ -127,7 +127,7 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
                 self.stopAll()
                 // All Spanish and all recorded (key forms' "Play all"): play the clips.
                 if RecordedVoice.isEnabled, parts.allSatisfy({ $0.language == nil }) {
-                    let plan = parts.compactMap { p in RecordedVoice.url(for: p.text).map { (url: $0, rate: Self.recordingRate, pause: p.pause) } }
+                    let plan = parts.compactMap { p in RecordedVoice.url(for: p.text).map { (url: $0, rate: Float(1.0), pause: p.pause) } }
                     if plan.count == parts.count, !plan.isEmpty {
                         self.play(plan)
                         self.finishContinuation = c
@@ -158,11 +158,10 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
         resumeContinuation()
     }
 
-    /// The learner's speed setting (0.9 = normal) applied to recordings, kept within what
-    /// sounds natural.
-    private static var recordingRate: Float {
-        Float(min(max(AppSettings.speechRate / 0.9, 0.7), 1.3))
-    }
+    /// Recordings always play at their recorded speed; "slow" sentences at 70% (pitch kept).
+    /// The Speed setting is the iPhone voice's only: its scale doesn't map onto recordings, and
+    /// a low setting made "normal" as slow as "slow".
+    private static let slowRecordingRate: Float = 0.7
 
     // MARK: Recorded clips
 

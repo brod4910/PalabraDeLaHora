@@ -77,7 +77,7 @@ struct SettingsView: View {
                         ForEach(SpanishVoice.allCases) { Text($0.label).tag($0.rawValue) }
                     }
                     VStack(alignment: .leading) {
-                        Text("Speed")
+                        Text(RecordedVoice.isEnabled ? "iPhone voice speed" : "Speed")
                         HStack {
                             Image(systemName: "tortoise.fill").foregroundStyle(.secondary)
                             Slider(value: $speechRate, in: 0.5...1.2, step: 0.05)
