@@ -151,6 +151,7 @@ APP_SETTINGS = {
     "INFOPLIST_FILE": "App/Info.plist",
     "INFOPLIST_KEY_CFBundleDisplayName": "Palabra",
     "INFOPLIST_KEY_LSApplicationCategoryType": "public.app-category.education",
+    "INFOPLIST_KEY_ITSAppUsesNonExemptEncryption": "NO",   # HTTPS only: skips the export-compliance question on upload
     "INFOPLIST_KEY_NSMicrophoneUsageDescription": "Palabra listens to your spoken answers during verbal quizzes.",
     "INFOPLIST_KEY_NSSpeechRecognitionUsageDescription": "Palabra uses speech recognition to check your spoken answers in verbal quizzes.",
     "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
