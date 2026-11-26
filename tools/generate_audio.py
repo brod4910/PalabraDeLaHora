@@ -391,9 +391,42 @@ re-record with <code>--check --redo-flagged</code> or <code>--redo "text"</code>
           + f" → open {page.relative_to(ROOT)}")
 
 
+def find_word(pcm: array.array, rate: int) -> tuple[float, float]:
+    """Where the word is in 'Repite conmigo esta palabra: <word>.', by loudness: the speech after
+    the longest pause in the second half of the take (the pause after the colon), up to where the
+    speech ends. Returns (start, end) in seconds, with a little room on both sides."""
+    win = max(1, int(0.02 * rate))                                  # 20 ms windows
+    levels = [max((abs(x) for x in pcm[i:i + win]), default=0) for i in range(0, len(pcm), win)]
+    peak = max(levels, default=0)
+    if peak == 0:
+        raise RuntimeError("silent take")
+    loud = [lv > max(500, 0.08 * peak) for lv in levels]
+    spans, cur = [], None                                           # (first, last) loud windows
+    for i, on in enumerate(loud):
+        if on and cur is None:
+            cur = [i, i]
+        elif on:
+            cur[1] = i
+        elif cur is not None and i - cur[1] > 2:                    # >40 ms quiet ends a span
+            spans.append(tuple(cur)); cur = None
+    if cur is not None:
+        spans.append(tuple(cur))
+    if len(spans) < 2:
+        raise RuntimeError("couldn't find the pause before the word")
+    speech_start, speech_end = spans[0][0], spans[-1][1]
+    middle = speech_start + (speech_end - speech_start) * 0.45
+    gaps = [(spans[k + 1][0] - spans[k][1], k) for k in range(len(spans) - 1) if spans[k][1] >= middle]
+    if not gaps:
+        gaps = [(spans[k + 1][0] - spans[k][1], k) for k in range(len(spans) - 1)]
+    _, k = max(gaps)
+    start = max(0.0, spans[k + 1][0] * 0.02 - 0.05)
+    end = min(len(pcm) / rate, (speech_end + 1) * 0.02 + 0.12)
+    return start, end
+
+
 def record_in_carrier(text: str, voice: str, args, key: str) -> tuple[bytes, bytes, str]:
     """Says the word inside the lead-in sentence, where voices pronounce it naturally, then cuts
-    the word out using Inworld's word timestamps. Returns (whole take as WAV, word as WAV, the
+    the word out by loudness (find_word). Returns (whole take as WAV, word as WAV, the
     whole take's transcript for checking)."""
     phrase = f"{CARRIER} {text.rstrip('.!?')}."
     body = {"text": phrase, "voiceId": voice, "modelId": args.model, "language": args.language,
@@ -403,23 +436,30 @@ def record_in_carrier(text: str, voice: str, args, key: str) -> tuple[bytes, byt
         body["deliveryMode"] = "BALANCED"
     data = request("/tts/v1/voice", key, body)
     whole = base64.b64decode(data["audioContent"])
-    align = (data.get("timestampInfo") or {}).get("wordAlignment") or {}
-    starts, ends = align.get("wordStartTimeSeconds") or [], align.get("wordEndTimeSeconds") or []
-    n = len(lookup_key(text).split())
-    if len(starts) < n or len(ends) < n:
-        raise RuntimeError("no word timestamps in the response")
     with wave.open(io.BytesIO(whole)) as w:
         rate, width, channels = w.getframerate(), w.getsampwidth(), w.getnchannels()
         frames = w.readframes(w.getnframes())
-    total = len(frames) // (width * channels) / rate
-    prev_end = ends[-n - 1] if len(ends) > n else 0.0
-    start = max(prev_end, starts[-n] - 0.06)
-    end = min(total, ends[-1] + 0.15)
-    samples = array.array("h", frames[int(start * rate) * width * channels: int(end * rate) * width * channels])
+    if width != 2:
+        raise RuntimeError(f"unexpected sample width {width}")
+    pcm = array.array("h", frames)
+    if channels > 1:
+        pcm = array.array("h", pcm[::channels])
+    # Keep the whole take and Inworld's word timings, to look at if a cut sounds wrong.
+    takes = AUDIO / voice / "_takes"
+    takes.mkdir(parents=True, exist_ok=True)
+    slug = hashlib.sha1(text.encode("utf-8")).hexdigest()[:10]
+    (takes / f"{slug}.wav").write_bytes(whole)
+    (takes / f"{slug}.json").write_text(json.dumps({"phrase": phrase, "timestampInfo": data.get("timestampInfo")},
+                                                   ensure_ascii=False, indent=1), encoding="utf-8")
+    start, end = find_word(pcm, rate)
+    samples = pcm[int(start * rate): int(end * rate)]
+    if not samples or max(abs(x) for x in samples) < 800:
+        raise RuntimeError("the cut came out silent")
     fade = min(int(0.012 * rate), len(samples) // 4)          # 12 ms fades: no clicks at the cut
     for i in range(fade):
         samples[i] = int(samples[i] * i / fade)
         samples[-1 - i] = int(samples[-1 - i] * i / fade)
+    channels = 1
     out = io.BytesIO()
     with wave.open(out, "wb") as w:
         w.setnchannels(channels); w.setsampwidth(width); w.setframerate(rate)
