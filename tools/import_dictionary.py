@@ -403,6 +403,8 @@ def is_letter_or_note(gloss: str, lemma: str, pos: str | None) -> bool:
         return True
     if gloss == lemma and len(lemma) <= 2:
         return True
+    if re.search(r"\bletter\s+(\S*[^\x00-\x7f]|[A-Z]\b)", gloss):     # "the Hebrew letter ה", "the Greek letter Μ"
+        return True
     return bool(re.search(r"\b(musical note|note of the scale|letter of the alphabet|name of the letter)\b",
                           gloss, re.IGNORECASE))
 
@@ -1115,6 +1117,11 @@ def build(args) -> list[dict]:
             pos = f"noun ({g})"
         return pos
 
+    if args.why:
+        explain_choices(args.why, entries, freq, strength, lemma_count, folded, ranked,
+                        candidate_meanings, support, wiktionary_example)
+        return []
+
     # 4. Cards.
     cards, skipped = [], defaultdict(int)
     for rank, (lemma, _) in enumerate(ranked, 1):
@@ -1206,6 +1213,36 @@ def build(args) -> list[dict]:
           + f"  → list in {report.relative_to(ROOT)}")
     print(f"Generated {len(cards):,} cards. Skipped: " + ", ".join(f"{v:,} {k}" for k, v in skipped.items()))
     return cards
+
+
+def explain_choices(words, entries, freq, strength, lemma_count, folded, ranked,
+                    candidate_meanings, support, wiktionary_example) -> None:
+    """--why: what Wiktionary has for a word and how the importer used it. Changes no files."""
+    counts = dict(freq)
+    rank = {w: i for i, (w, _) in enumerate(ranked, 1)}
+    for w in words:
+        w = w.lower()
+        print(f"\n══ {w} ══  frequency count {counts.get(w, 0):,} · used on its own {strength.get(w, 0):,} · "
+              f"credited {lemma_count.get(w, 0):,} · rank {rank.get(w, '—')} ({level_for(rank[w]) if w in rank else 'no card'})"
+              + (f" · counted as a form of {folded[w]}" if w in folded else ""))
+        for e in entries.get(w, []):
+            print(f"  [{e.get('pos')}] forms: {len(e.get('forms') or [])}"
+                  + (f" · head: {e['head_templates'][0].get('expansion', '')}" if e.get("head_templates") else ""))
+            for sn in e.get("senses", [])[:8]:
+                extra = []
+                if sn.get("form_of"): extra.append("form of " + ", ".join(t.get("word", "") for t in sn["form_of"]))
+                if sn.get("tags"): extra.append("tags " + ",".join(sn["tags"]))
+                if sn.get("raw_tags"): extra.append("raw " + ",".join(sn["raw_tags"]))
+                if sn.get("topics"): extra.append("topics " + ",".join(sn["topics"]))
+                print(f"     - {' › '.join(sn.get('glosses') or ['(no gloss)'])}" + (f"   [{'; '.join(extra)}]" if extra else ""))
+        meanings = candidate_meanings(w)
+        if not meanings:
+            print("  → no usable meaning")
+        for m in meanings:
+            count, example, form, _ = support(w, m, True)
+            example = example or wiktionary_example(m["sense"])
+            print(f"  → meaning “{m['gloss']}” ({m['entry'].get('pos')}) keywords {m['kws']} · {count} sentences"
+                  + (f" · e.g. {example[0]} = {example[1]}" if example else ""))
 
 
 def form_values(forms: str | None) -> list[str]:
@@ -1324,7 +1361,13 @@ def main() -> None:
     ap.add_argument("--rebuild-subset", action="store_true", help="re-scan the Wiktionary dump")
     ap.add_argument("--freq-file", help="use a local frequency list instead of downloading")
     ap.add_argument("--kaikki-file", help="use a local Wiktextract JSONL(.gz) instead of downloading")
+    ap.add_argument("--why", nargs="+", metavar="WORD",
+                    help="show what Wiktionary has for these words and how the importer used them (changes no files)")
     args = ap.parse_args()
+
+    if args.why:
+        build(args)
+        return
 
     if not args.merge_only:
         cards = build(args)
