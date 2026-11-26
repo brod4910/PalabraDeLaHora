@@ -27,6 +27,22 @@ if _args.bundle_id or _args.team:
 BUNDLE_ID = signing.get("bundle_id", "com.example.palabra")
 TEAM = signing.get("team", "")
 
+# The App Group is written literally into both entitlements files too, so automatic signing
+# registers the real group (it doesn't expand $(…) when creating it).
+ENTITLEMENTS = """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+\t<key>com.apple.security.application-groups</key>
+\t<array>
+\t\t<string>group.{bundle}</string>
+\t</array>
+</dict>
+</plist>
+"""
+for _path in (ROOT / "App" / "PalabraDeLaHora.entitlements", ROOT / "Widget" / "PalabraWidgetExtension.entitlements"):
+    _path.write_text(ENTITLEMENTS.format(bundle=BUNDLE_ID))
+
 def oid(*parts):
     return hashlib.md5("|".join(parts).encode()).hexdigest()[:24].upper()
 
@@ -177,7 +193,7 @@ APP_SETTINGS = {
     "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone": "UIInterfaceOrientationPortrait",
     "LD_RUNPATH_SEARCH_PATHS": ["$(inherited)", "@executable_path/Frameworks"],
     "MARKETING_VERSION": "1.0",
-    "PRODUCT_BUNDLE_IDENTIFIER": "$(PALABRA_BUNDLE_ID)",
+    "PRODUCT_BUNDLE_IDENTIFIER": BUNDLE_ID,     # literal: Xcode's Signing screen can't resolve $(…) here
     "PRODUCT_NAME": "$(TARGET_NAME)",
     "SWIFT_EMIT_LOC_STRINGS": "YES",
     "TARGETED_DEVICE_FAMILY": "1",
@@ -193,7 +209,7 @@ WIDGET_SETTINGS = {
     "INFOPLIST_KEY_CFBundleDisplayName": "Palabra Widget",
     "LD_RUNPATH_SEARCH_PATHS": ["$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks"],
     "MARKETING_VERSION": "1.0",
-    "PRODUCT_BUNDLE_IDENTIFIER": "$(PALABRA_BUNDLE_ID).widget",
+    "PRODUCT_BUNDLE_IDENTIFIER": BUNDLE_ID + ".widget",
     "PRODUCT_NAME": "$(TARGET_NAME)",
     "SKIP_INSTALL": "YES",
     "SWIFT_EMIT_LOC_STRINGS": "YES",
