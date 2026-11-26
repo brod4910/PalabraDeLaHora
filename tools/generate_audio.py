@@ -204,8 +204,14 @@ def synthesize(clip: dict, voice: str, args, key: str, context: list[str] | None
         body["deliveryMode"] = args.delivery
     if context:
         # Earlier text the voice "has just said": shapes pronunciation and stress, not spoken, not billed.
-        body["synthesisContext"] = {"previousRequests": context}
-    return base64.b64decode(request("/tts/v1/voice", key, body)["audioContent"])
+        body["synthesisContext"] = {"previousRequests": [{"text": t} for t in context]}
+    try:
+        return base64.b64decode(request("/tts/v1/voice", key, body)["audioContent"])
+    except RuntimeError as err:
+        if context and " 400" in str(err):         # context rejected: record without it
+            body.pop("synthesisContext")
+            return base64.b64decode(request("/tts/v1/voice", key, body)["audioContent"])
+        raise
 
 
 def clip_id(clip: dict, voice: str, args) -> str:
