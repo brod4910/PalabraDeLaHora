@@ -5,7 +5,7 @@ import AVFoundation
 ///
 /// Tip: Settings › Accessibility › Spoken Content › Voices › Spanish lets you download an
 /// "Enhanced" or "Premium" voice; `bestVoice` picks the highest quality one installed.
-final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, AVAudioPlayerDelegate, @unchecked Sendable {
+final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
     static let shared = Speaker()
 
     @Published private(set) var isSpeaking = false
@@ -14,9 +14,15 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, AV
     private var finishContinuation: CheckedContinuation<Void, Never>?
     private var lastUtterance: AVSpeechUtterance?
 
-    // Recorded clips: the one playing and the ones still to play (url, speed, pause after).
-    private var player: AVAudioPlayer?
+    // Recorded clips go through an audio engine with a time-pitch unit, so "slow" really is
+    // slower (AVAudioPlayer's rate is ignored for some files) and the voice keeps its pitch.
+    private let engine = AVAudioEngine()
+    private let clipNode = AVAudioPlayerNode()
+    private let timePitch = AVAudioUnitTimePitch()
+    private var engineFormat: AVAudioFormat?
     private var clipQueue: [(url: URL, rate: Float, pause: TimeInterval)] = []
+    private var playToken = 0            // bumped on every stop, so stale completions are ignored
+    private var isPlayingClip = false
 
     override init() {
         super.init()
@@ -30,14 +36,14 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, AV
         stopAll()
 
         // A recording for every line: words slow = the syllable-by-syllable clip; sentences slow =
-        // the normal clip at 75% speed (pitch kept).
+        // the normal clip at 70% speed (pitch kept).
         if RecordedVoice.isEnabled {
             var plan: [(url: URL, rate: Float, pause: TimeInterval)] = []
             for line in lines {
                 if slow, let url = RecordedVoice.url(for: line, slow: true) {
                     plan.append((url, 1.0, 0.6))
                 } else if let url = RecordedVoice.url(for: line) {
-                    plan.append((url, slow ? 0.75 : Self.recordingRate, slow ? 0.6 : 0.45))
+                    plan.append((url, slow ? 0.7 : Self.recordingRate, slow ? 0.6 : 0.45))
                 } else {
                     plan = []; break
                 }
@@ -168,35 +174,50 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, AV
     private func playNext() {
         guard !clipQueue.isEmpty else { finishPlayback(); return }
         let next = clipQueue.removeFirst()
-        guard let p = try? AVAudioPlayer(contentsOf: next.url) else { playNext(); return }
-        p.delegate = self
-        p.enableRate = next.rate != 1
-        p.rate = next.rate
-        p.prepareToPlay()
-        player = p
-        pauseAfterCurrent = next.pause
-        p.play()
-        DispatchQueue.main.async { self.isSpeaking = true }
-    }
-
-    private var pauseAfterCurrent: TimeInterval = 0
-
-    func audioPlayerDidFinishPlaying(_ p: AVAudioPlayer, successfully flag: Bool) {
-        DispatchQueue.main.async {
-            guard p === self.player else { return }
-            if self.clipQueue.isEmpty {
-                self.finishPlayback()
-            } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.pauseAfterCurrent) { [weak self] in
-                    guard let self, self.player === p else { return }      // stopped or replaced meanwhile
-                    self.playNext()
+        guard let file = try? AVAudioFile(forReading: next.url) else { playNext(); return }
+        if engineFormat != file.processingFormat {
+            if engineFormat == nil {
+                engine.attach(clipNode)
+                engine.attach(timePitch)
+            }
+            engine.connect(clipNode, to: timePitch, format: file.processingFormat)
+            engine.connect(timePitch, to: engine.mainMixerNode, format: file.processingFormat)
+            engineFormat = file.processingFormat
+        }
+        timePitch.rate = next.rate
+        do {
+            if !engine.isRunning { try engine.start() }
+        } catch {
+            clipQueue = []; finishPlayback(); return
+        }
+        playToken += 1
+        let token = playToken
+        let pause = next.pause
+        clipNode.scheduleFile(file, at: nil, completionCallbackType: .dataPlayedBack) { [weak self] _ in
+            DispatchQueue.main.async {
+                guard let self, token == self.playToken else { return }    // stopped or replaced meanwhile
+                if self.clipQueue.isEmpty {
+                    self.finishPlayback()
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + pause) {
+                        guard token == self.playToken else { return }
+                        self.playNext()
+                    }
                 }
             }
         }
+        clipNode.play()
+        isPlayingClip = true
+        DispatchQueue.main.async { self.isSpeaking = true }
     }
 
     private func finishPlayback() {
-        player = nil
+        playToken += 1
+        if engineFormat != nil {         // the node only exists in the engine once a clip has played
+            clipNode.stop()
+            engine.stop()
+        }
+        isPlayingClip = false
         isSpeaking = false
         deactivateAudioSession()
         resumeContinuation()
@@ -205,8 +226,11 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, AV
     /// Stops both the recording and the synthesizer without reporting the end (a new line follows).
     private func stopAll() {
         clipQueue = []
-        player?.stop()
-        player = nil
+        playToken += 1
+        if isPlayingClip {
+            isPlayingClip = false
+            clipNode.stop()
+        }
         lastUtterance = nil              // so the synthesizer's cancel callback is ignored
         if synthesizer.isSpeaking { synthesizer.stopSpeaking(at: .immediate) }
     }
