@@ -37,6 +37,7 @@ from __future__ import annotations
 import argparse
 import base64
 import concurrent.futures as futures
+import re
 import difflib
 import hashlib
 import html
@@ -241,26 +242,68 @@ def transcribe(audio: bytes, args, key: str) -> str:
 
 
 def after_carrier(heard: str) -> str:
-    """The transcript minus the lead-in (matched loosely, in case it's heard slightly off)."""
-    flat = lambda t: dict_tools.strip_accents(lookup_key(t)).replace(" ", "")
-    lead, got = flat(CARRIER), flat(heard)
-    blocks = [b for b in difflib.SequenceMatcher(None, lead, got).get_matching_blocks() if b.size >= 3]
-    end = max((b.b + b.size for b in blocks if b.a + b.size >= len(lead) - 4), default=0)
-    return got[end:]
+    """The transcript minus the lead-in, as words (the lead-in matched loosely)."""
+    words = heard.split()
+    lead = lookup_key(CARRIER).split()
+    best, cut = 0.0, 0
+    for n in range(1, min(len(words), len(lead) + 2) + 1):          # the prefix that sounds most like it
+        r = difflib.SequenceMatcher(None, sounds(" ".join(words[:n])), sounds(CARRIER)).ratio()
+        if r > best:
+            best, cut = r, n
+    return " ".join(words[cut:]) if best >= 0.7 else heard
+
+
+def only_letters(text: str) -> bool:
+    """'K. S.', 'C', 'K, B, Y, R': speech-to-text spelling letters, not a judgement of the audio."""
+    tokens = re.findall(r"[^\W\d_]+", text)
+    return bool(tokens) and all(len(t) == 1 for t in tokens)
 
 
 def latin(text: str) -> bool:
     return all(not ch.isalpha() or ch.isascii() or "LATIN" in unicodedata.name(ch, "") for ch in text)
 
 
+NUMBERS = ("cero uno dos tres cuatro cinco seis siete ocho nueve diez once doce trece catorce quince "
+           "dieciseis diecisiete dieciocho diecinueve veinte").split()
+TENS = {30: "treinta", 40: "cuarenta", 50: "cincuenta", 60: "sesenta", 70: "setenta", 80: "ochenta", 90: "noventa"}
+
+
+def number_words(n: int) -> str:
+    if n <= 20: return NUMBERS[n]
+    if n < 30: return "veinti" + NUMBERS[n - 20]
+    if n < 100: return TENS[n // 10 * 10] + ("" if n % 10 == 0 else " y " + NUMBERS[n % 10])
+    if n == 100: return "cien"
+    if n < 1000:
+        hundreds = {1: "ciento", 5: "quinientos", 7: "setecientos", 9: "novecientos"}.get(n // 100, NUMBERS[n // 100] + "cientos")
+        return hundreds + ("" if n % 100 == 0 else " " + number_words(n % 100))
+    if n < 1_000_000:
+        k = "mil" if n // 1000 == 1 else number_words(n // 1000) + " mil"
+        return k + ("" if n % 1000 == 0 else " " + number_words(n % 1000))
+    return str(n)
+
+
+def sounds(text: str) -> str:
+    """How it sounds in Mexican Spanish, so homophones compare equal: silent h, b = v, c/z = s
+    before e/i, ll = y, qu = k, numbers as words. 'vez' = 'ves', 'hay' = 'ay', 'casar' = 'cazar'."""
+    t = lookup_key(re.sub(r"\d+", lambda m: " " + number_words(int(m.group())) + " ", text))
+    t = dict_tools.strip_accents(t).replace(" ", "").replace("ñ", "ny")
+    for a, b in (("ch", "§"), ("qu", "k"), ("gue", "ge"), ("gui", "gi"), ("ge", "je"), ("gi", "ji"),
+                 ("ce", "se"), ("ci", "si"), ("c", "k"), ("z", "s"), ("ll", "y"), ("v", "b"), ("h", ""), ("x", "ks")):
+        t = t.replace(a, b)
+    return t.replace("§", "ch")
+
+
 def heard_score(expected: str, heard: str) -> float:
-    """0–1: how closely the transcript matches the text, ignoring accents, case, punctuation and
-    spaces (so a slow 'su ce des' still matches 'sucedes')."""
-    def flat(t: str) -> str:
-        return dict_tools.strip_accents(lookup_key(t)).replace(" ", "")
-    a, b = flat(expected), flat(heard)
+    """0–1: how closely the transcript *sounds* like the text (accents, case, punctuation, spaces
+    and spelling-only differences ignored)."""
+    a, b = sounds(expected), sounds(heard)
     if not a or not b:
         return 0.0
+    # Short texts word by word, so one wrong word isn't hidden by the rest ("tú sucedes" heard
+    # as "tú susodes").
+    ew, hw = lookup_key(expected).split(), lookup_key(heard).split()
+    if len(ew) <= 2 and len(ew) == len(hw):
+        return min(difflib.SequenceMatcher(None, sounds(x), sounds(y)).ratio() for x, y in zip(ew, hw))
     return difflib.SequenceMatcher(None, a, b).ratio()
 
 
@@ -275,8 +318,10 @@ def check(voice: str, args, key: str) -> None:
     if results.get("_version") != CHECK_VERSION:
         results = {"_version": CHECK_VERSION}          # earlier checks had no Spanish lead-in
     lead_in = carrier_audio(voice, args, key)
+    # Slow syllable clips aren't checked: speech-to-text hears separate syllables as letter names
+    # ("ca · sa" → "K. S."), and they're made from the same text as the normal clip, which is.
     todo = [cid for cid, m in manifest.items() if cid not in results and (folder / m["file"]).exists()
-            and (not m["kind"].startswith("slow-") or m["kind"] == f"slow-{args.slow_style}")]
+            and not m["kind"].startswith("slow-")]
     print(f"{len(manifest):,} clips · {len(todo):,} to check (≈ ${len(todo) * 1.8 / 3600 * 0.15:.2f} at $0.15/hour)")
 
     def work(cid):
@@ -297,18 +342,20 @@ def check(voice: str, args, key: str) -> None:
                 results_path.write_text(json.dumps(results, ensure_ascii=False) + "\n", encoding="utf-8")
     results_path.write_text(json.dumps(results, ensure_ascii=False) + "\n", encoding="utf-8")
 
-    rows, other_language = [], 0
+    rows, unclear = [], 0
     for cid, heard in results.items():
         m = manifest.get(cid)
-        if not m:
+        if not m or m["kind"].startswith("slow-"):
             continue
-        if not latin(heard):
-            other_language += 1
-            rows.append((-1.0, cid, m, heard))     # listed, but not counted as mispronounced
+        rest = after_carrier(heard)
+        # Can't be judged: another alphabet, spelled-out letters, or a one- or two-letter word.
+        if not latin(heard) or only_letters(rest) or len(sounds(m["text"])) <= 2:
+            unclear += 1
+            rows.append((-1.0, cid, m, rest))
             continue
-        score = heard_score(m["text"], after_carrier(heard))
-        # Short texts get a stricter bar: one wrong letter in "sucedes" is the whole problem.
-        bar = 0.9 if len(lookup_key(m["text"]).replace(" ", "")) <= 8 else 0.8
+        score = heard_score(m["text"], rest)
+        # Words and short phrases get a stricter bar: one wrong letter in "sucedes" is the whole problem.
+        bar = 0.9 if len(lookup_key(m["text"]).split()) <= 2 else 0.8
         if score < bar:
             rows.append((score, cid, m, heard))
     rows.sort(key=lambda r: (r[0] < 0, r[0]))
@@ -318,15 +365,15 @@ def check(voice: str, args, key: str) -> None:
 <style>body{font:15px -apple-system,system-ui;max-width:860px;margin:24px auto;padding:0 16px}
 td{padding:6px 8px;border-bottom:1px solid #eee;vertical-align:top}.s{color:#999}audio{height:30px}</style>
 <h1>Pronunciation check · """ + html.escape(voice) + f"""</h1>
-<p>{len(rows) - other_language:,} of {len(results) - 1:,} clips didn't match what speech-to-text heard
-(after the lead-in “{html.escape(CARRIER)}”){f"; {other_language} more were heard as another language — listen to those yourself" if other_language else ""}. Listen to the worst ones;
+<p>{len(rows) - unclear:,} of {len(results) - 1:,} clips didn't sound like what they should say. At the bottom,
+{unclear} that speech-to-text couldn't judge (letters, very short words, another language): listen if you like. Listen to the worst ones;
 re-record with <code>--check --redo-flagged</code> or <code>--redo "text"</code>.</p><table>
 <tr><th>score</th><th>should say</th><th>heard</th><th>kind</th><th></th></tr>
-""" + "\n".join(f'<tr><td class="s">{"lang?" if sc < 0 else f"{sc:.2f}"}</td><td>{html.escape(m["text"])}</td><td>{html.escape(h or "(nothing)")}</td>'
+""" + "\n".join(f'<tr><td class="s">{"unclear" if sc < 0 else f"{sc:.2f}"}</td><td>{html.escape(m["text"])}</td><td>{html.escape(h or "(nothing)")}</td>'
                 f'<td class="s">{m["kind"]}</td><td><audio controls preload="none" src="{html.escape(voice)}/{m["file"]}"></audio></td></tr>'
                 for sc, cid, m, h in rows) + "</table>", encoding="utf-8")
-    print(f"{len(rows) - other_language:,} flagged of {len(results) - 1:,}"
-          + (f" ({other_language} heard as another language)" if other_language else "")
+    print(f"{len(rows) - unclear:,} flagged of {len(results) - 1:,}"
+          + (f" ({unclear} couldn't be judged)" if unclear else "")
           + f" → open {page.relative_to(ROOT)}")
 
 
