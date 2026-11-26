@@ -82,6 +82,19 @@ struct TodayView: View {
                 ScrollViewReader { proxy in
                     ScrollView {
                         VStack(alignment: .leading, spacing: 20) {
+                            // A quiet label instead of a large navigation title: the word is the headline.
+                            HStack(spacing: 6) {
+                                Image(systemName: "clock.fill")
+                                Text("Palabra de la hora")
+                            }
+                            .font(.footnote.weight(.semibold))
+                            .textCase(.uppercase)
+                            .tracking(0.8)
+                            .foregroundStyle(Theme.coral)
+                            .padding(.horizontal, 4)
+                            .padding(.bottom, -8)
+                            .accessibilityAddTraits(.isHeader)
+
                             WordCardView(word: word)
                                 .id(word.id)
                                 .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity),
@@ -116,7 +129,8 @@ struct TodayView: View {
                     }
                 }
             }
-            .navigationTitle("Palabra de la hora")
+            .navigationTitle("Palabra de la hora")       // still the back-button / accessibility name
+            .toolbar(.hidden, for: .navigationBar)
             .background(Color(.systemGroupedBackground))
             .onAppear { LearningProgress.catchUp() }
         }
