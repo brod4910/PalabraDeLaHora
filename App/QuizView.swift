@@ -45,9 +45,18 @@ struct QuizQuestion: Identifiable {
 }
 
 /// One quiz run: the questions plus the mode, so "quiz me again" keeps the same mode.
+/// How many words a quiz covers. 0 = every word she has seen.
+enum QuizLength: Int, CaseIterable, Identifiable {
+    case ten = 10, twenty = 20, all = 0
+    var id: Int { rawValue }
+    func label(seen: Int) -> String { self == .all ? "All \(seen)" : "\(rawValue)" }
+    func count(seen: Int) -> Int { self == .all ? seen : min(rawValue, seen) }
+}
+
 struct QuizRun: Identifiable {
     let id = UUID()
     let mode: QuizMode
+    var length: QuizLength = .ten
     let questions: [QuizQuestion]
 }
 
@@ -117,6 +126,7 @@ enum QuizBuilder {
 struct QuizHomeView: View {
     @AppStorage("quizMode", store: AppSettings.defaults) private var modeRaw = QuizMode.written.rawValue
     @AppStorage(AppSettings.Key.quizSounds, store: AppSettings.defaults) private var soundsOn = true
+    @AppStorage("quizLength", store: AppSettings.defaults) private var lengthRaw = QuizLength.ten.rawValue
 
     @State private var run: QuizRun?
     @State private var refresh = UUID()
@@ -147,6 +157,14 @@ struct QuizHomeView: View {
                         Text(mode.summary)
                             .font(.footnote)
                             .foregroundStyle(.secondary)
+
+                        HStack {
+                            Text("Words").font(.subheadline)
+                            Picker("Words", selection: $lengthRaw) {
+                                ForEach(QuizLength.allCases) { Text($0.label(seen: seen.count)).tag($0.rawValue) }
+                            }
+                            .pickerStyle(.segmented)
+                        }
 
                         Toggle("Sounds", isOn: $soundsOn)
                             .font(.subheadline)
@@ -212,7 +230,9 @@ struct QuizHomeView: View {
         if mode == .verbal {
             guard await SpeechListener.requestPermissions() else { permissionDenied = true; return }
         }
-        run = QuizRun(mode: mode, questions: QuizBuilder.make(from: seen, mode: mode))
+        let length = QuizLength(rawValue: lengthRaw) ?? .ten
+        run = QuizRun(mode: mode, length: length,
+                      questions: QuizBuilder.make(from: seen, mode: mode, count: length.count(seen: seen.count)))
     }
 }
 
@@ -246,7 +266,10 @@ struct QuizSessionView: View {
     @State private var missed: [Word] = []
     @State private var reviewingMissed = false
 
+    private let length: QuizLength
+
     init(run: QuizRun) {
+        length = run.length
         _mode = State(initialValue: run.mode)
         _questions = State(initialValue: run.questions)
     }
@@ -300,8 +323,10 @@ struct QuizSessionView: View {
     }
 
     /// Starts a new, freshly shuffled run in the same mode.
-    private func restart(with words: [Word]) {
-        questions = QuizBuilder.make(from: words, mode: mode, count: min(words.count, 10))
+    /// A new shuffled run in the same mode: every missed word, or the chosen length of seen words.
+    private func restart(with words: [Word], all: Bool = false) {
+        let count = all ? words.count : length.count(seen: words.count)
+        questions = QuizBuilder.make(from: words, mode: mode, count: count)
         index = 0
         score = 0
         missed = []
@@ -344,7 +369,7 @@ struct QuizSessionView: View {
                     .controlSize(.large)
 
                     Button {
-                        restart(with: missed)
+                        restart(with: missed, all: true)
                     } label: {
                         Label("Quiz me on the missed words", systemImage: "arrow.counterclockwise")
                             .frame(maxWidth: .infinity)
