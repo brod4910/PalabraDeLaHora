@@ -50,6 +50,7 @@ CURATED = TOOLS / "curated.json"
 GENERATED = TOOLS / "generated.json"
 DECK = ROOT / "Shared" / "words.json"
 PHRASES = TOOLS / "phrases.json"
+PHRASE_CARDS = TOOLS / "phrase_cards.json"     # everyday expressions from generate_phrase_cards.py
 REJECTED_PHRASES = TOOLS / "phrases_rejected.txt"
 
 FREQ_URL = "https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/es/es_50k.txt"
@@ -1413,6 +1414,26 @@ def merge() -> None:
             g = {**g, "id": f"{base}-{n}"}; n += 1
         deck.append(g); ids.add(g["id"]); added += 1
 
+    # Everyday expressions (¿qué onda?, ni modo…) from generate_phrase_cards.py, after the
+    # hand-written and dictionary cards; one that's already in the deck is skipped.
+    def folded(text: str) -> str:
+        return " ".join(tokens(strip_accents(text.replace("…", " "))))
+    in_deck = {folded(c["spanish"]) for c in deck}
+    phrase_cards = json.loads(PHRASE_CARDS.read_text(encoding="utf-8")) if PHRASE_CARDS.exists() else []
+    added_phrases = 0
+    for pc in phrase_cards:
+        if folded(pc["spanish"]) in in_deck:
+            continue
+        card = {k: v for k, v in pc.items() if k != "situation"}
+        base, n = slug(pc["spanish"]) or "frase", 2
+        card["id"] = base
+        while card["id"] in ids:
+            card["id"] = f"{base}-{n}"; n += 1
+        core = pc["spanish"].replace("…", " ").strip(" ¿?¡!.,;:")
+        if (hit := find_in_sentence(card["example"], core)):
+            card["exampleWord"] = hit
+        deck.append(card); ids.add(card["id"]); in_deck.add(folded(pc["spanish"])); added_phrases += 1
+
     # Everyday phrases: AI-written ones (tools/phrases.json, from generate_phrases.py) first, then
     # real Tatoeba sentences from the import. Hand-written cards also get the import's sentences.
     ai = json.loads(PHRASES.read_text(encoding="utf-8")) if PHRASES.exists() else {}
@@ -1452,7 +1473,7 @@ def merge() -> None:
     for c in deck:
         by_level[c["level"]] += 1
     print(f"Shared/words.json: {len(deck):,} cards ({len(curated)} curated, {with_forms} with key forms, "
-          f"+ {added:,} from the dictionary; {with_phrases:,} with everyday phrases) — "
+          f"+ {added:,} from the dictionary, + {added_phrases:,} everyday expressions; {with_phrases:,} with everyday phrases) — "
           + ", ".join(f"{k} {v:,}" for k, v in by_level.items()))
 
 

@@ -154,3 +154,15 @@ python3 tools/generate_audio.py --check --redo-flagged --voice Paloma   # re-rec
 python3 tools/generate_audio.py --export --voice Paloma          # copy clips into the app (App/Audio)
 python3 tools/generate_audio.py --levels novice --slow-style plain           # ≈ $3.50 (shows cost first)
 ```
+
+## Everyday expressions (phrase cards)
+
+The "Everyday phrases" focus shows phrase cards (¿qué onda?, ni modo, ¿me pasas…?).
+`tools/generate_phrase_cards.py` writes them per level and situation, checks each one (the example
+contains it, vocabulary fits the level, native es-MX review) and merges them into the deck:
+
+```bash
+python3 tools/generate_phrase_cards.py --backend claude-code --levels novice   # ≈ 100+ per level
+python3 tools/generate_phrases.py --backend claude-code --levels novice        # everyday phrases for them
+python3 tools/generate_audio.py --levels novice --voice Paloma                 # record the new ones
+```
