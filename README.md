@@ -149,5 +149,5 @@ export INWORLD_API_KEY=...                       # platform.inworld.ai — never
 python3 tools/generate_audio.py --list-voices     # Spanish voices
 python3 tools/generate_audio.py --sample --voice Paloma --voice <another>   # ≈ $0.10 per voice
 open tools/.cache/audio/sample.html               # listen and compare the slow styles
-python3 tools/generate_audio.py --levels novice --slow-style accent           # ≈ $3.50 (shows cost first)
+python3 tools/generate_audio.py --levels novice --slow-style plain           # ≈ $3.50 (shows cost first)
 ```

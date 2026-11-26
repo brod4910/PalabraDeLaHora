@@ -222,7 +222,7 @@ def main() -> None:
     ap.add_argument("--language", default="es-MX", help="BCP-47 tag (default es-MX, Mexican Spanish)")
     ap.add_argument("--model", default="inworld-tts-2")
     ap.add_argument("--delivery", default="STABLE", choices=["STABLE", "BALANCED", "CREATIVE"])
-    ap.add_argument("--slow-style", default="accent", choices=SLOW_STYLES)
+    ap.add_argument("--slow-style", default="plain", choices=SLOW_STYLES)
     ap.add_argument("--slow-rate", type=float, default=0.85, help="speaking rate for the slow clip (0.5–1.5)")
     ap.add_argument("--pause-ms", type=int, default=350, help="pause between syllables in the slow clip")
     ap.add_argument("--bitrate", type=int, default=48000, help="MP3 bits per second (32000 is enough for voice)")
