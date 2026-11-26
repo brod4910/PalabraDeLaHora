@@ -3,48 +3,43 @@ import SwiftUI
 // MARK: - Model
 
 enum QuizMode: String, CaseIterable, Identifiable {
-    case written, verbal
+    case written, verbal          // raw values kept so the saved choice survives the rename
     var id: String { rawValue }
-    var label: String { self == .written ? "Written" : "Verbal" }
+    var label: String { self == .written ? "Multiple choice" : "Listen & speak" }
     var summary: String {
         switch self {
-        case .written: "Read and answer: multiple choice, fill in the blank, and typing the Spanish."
-        case .verbal: "Eyes-free: the app asks out loud and you answer out loud. Say it in Spanish, say what it means, and repeat after me."
+        case .written: "See the Spanish word (tap to hear it) and pick what it means. No typing, no full sentences to translate."
+        case .verbal: "Hear a word and pick its meaning, repeat after the voice, or say the Spanish for an English word. Tap the mic when you're ready."
         }
     }
 }
 
 struct QuizQuestion: Identifiable {
     enum Style {
-        // Written
-        case meaning      // Spanish → pick English
-        case reverse      // English → pick Spanish
-        case fillBlank    // sentence with a gap → pick Spanish
-        case typeIt       // English → type Spanish
-        // Verbal
-        case sayIt            // hear English → say Spanish
-        case whatDoesItMean   // hear Spanish → say English
-        case repeatAfterMe    // hear the example sentence → repeat it
+        // Multiple choice
+        case meaning      // Spanish word (+ hear it, + example) → pick English
+        case reverse      // English → pick the Spanish word (only for words she's already got right)
+        // Listen & speak
+        case listen       // hear the word (not shown) → pick English
+        case repeatWord   // see + hear the word → say it
+        case sayIt        // see the English → say the Spanish
 
-        var isVerbal: Bool { [.sayIt, .whatDoesItMean, .repeatAfterMe].contains(self) }
+        var usesMicrophone: Bool { self == .repeatWord || self == .sayIt }
     }
 
     let id = UUID()
     let word: Word
     let style: Style
-    let prompt: String
     let options: [String]
     let answer: String
 
     var instruction: String {
         switch style {
-        case .meaning: "What does this mean?"
-        case .reverse: "How do you say this in Spanish?"
-        case .fillBlank: "Fill in the blank."
-        case .typeIt: "Type it in Spanish."
-        case .sayIt: "Say it in Spanish."
-        case .whatDoesItMean: "Say what it means in English."
-        case .repeatAfterMe: "Repeat after me."
+        case .meaning: "What does this word mean?"
+        case .reverse: "Which word means this?"
+        case .listen: "Listen. What does it mean?"
+        case .repeatWord: "Listen, then say it."
+        case .sayIt: "How do you say this in Spanish?"
         }
     }
 }
@@ -72,49 +67,23 @@ enum QuizBuilder {
         return candidates.shuffled().prefix(count).map { question(for: $0, mode: mode) }
     }
 
+    /// Easier styles for words she hasn't got right yet; harder ones once she has.
     private static func question(for word: Word, mode: QuizMode) -> QuizQuestion {
-        var styles: [QuizQuestion.Style]
+        let known = LearningProgress.record(for: word.id).right > 0
+        let styles: [QuizQuestion.Style]
         switch mode {
-        case .written:
-            styles = [.meaning, .reverse, .typeIt]
-            if blanked(word) != nil { styles += [.fillBlank, .fillBlank] }
-        case .verbal:
-            styles = [.sayIt, .sayIt, .whatDoesItMean, .repeatAfterMe]
+        case .written: styles = known ? [.meaning, .meaning, .reverse] : [.meaning]
+        case .verbal: styles = known ? [.listen, .repeatWord, .sayIt, .sayIt] : [.listen, .repeatWord, .repeatWord]
         }
         let style = styles.randomElement()!
-
         switch style {
-        case .meaning:
-            return QuizQuestion(word: word, style: style, prompt: word.spanish,
-                                options: options(word, \.english), answer: word.english)
+        case .meaning, .listen:
+            return QuizQuestion(word: word, style: style, options: options(word, \.english), answer: word.english)
         case .reverse:
-            return QuizQuestion(word: word, style: style, prompt: word.english,
-                                options: options(word, \.spanish), answer: word.spanish)
-        case .fillBlank:
-            return QuizQuestion(word: word, style: style, prompt: blanked(word)!,
-                                options: options(word, \.spanish), answer: word.spanish)
-        case .typeIt, .sayIt:
-            return QuizQuestion(word: word, style: style, prompt: word.english, options: [], answer: word.spanish)
-        case .whatDoesItMean:
-            return QuizQuestion(word: word, style: style, prompt: word.spanish, options: [], answer: word.english)
-        case .repeatAfterMe:
-            // Repeat a real everyday phrase when the card has some, otherwise its example.
-            let sentence = word.allPhrases.filter { $0.es.split(separator: " ").count <= 8 }.randomElement()?.es ?? word.example
-            return QuizQuestion(word: word, style: style, prompt: sentence, options: [], answer: sentence)
+            return QuizQuestion(word: word, style: style, options: options(word, \.spanish), answer: word.spanish)
+        case .repeatWord, .sayIt:
+            return QuizQuestion(word: word, style: style, options: [], answer: word.spanish)
         }
-    }
-
-    /// A sentence (the example or one of the everyday phrases) with the word blanked out, when the
-    /// word appears as-is. Picks a random one, so the same word gets different sentences.
-    static func blanked(_ word: Word) -> String? {
-        guard word.spanish.count > 2 else { return nil }
-        let sentences = ([word.example] + word.allPhrases.map(\.es)).shuffled()
-        for sentence in sentences {
-            if let range = sentence.range(of: word.spanish, options: [.caseInsensitive]) {
-                return sentence.replacingCharacters(in: range, with: "_____")
-            }
-        }
-        return nil
     }
 
     private static func options(_ word: Word, _ field: KeyPath<Word, String>) -> [String] {
@@ -136,20 +105,12 @@ enum QuizBuilder {
         }
         return result
     }
-
-    /// English as it should be read aloud: "to want / to love" → "to want, or to love".
-    static func spokenEnglish(_ s: String) -> String {
-        s.replacingOccurrences(of: " / ", with: ", or ")
-            .replacingOccurrences(of: "(", with: ", ")
-            .replacingOccurrences(of: ")", with: "")
-    }
 }
 
 // MARK: - Home
 
 struct QuizHomeView: View {
     @AppStorage("quizMode", store: AppSettings.defaults) private var modeRaw = QuizMode.written.rawValue
-    @AppStorage("quizHandsFree", store: AppSettings.defaults) private var handsFree = true
 
     @State private var run: QuizRun?
     @State private var refresh = UUID()
@@ -181,15 +142,10 @@ struct QuizHomeView: View {
                             .font(.footnote)
                             .foregroundStyle(.secondary)
 
-                        if mode == .verbal {
-                            Toggle("Hands-free (moves on by itself)", isOn: $handsFree)
-                                .font(.subheadline)
-                        }
-
                         Button {
                             Task { await start(with: seen) }
                         } label: {
-                            Label("Start a \(mode.label.lowercased()) quiz",
+                            Label("Start a quiz",
                                   systemImage: mode == .verbal ? "mic.fill" : "pencil")
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)
@@ -229,7 +185,7 @@ struct QuizHomeView: View {
             .id(refresh)
             .navigationTitle("Quiz")
             .fullScreenCover(item: $run, onDismiss: { refresh = UUID() }) { run in
-                QuizSessionView(run: run, handsFree: handsFree)
+                QuizSessionView(run: run)
             }
             .alert("Microphone access needed", isPresented: $permissionDenied) {
                 Button("Open Settings") {
@@ -237,7 +193,7 @@ struct QuizHomeView: View {
                 }
                 Button("Cancel", role: .cancel) {}
             } message: {
-                Text("Verbal quizzes need the microphone and speech recognition. Turn them on for Palabra in Settings.")
+                Text("Listen & speak quizzes need the microphone and speech recognition. Turn them on for Palabra in Settings.")
             }
             .onAppear { LearningProgress.catchUp(); refresh = UUID() }
         }
@@ -268,8 +224,6 @@ private struct StatTile: View {
 // MARK: - Session
 
 struct QuizSessionView: View {
-    let handsFree: Bool
-
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var speaker: Speaker
     @StateObject private var listener = SpeechListener()
@@ -283,8 +237,7 @@ struct QuizSessionView: View {
     @State private var missed: [Word] = []
     @State private var reviewingMissed = false
 
-    init(run: QuizRun, handsFree: Bool) {
-        self.handsFree = handsFree
+    init(run: QuizRun) {
         _mode = State(initialValue: run.mode)
         _questions = State(initialValue: run.questions)
     }
@@ -296,11 +249,11 @@ struct QuizSessionView: View {
                     let q = questions[index]
                     VStack(spacing: 16) {
                         ProgressView(value: Double(index), total: Double(questions.count))
-                        if q.style.isVerbal {
-                            VerbalQuestionView(question: q, handsFree: handsFree, listener: listener,
-                                               onResult: { pending = $0 }, onNext: next)
+                        if q.style.usesMicrophone {
+                            SpeakQuestionView(question: q, listener: listener,
+                                              onResult: { pending = $0 }, onNext: next)
                         } else {
-                            WrittenQuestionView(question: q, onResult: { pending = $0 }, onNext: next)
+                            ChoiceQuestionView(question: q, onResult: { pending = $0 }, onNext: next)
                         }
                     }
                     .id(q.id) // fresh state for every question
@@ -406,20 +359,18 @@ struct QuizSessionView: View {
     }
 }
 
-// MARK: - Written questions
+// MARK: - Multiple choice (and "listen" in Listen & speak)
 
-private struct WrittenQuestionView: View {
+private struct ChoiceQuestionView: View {
     let question: QuizQuestion
     let onResult: (Bool) -> Void
     let onNext: () -> Void
 
     @EnvironmentObject private var speaker: Speaker
     @State private var chosen: String?
-    @State private var typed = ""
-    @State private var typedResult: AnswerMatcher.TypedResult?
-    @FocusState private var fieldFocused: Bool
 
-    private var answered: Bool { chosen != nil || typedResult != nil }
+    private var word: Word { question.word }
+    private var answered: Bool { chosen != nil }
 
     var body: some View {
         ScrollView {
@@ -428,21 +379,15 @@ private struct WrittenQuestionView: View {
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.secondary)
 
-                Text(question.prompt)
-                    .font(question.style == .fillBlank ? .title2.weight(.medium) : .system(size: 34, weight: .bold, design: .rounded))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(20)
-                    .background(Color(.secondarySystemGroupedBackground),
-                                in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                prompt
 
-                if question.style == .typeIt {
-                    typingArea
-                } else {
-                    choices
+                choices
+
+                if question.style == .meaning || answered {
+                    exampleCard
                 }
 
                 if answered {
-                    explanation
                     Button(action: onNext) {
                         Text("Next").frame(maxWidth: .infinity)
                     }
@@ -451,7 +396,39 @@ private struct WrittenQuestionView: View {
                 }
             }
         }
-        .scrollDismissesKeyboard(.interactively)
+        .onAppear {
+            if question.style == .listen { speaker.speak(word.spanish) }
+        }
+    }
+
+    @ViewBuilder
+    private var prompt: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            switch question.style {
+            case .reverse:
+                Text(word.english)
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
+            case .listen where !answered:
+                Text("🎧  Tap to hear it again")
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            default:
+                Text(word.spanish)
+                    .font(.system(size: 38, weight: .bold, design: .rounded))
+                Text(word.phonetic)
+                    .font(.callout.monospaced())
+                    .foregroundStyle(.secondary)
+            }
+            if question.style != .reverse || answered {
+                HStack {
+                    QuizAudioButton(title: "Hear it", systemImage: "speaker.wave.2.fill") { speaker.speak(word.spanish) }
+                    QuizAudioButton(title: "Slow", systemImage: "tortoise.fill") { speaker.speak(word.spanish, slow: true) }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(20)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
     }
 
     private var choices: some View {
@@ -464,9 +441,9 @@ private struct WrittenQuestionView: View {
                     UINotificationFeedbackGenerator().notificationOccurred(correct ? .success : .error)
                 } label: {
                     HStack {
-                        Text(option).multilineTextAlignment(.leading)
+                        Text(option).font(.body.weight(.medium)).multilineTextAlignment(.leading)
                         Spacer()
-                        if chosen != nil, option == question.answer {
+                        if answered, option == question.answer {
                             Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
                         } else if chosen == option {
                             Image(systemName: "xmark.circle.fill").foregroundStyle(.red)
@@ -477,76 +454,30 @@ private struct WrittenQuestionView: View {
                     .background(background(for: option), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                 }
                 .buttonStyle(.plain)
-                .disabled(chosen != nil)
+                .disabled(answered)
             }
         }
     }
 
-    private var typingArea: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            TextField("Escribe en español…", text: $typed)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .font(.title3)
-                .padding()
-                .background(Color(.secondarySystemGroupedBackground),
-                            in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                .focused($fieldFocused)
-                .disabled(typedResult != nil)
-                .onSubmit(check)
-                .onAppear { fieldFocused = true }
-
-            if let typedResult {
-                Label(feedback(typedResult), systemImage: typedResult.isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .foregroundStyle(typedResult.isCorrect ? .green : .red)
-                    .font(.headline)
-            } else {
-                // Accent keys, since most English keyboards hide them behind a long-press.
-                HStack(spacing: 6) {
-                    ForEach(["á", "é", "í", "ó", "ú", "ñ", "ü", "¿", "¡"], id: \.self) { ch in
-                        Button(ch) { typed.append(ch) }
-                            .font(.title3)
-                            .frame(minWidth: 32, minHeight: 36)
-                            .background(Color(.tertiarySystemGroupedBackground),
-                                        in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-                            .buttonStyle(.plain)
-                    }
-                }
-                Button("Check", action: check)
-                    .buttonStyle(.borderedProminent)
-                    .disabled(typed.trimmingCharacters(in: .whitespaces).isEmpty)
+    /// The word in use. Before answering only the Spanish shows (the English would give it away).
+    private var exampleCard: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Label(answered ? "\(word.spanish) — \(word.allMeanings)" : "In a sentence",
+                  systemImage: "text.quote")
+                .font(.caption.weight(.bold))
+                .foregroundStyle(Theme.coral)
+            Text(highlighted(word.example, word: word.exampleWord, color: Theme.coral))
+                .font(.title3.weight(.medium))
+                .fontDesign(.serif)
+                .italic()
+            if answered {
+                Text(word.exampleTranslation).foregroundStyle(.secondary)
             }
-        }
-    }
-
-    private func check() {
-        guard typedResult == nil, !typed.trimmingCharacters(in: .whitespaces).isEmpty else { return }
-        let result = AnswerMatcher.checkTyped(typed, target: question.answer)
-        withAnimation { typedResult = result }
-        onResult(result.isCorrect)
-        UINotificationFeedbackGenerator().notificationOccurred(result.isCorrect ? .success : .error)
-    }
-
-    private func feedback(_ r: AnswerMatcher.TypedResult) -> String {
-        switch r {
-        case .exact: "¡Correcto!"
-        case .missingAccents: "Correct — watch the accents: \(question.answer)"
-        case .typo: "Close enough — it's spelled \(question.answer)"
-        case .wrong: "The answer is \(question.answer)"
-        }
-    }
-
-    private var explanation: some View {
-        VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text("\(question.word.spanish) — \(question.word.allMeanings)").font(.headline)
-                Spacer()
-                Button { speaker.speak([question.word.spanish, question.word.example]) } label: {
-                    Image(systemName: "speaker.wave.2.fill")
-                }
+                QuizAudioButton(title: "Play", systemImage: "play.fill") { speaker.speak(word.example) }
+                QuizAudioButton(title: "Slow", systemImage: "tortoise.fill") { speaker.speak(word.example, slow: true) }
             }
-            Text(question.word.example).italic()
-            Text(question.word.exampleTranslation).font(.subheadline).foregroundStyle(.secondary)
+            .padding(.top, 2)
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -562,184 +493,191 @@ private struct WrittenQuestionView: View {
     }
 }
 
-// MARK: - Verbal questions
+private struct QuizAudioButton: View {
+    let title: String
+    let systemImage: String
+    let action: () -> Void
 
-/// Fully spoken question: the prompt is read aloud, the answer is heard through the mic, feedback
-/// is spoken, and in hands-free mode it moves on by itself.
-private struct VerbalQuestionView: View {
+    var body: some View {
+        Button(action: action) {
+            Label(title, systemImage: systemImage)
+                .font(.subheadline.weight(.semibold))
+                .padding(.horizontal, 14).padding(.vertical, 8)
+                .background(Theme.coral.opacity(0.12), in: Capsule())
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(Theme.coral)
+    }
+}
+
+// MARK: - Speak (Listen & speak)
+
+/// Repeat after me, or say the Spanish for an English word. Everything is on screen; the only
+/// voice is the Spanish one (the recorded clips when bundled). She taps the mic when ready.
+private struct SpeakQuestionView: View {
     let question: QuizQuestion
-    let handsFree: Bool
     @ObservedObject var listener: SpeechListener
     let onResult: (Bool) -> Void
     let onNext: () -> Void
 
     @EnvironmentObject private var speaker: Speaker
 
-    enum Phase { case asking, listening, correct, wrong }
-    @State private var phase: Phase = .asking
+    enum Phase { case ready, listening, correct, wrong }
+    @State private var phase: Phase = .ready
     @State private var heard = ""
-    @State private var attempt = 0
+    @State private var listenTask: Task<Void, Never>?
+
+    private var word: Word { question.word }
+    private var done: Bool { phase == .correct || phase == .wrong }
 
     var body: some View {
-        VStack(spacing: 22) {
+        VStack(spacing: 20) {
             Text(question.instruction)
                 .font(.title3.weight(.semibold))
 
-            Button {
-                if phase == .listening { listener.stopNow() }
-            } label: {
+            promptCard
+
+            Button(action: micTapped) {
                 ZStack {
                     Circle()
                         .fill(color.opacity(0.18))
-                        .frame(width: 170, height: 170)
+                        .frame(width: 150, height: 150)
                         .scaleEffect(phase == .listening ? 1.08 : 1)
                         .animation(phase == .listening ? .easeInOut(duration: 0.8).repeatForever() : .default, value: phase)
                     Image(systemName: icon)
-                        .font(.system(size: 60, weight: .semibold))
+                        .font(.system(size: 54, weight: .semibold))
                         .foregroundStyle(color)
                 }
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(phase == .listening ? "Stop listening" : statusText)
+            .disabled(done)
+            .accessibilityLabel(statusText)
 
             Text(statusText).font(.headline).foregroundStyle(.secondary)
 
             let shown = phase == .listening ? listener.transcript : heard
             if !shown.isEmpty {
-                Text("“\(shown)”")
+                Text("You said: “\(shown)”")
                     .font(.title3)
                     .multilineTextAlignment(.center)
             }
 
-            if phase == .correct || phase == .wrong {
-                VStack(spacing: 4) {
-                    Text(question.word.spanish).font(.title2.bold())
-                    Text(question.word.allMeanings).foregroundStyle(.secondary)
-                    if question.style == .repeatAfterMe {
-                        Text(question.answer).italic().multilineTextAlignment(.center).padding(.top, 4)
-                    }
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            if done {
+                answerCard
             }
 
             Spacer(minLength: 0)
 
             VStack(spacing: 10) {
                 if phase == .wrong {
-                    // Speech recognition isn't perfect — let her overrule it.
-                    Button {
-                        onResult(true)
-                        onNext()
-                    } label: {
-                        Label("I said it right", systemImage: "hand.thumbsup.fill").frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
-                }
-                HStack {
-                    Button {
-                        listener.stopNow()
-                        speaker.stop()
-                        attempt += 1
-                    } label: { Label("Ask again", systemImage: "arrow.counterclockwise") }
-                    Spacer()
-                    if (phase == .correct || phase == .wrong) && !handsFree {
-                        Button("Next", action: onNext).buttonStyle(.borderedProminent)
-                    } else {
-                        Button("Skip") {
-                            listener.stopNow()
-                            speaker.stop()
-                            onResult(false)
+                    HStack {
+                        Button {
+                            phase = .ready; heard = ""
+                        } label: { Label("Try again", systemImage: "arrow.counterclockwise").frame(maxWidth: .infinity) }
+                        .buttonStyle(.bordered)
+                        // Speech recognition isn't perfect — let her overrule it.
+                        Button {
+                            onResult(true)
                             onNext()
-                        }
+                        } label: { Label("I said it right", systemImage: "hand.thumbsup.fill").frame(maxWidth: .infinity) }
+                        .buttonStyle(.bordered)
+                    }
+                }
+                if done {
+                    Button(action: onNext) { Text("Next").frame(maxWidth: .infinity) }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                } else {
+                    Button("Skip") {
+                        stopListening()
+                        onResult(false)
+                        onNext()
                     }
                 }
             }
         }
         .frame(maxWidth: .infinity)
-        .task(id: attempt) { await run() }
+        .onAppear {
+            if question.style == .repeatWord { speaker.speak(word.spanish) }
+        }
         .onDisappear {
-            listener.stopNow()
+            stopListening()
             speaker.stop()
         }
     }
 
+    @ViewBuilder
+    private var promptCard: some View {
+        VStack(spacing: 10) {
+            if question.style == .repeatWord {
+                Text(word.spanish).font(.system(size: 38, weight: .bold, design: .rounded))
+                Text(word.phonetic).font(.callout.monospaced()).foregroundStyle(.secondary)
+                HStack {
+                    QuizAudioButton(title: "Hear it", systemImage: "speaker.wave.2.fill") { speaker.speak(word.spanish) }
+                    QuizAudioButton(title: "Slow", systemImage: "tortoise.fill") { speaker.speak(word.spanish, slow: true) }
+                }
+            } else {
+                Text(word.english).font(.system(size: 30, weight: .bold, design: .rounded))
+                    .multilineTextAlignment(.center)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(20)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+    }
+
+    private var answerCard: some View {
+        VStack(spacing: 6) {
+            Text(word.spanish).font(.title2.bold())
+            Text(word.allMeanings).foregroundStyle(.secondary).multilineTextAlignment(.center)
+            HStack {
+                QuizAudioButton(title: "Hear it", systemImage: "speaker.wave.2.fill") { speaker.speak(word.spanish) }
+                QuizAudioButton(title: "Slow", systemImage: "tortoise.fill") { speaker.speak(word.spanish, slow: true) }
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+    }
+
     // MARK: Flow
 
-    private func run() async {
-        phase = .asking
+    private func micTapped() {
+        if phase == .listening {
+            listener.stopNow()          // the listen task finishes and grades
+            return
+        }
+        speaker.stop()
         heard = ""
-        await speaker.say(promptParts)
-        guard !Task.isCancelled else { return }
-
-        var text = ""
-        for tryNumber in 0..<2 {
-            phase = .listening
-            text = await listener.listen(language: answerLanguage, hints: [question.answer])
+        phase = .listening
+        listenTask = Task {
+            let text = await listener.listen(language: AppSettings.voice.rawValue, hints: [word.spanish])
             guard !Task.isCancelled else { return }
-            if !text.isEmpty || tryNumber == 1 { break }
-            await speaker.say([.english("I didn't catch that. Try again.")])
+            heard = text
+            if text.isEmpty {
+                phase = .ready          // nothing heard: just let her tap again
+                return
+            }
+            let correct = AnswerMatcher.matchesSpanish(spoken: text, target: word.spanish)
+            phase = correct ? .correct : .wrong
+            onResult(correct)
+            UINotificationFeedbackGenerator().notificationOccurred(correct ? .success : .error)
+            // Hear the right answer in the Spanish voice either way.
+            try? await Task.sleep(for: .seconds(0.3))
             guard !Task.isCancelled else { return }
-        }
-
-        heard = text
-        let correct = grade(text)
-        phase = correct ? .correct : .wrong
-        onResult(correct)
-        UINotificationFeedbackGenerator().notificationOccurred(correct ? .success : .error)
-
-        await speaker.say(feedbackParts(correct))
-        guard handsFree, !Task.isCancelled else { return }
-        try? await Task.sleep(for: .seconds(correct ? 0.6 : 2.0))
-        guard !Task.isCancelled else { return }
-        onNext()
-    }
-
-    private var answerLanguage: String {
-        question.style == .whatDoesItMean ? "en-US" : AppSettings.voice.rawValue
-    }
-
-    private func grade(_ text: String) -> Bool {
-        switch question.style {
-        case .sayIt: AnswerMatcher.matchesSpanish(spoken: text, target: question.word.spanish)
-        case .whatDoesItMean: AnswerMatcher.matchesEnglish(spoken: text, english: question.word.allMeanings.replacingOccurrences(of: " · ", with: " / "))
-        case .repeatAfterMe: AnswerMatcher.overlap(spoken: text, sentence: question.answer) >= 0.7
-        default: false
+            speaker.speak(word.spanish)
         }
     }
 
-    private var promptParts: [Speaker.Part] {
-        switch question.style {
-        case .sayIt:
-            [.english("How do you say: \(QuizBuilder.spokenEnglish(question.word.english))?")]
-        case .whatDoesItMean:
-            [.english("What does this mean?", pause: 0.4), .spanish(question.word.spanish)]
-        case .repeatAfterMe:
-            [.english("Repeat after me.", pause: 0.4), .spanish(question.answer)]
-        default:
-            []
-        }
-    }
-
-    private func feedbackParts(_ correct: Bool) -> [Speaker.Part] {
-        if correct { return [.spanish("¡Correcto!")] }
-        switch question.style {
-        case .sayIt:
-            return [.english("The answer is", pause: 0.2), .spanish(question.word.spanish)]
-        case .whatDoesItMean:
-            return [.english("It means: \(QuizBuilder.spokenEnglish(question.word.allMeanings.replacingOccurrences(of: " · ", with: " / ")))")]
-        case .repeatAfterMe:
-            return [.english("Listen once more.", pause: 0.3), .spanish(question.answer)]
-        default:
-            return []
-        }
+    private func stopListening() {
+        listenTask?.cancel()
+        listener.stopNow()
     }
 
     private var icon: String {
         switch phase {
-        case .asking: "speaker.wave.3.fill"
-        case .listening: "mic.fill"
+        case .ready: "mic.fill"
+        case .listening: "waveform"
         case .correct: "checkmark"
         case .wrong: "xmark"
         }
@@ -747,7 +685,7 @@ private struct VerbalQuestionView: View {
 
     private var color: Color {
         switch phase {
-        case .asking: Theme.magenta
+        case .ready: Theme.magenta
         case .listening: Theme.coral
         case .correct: .green
         case .wrong: .red
@@ -756,8 +694,8 @@ private struct VerbalQuestionView: View {
 
     private var statusText: String {
         switch phase {
-        case .asking: "Listen…"
-        case .listening: "Your turn — speak now (tap to finish)"
+        case .ready: heard.isEmpty ? "Tap the mic, then speak" : "Didn't catch that — tap and try again"
+        case .listening: "Listening… tap when you're done"
         case .correct: "¡Correcto!"
         case .wrong: "Not quite"
         }

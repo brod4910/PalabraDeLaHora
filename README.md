@@ -31,7 +31,7 @@ iOS 17+, Xcode 15+ (built against the Xcode 16 project format). No third-party d
 | Settings: cadence, accent (MX/ES/US), speech speed, notifications, reshuffle | `App/SettingsView.swift` |
 | **Levels** (Novice A1 → Fluent B2–C1) and **focus** (words + phrases / everyday phrases / vocabulary) | `Shared/Word.swift` (`WordBank.deck`) |
 | **"Learn the next word now"**: skip ahead without waiting. The widget, notifications and "Coming up" all shift with it | `App/ContentView.swift` (`Rotation.skipAhead`) |
-| **Optional quizzes** on seen words, freshly shuffled each run. **Written**: multiple choice, fill in the blank, type it (with accent keys). **Verbal**: hands-free; it asks out loud and checks her spoken answer with speech recognition. Results let her review missed words or quiz again on just those | `App/QuizView.swift`, `App/SpeechListener.swift`, `Shared/LearningProgress.swift` |
+| **Optional quizzes** on seen words, freshly shuffled each run. **Multiple choice**: the Spanish word (tap to hear it, normal or slow) with four English meanings, plus its example sentence to hear; the translation shows after she answers. Words she already knows also come up the other way (English → Spanish). **Listen & speak**: hear a word and pick its meaning, repeat after the voice, or say the Spanish for an English word; she taps the mic when ready, speech recognition checks it, and the Spanish voice plays the right answer. Results let her review missed words or quiz again on just those | `App/QuizView.swift`, `App/SpeechListener.swift`, `Shared/LearningProgress.swift` |
 | 284-card deck: 205 words + 79 everyday phrases and idioms, tagged by level | `Shared/words.json` (source: `tools/words_source.py`, `tools/new_words.py`) |
 
 ## How the schedule works
@@ -42,7 +42,7 @@ Since the word for any moment can be computed, the widget pre-builds the next 24
 
 ## Everyday phrases
 
-Every card has one **Examples** panel that shows a single sentence at a time: the card's example first, then one for each other meaning, then everyday phrases — short, natural things people say with the word. **Next example** goes through them, and **Show me another** (with an API key) writes a new one. Each phrase has a situation (🏠 at home, 🍽️ food, 💬 texting, ❤️ couple…), the word highlighted, Play/Slow buttons, and a beginner note for new forms. The **Phrases** tab (Phrasebook) collects every phrase from the words she has seen, by word or by situation, with search and ⭐ favorites. Verbal "repeat after me" and fill-in-the-blank quizzes use phrases too, and the medium/large widget can show a **phrase of the hour** (Settings › Widget).
+Every card has one **Examples** panel that shows a single sentence at a time: the card's example first, then one for each other meaning, then everyday phrases — short, natural things people say with the word. **Next example** goes through them, and **Show me another** (with an API key) writes a new one. Each phrase has a situation (🏠 at home, 🍽️ food, 💬 texting, ❤️ couple…), the word highlighted, Play/Slow buttons, and a beginner note for new forms. The **Phrases** tab (Phrasebook) collects every phrase from the words she has seen, by word or by situation, with search and ⭐ favorites. The medium/large widget can show a **phrase of the hour** (Settings › Widget).
 
 Phrases come from three places:
 
