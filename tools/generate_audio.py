@@ -14,7 +14,8 @@ Output: tools/.cache/audio/<voice>/<hash>.mp3, tools/.cache/audio/<voice>/manife
 
 Slow version: the word split into syllables with a short pause between them and the stressed
 syllable emphasized, like the written respelling (oh · por · too · nee · DAHD). --sample makes
-three styles so you can pick: CAPS for the stressed syllable, *stars* around it, or plain.
+three styles so you can pick: a written accent on the stressed syllable (cá · sa), *stars*
+around it, or plain.
 
 Standard library only. PALABRA_INWORLD_URL overrides the API URL (for tests).
 """
@@ -41,7 +42,10 @@ DECK = dict_tools.DECK
 AUDIO = dict_tools.CACHE / "audio"
 API = os.environ.get("PALABRA_INWORLD_URL", "https://api.inworld.ai")
 PRICE_PER_MILLION = 25.0       # inworld-tts-2 on demand; lower on paid plans
-SLOW_STYLES = ("caps", "stars", "plain")
+# accent: the stressed syllable gets a written accent (cá · sa), which a Spanish voice reads as stress.
+# CAPS was dropped: short capital syllables are read as English letters ("CA" → "see-ay").
+SLOW_STYLES = ("accent", "stars", "plain")
+ACUTE = {"a": "á", "e": "é", "i": "í", "o": "ó", "u": "ú"}
 LEVELS = ("novice", "beginner", "intermediate", "fluent")
 
 
@@ -59,16 +63,28 @@ def stressed_index(word: str, syllables: list[str]) -> int:
     return len(syllables) - 2 if last in "aeiouns" else len(syllables) - 1
 
 
+def with_accent(syllable: str) -> str:
+    """cá, bién (already), bué (bue: the strong vowel), cuí (cui: the last weak vowel)."""
+    if any(ch in dict_tools.ACCENTED for ch in syllable):
+        return syllable
+    vowels = [i for i, ch in enumerate(syllable) if ch in ACUTE]
+    if not vowels:
+        return syllable
+    strong = [i for i in vowels if syllable[i] in "aeo"]
+    i = strong[0] if strong else vowels[-1]
+    return syllable[:i] + ACUTE[syllable[i]] + syllable[i + 1:]
+
+
 def slow_text(text: str, style: str, pause_ms: int) -> str:
-    """'oportunidad' → 'o <break/> por <break/> tu <break/> ni <break/> DAD' (style caps)."""
+    """'oportunidad' → 'o <break/> por <break/> tu <break/> ni <break/> dád' (style accent)."""
     gap = f' <break time="{pause_ms}ms" /> '
     word_gap = f' <break time="{pause_ms * 2}ms" /> '
     words = []
     for w in dict_tools.tokens(text):
         syl = dict_tools.syllabify(w)
         k = stressed_index(w, syl)
-        if len(syl) > 1 and style == "caps":
-            syl[k] = syl[k].upper()
+        if len(syl) > 1 and style == "accent":
+            syl[k] = with_accent(syl[k])
         elif len(syl) > 1 and style == "stars":
             syl[k] = f"*{syl[k]}*"
         words.append(gap.join(syl))
@@ -206,7 +222,7 @@ def main() -> None:
     ap.add_argument("--language", default="es-MX", help="BCP-47 tag (default es-MX, Mexican Spanish)")
     ap.add_argument("--model", default="inworld-tts-2")
     ap.add_argument("--delivery", default="STABLE", choices=["STABLE", "BALANCED", "CREATIVE"])
-    ap.add_argument("--slow-style", default="caps", choices=SLOW_STYLES)
+    ap.add_argument("--slow-style", default="accent", choices=SLOW_STYLES)
     ap.add_argument("--slow-rate", type=float, default=0.85, help="speaking rate for the slow clip (0.5–1.5)")
     ap.add_argument("--pause-ms", type=int, default=350, help="pause between syllables in the slow clip")
     ap.add_argument("--bitrate", type=int, default=48000, help="MP3 bits per second (32000 is enough for voice)")
