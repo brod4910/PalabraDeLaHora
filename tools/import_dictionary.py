@@ -450,7 +450,9 @@ def lemma_senses(e: dict) -> list[dict]:
             continue
         g = s["glosses"][-1].lower()
         # "apocopic form of mucho; very" is muy's real meaning after the semicolon.
-        translated = ";" in g and g.split(";", 1)[1].strip()
+        # …or after a comma: "apocopic form of mío, my".
+        translated = (";" in g and g.split(";", 1)[1].strip()) or \
+            ((m := re.match(r".*\bform of [\wáéíóúüñ]+, (.+)", g)) and m.group(1).strip())
         if (s.get("form_of") or s.get("alt_of")) and not translated:
             continue
         if re.match(r"(plural|feminine|masculine|inflection|alternative|obsolete|archaic|misspelling) (form |spelling )?of\b", g) \
@@ -1062,6 +1064,15 @@ def build(args) -> list[dict]:
                 parts = []
                 # 'synonym of sala ("room")' → "room": keep the quoted meaning before dropping (…).
                 raw_gloss = re.sub(r"\b(?:synonym|ellipsis|short) (?:form )?of [^(;]+\(“([^”]+)”\)", r"\1", sense["glosses"][-1])
+                # A meaning that names a letter anywhere ("san; the Greek letter Ϻ", "mu; the Greek
+                # letter Μ") is the letter, even where another part looks like a translation ("san"
+                # matched "San Francisco"). So is an abbreviation ("abbreviation of este; east").
+                if re.search(r"\bletter\b", raw_gloss, re.I) and any(
+                        is_letter_or_note((translation_of(x.strip()) or x.strip()), lemma, e.get("pos"))
+                        for x in raw_gloss.split(";")):
+                    continue
+                if re.match(r"(abbreviation|initialism|acronym) of\b", raw_gloss.strip(), re.I):
+                    continue
                 for part in re.sub(r"\s*\([^)]*\)", "", raw_gloss).split(";"):
                     g = translation_of(re.sub(r"\s+", " ", part).strip().rstrip("."))
                     while g and len(g) > 40 and ", " in g:     # "opportunity, chance, shot, break, occasion, time"
