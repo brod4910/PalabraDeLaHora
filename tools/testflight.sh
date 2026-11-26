@@ -15,7 +15,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-: "${ASC_KEY_ID:?Set ASC_KEY_ID (the API key's Key ID)}"
+: "${ASC_KEY_ID:?Set ASC_KEY_ID (the Key ID of the API key)}"
 : "${ASC_ISSUER_ID:?Set ASC_ISSUER_ID (shown above the keys list in App Store Connect)}"
 KEY_PATH="${ASC_KEY_PATH:-$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_KEY_ID}.p8}"
 KEY_PATH="${KEY_PATH/#\~/$HOME}"
