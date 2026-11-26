@@ -137,3 +137,17 @@ Key forms for hand-written cards live in `tools/curated_forms.py`. These are con
 - A Siri / App Shortcut ("¿Cuál es la palabra?") using the existing intent.
 - Bundle recorded native-speaker audio per word, and fall back to TTS when a recording is missing.
 - Themed decks, such as wedding, travel, family or food.
+
+## Recorded voice (Inworld TTS, optional)
+
+`tools/generate_audio.py` pre-records words (normal and slow, syllable by syllable with the stressed
+syllable emphasized), example sentences, phrases and key forms with Inworld's realistic voices.
+Clips are cached by text, so only new or changed text is ever paid for.
+
+```bash
+export INWORLD_API_KEY=...                       # platform.inworld.ai — never commit it
+python3 tools/generate_audio.py --list-voices     # Spanish voices
+python3 tools/generate_audio.py --sample --voice Paloma --voice <another>   # ≈ $0.10 per voice
+open tools/.cache/audio/sample.html               # listen and compare the slow styles
+python3 tools/generate_audio.py --levels novice --slow-style caps           # ≈ $3.50 (shows cost first)
+```
