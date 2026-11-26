@@ -209,12 +209,48 @@ def clip_id(clip: dict, voice: str, args) -> str:
     return hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16]
 
 
-def transcribe(path: pathlib.Path, args, key: str) -> str:
+# Speech-to-text only *leans* toward the language it's given and guesses from the audio; one or
+# two words aren't enough (a lone "sucedes" came back as Russian or Japanese). Each clip is checked
+# after this Spanish lead-in, recorded once in the same voice, which is then ignored when comparing.
+CARRIER = "Repite conmigo esta palabra:"
+CHECK_VERSION = "v2"
+
+
+def strip_id3(mp3: bytes) -> bytes:
+    """Drop a leading ID3v2 tag so two MP3s can be joined into one stream."""
+    if mp3[:3] == b"ID3" and len(mp3) > 10:
+        size = ((mp3[6] & 0x7F) << 21) | ((mp3[7] & 0x7F) << 14) | ((mp3[8] & 0x7F) << 7) | (mp3[9] & 0x7F)
+        return mp3[10 + size:]
+    return mp3
+
+
+def carrier_audio(voice: str, args, key: str) -> bytes:
+    path = AUDIO / voice / "_carrier.mp3"
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(synthesize({"text": CARRIER, "rate": 1.0}, voice, args, key))
+    return path.read_bytes()
+
+
+def transcribe(audio: bytes, args, key: str) -> str:
     body = {"transcribeConfig": {"modelId": "inworld/inworld-stt-1", "audioEncoding": "MP3",
-                                 "language": args.language},
-            "audioData": {"content": base64.b64encode(path.read_bytes()).decode()}}
+                                 "language": args.language.split("-")[0]},
+            "audioData": {"content": base64.b64encode(audio).decode()}}
     data = request("/stt/v1/transcribe", key, body)
     return (data.get("transcription") or {}).get("transcript", "")
+
+
+def after_carrier(heard: str) -> str:
+    """The transcript minus the lead-in (matched loosely, in case it's heard slightly off)."""
+    flat = lambda t: dict_tools.strip_accents(lookup_key(t)).replace(" ", "")
+    lead, got = flat(CARRIER), flat(heard)
+    blocks = [b for b in difflib.SequenceMatcher(None, lead, got).get_matching_blocks() if b.size >= 3]
+    end = max((b.b + b.size for b in blocks if b.a + b.size >= len(lead) - 4), default=0)
+    return got[end:]
+
+
+def latin(text: str) -> bool:
+    return all(not ch.isalpha() or ch.isascii() or "LATIN" in unicodedata.name(ch, "") for ch in text)
 
 
 def heard_score(expected: str, heard: str) -> float:
@@ -236,12 +272,16 @@ def check(voice: str, args, key: str) -> None:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     results_path = folder / "check.json"
     results = json.loads(results_path.read_text(encoding="utf-8")) if results_path.exists() else {}
+    if results.get("_version") != CHECK_VERSION:
+        results = {"_version": CHECK_VERSION}          # earlier checks had no Spanish lead-in
+    lead_in = carrier_audio(voice, args, key)
     todo = [cid for cid, m in manifest.items() if cid not in results and (folder / m["file"]).exists()
             and (not m["kind"].startswith("slow-") or m["kind"] == f"slow-{args.slow_style}")]
     print(f"{len(manifest):,} clips · {len(todo):,} to check (≈ ${len(todo) * 1.8 / 3600 * 0.15:.2f} at $0.15/hour)")
 
     def work(cid):
-        return cid, transcribe(folder / manifest[cid]["file"], args, key)
+        clip = strip_id3((folder / manifest[cid]["file"]).read_bytes())
+        return cid, transcribe(lead_in + clip, args, key)
 
     done = 0
     with futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
@@ -257,30 +297,37 @@ def check(voice: str, args, key: str) -> None:
                 results_path.write_text(json.dumps(results, ensure_ascii=False) + "\n", encoding="utf-8")
     results_path.write_text(json.dumps(results, ensure_ascii=False) + "\n", encoding="utf-8")
 
-    rows = []
+    rows, other_language = [], 0
     for cid, heard in results.items():
         m = manifest.get(cid)
         if not m:
             continue
-        score = heard_score(m["text"], heard)
+        if not latin(heard):
+            other_language += 1
+            rows.append((-1.0, cid, m, heard))     # listed, but not counted as mispronounced
+            continue
+        score = heard_score(m["text"], after_carrier(heard))
         # Short texts get a stricter bar: one wrong letter in "sucedes" is the whole problem.
         bar = 0.9 if len(lookup_key(m["text"]).replace(" ", "")) <= 8 else 0.8
         if score < bar:
             rows.append((score, cid, m, heard))
-    rows.sort(key=lambda r: r[0])
-    (folder / "flagged.json").write_text(json.dumps([cid for _, cid, _, _ in rows]) + "\n", encoding="utf-8")
+    rows.sort(key=lambda r: (r[0] < 0, r[0]))
+    (folder / "flagged.json").write_text(json.dumps([cid for sc, cid, _, _ in rows if sc >= 0]) + "\n", encoding="utf-8")
     page = AUDIO / "check.html"
     page.write_text("""<!doctype html><meta charset="utf-8"><title>Palabra · pronunciation check</title>
 <style>body{font:15px -apple-system,system-ui;max-width:860px;margin:24px auto;padding:0 16px}
 td{padding:6px 8px;border-bottom:1px solid #eee;vertical-align:top}.s{color:#999}audio{height:30px}</style>
 <h1>Pronunciation check · """ + html.escape(voice) + f"""</h1>
-<p>{len(rows):,} of {len(results):,} clips didn't match what speech-to-text heard. Listen to the worst ones;
+<p>{len(rows) - other_language:,} of {len(results) - 1:,} clips didn't match what speech-to-text heard
+(after the lead-in “{html.escape(CARRIER)}”){f"; {other_language} more were heard as another language — listen to those yourself" if other_language else ""}. Listen to the worst ones;
 re-record with <code>--check --redo-flagged</code> or <code>--redo "text"</code>.</p><table>
 <tr><th>score</th><th>should say</th><th>heard</th><th>kind</th><th></th></tr>
-""" + "\n".join(f'<tr><td class="s">{sc:.2f}</td><td>{html.escape(m["text"])}</td><td>{html.escape(h or "(nothing)")}</td>'
+""" + "\n".join(f'<tr><td class="s">{"lang?" if sc < 0 else f"{sc:.2f}"}</td><td>{html.escape(m["text"])}</td><td>{html.escape(h or "(nothing)")}</td>'
                 f'<td class="s">{m["kind"]}</td><td><audio controls preload="none" src="{html.escape(voice)}/{m["file"]}"></audio></td></tr>'
                 for sc, cid, m, h in rows) + "</table>", encoding="utf-8")
-    print(f"{len(rows):,} flagged of {len(results):,} → open {page.relative_to(ROOT)}")
+    print(f"{len(rows) - other_language:,} flagged of {len(results) - 1:,}"
+          + (f" ({other_language} heard as another language)" if other_language else "")
+          + f" → open {page.relative_to(ROOT)}")
 
 
 def redo(cids: list[str], voice: str, args, key: str) -> None:
