@@ -191,7 +191,7 @@ def request(path: str, key: str, body: dict | None = None) -> dict:
     raise RuntimeError("Inworld API: too many retries")
 
 
-def synthesize(clip: dict, voice: str, args, key: str) -> bytes:
+def synthesize(clip: dict, voice: str, args, key: str, context: list[str] | None = None) -> bytes:
     body = {
         "text": clip["text"],
         "voiceId": voice,
@@ -202,6 +202,9 @@ def synthesize(clip: dict, voice: str, args, key: str) -> bytes:
     }
     if args.model == "inworld-tts-2":
         body["deliveryMode"] = args.delivery
+    if context:
+        # Earlier text the voice "has just said": shapes pronunciation and stress, not spoken, not billed.
+        body["synthesisContext"] = {"previousRequests": context}
     return base64.b64decode(request("/tts/v1/voice", key, body)["audioContent"])
 
 
@@ -396,8 +399,11 @@ def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
     if results.get("_version") != CHECK_VERSION:
         results = {"_version": CHECK_VERSION}
     lead_in = carrier_audio(voice, args, key)
+    # Each retry tells the voice a single Spanish word is coming (context, not spoken): a word on
+    # its own can get the wrong stress (funciono said as "función-o").
     attempts = [("BALANCED", lambda t: t), ("CREATIVE", lambda t: t.rstrip(".!?") + "."),
                 ("BALANCED", lambda t: t[:1].upper() + t[1:].rstrip(".!?") + "!")]
+    context = [CARRIER]
     for cid in cids:
         m = manifest[cid]
         slow = m["kind"].startswith("slow-")
@@ -405,7 +411,7 @@ def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
         for delivery, variant in attempts[:takes]:
             text = slow_text(m["text"], args.slow_style, args.pause_ms) if slow else variant(m["text"])
             audio = synthesize({"text": text, "rate": m["rate"]}, voice,
-                               argparse.Namespace(**{**vars(args), "delivery": delivery}), key)
+                               argparse.Namespace(**{**vars(args), "delivery": delivery}), key, context=context)
             if slow:                                  # slow clips can't be checked: keep the new take
                 best = (True, 1.0, audio, ""); break
             heard = transcribe(lead_in + strip_id3(audio), args, key)
