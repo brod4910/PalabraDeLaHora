@@ -7,6 +7,7 @@ struct SettingsView: View {
     @AppStorage(AppSettings.Key.cadence, store: AppSettings.defaults) private var cadenceRaw = Cadence.hourly.rawValue
     @AppStorage(AppSettings.Key.voice, store: AppSettings.defaults) private var voiceRaw = SpanishVoice.mexico.rawValue
     @AppStorage(AppSettings.Key.speechRate, store: AppSettings.defaults) private var speechRate = 0.9
+    @AppStorage(AppSettings.Key.useRecordedVoice, store: AppSettings.defaults) private var useRecordedVoice = true
     @AppStorage(AppSettings.Key.notificationsEnabled, store: AppSettings.defaults) private var notificationsOn = false
     @AppStorage(AppSettings.Key.quietStart, store: AppSettings.defaults) private var quietStart = 21
     @AppStorage(AppSettings.Key.quietEnd, store: AppSettings.defaults) private var quietEnd = 8
@@ -62,7 +63,17 @@ struct SettingsView: View {
                 }
 
                 Section("Pronunciation") {
-                    Picker("Accent", selection: $voiceRaw) {
+                    if RecordedVoice.isAvailable {
+                        Toggle(isOn: $useRecordedVoice) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Recorded voice")
+                                Text("\(RecordedVoice.voiceName ?? "Natural voice") · anything not recorded uses the iPhone voice")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    Picker(RecordedVoice.isEnabled ? "iPhone voice accent" : "Accent", selection: $voiceRaw) {
                         ForEach(SpanishVoice.allCases) { Text($0.label).tag($0.rawValue) }
                     }
                     VStack(alignment: .leading) {

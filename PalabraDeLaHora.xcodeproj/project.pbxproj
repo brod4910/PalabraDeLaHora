@@ -23,6 +23,10 @@
 			isa = PBXBuildFile;
 			fileRef = 2ADB1AD68DE779C2DDFE7691;
 		};
+		220591D82DBDB4C2B32BD2BD = {
+			isa = PBXBuildFile;
+			fileRef = 6647958953A7485B374FE255;
+		};
 		3766CF7477FABE1511CC4CE6 = {
 			isa = PBXBuildFile;
 			fileRef = C393BF19D8473F0058CF5870;
@@ -50,6 +54,10 @@
 		432C8335E20DDC531D6608A3 = {
 			isa = PBXBuildFile;
 			fileRef = FE9B504A10B4DC9F62750808;
+		};
+		4375DC2948D8A572DAB14590 = {
+			isa = PBXBuildFile;
+			fileRef = 6647958953A7485B374FE255;
 		};
 		4402B7390E829C0D7AF79695 = {
 			isa = PBXBuildFile;
@@ -115,6 +123,10 @@
 		CA9F81A4C83CFF1944EC4FF1 = {
 			isa = PBXBuildFile;
 			fileRef = E3D6BC4354D73A6710D4301D;
+		};
+		D16D2A4EB97CDC4AD2BE58F6 = {
+			isa = PBXBuildFile;
+			fileRef = 3FD04B7F41E59825B3433F9E;
 		};
 		D2859354E45DE6E7C138BB54 = {
 			isa = PBXBuildFile;
@@ -220,6 +232,12 @@
 			path = PatternView.swift;
 			sourceTree = "<group>";
 		};
+		3FD04B7F41E59825B3433F9E = {
+			isa = PBXFileReference;
+			lastKnownFileType = folder;
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		43CE4703619D66F0FAE9C7FC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.swift;
@@ -254,6 +272,12 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.swift;
 			path = WordCardView.swift;
+			sourceTree = "<group>";
+		};
+		6647958953A7485B374FE255 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = RecordedVoice.swift;
 			sourceTree = "<group>";
 		};
 		764C03B97302C5AF1E18DC27 = {
@@ -405,6 +429,7 @@
 				B05FB2286FCD351CD311ACBC,
 				94A7866494CE207ED144A111,
 				020A8A095C38D02BB4F892A3,
+				3FD04B7F41E59825B3433F9E,
 				C2B3B50E19269B90296A3A8A,
 				7E069165862689FE5F293965,
 			);
@@ -455,6 +480,7 @@
 				38D537946B143390B4E8889C,
 				CE1091B3394C87B9178D1F35,
 				2ADB1AD68DE779C2DDFE7691,
+				6647958953A7485B374FE255,
 				780EED58566ECFA78B446FBB,
 			);
 			path = Shared;
@@ -551,6 +577,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8228D95C9E0E1AE0B7D01532,
+				D16D2A4EB97CDC4AD2BE58F6,
 				C4A6F45C1179EEF1924989DA,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -574,6 +601,7 @@
 				D8BDD52ECDAC25CDEAABA992,
 				7553E7179672BF412D8D00CA,
 				EF226052074D41BB128EA919,
+				4375DC2948D8A572DAB14590,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +629,7 @@
 				135B377D7608C9F477415805,
 				E549AD6AA4A651FB6D37CECC,
 				1FA207B9761973B629E6DB16,
+				220591D82DBDB4C2B32BD2BD,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

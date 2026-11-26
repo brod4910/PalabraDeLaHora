@@ -30,7 +30,9 @@ import json
 import os
 import pathlib
 import sys
+import shutil
 import time
+import unicodedata
 import urllib.error
 import urllib.request
 
@@ -40,6 +42,8 @@ import import_dictionary as dict_tools  # noqa: E402
 ROOT = dict_tools.ROOT
 DECK = dict_tools.DECK
 AUDIO = dict_tools.CACHE / "audio"
+APP_AUDIO = ROOT / "App" / "Audio"          # bundled into the app by --export (mp3s are git-ignored)
+TEST_PHRASE = "Hola, mi amor. ¿Cómo estás hoy?"   # Settings › Test voice
 API = os.environ.get("PALABRA_INWORLD_URL", "https://api.inworld.ai")
 PRICE_PER_MILLION = 25.0       # inworld-tts-2 on demand; lower on paid plans
 # accent: the stressed syllable gets a written accent (cá · sa), which a Spanish voice reads as stress.
@@ -91,12 +95,33 @@ def slow_text(text: str, style: str, pause_ms: int) -> str:
     return word_gap.join(words) or text
 
 
+def lookup_key(text: str) -> str:
+    """How the app finds a clip: lowercase, letters and digits only, single spaces.
+    Must match RecordedVoice.key(_:) in Shared/RecordedVoice.swift."""
+    text = unicodedata.normalize("NFC", text).lower()
+    return " ".join("".join(ch if ch.isalnum() else " " for ch in text).split())
+
+
 def key_forms(card: dict) -> list[str]:
+    """Exactly what the app says when a key form is tapped (PatternRow.spokenText):
+    "yo: quiero" → "yo quiero", "él / ella: quiere" → "él quiere", "plural: los amigos / las amigas"
+    → "los amigos, las amigas"."""
     out = []
     for forms in [card.get("forms")] + [m.get("forms") for m in card.get("otherMeanings") or []]:
-        for v in dict_tools.form_values(forms):
-            if v and not v.startswith("("):
-                out.append(v)
+        for line in (forms or "").split("\n"):
+            if ": " not in line:
+                continue
+            label, value = line.split(": ", 1)
+            value = value.replace(" / ", ", ").strip()
+            if not value:
+                continue
+            if label in ("yo", "tú", "nosotros"):
+                value = f"{label} {value}"
+            elif label == "él / ella":
+                value = f"él {value}"
+            elif label == "past (yo)":
+                value = f"yo {value}"
+            out.append(value)
     return out
 
 
@@ -228,10 +253,16 @@ def main() -> None:
     ap.add_argument("--bitrate", type=int, default=48000, help="MP3 bits per second (32000 is enough for voice)")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--list-voices", action="store_true")
+    ap.add_argument("--export", action="store_true",
+                    help="copy this voice's recorded clips into App/Audio/ for the app (records nothing)")
     ap.add_argument("--dry-run", action="store_true", help="count characters and cost, call nothing")
     ap.add_argument("--yes", action="store_true", help="don't ask before spending")
     args = ap.parse_args()
     voices = args.voice or ["Paloma"]
+
+    if args.export:
+        export(voices[0], args)
+        return
 
     key = os.environ.get("INWORLD_API_KEY", "").strip()
     if not key and not args.dry_run:
@@ -242,6 +273,9 @@ def main() -> None:
 
     deck = json.loads(DECK.read_text(encoding="utf-8"))
     cards = pick_sample(deck) if args.sample else [c for c in deck if c["level"] in args.levels]
+    if not args.sample:
+        cards = cards + [{"id": "test-voice", "spanish": TEST_PHRASE, "english": "", "example": "",
+                          "level": "novice", "kind": "phrase"}]
 
     jobs, seen = [], set()
     for voice in voices:
@@ -298,6 +332,40 @@ def main() -> None:
         manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     if args.sample:
         print(f"Open {write_sample_page(group(jobs)).relative_to(ROOT)} in a browser to listen.")
+
+
+def export(voice: str, args) -> None:
+    """App/Audio/index.json maps lookup_key(text) → file ("slow|" + key for slow words)."""
+    manifest_path = AUDIO / voice / "manifest.json"
+    if not manifest_path.exists():
+        sys.exit(f"No recordings for {voice} yet — run without --export first.")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    index: dict[str, str] = {}
+    for cid, m in manifest.items():
+        src = AUDIO / voice / m["file"]
+        if not src.exists():
+            continue
+        if m["kind"].startswith("slow-"):
+            if m["kind"] != f"slow-{args.slow_style}":
+                continue
+            index["slow|" + lookup_key(m["text"])] = m["file"]
+        else:
+            index.setdefault(lookup_key(m["text"]), m["file"])
+    APP_AUDIO.mkdir(parents=True, exist_ok=True)
+    keep = set(index.values())
+    for old in APP_AUDIO.glob("*.mp3"):
+        if old.name not in keep:
+            old.unlink()
+    size = 0
+    for name in keep:
+        dest = APP_AUDIO / name
+        if not dest.exists():
+            shutil.copy2(AUDIO / voice / name, dest)
+        size += dest.stat().st_size
+    (APP_AUDIO / "index.json").write_text(json.dumps({"voice": voice, "clips": index}, ensure_ascii=False) + "\n",
+                                          encoding="utf-8")
+    print(f"App/Audio: {len(keep):,} clips ({size / 1e6:.1f} MB) for {len(index):,} texts, voice {voice}. "
+          "Build the app in Xcode to bundle them.")
 
 
 def group(jobs) -> dict[str, list[tuple[dict, dict, str]]]:

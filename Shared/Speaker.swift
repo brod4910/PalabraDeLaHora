@@ -1,10 +1,11 @@
 import AVFoundation
 
-/// Spanish text-to-speech using on-device voices (works offline, no audio files to ship).
+/// Spanish speech. Plays the pre-recorded clips (`RecordedVoice`, from tools/generate_audio.py)
+/// when every line has one, otherwise the on-device voice (works offline, nothing to ship).
 ///
 /// Tip: Settings › Accessibility › Spoken Content › Voices › Spanish lets you download an
 /// "Enhanced" or "Premium" voice; `bestVoice` picks the highest quality one installed.
-final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
+final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, AVAudioPlayerDelegate, @unchecked Sendable {
     static let shared = Speaker()
 
     @Published private(set) var isSpeaking = false
@@ -12,6 +13,10 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
     private let synthesizer = AVSpeechSynthesizer()
     private var finishContinuation: CheckedContinuation<Void, Never>?
     private var lastUtterance: AVSpeechUtterance?
+
+    // Recorded clips: the one playing and the ones still to play (url, speed, pause after).
+    private var player: AVAudioPlayer?
+    private var clipQueue: [(url: URL, rate: Float, pause: TimeInterval)] = []
 
     override init() {
         super.init()
@@ -22,7 +27,26 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
     func speak(_ lines: [String], slow: Bool = false) {
         activateAudioSession()
         resumeContinuation()
-        if synthesizer.isSpeaking { synthesizer.stopSpeaking(at: .immediate) }
+        stopAll()
+
+        // A recording for every line: words slow = the syllable-by-syllable clip; sentences slow =
+        // the normal clip at 75% speed (pitch kept).
+        if RecordedVoice.isEnabled {
+            var plan: [(url: URL, rate: Float, pause: TimeInterval)] = []
+            for line in lines {
+                if slow, let url = RecordedVoice.url(for: line, slow: true) {
+                    plan.append((url, 1.0, 0.6))
+                } else if let url = RecordedVoice.url(for: line) {
+                    plan.append((url, slow ? 0.75 : Self.recordingRate, slow ? 0.6 : 0.45))
+                } else {
+                    plan = []; break
+                }
+            }
+            if !plan.isEmpty {
+                play(plan)
+                return
+            }
+        }
 
         let voice = Self.bestVoice(for: AppSettings.voice.rawValue)
         let normalRate = AVSpeechUtteranceDefaultSpeechRate * Float(AppSettings.speechRate)
@@ -94,7 +118,16 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
             DispatchQueue.main.async {
                 self.activateAudioSession()
                 self.resumeContinuation()
-                if self.synthesizer.isSpeaking { self.synthesizer.stopSpeaking(at: .immediate) }
+                self.stopAll()
+                // All Spanish and all recorded (key forms' "Play all"): play the clips.
+                if RecordedVoice.isEnabled, parts.allSatisfy({ $0.language == nil }) {
+                    let plan = parts.compactMap { p in RecordedVoice.url(for: p.text).map { (url: $0, rate: Self.recordingRate, pause: p.pause) } }
+                    if plan.count == parts.count, !plan.isEmpty {
+                        self.play(plan)
+                        self.finishContinuation = c
+                        return
+                    }
+                }
                 var last: AVSpeechUtterance?
                 for part in parts where !part.text.isEmpty {
                     let u = AVSpeechUtterance(string: part.text)
@@ -114,7 +147,68 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
     }
 
     func stop() {
-        synthesizer.stopSpeaking(at: .immediate)
+        stopAll()
+        DispatchQueue.main.async { self.isSpeaking = false }
+        resumeContinuation()
+    }
+
+    /// The learner's speed setting (0.9 = normal) applied to recordings, kept within what
+    /// sounds natural.
+    private static var recordingRate: Float {
+        Float(min(max(AppSettings.speechRate / 0.9, 0.7), 1.3))
+    }
+
+    // MARK: Recorded clips
+
+    private func play(_ plan: [(url: URL, rate: Float, pause: TimeInterval)]) {
+        clipQueue = plan
+        playNext()
+    }
+
+    private func playNext() {
+        guard !clipQueue.isEmpty else { finishPlayback(); return }
+        let next = clipQueue.removeFirst()
+        guard let p = try? AVAudioPlayer(contentsOf: next.url) else { playNext(); return }
+        p.delegate = self
+        p.enableRate = next.rate != 1
+        p.rate = next.rate
+        p.prepareToPlay()
+        player = p
+        pauseAfterCurrent = next.pause
+        p.play()
+        DispatchQueue.main.async { self.isSpeaking = true }
+    }
+
+    private var pauseAfterCurrent: TimeInterval = 0
+
+    func audioPlayerDidFinishPlaying(_ p: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async {
+            guard p === self.player else { return }
+            if self.clipQueue.isEmpty {
+                self.finishPlayback()
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + self.pauseAfterCurrent) { [weak self] in
+                    guard let self, self.player === p else { return }      // stopped or replaced meanwhile
+                    self.playNext()
+                }
+            }
+        }
+    }
+
+    private func finishPlayback() {
+        player = nil
+        isSpeaking = false
+        deactivateAudioSession()
+        resumeContinuation()
+    }
+
+    /// Stops both the recording and the synthesizer without reporting the end (a new line follows).
+    private func stopAll() {
+        clipQueue = []
+        player?.stop()
+        player = nil
+        lastUtterance = nil              // so the synthesizer's cancel callback is ignored
+        if synthesizer.isSpeaking { synthesizer.stopSpeaking(at: .immediate) }
     }
 
     static func bestVoice(for language: String) -> AVSpeechSynthesisVoice? {

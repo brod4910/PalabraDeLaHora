@@ -67,6 +67,7 @@ enum AppSettings {
         static let quizStats = "quizStats"
         static let quizzesEnabled = "quizzesEnabled"
         static let widgetShowsPhrase = "widgetShowsPhrase"
+        static let useRecordedVoice = "useRecordedVoice"
     }
 
     static var level: Level {
@@ -118,6 +119,12 @@ enum AppSettings {
     }
 
     /// Multiplier on the system default speech rate (0.5 … 1.2).
+    /// Play the bundled recordings (when there are any) instead of the on-device voice. On by default.
+    static var useRecordedVoice: Bool {
+        get { defaults.object(forKey: Key.useRecordedVoice) as? Bool ?? true }
+        set { defaults.set(newValue, forKey: Key.useRecordedVoice) }
+    }
+
     static var speechRate: Double {
         get { let v = defaults.double(forKey: Key.speechRate); return v == 0 ? 0.9 : v }
         set { defaults.set(newValue, forKey: Key.speechRate) }

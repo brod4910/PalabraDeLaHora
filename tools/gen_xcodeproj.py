@@ -24,13 +24,14 @@ def q(v):
 FILETYPES = {
     ".swift": "sourcecode.swift", ".json": "text.json", ".xcassets": "folder.assetcatalog",
     ".plist": "text.plist.xml", ".entitlements": "text.plist.entitlements",
+    "": "folder",          # folder reference (App/Audio: recorded clips, copied as a folder)
 }
 
 groups = {
     "Shared": ["Word.swift", "AppSettings.swift", "WordSchedule.swift", "Speaker.swift",
-               "SpeakWordIntent.swift", "SlowSpeech.swift", "LearningProgress.swift", "PatternView.swift", "LivePhraseStore.swift", "Theme.swift", "words.json"],
+               "SpeakWordIntent.swift", "SlowSpeech.swift", "LearningProgress.swift", "PatternView.swift", "LivePhraseStore.swift", "Theme.swift", "RecordedVoice.swift", "words.json"],
     "App": ["PalabraApp.swift", "ContentView.swift", "WordCardView.swift", "ReviewView.swift",
-            "SettingsView.swift", "QuizView.swift", "SpeechListener.swift", "PhrasesView.swift", "LiveGenerator.swift", "NotificationScheduler.swift", "Assets.xcassets", "Info.plist",
+            "SettingsView.swift", "QuizView.swift", "SpeechListener.swift", "PhrasesView.swift", "LiveGenerator.swift", "NotificationScheduler.swift", "Assets.xcassets", "Audio", "Info.plist",
             "PalabraDeLaHora.entitlements"],
     "Widget": ["PalabraWidgetBundle.swift", "PalabraWidget.swift", "Assets.xcassets", "Info.plist",
                "PalabraWidgetExtension.entitlements"],
@@ -47,7 +48,7 @@ def swift(g): return [f for f in groups[g] if f.endswith(".swift")]
 targets = {
     APP: dict(
         sources=[("App", f) for f in swift("App")] + [("Shared", f) for f in swift("Shared")],
-        resources=[("App", "Assets.xcassets"), ("Shared", "words.json")],
+        resources=[("App", "Assets.xcassets"), ("App", "Audio"), ("Shared", "words.json")],
         product=app_product, product_name=f"{APP}.app", type="com.apple.product-type.application",
     ),
     WIDGET: dict(
