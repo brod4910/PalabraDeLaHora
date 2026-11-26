@@ -71,6 +71,9 @@ TATOEBA_FULL = {
 
 PHRASES_PER_MEANING = 3   # extra real sentences kept per meaning for "Everyday phrases"
 LEVEL_CUTOFFS = [(600, "novice"), (1500, "beginner"), (3000, "intermediate")]
+# Sexual meanings Wiktionary doesn't always tag as vulgar (comer = "to have sexual intercourse").
+BLOCKED_GLOSS = re.compile(r"\b(sex|sexual|intercourse|penis|vagina|genitals?|testicles?|breasts?|masturbat\w*|"
+                           r"orgasm|prostitut\w*|fuck\w*|screw|copulat\w*|erection|anus|buttocks)\b", re.IGNORECASE)
 BLOCKED_TAGS = {"vulgar", "offensive", "derogatory", "slur", "ethnic", "pejorative", "sexual"}
 WEAK_TAGS = {"regional", "obsolete", "archaic", "rare", "dated", "historical", "uncommon", "nonstandard",
              "misspelling", "literary", "poetic", "formal", "slang", "jargon", "euphemistic"}
@@ -81,14 +84,12 @@ REGION_TAGS = {"spain", "peninsular", "argentina", "rioplatense", "uruguay", "ch
                "central-america", "costa-rica", "honduras", "nicaragua", "panama", "el-salvador", "guatemala",
                "andes", "southern-cone"}
 HOME_REGION_TAGS = {"mexico", "latin-america", "us", "united-states"}
-# Specialist senses (casar = "to overturn" in law, yo = "the ego" in psychology, diez = "an A" in
-# school). Used only when a word has no everyday sense at all (abogado is still "lawyer").
-SPECIALIST_TOPICS = {"law", "legal", "psychology", "psychoanalysis", "education", "botany", "zoology", "anatomy",
-                     "biology", "physiology", "chemistry", "physics", "heraldry", "nautical", "military",
-                     "mathematics", "geometry", "linguistics", "printing", "mining", "architecture", "astronomy",
-                     "geology", "mineralogy", "ichthyology", "entomology", "ornithology", "mycology",
+# Jargon senses (casar = "to overturn" in law, ello = "the id" in psychology, diez = "an A" in
+# school). They rank after everyday senses. Broad fields are not here: Wiktionary files "arm",
+# "eye" under anatomy and "time" under physics.
+SPECIALIST_TOPICS = {"law", "legal", "psychology", "psychoanalysis", "education", "heraldry", "nautical",
                      "card-games", "board-games", "chess", "go", "bullfighting", "falconry", "equestrianism",
-                     "philosophy", "theology", "sciences", "natural-sciences", "engineering", "music"}
+                     "printing", "mining", "music"}
 FUNCTION_POS = {"prep", "conj", "adv", "pron", "det", "article", "num"}
 # Never a card for Mexican Spanish learners: Spain-only "you all" words.
 SKIP_WORDS = {"vosotros", "vosotras", "vuestro", "vuestra", "vuestros", "vuestras", "os"}
@@ -320,6 +321,13 @@ def load_frequency(path: pathlib.Path) -> list[tuple[str, int]]:
 WORD_FIELD = re.compile(r'"word":\s*"((?:[^"\\]|\\.)*)"')
 
 
+def _unescape(raw: str) -> str:
+    try:
+        return json.loads(f'"{raw}"').lower()
+    except json.JSONDecodeError:
+        return raw.lower()
+
+
 def kaikki_subset(wanted: set[str], source: pathlib.Path, is_raw: bool, subset: pathlib.Path) -> None:
     """Streams the big dump once, keeping Spanish entries whose headword is in `wanted`."""
     print(f"Scanning {source.name} for {len(wanted):,} headwords… (one-time, a few minutes)")
@@ -328,17 +336,14 @@ def kaikki_subset(wanted: set[str], source: pathlib.Path, is_raw: bool, subset: 
         for n, line in enumerate(f, 1):
             if is_raw and '"lang_code": "es"' not in line:
                 continue
-            m = WORD_FIELD.search(line)
-            if not m:
-                continue
-            try:
-                w = json.loads(f'"{m.group(1)}"').lower()
-            except json.JSONDecodeError:
-                continue
-            if w not in wanted:
+            # Big entries list related words ({"word": "casas"}, derived terms…) before their own
+            # headword, so the first "word" field in the line is often not the entry's word. Check
+            # every one cheaply, then the real headword after parsing.
+            if not any(raw.lower() in wanted or ("\\" in raw and _unescape(raw) in wanted)
+                       for raw in WORD_FIELD.findall(line)):
                 continue
             e = json.loads(line)
-            if e.get("lang_code", "es") != "es":
+            if e.get("lang_code", "es") != "es" or (e.get("word") or "").lower() not in wanted:
                 continue
             out.write(json.dumps(e, ensure_ascii=False) + "\n")
             kept += 1
@@ -376,6 +381,7 @@ def sense_tags(sense: dict) -> set[str]:
 # of the ego"); shown as a card's meaning they're confusing, and they can't be counted in sentences.
 DESCRIPTION = re.compile(r"^(Used|Said|Expresses|Expressing|Indicates|Indicating|Denotes|Introduces|Refers|"
                          r"Describes|The name of|Name of|A name for|The letter|Letter)\b"
+                         r"|\b(form|synonym|spelling|apocope|diminutive|augmentative|superlative) of\b|^[\"“]|\.\.\.|…\s*\?"
                          r"|\b(concept of|pronoun|particle|suffix|prefix)\b|\bletters?\b.*\b(alphabet|script)\b")
 ARTICLE_GLOSS = [(re.compile(r"\bindefinite article\b", re.I), "a, an"), (re.compile(r"\bdefinite article\b", re.I), "the")]
 
@@ -387,11 +393,20 @@ def translation_of(gloss: str) -> str | None:
             return english
     if not DESCRIPTION.search(gloss):
         return gloss
-    # "Used in emphatic negations, not even" → "not even"
-    tail = gloss.rsplit(",", 1)[1].strip() if "," in gloss else ""
-    if tail and tail[0].islower() and len(tail.split()) <= 4 and not DESCRIPTION.search(tail):
-        return tail
+    if gloss[:1] in "\"“":                                   # '"Not again!" or "What, again?"'
+        return None
+    # "Used in emphatic negations, not even" → "not even"; "it, neuter … pronoun" → "it"
+    for part in (p.strip() for p in gloss.split(",")):
+        if part and part[0].islower() and len(part.split()) <= 4 and not DESCRIPTION.search(part):
+            return part
     return None
+
+
+def short_meaning(gloss: str) -> str:
+    """At most two ways of saying it: "there, over there, thither" → "there, over there"."""
+    parts = [p.strip() for p in gloss.split(",") if p.strip()]
+    out = ", ".join(parts[:2])
+    return out if len(out) <= 32 or len(parts) == 1 else parts[0]
 
 
 def is_letter_or_note(gloss: str, lemma: str, pos: str | None) -> bool:
@@ -409,22 +424,35 @@ def is_letter_or_note(gloss: str, lemma: str, pos: str | None) -> bool:
                           gloss, re.IGNORECASE))
 
 
+# Fine in Spain, vulgar in Mexico.
+BLOCKED_IN_MEXICO = {"coger", "cogí", "coges", "coge", "cogemos", "cogen", "cogió", "cogido"}
+
+
 def is_blocked(entries: list[dict]) -> bool:
-    for e in entries:
-        for s in e.get("senses", []):
-            if sense_tags(s) & BLOCKED_TAGS:
-                return True
-    return False
+    """A word is left out only if it is mainly vulgar or offensive: its first real meaning is, or
+    all of them are. One rude side sense (para = a slur for paramilitary, madre = "thing" in Mexican
+    slang) must not cost the deck para, ir, madre, perro, leche… and every sentence that uses them."""
+    if entries and entries[0].get("word", "").lower() in BLOCKED_IN_MEXICO:
+        return True
+    senses = [s for e in entries if e.get("pos") in POS_LABELS for s in lemma_senses(e)]
+    if not senses:
+        return False
+    return bool(sense_tags(senses[0]) & BLOCKED_TAGS) or all(sense_tags(s) & BLOCKED_TAGS for s in senses)
 
 
 def lemma_senses(e: dict) -> list[dict]:
     """Real definitions (not 'plural of …' / 'alternative form of …')."""
     good = []
     for s in e.get("senses", []):
-        if s.get("form_of") or s.get("alt_of") or not s.get("glosses"):
+        if not s.get("glosses"):
             continue
         g = s["glosses"][-1].lower()
-        if re.match(r"(plural|feminine|masculine|inflection|alternative|obsolete|archaic|misspelling) (form |spelling )?of\b", g):
+        # "apocopic form of mucho; very" is muy's real meaning after the semicolon.
+        translated = ";" in g and g.split(";", 1)[1].strip()
+        if (s.get("form_of") or s.get("alt_of")) and not translated:
+            continue
+        if re.match(r"(plural|feminine|masculine|inflection|alternative|obsolete|archaic|misspelling) (form |spelling )?of\b", g) \
+                and not translated:
             continue
         good.append(s)
     return good
@@ -909,8 +937,19 @@ def build(args) -> list[dict]:
                 if not sense_tags(sense) & (WEAK_TAGS | BLOCKED_TAGS):
                     kws |= set(keywords(clean_gloss(sense["glosses"][-1])))
         # Ignore words that just restate the main word's meaning: comido "having eaten" ≈ comer "eat".
-        base = {k for t in targets for k in gloss_keywords(t)}
-        kws = {k for k in kws if not any(k[:3] == b[:3] for b in base)}
+        # Only participle-like words (comido) and forms of verbs restate them; música "music" is
+        # not just the feminine of músico "musical".
+        # Forms of a verb restate it loosely (comido "eaten" ≈ comer "eat"); forms of a noun or
+        # adjective only with the same English word (corazones "hearts" = corazón "heart"), since
+        # música "music" is not just the feminine of músico "musical".
+        verb_targets = [t for t in targets if any(e.get("pos") == "verb" for e in entries.get(t, []))]
+        if any(e.get("pos") == "adj" for e in own_entries):
+            verb_targets = targets
+        loose = {k for t in verb_targets for k in gloss_keywords(t)}
+        exact = set().union(set(), *(english_variants(k) for t in targets if t not in verb_targets
+                                     for k in gloss_keywords(t)))
+        kws = {k for k in kws if not any(k[:3] == b[:3] for b in loose)
+               and k not in exact and not english_variants(k) & exact}
         variants = set().union(*(english_variants(k) for k in kws)) if kws else set()
         hits = index.get(w, [])
         if not hits:
@@ -956,7 +995,10 @@ def build(args) -> list[dict]:
         own = [e for e in es if lemma_senses(e) and e.get("pos") in POS_LABELS]
         targets = [t for e in es for t in form_of_targets(e) if t != w]
         if own and targets:
-            function_word = any(e.get("pos") in FUNCTION_POS for e in own)
+            # A little word that is also a verb form stays its own word (para ≠ parar, como ≠ comer,
+            # sobre ≠ sobrar); a plural of a little word or noun does not (esos → ese, veces → vez).
+            function_word = (any(e.get("pos") in FUNCTION_POS for e in own)
+                             and any(e.get("pos") == "verb" for t in targets for e in entries.get(t, [])))
             all_weak = all(sense_tags(sn) & (WEAK_TAGS | BLOCKED_TAGS) for e in own for sn in lemma_senses(e))
             share, seen = own_usage_share(w, own, targets)
             weak_target = strength[best_target(targets)] < 0.1 * count
@@ -998,15 +1040,30 @@ def build(args) -> list[dict]:
         for e in entries.get(lemma, []):
             if e.get("pos") not in POS_LABELS:
                 continue
-            for sense in lemma_senses(e)[:5]:
+            # Sub-senses of one parent ("fourth, quarter › quarter-hour", "› quart", "› watch"…) count
+            # as one, so meanings further down the page are still seen (cuarto = room).
+            parents: set[str] = set()
+            distinct = []
+            for sense in lemma_senses(e):
+                parent = sense["glosses"][0] if len(sense["glosses"]) > 1 else None
+                if parent and parent in parents:
+                    continue
+                if parent:
+                    parents.add(parent)
+                distinct.append(sense)
+            for sense in distinct[:8]:
                 tags = sense_tags(sense)
-                if tags & (WEAK_TAGS | BLOCKED_TAGS):
+                if tags & (WEAK_TAGS | BLOCKED_TAGS) or BLOCKED_GLOSS.search(sense["glosses"][-1]):
                     continue
                 # "timeliness; opportunity": every part is a way to say it. All parts are counted
                 # in sentences and the one real sentences use most is shown (see support()).
                 parts = []
-                for part in re.sub(r"\s*\([^)]*\)", "", sense["glosses"][-1]).split(";"):
+                # 'synonym of sala ("room")' → "room": keep the quoted meaning before dropping (…).
+                raw_gloss = re.sub(r"\b(?:synonym|ellipsis|short) (?:form )?of [^(;]+\(“([^”]+)”\)", r"\1", sense["glosses"][-1])
+                for part in re.sub(r"\s*\([^)]*\)", "", raw_gloss).split(";"):
                     g = translation_of(re.sub(r"\s+", " ", part).strip().rstrip("."))
+                    while g and len(g) > 40 and ", " in g:     # "opportunity, chance, shot, break, occasion, time"
+                        g = g.rsplit(", ", 1)[0]
                     if g and len(g) <= 40 and not is_letter_or_note(g, lemma, e.get("pos")) and g not in parts:
                         parts.append(g)
                 if not parts:
@@ -1021,7 +1078,18 @@ def build(args) -> list[dict]:
                 if not kws and any(m["gloss"].lower() == gloss.lower() for m in out):
                     continue
                 out.append({"gloss": gloss, "parts": parts, "kws": kws, "entry": e, "sense": sense})
-        return everyday or specialist
+        # Specialist senses compete on real sentences like any other, after the everyday ones:
+        # tiempo = "time" is filed under physics, casar = "to overturn" under law (0 sentences).
+        for m in specialist:
+            same = next((x for x in everyday if m["kws"] and set(m["kws"]) & set(x["kws"])), None)
+            if same:
+                same["parts"] = list(dict.fromkeys(m["parts"] + same["parts"]))
+                if m["sense"] is lemma_senses(m["entry"])[0] or len(m["gloss"]) < len(same["gloss"]):
+                    same["gloss"] = m["gloss"]
+            else:
+                m["specialist"] = True
+                everyday.append(m)
+        return everyday
 
     def other_word(form: str) -> bool:
         """The form is also a noun / adjective / etc. in its own right (beso, sueño, casa, punto)."""
@@ -1035,7 +1103,8 @@ def build(args) -> list[dict]:
     def after_non_command(sentence: str, form: str) -> bool:
         """A command never follows a subject pronoun, "no" or an object pronoun: yo sé, no sé, lo sé."""
         toks = tokens(sentence)
-        before = {"yo", "tú", "él", "ella", "usted", "no", "lo", "la", "le", "me", "te", "se", "nos", "les", "los", "las", "ya"}
+        before = {"yo", "tú", "él", "ella", "usted", "no", "lo", "la", "le", "me", "te", "se", "nos", "les", "los", "las",
+                  "ya", "que", "qué", "si", "lo"}
         return any(t == form and i and toks[i - 1] in before for i, t in enumerate(toks))
 
     def support(lemma: str, meaning: dict, novice: bool):
@@ -1058,7 +1127,7 @@ def build(args) -> list[dict]:
             for k in index.get(form, []):
                 if not (scored[k][3] & variants):
                     continue
-                if only_command and after_non_command(scored[k][1], form):
+                if only_command and (lemma in NO_COMMAND_VERBS or after_non_command(scored[k][1], form)):
                     continue                  # "yo sé" is saber, not the command of ser
                 count += 1
                 cands.append((scored[k][0] + penalty, k, form))
@@ -1149,11 +1218,18 @@ def build(args) -> list[dict]:
         # Most-used meaning first; Wiktionary's order breaks ties.
         # Most-used first; ties (often 0, e.g. "the" can't be counted) go to function words, then
         # Wiktionary's order, so la = "the" beats the musical note "A".
-        meanings.sort(key=lambda m: (-m["count"], m["entry"].get("pos") not in FUNCTION_POS, m["order"]))
+        meanings.sort(key=lambda m: (m.get("specialist", False), -m["count"],
+                                     m["entry"].get("pos") not in FUNCTION_POS, m["order"]))
         if anchored:
             meanings.remove(lead)
             meanings.insert(0, lead)
         primary = meanings[0]
+        # The dictionary's meanings don't match how the word is used: plenty of sentences, none
+        # with any of its meanings (sitio = "siege", casar = "to overturn" when the everyday
+        # meaning is missing). Better no card than a wrong one.
+        sentences = sum(len(index.get(f, [])) for f in spanish_forms(lemma, primary["entry"]))
+        if not anchored and primary["kws"] and all(m["count"] == 0 for m in meanings) and sentences >= 10:
+            skipped["meanings don't match real sentences"] += 1; continue
         if not primary["example"] and (len(meanings) == 1 or anchored):
             # Only one meaning (or a function word's main one, which nearly every use has), so any
             # sentence with the word is safe to use.
@@ -1164,13 +1240,14 @@ def build(args) -> list[dict]:
         if not primary["example"]:
             skipped["no matching example sentence"] += 1; continue
 
-        # Other meanings only when real sentences use them (≥2, and ≥5% as often as the main one).
-        # This keeps out rare dictionary senses like sitio = "siege" or cabeza = "guy".
+        # Other meanings only when real sentences use them often (≥5, and ≥15% as often as the main
+        # one). This keeps out rare senses (sitio = "siege", cabeza = "guy") and near-synonyms
+        # (ganar = "to gain" next to "to win") that only crowd the card.
         others = [m for m in meanings[1:]
-                  if m["example"] and m["count"] >= max(2, 0.05 * primary["count"])][:2]
+                  if m["example"] and m["count"] >= max(5, 0.15 * primary["count"])][:2]
 
         card = {
-            "id": slug(lemma), "spanish": lemma, "english": primary["gloss"],
+            "id": slug(lemma), "spanish": lemma, "english": short_meaning(primary["gloss"]),
             "partOfSpeech": pos_label(primary["entry"]),
             "phonetic": respell(lemma), "example": primary["example"][0], "exampleTranslation": primary["example"][1],
             "level": level_for(rank), "kind": "phrase" if primary["entry"]["pos"] == "phrase" else "word",
@@ -1183,7 +1260,7 @@ def build(args) -> list[dict]:
         if others:
             card["otherMeanings"] = []
             for m in others:
-                om = {"english": m["gloss"], "partOfSpeech": pos_label(m["entry"]),
+                om = {"english": short_meaning(m["gloss"]), "partOfSpeech": pos_label(m["entry"]),
                       "example": m["example"][0], "exampleTranslation": m["example"][1]}
                 if m["entry"] is not primary["entry"]:
                     om["forms"] = key_forms(m["entry"], lemma)
@@ -1228,7 +1305,7 @@ def explain_choices(words, entries, freq, strength, lemma_count, folded, ranked,
         for e in entries.get(w, []):
             print(f"  [{e.get('pos')}] forms: {len(e.get('forms') or [])}"
                   + (f" · head: {e['head_templates'][0].get('expansion', '')}" if e.get("head_templates") else ""))
-            for sn in e.get("senses", [])[:8]:
+            for sn in e.get("senses", [])[:30]:
                 extra = []
                 if sn.get("form_of"): extra.append("form of " + ", ".join(t.get("word", "") for t in sn["form_of"]))
                 if sn.get("tags"): extra.append("tags " + ",".join(sn["tags"]))
@@ -1287,6 +1364,31 @@ def merge() -> None:
     from curated_forms import FORMS as CURATED_FORMS, MEANING_FORMS, EXAMPLE_NOTES
 
     generated_forms = {g["spanish"].lower(): g["forms"] for g in generated if g.get("forms")}
+    generated_by_word = {g["spanish"].lower(): g for g in generated}
+
+    def meaning_keys(text: str) -> set[str]:
+        return {w[:5] for w in re.findall(r"[a-z]+", text.lower()) if w not in STOPWORDS | {"you", "it"} and len(w) > 2}
+
+    def with_dictionary_meanings(c: dict) -> dict:
+        """A hand-written card keeps its Mexican example, pattern and tip, and gains the everyday
+        meanings the dictionary found in real sentences that it doesn't list yet (salud = health,
+        conocer = to meet). Only for nouns, verbs and adjectives, and only when the dictionary's
+        main meaning agrees with the hand-written one: little words (y, de, mi) and the few
+        words the dictionary gets wrong (ir = "to extend in time or space") stay as written."""
+        g = generated_by_word.get(c["spanish"].lower())
+        if not g or c.get("kind") == "phrase" or not c["partOfSpeech"].startswith(("noun", "verb", "adjective")):
+            return c
+        mine = [c["english"]] + [m["english"] for m in c.get("otherMeanings") or []]
+        have = set().union(*(meaning_keys(m) for m in mine))
+        if not meaning_keys(g["english"]) & have:
+            return c
+        extra = []
+        for m in g.get("otherMeanings") or []:
+            keys = meaning_keys(m["english"])
+            if keys and not keys & have and m.get("example") and len(mine) + len(extra) < 4:
+                extra.append({k: v for k, v in m.items() if v})
+                have |= keys
+        return {**c, "otherMeanings": (c.get("otherMeanings") or []) + extra} if extra else c
     deck, ids = [], set()
     curated_words = {c["spanish"].lower() for c in curated}
     with_forms = 0
@@ -1296,6 +1398,7 @@ def merge() -> None:
         if forms:
             c = {**c, "forms": forms}; with_forms += 1
         c = annotate_curated_example(c, EXAMPLE_NOTES.get(c["spanish"]))
+        c = with_dictionary_meanings(c)
         if c.get("otherMeanings"):
             c = {**c, "otherMeanings": [
                 {**m, "forms": MEANING_FORMS[(c["spanish"], i)]} if (c["spanish"], i) in MEANING_FORMS else m
