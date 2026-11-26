@@ -122,7 +122,11 @@ struct Phrase: Codable, Hashable, Identifiable, Sendable {
     var situationInfo: Situation? { situation.flatMap(Situation.init(rawValue:)) }
     var contextLabel: String {
         if let s = situationInfo { return "\(s.emoji) \(s.label)" }
-        return source == "tatoeba" ? "📖 Real sentence" : "✨ Everyday"
+        switch source {
+        case "tatoeba": return "📖 Real sentence"
+        case "example": return "📌 Example"
+        default: return "✨ Everyday"
+        }
     }
 }
 

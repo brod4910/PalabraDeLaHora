@@ -42,7 +42,7 @@ Since the word for any moment can be computed, the widget pre-builds the next 24
 
 ## Everyday phrases
 
-Every card has an **Everyday phrases** section with short, natural things people say with the word. Each phrase has a situation (🏠 at home, 🍽️ food, 💬 texting, ❤️ couple…), the word highlighted, Play/Slow buttons, and a beginner note for new forms. The **Phrases** tab (Phrasebook) collects every phrase from the words she has seen, by word or by situation, with search and ⭐ favorites. Verbal "repeat after me" and fill-in-the-blank quizzes use phrases too, and the medium/large widget can show a **phrase of the hour** (Settings › Widget).
+Every card has one **Examples** panel that shows a single sentence at a time: the card's example first, then one for each other meaning, then everyday phrases — short, natural things people say with the word. **Next example** goes through them, and **Show me another** (with an API key) writes a new one. Each phrase has a situation (🏠 at home, 🍽️ food, 💬 texting, ❤️ couple…), the word highlighted, Play/Slow buttons, and a beginner note for new forms. The **Phrases** tab (Phrasebook) collects every phrase from the words she has seen, by word or by situation, with search and ⭐ favorites. Verbal "repeat after me" and fill-in-the-blank quizzes use phrases too, and the medium/large widget can show a **phrase of the hour** (Settings › Widget).
 
 Phrases come from three places:
 

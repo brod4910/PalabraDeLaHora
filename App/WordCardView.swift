@@ -14,11 +14,10 @@ struct WordCardView: View {
         VStack(alignment: .leading, spacing: 16) {
             hero
 
-            // Meaning 1 (the main one): its sentence, key forms and how to use it.
-            section(title: hasExtraMeanings ? "1 · \(word.english)" : "In a sentence",
-                    systemImage: hasExtraMeanings ? "1.circle.fill" : "text.quote") {
-                exampleBlock(word.example, word.exampleTranslation, word: word.exampleWord, note: word.exampleNote)
-            }
+            // One sentence at a time; "Next example" for more.
+            ExamplesPanel(word: word)
+                .id(word.id)
+
             formsSection(word.formRows, title: "Key forms")
             if word.formRows.isEmpty && word.neverChangesForm {
                 section(title: "Key forms", systemImage: "tablecells") {
@@ -33,28 +32,6 @@ struct WordCardView: View {
                 }
             }
 
-            // Other meanings, each with its own example (and key forms when they differ).
-            ForEach(Array(word.extraMeanings.enumerated()), id: \.offset) { i, meaning in
-                section(title: "\(i + 2) · \(meaning.english)", systemImage: "\(i + 2).circle.fill") {
-                    if let pos = meaning.partOfSpeech {
-                        Text(pos).font(.caption.weight(.semibold)).foregroundStyle(.secondary)
-                    }
-                    if let example = meaning.example {
-                        exampleBlock(example, meaning.exampleTranslation ?? "",
-                                     word: meaning.exampleWord, note: meaning.exampleNote)
-                    }
-                    if !meaning.formRows.isEmpty {
-                        Divider().padding(.vertical, 4)
-                        PatternView(rows: meaning.formRows, onSpeak: { row in
-                            if let text = row.spokenText { speaker.speak(text) }
-                        })
-                    }
-                }
-            }
-
-            EverydayPhrasesSection(word: word)
-                .id(word.id)
-
             if let tip = word.tip {
                 section(title: "Tip", systemImage: "lightbulb.fill") {
                     Text(tip)
@@ -63,27 +40,6 @@ struct WordCardView: View {
         }
         .onAppear {
             if autoplay { speaker.speak([word.spanish, word.example]) }
-        }
-    }
-
-    private func exampleBlock(_ example: String, _ translation: String,
-                              word highlight: String? = nil, note: String? = nil) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(highlighted(example, word: highlight, color: Theme.coral))
-                .font(.title3.weight(.medium))
-                .fontDesign(.serif)
-                .italic()
-            Text(translation)
-                .foregroundStyle(.secondary)
-            if let note {
-                ExampleNoteView(note: note)
-                    .padding(.top, 2)
-            }
-            HStack {
-                PlayButton(title: "Play", systemImage: "play.fill") { speaker.speak(example) }
-                PlayButton(title: "Slow", systemImage: "tortoise.fill") { speaker.speak(example, slow: true) }
-            }
-            .padding(.top, 4)
         }
     }
 

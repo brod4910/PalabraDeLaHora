@@ -26,15 +26,17 @@ struct PhraseRow: View {
                     Text(wordLabel).font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Button {
-                    LivePhraseStore.toggleFavorite(phrase.id)
-                    isFavorite.toggle()
-                } label: {
-                    Image(systemName: isFavorite ? "star.fill" : "star")
-                        .foregroundStyle(isFavorite ? Theme.sun : .secondary)
+                if phrase.source != "example" {        // the card's own examples are starred with the card
+                    Button {
+                        LivePhraseStore.toggleFavorite(phrase.id)
+                        isFavorite.toggle()
+                    } label: {
+                        Image(systemName: isFavorite ? "star.fill" : "star")
+                            .foregroundStyle(isFavorite ? Theme.sun : .secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(isFavorite ? "Remove from favorites" : "Add to favorites")
                 }
-                .buttonStyle(.plain)
-                .accessibilityLabel(isFavorite ? "Remove from favorites" : "Add to favorites")
             }
             Text(highlighted(phrase.es, word: phrase.form, color: Theme.coral))
                 .font(.body.weight(.medium))
@@ -61,76 +63,119 @@ struct PhraseRow: View {
 // MARK: - On the study card
 
 /// "Everyday phrases" on a card, with "Show me another" when an API key is set.
-struct EverydayPhrasesSection: View {
+/// One sentence at a time: the card's example, its other meanings' examples, then everyday
+/// phrases. "Next" goes through them; "Show me another" writes a new one (with an API key).
+struct ExamplesPanel: View {
     let word: Word
 
+    @EnvironmentObject private var speaker: Speaker
     @StateObject private var live = LiveGenerator()
-    @State private var phrases: [Phrase] = []
-    @State private var showAll = false
+    @State private var items: [Phrase] = []
+    @State private var index = 0
     @State private var hasKey = APIKeyStore.hasKey
 
-    private let initiallyShown = 4
+    private var meanings: [String] { [word.english] + word.extraMeanings.map(\.english) }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Label("Everyday phrases", systemImage: "bubble.left.and.bubble.right.fill")
-                .font(.caption.weight(.bold))
-                .textCase(.uppercase)
-                .foregroundStyle(Theme.coral)
-
-            if phrases.isEmpty {
-                Text(hasKey ? "No phrases yet — tap below to write one."
-                            : "No phrases yet. Run tools/generate_phrases.py, or add an API key in Settings to write them here.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-
-            ForEach(showAll ? phrases : Array(phrases.prefix(initiallyShown))) { phrase in
-                PhraseRow(phrase: phrase)
-                if phrase.id != (showAll ? phrases : Array(phrases.prefix(initiallyShown))).last?.id {
-                    Divider()
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Label("Examples", systemImage: "text.quote")
+                    .font(.caption.weight(.bold))
+                    .textCase(.uppercase)
+                    .foregroundStyle(Theme.coral)
+                Spacer()
+                if items.count > 1 {
+                    Text("\(index + 1) of \(items.count)")
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(.secondary)
                 }
             }
 
-            if phrases.count > initiallyShown {
-                Button(showAll ? "Show fewer" : "Show all \(phrases.count) phrases") {
-                    withAnimation { showAll.toggle() }
+            if items.indices.contains(index) {
+                let item = items[index]
+                if meanings.count > 1 {
+                    let m = min(item.meaning ?? 0, meanings.count - 1)
+                    Text("Meaning \(m + 1) · \(meanings[m])")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
                 }
-                .font(.subheadline.weight(.semibold))
+                PhraseRow(phrase: item)
+                    .id(item.id)
+                    .transition(.opacity)
+                if let m = item.meaning, m > 0, word.extraMeanings.indices.contains(m - 1),
+                   !word.extraMeanings[m - 1].formRows.isEmpty {
+                    PatternView(rows: word.extraMeanings[m - 1].formRows, onSpeak: { row in
+                        if let text = row.spokenText { speaker.speak(text) }
+                    })
+                }
             }
 
-            if hasKey {
-                Button {
-                    Task {
-                        if let phrase = await live.newPhrase(for: word) {
-                            withAnimation { phrases.append(phrase); showAll = true }
+            HStack(spacing: 10) {
+                if index > 0 {
+                    Button {
+                        withAnimation(.snappy) { index -= 1 }
+                    } label: {
+                        Label("Back", systemImage: "chevron.left")
+                    }
+                    .buttonStyle(.bordered)
+                }
+                if index + 1 < items.count {
+                    Button {
+                        withAnimation(.snappy) { index += 1 }
+                    } label: {
+                        Label("Next example", systemImage: "chevron.right")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                } else if hasKey {
+                    Button {
+                        Task {
+                            if let phrase = await live.newPhrase(for: word) {
+                                withAnimation(.snappy) { items.append(phrase); index = items.count - 1 }
+                            }
                         }
+                    } label: {
+                        HStack {
+                            if live.isWorking { ProgressView().controlSize(.small) }
+                            Label(live.isWorking ? "Writing one…" : "Show me another", systemImage: "sparkles")
+                        }
+                        .frame(maxWidth: .infinity)
                     }
-                } label: {
-                    HStack {
-                        if live.isWorking { ProgressView().controlSize(.small) }
-                        Label(live.isWorking ? "Writing a phrase…" : "Show me another",
-                              systemImage: "sparkles")
-                    }
-                    .frame(maxWidth: .infinity)
+                    .buttonStyle(.borderedProminent)
+                    .disabled(live.isWorking)
                 }
-                .buttonStyle(.bordered)
-                .tint(Theme.coral)
-                .disabled(live.isWorking)
-                .padding(.top, 4)
+            }
+            .tint(Theme.coral)
+            .controlSize(.regular)
 
-                if let error = live.lastError {
-                    Text(error).font(.caption).foregroundStyle(.red)
-                }
+            if let error = live.lastError {
+                Text(error).font(.caption).foregroundStyle(.red)
             }
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         .onAppear {
-            phrases = word.allPhrases
+            items = Self.examples(for: word)
+            index = 0
             hasKey = APIKeyStore.hasKey
         }
+    }
+
+    /// The card's own example first, then one example per other meaning, then everyday phrases.
+    static func examples(for word: Word) -> [Phrase] {
+        var out = [Phrase(id: "example-\(word.id)", es: word.example, en: word.exampleTranslation, situation: nil,
+                          form: word.exampleWord, note: word.exampleNote, source: "example", meaning: 0)]
+        for (i, m) in word.extraMeanings.enumerated() {
+            if let ex = m.example {
+                out.append(Phrase(id: "example-\(word.id)-\(i + 1)", es: ex, en: m.exampleTranslation ?? "",
+                                  situation: nil, form: m.exampleWord, note: m.exampleNote, source: "example",
+                                  meaning: i + 1))
+            }
+        }
+        let seen = Set(out.map { $0.es.lowercased() })
+        out += word.allPhrases.filter { !seen.contains($0.es.lowercased()) }
+        return out
     }
 }
 
