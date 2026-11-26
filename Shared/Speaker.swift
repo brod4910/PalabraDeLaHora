@@ -248,14 +248,11 @@ final class Speaker: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @u
     // MARK: Private
 
     private func activateAudioSession() {
-        let session = AVAudioSession.sharedInstance()
-        // .playback so it speaks even with the silent switch on; duck other audio instead of stopping it.
-        try? session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
-        try? session.setActive(true)
+        AudioSessionManager.shared.activate(AudioSessionManager.playback)
     }
 
     private func deactivateAudioSession() {
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        AudioSessionManager.shared.deactivateSoon()
     }
 
     private func resumeContinuation() {

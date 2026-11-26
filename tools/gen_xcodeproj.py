@@ -29,7 +29,7 @@ FILETYPES = {
 
 groups = {
     "Shared": ["Word.swift", "AppSettings.swift", "WordSchedule.swift", "Speaker.swift",
-               "SpeakWordIntent.swift", "SlowSpeech.swift", "LearningProgress.swift", "PatternView.swift", "LivePhraseStore.swift", "Theme.swift", "RecordedVoice.swift", "words.json"],
+               "SpeakWordIntent.swift", "SlowSpeech.swift", "LearningProgress.swift", "PatternView.swift", "LivePhraseStore.swift", "Theme.swift", "RecordedVoice.swift", "AudioSessionManager.swift", "words.json"],
     "App": ["PalabraApp.swift", "ContentView.swift", "WordCardView.swift", "ReviewView.swift",
             "SettingsView.swift", "QuizView.swift", "SpeechListener.swift", "PhrasesView.swift", "LiveGenerator.swift", "NotificationScheduler.swift", "QuizSounds.swift", "Assets.xcassets", "Audio",
             "Sounds/correct.wav", "Sounds/wrong.wav", "Sounds/complete.wav", "Info.plist",

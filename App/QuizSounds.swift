@@ -12,12 +12,8 @@ enum QuizSounds {
 
     static func play(_ sound: QuizSound) {
         guard AppSettings.quizSoundsEnabled else { return }
-        let session = AVAudioSession.sharedInstance()
-        // Don't change the category while the voice is playing (it would cut it off).
-        if session.category != .playback {
-            try? session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
-        }
-        try? session.setActive(true)
+        // Same session as the voice, so a chime never cuts the voice off.
+        AudioSessionManager.shared.activate(AudioSessionManager.playback)
         if players[sound] == nil, let url = Bundle.main.url(forResource: sound.rawValue, withExtension: "wav") {
             let player = try? AVAudioPlayer(contentsOf: url)
             player?.volume = 0.6
@@ -26,5 +22,8 @@ enum QuizSounds {
         }
         players[sound]?.currentTime = 0
         players[sound]?.play()
+        if !Speaker.shared.isSpeaking {             // the voice switches it off itself when it's done
+            AudioSessionManager.shared.deactivateSoon(after: 2)
+        }
     }
 }

@@ -27,6 +27,10 @@
 			isa = PBXBuildFile;
 			fileRef = 6647958953A7485B374FE255;
 		};
+		2AE298D2B6A05BA440315F54 = {
+			isa = PBXBuildFile;
+			fileRef = 8AA609183DC76CCE18DCE269;
+		};
 		3766CF7477FABE1511CC4CE6 = {
 			isa = PBXBuildFile;
 			fileRef = C393BF19D8473F0058CF5870;
@@ -147,6 +151,10 @@
 		D2859354E45DE6E7C138BB54 = {
 			isa = PBXBuildFile;
 			fileRef = 4D3B9340B20651CD3E227132;
+		};
+		D42EF678BC6C4465E7D88FC8 = {
+			isa = PBXBuildFile;
+			fileRef = 8AA609183DC76CCE18DCE269;
 		};
 		D8BDD52ECDAC25CDEAABA992 = {
 			isa = PBXBuildFile;
@@ -345,6 +353,12 @@
 			path = PalabraDeLaHora.entitlements;
 			sourceTree = "<group>";
 		};
+		8AA609183DC76CCE18DCE269 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = AudioSessionManager.swift;
+			sourceTree = "<group>";
+		};
 		8B1488007FB128F94A4D13E2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.swift;
@@ -525,6 +539,7 @@
 				CE1091B3394C87B9178D1F35,
 				2ADB1AD68DE779C2DDFE7691,
 				6647958953A7485B374FE255,
+				8AA609183DC76CCE18DCE269,
 				780EED58566ECFA78B446FBB,
 			);
 			path = Shared;
@@ -649,6 +664,7 @@
 				7553E7179672BF412D8D00CA,
 				EF226052074D41BB128EA919,
 				4375DC2948D8A572DAB14590,
+				D42EF678BC6C4465E7D88FC8,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +694,7 @@
 				E549AD6AA4A651FB6D37CECC,
 				1FA207B9761973B629E6DB16,
 				220591D82DBDB4C2B32BD2BD,
+				2AE298D2B6A05BA440315F54,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,14 +33,7 @@ final class SpeechListener: ObservableObject {
             return ""
         }
 
-        let session = AVAudioSession.sharedInstance()
-        do {
-            try session.setCategory(.playAndRecord, mode: .measurement,
-                                    options: [.defaultToSpeaker, .duckOthers, .allowBluetooth])
-            try session.setActive(true, options: .notifyOthersOnDeactivation)
-        } catch {
-            return ""
-        }
+        guard AudioSessionManager.shared.activate(AudioSessionManager.listening) else { return "" }
 
         let request = SFSpeechAudioBufferRecognitionRequest()
         request.shouldReportPartialResults = true
@@ -116,7 +109,7 @@ final class SpeechListener: ObservableObject {
         request?.endAudio(); request = nil
         task?.cancel(); task = nil
         isListening = false
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        AudioSessionManager.shared.deactivateSoon(after: 0.5)
     }
 }
 
