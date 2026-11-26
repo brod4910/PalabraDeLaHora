@@ -419,8 +419,10 @@ def find_word(pcm: array.array, rate: int) -> tuple[float, float]:
     if not gaps:
         gaps = [(spans[k + 1][0] - spans[k][1], k) for k in range(len(spans) - 1)]
     _, k = max(gaps)
-    start = max(0.0, spans[k + 1][0] * 0.02 - 0.05)
-    end = min(len(pcm) / rate, (speech_end + 1) * 0.02 + 0.12)
+    # ~150 ms of the quiet pause before the word: a soft first sound (the t of tener) is otherwise
+    # lost while playback starts. Never reaching back into the lead-in's last word.
+    start = max(0.0, (spans[k][1] + 1) * 0.02 + 0.02, spans[k + 1][0] * 0.02 - 0.15)
+    end = min(len(pcm) / rate, (speech_end + 1) * 0.02 + 0.15)
     return start, end
 
 
@@ -436,14 +438,7 @@ def record_in_carrier(text: str, voice: str, args, key: str) -> tuple[bytes, byt
         body["deliveryMode"] = "BALANCED"
     data = request("/tts/v1/voice", key, body)
     whole = base64.b64decode(data["audioContent"])
-    with wave.open(io.BytesIO(whole)) as w:
-        rate, width, channels = w.getframerate(), w.getsampwidth(), w.getnchannels()
-        frames = w.readframes(w.getnframes())
-    if width != 2:
-        raise RuntimeError(f"unexpected sample width {width}")
-    pcm = array.array("h", frames)
-    if channels > 1:
-        pcm = array.array("h", pcm[::channels])
+    pcm, rate = read_wav(whole)
     # Keep the whole take and Inworld's word timings, to look at if a cut sounds wrong.
     takes = AUDIO / voice / "_takes"
     takes.mkdir(parents=True, exist_ok=True)
@@ -451,21 +446,53 @@ def record_in_carrier(text: str, voice: str, args, key: str) -> tuple[bytes, byt
     (takes / f"{slug}.wav").write_bytes(whole)
     (takes / f"{slug}.json").write_text(json.dumps({"phrase": phrase, "timestampInfo": data.get("timestampInfo")},
                                                    ensure_ascii=False, indent=1), encoding="utf-8")
+    heard = transcribe(whole, args, key, encoding="LINEAR16")
+    return whole, cut_word(pcm, rate), heard
+
+
+def read_wav(data: bytes) -> tuple[array.array, int]:
+    with wave.open(io.BytesIO(data)) as w:
+        rate, width, channels = w.getframerate(), w.getsampwidth(), w.getnchannels()
+        frames = w.readframes(w.getnframes())
+    if width != 2:
+        raise RuntimeError(f"unexpected sample width {width}")
+    pcm = array.array("h", frames)
+    return (array.array("h", pcm[::channels]) if channels > 1 else pcm), rate
+
+
+def cut_word(pcm: array.array, rate: int) -> bytes:
+    """The word from a lead-in take, as a mono WAV with 12 ms fades (no clicks)."""
     start, end = find_word(pcm, rate)
     samples = pcm[int(start * rate): int(end * rate)]
     if not samples or max(abs(x) for x in samples) < 800:
         raise RuntimeError("the cut came out silent")
-    fade = min(int(0.012 * rate), len(samples) // 4)          # 12 ms fades: no clicks at the cut
+    fade = min(int(0.012 * rate), len(samples) // 4)
     for i in range(fade):
         samples[i] = int(samples[i] * i / fade)
         samples[-1 - i] = int(samples[-1 - i] * i / fade)
-    channels = 1
     out = io.BytesIO()
     with wave.open(out, "wb") as w:
-        w.setnchannels(channels); w.setsampwidth(width); w.setframerate(rate)
+        w.setnchannels(1); w.setsampwidth(2); w.setframerate(rate)
         w.writeframes(samples.tobytes())
-    heard = transcribe(whole, args, key, encoding="LINEAR16")
-    return whole, out.getvalue(), heard
+    return out.getvalue()
+
+
+def recut(texts: list[str], voice: str) -> None:
+    """Cut the words again from the saved lead-in takes (_takes/): free, same take."""
+    folder = AUDIO / voice
+    manifest_path = folder / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    for text in texts:
+        take = folder / "_takes" / f"{hashlib.sha1(text.encode('utf-8')).hexdigest()[:10]}.wav"
+        if not take.exists():
+            print(f"  no saved take for {text!r} — run --redo {text!r} --cut first"); continue
+        pcm, rate = read_wav(take.read_bytes())
+        wav = cut_word(pcm, rate)
+        for cid, m in manifest.items():
+            if m["text"] == text and not m["kind"].startswith("slow-"):
+                m["file"] = save_cut(folder, cid, wav)
+                print(f"  re-cut: {text} → {m['file']}")
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
 
 def save_cut(folder: pathlib.Path, cid: str, wav: bytes) -> str:
@@ -633,6 +660,8 @@ def main() -> None:
     ap.add_argument("--check", action="store_true", help="transcribe the clips and flag mispronounced ones")
     ap.add_argument("--redo-flagged", action="store_true", help="with --check: re-record the flagged clips, then check again")
     ap.add_argument("--redo", nargs="+", metavar="TEXT", help="re-record the clips for these texts (any kind)")
+    ap.add_argument("--recut", nargs="+", metavar="TEXT",
+                    help="cut these words again from their saved sentence takes (free, no API call)")
     ap.add_argument("--cut", action="store_true",
                     help="with --redo: say the word inside a sentence and cut it out (for words a voice won't say right on their own)")
     ap.add_argument("--redo-kind", nargs="+", choices=["word", "form", "sentence", "slow"],
@@ -646,6 +675,10 @@ def main() -> None:
 
     if args.export:
         export(voices[0], args)
+        return
+    if args.recut:
+        recut(args.recut, voices[0])
+        print("Run --export again to update the app.")
         return
 
     key = os.environ.get("INWORLD_API_KEY", "").strip()
