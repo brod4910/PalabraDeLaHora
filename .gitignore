@@ -9,3 +9,4 @@ tools/.cache/
 # Recorded clips (tools/generate_audio.py --export)
 App/Audio/*
 !App/Audio/README.md
+tools/signing.local.json

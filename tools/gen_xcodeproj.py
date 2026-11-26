@@ -1,14 +1,31 @@
 #!/usr/bin/env python3
 """Generates PalabraDeLaHora.xcodeproj/project.pbxproj.
 
-You only need this if you add/rename files and don't want to do it in Xcode
-(or use XcodeGen with project.yml instead). Run from the repo root:
+Run from the repo root:
     python3 tools/gen_xcodeproj.py
+    python3 tools/gen_xcodeproj.py --bundle-id com.yourname.palabra --team ABCDE12345
+
+--bundle-id / --team set your signing once (Team ID: developer.apple.com/account → Membership
+details). They're saved in tools/signing.local.json (git-ignored) and reused on every later run,
+so regenerating the project never resets them.
 """
-import hashlib, pathlib, re
+import argparse, hashlib, json, pathlib, re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 APP, WIDGET = "PalabraDeLaHora", "PalabraWidgetExtension"
+
+_ap = argparse.ArgumentParser(description="Generate the Xcode project")
+_ap.add_argument("--bundle-id", help="e.g. com.yourname.palabra (also sets the widget ID and App Group)")
+_ap.add_argument("--team", help="your 10-character Apple Developer Team ID")
+_args = _ap.parse_args()
+SIGNING_FILE = ROOT / "tools" / "signing.local.json"
+signing = json.loads(SIGNING_FILE.read_text()) if SIGNING_FILE.exists() else {}
+if _args.bundle_id: signing["bundle_id"] = _args.bundle_id.strip()
+if _args.team: signing["team"] = _args.team.strip()
+if _args.bundle_id or _args.team:
+    SIGNING_FILE.write_text(json.dumps(signing, indent=1) + "\n")
+BUNDLE_ID = signing.get("bundle_id", "com.example.palabra")
+TEAM = signing.get("team", "")
 
 def oid(*parts):
     return hashlib.md5("|".join(parts).encode()).hexdigest()[:24].upper()
@@ -119,7 +136,7 @@ PROJECT_COMMON = {
     "CLANG_ENABLE_OBJC_ARC": "YES",
     "CLANG_ENABLE_OBJC_WEAK": "YES",
     "COPY_PHASE_STRIP": "NO",
-    "DEVELOPMENT_TEAM": "",
+    "DEVELOPMENT_TEAM": TEAM,
     "ENABLE_STRICT_OBJC_MSGSEND": "YES",
     "ENABLE_USER_SCRIPT_SANDBOXING": "YES",
     "GCC_C_LANGUAGE_STANDARD": "gnu17",
@@ -127,7 +144,7 @@ PROJECT_COMMON = {
     "IPHONEOS_DEPLOYMENT_TARGET": "17.0",
     "LOCALIZATION_PREFERS_STRING_CATALOGS": "YES",
     # ⬇︎ Change this one value to your own reverse-DNS prefix. Bundle IDs and the App Group derive from it.
-    "PALABRA_BUNDLE_ID": "com.example.palabra",
+    "PALABRA_BUNDLE_ID": BUNDLE_ID,
     "SDKROOT": "iphoneos",
     "SWIFT_VERSION": "5.0",
 }
