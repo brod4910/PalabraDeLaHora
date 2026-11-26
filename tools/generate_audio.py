@@ -493,6 +493,8 @@ def main() -> None:
     ap.add_argument("--check", action="store_true", help="transcribe the clips and flag mispronounced ones")
     ap.add_argument("--redo-flagged", action="store_true", help="with --check: re-record the flagged clips, then check again")
     ap.add_argument("--redo", nargs="+", metavar="TEXT", help="re-record the clips for these texts (any kind)")
+    ap.add_argument("--redo-kind", nargs="+", choices=["word", "form", "sentence", "slow"],
+                    help="re-record every clip of these kinds for --levels, with Spanish context, checking each take")
     ap.add_argument("--export", action="store_true",
                     help="copy this voice's recorded clips into App/Audio/ for the app (records nothing)")
     ap.add_argument("--dry-run", action="store_true", help="count characters and cost, call nothing")
@@ -515,6 +517,21 @@ def main() -> None:
         wanted = {lookup_key(t) for t in args.redo}
         redo([cid for cid, m in manifest.items() if lookup_key(m["text"]) in wanted
               and (not m["kind"].startswith("slow-") or m["kind"] == f"slow-{args.slow_style}")], voices[0], args, key)
+        print("Run --export again to update the app.")
+        return
+    if args.redo_kind:
+        deck = json.loads(DECK.read_text(encoding="utf-8"))
+        kinds = {("slow-" + args.slow_style) if k == "slow" else k for k in args.redo_kind}
+        cids = list(dict.fromkeys(clip_id(c, voices[0], args) for card in deck if card["level"] in args.levels
+                                  for c in clips_for(card, args) if c["kind"] in kinds))
+        manifest = json.loads((AUDIO / voices[0] / "manifest.json").read_text(encoding="utf-8"))
+        cids = [c for c in cids if c in manifest]
+        chars = sum(len(manifest[c]["text"]) for c in cids)
+        print(f"{len(cids):,} clips ({', '.join(sorted(kinds))}) for {', '.join(args.levels)} · ≈ {chars:,}–{chars * 3:,} "
+              f"characters (1–3 takes) ≈ ${chars / 1e6 * PRICE_PER_MILLION:.2f}–${chars * 3 / 1e6 * PRICE_PER_MILLION:.2f}")
+        if not args.yes and input("Re-record them? [y/N] ").strip().lower() != "y":
+            return
+        redo(cids, voices[0], args, key)
         print("Run --export again to update the app.")
         return
     if args.check:
