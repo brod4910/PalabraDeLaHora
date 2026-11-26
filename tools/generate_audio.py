@@ -404,7 +404,7 @@ def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
     attempts = [("BALANCED", lambda t: t), ("CREATIVE", lambda t: t.rstrip(".!?") + "."),
                 ("BALANCED", lambda t: t[:1].upper() + t[1:].rstrip(".!?") + "!")]
     context = [CARRIER]
-    for cid in cids:
+    def one(cid):
         m = manifest[cid]
         slow = m["kind"].startswith("slow-")
         best = None
@@ -420,15 +420,29 @@ def redo(cids: list[str], voice: str, args, key: str, takes: int = 3) -> None:
                 best = (ok, score, audio, heard)
             if ok:
                 break
-        ok, score, audio, heard = best
-        (folder / m["file"]).write_bytes(audio)
-        if heard:
-            results[cid] = heard
-        else:
-            results.pop(cid, None)
-        heard_text = after_carrier(heard) if heard else ""
-        label = "re-recorded (slow)" if slow else ("fixed" if ok else "still off — listen, or try --redo again")
-        print(f"  {label}: {m['text']}" + (f"  (heard “{heard_text}”, {score:.2f})" if heard else ""))
+        return cid, slow, best
+
+    still_off = []
+    with futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
+        for fut in futures.as_completed([pool.submit(one, c) for c in cids]):
+            try:
+                cid, slow, (ok, score, audio, heard) = fut.result()
+            except Exception as err:                 # noqa: BLE001 — keep going
+                print("  error:", str(err)[:200]); continue
+            m = manifest[cid]
+            (folder / m["file"]).write_bytes(audio)
+            if heard:
+                results[cid] = heard
+            else:
+                results.pop(cid, None)
+            if not ok:
+                still_off.append(m["text"])
+            if len(cids) <= 30 or not ok:
+                label = "re-recorded (slow)" if slow else ("fixed" if ok else "still off — listen, or try --redo again")
+                print(f"  {label}: {m['text']}" + (f"  (heard “{after_carrier(heard)}”, {score:.2f})" if heard else ""), flush=True)
+    if len(cids) > 30:
+        print(f"  {len(cids) - len(still_off):,} of {len(cids):,} re-recorded and passing"
+              + (f"; still off: {', '.join(still_off[:20])}" if still_off else ""))
     results_path.write_text(json.dumps(results, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
