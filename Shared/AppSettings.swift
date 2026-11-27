@@ -69,6 +69,9 @@ enum AppSettings {
         static let widgetShowsPhrase = "widgetShowsPhrase"
         static let useRecordedVoice = "useRecordedVoice"
         static let quizSounds = "quizSounds"
+        static let pauseDuringQuiet = "pauseDuringQuiet"
+        static let pauseMigrated = "pauseMigrated"
+        static let missed = "missed"
     }
 
     static var level: Level {
@@ -151,6 +154,42 @@ enum AppSettings {
     static var quietEnd: Int {
         get { defaults.object(forKey: Key.quietEnd) as? Int ?? 8 }
         set { defaults.set(newValue, forKey: Key.quietEnd) }
+    }
+
+    /// Words don't change during quiet hours (on by default).
+    static var pauseDuringQuiet: Bool {
+        get { defaults.object(forKey: Key.pauseDuringQuiet) as? Bool ?? true }
+        set { defaults.set(newValue, forKey: Key.pauseDuringQuiet) }
+    }
+
+    /// The hours the rotation pauses for (see WordSchedule.quietHours).
+    static var pausedHours: Set<Int> {
+        pauseDuringQuiet ? quietHourSet(start: quietStart, end: quietEnd) : []
+    }
+
+    static func quietHourSet(start: Int, end: Int) -> Set<Int> {
+        guard start != end else { return [] }
+        return Set((0..<24).filter { start < end ? ($0 >= start && $0 < end) : ($0 >= start || $0 < end) })
+    }
+
+    /// After the paused hours changed (quiet hours edited, or pausing turned on/off): keep the word
+    /// on screen by letting the skip offset absorb the difference in position.
+    static func pauseChanged(from oldHours: Set<Int>) {
+        let now = WordSchedule.current
+        var before = now
+        before.quietHours = cadence == .daily ? [] : oldHours
+        skipOffset += before.position(at: .now) - now.position(at: .now)
+    }
+
+    /// The first time this version runs, pausing comes on by default; keep the word she's on.
+    static func migratePauseIfNeeded() {
+        guard !defaults.bool(forKey: Key.pauseMigrated) else { return }
+        defaults.set(true, forKey: Key.pauseMigrated)
+        let unpaused = WordSchedule(words: WordBank.currentDeck, cadence: cadence, seed: seed,
+                                    startDate: startDate, offset: skipOffset, quietHours: [])
+        let paused = WordSchedule(words: WordBank.currentDeck, cadence: cadence, seed: seed,
+                                  startDate: startDate, offset: skipOffset, quietHours: pausedHours)
+        skipOffset += unpaused.position(at: .now) - paused.position(at: .now)
     }
 
     static func isQuiet(hour: Int) -> Bool {

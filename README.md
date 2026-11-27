@@ -98,7 +98,7 @@ The levels loosely follow CEFR, which is also how the Instituto Cervantes curric
 
 ## Skipping ahead
 
-`WordSchedule` adds `AppSettings.skipOffset` to the clock slot. "Next word" increments it, reloads the widget timelines and re-queues notifications. When the next hour arrives she continues from where she skipped to, so nothing repeats. Seen words are recorded in the App Group by `LearningProgress.catchUp()`, which runs from both the app and the widget, so the Review and Quiz tabs include words she skipped past.
+Quiet hours pause the rotation (Settings › Quiet hours): slots starting in a quiet hour don't count, so the evening's word stays up overnight. A word counts as **seen** only when it's on the Today screen (or opened from Review / Catch up); words whose turn passed while she wasn't looking go on a missed list, and the Today tab offers **Catch up** or **Skip**. `WordSchedule` adds `AppSettings.skipOffset` to the clock slot. "Next word" increments it, reloads the widget timelines and re-queues notifications. When the next hour arrives she continues from where she skipped to, so nothing repeats. Seen words are recorded in the App Group by `LearningProgress.catchUp()`, which runs from both the app and the widget, so the Review and Quiz tabs include words she skipped past.
 
 ## Building the full deck from a dictionary
 

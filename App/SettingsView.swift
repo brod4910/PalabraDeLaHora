@@ -11,6 +11,7 @@ struct SettingsView: View {
     @AppStorage(AppSettings.Key.notificationsEnabled, store: AppSettings.defaults) private var notificationsOn = false
     @AppStorage(AppSettings.Key.quietStart, store: AppSettings.defaults) private var quietStart = 21
     @AppStorage(AppSettings.Key.quietEnd, store: AppSettings.defaults) private var quietEnd = 8
+    @AppStorage(AppSettings.Key.pauseDuringQuiet, store: AppSettings.defaults) private var pauseDuringQuiet = true
 
     @AppStorage(AppSettings.Key.level, store: AppSettings.defaults) private var levelRaw = Level.novice.rawValue
     @AppStorage(AppSettings.Key.includeEarlierLevels, store: AppSettings.defaults) private var includeEarlier = false
@@ -97,23 +98,29 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Toggle("Notify me with each new word", isOn: $notificationsOn)
-                    if notificationsOn {
-                        Picker("Quiet from", selection: $quietStart) {
-                            ForEach(0..<24, id: \.self) { Text(hourLabel($0)).tag($0) }
-                        }
-                        Picker("Until", selection: $quietEnd) {
-                            ForEach(0..<24, id: \.self) { Text(hourLabel($0)).tag($0) }
-                        }
+                    Picker("Quiet from", selection: $quietStart) {
+                        ForEach(0..<24, id: \.self) { Text(hourLabel($0)).tag($0) }
                     }
+                    Picker("Until", selection: $quietEnd) {
+                        ForEach(0..<24, id: \.self) { Text(hourLabel($0)).tag($0) }
+                    }
+                    Toggle("Pause words during quiet hours", isOn: $pauseDuringQuiet)
+                } header: {
+                    Text("Quiet hours")
+                } footer: {
+                    Text(pauseDuringQuiet
+                         ? "No notifications, and the word doesn't change: the evening's word stays up and the next one comes when quiet hours end."
+                         : "No notifications. Words keep changing overnight.")
+                }
+
+                Section {
+                    Toggle("Notify me with each new word", isOn: $notificationsOn)
                 } header: {
                     Text("Notifications")
                 } footer: {
                     if notificationsDenied {
                         Text("Notifications are turned off for Palabra in the Settings app.")
                             .foregroundStyle(.red)
-                    } else {
-                        Text("No notifications during quiet hours. The widget keeps updating either way.")
                     }
                 }
 
@@ -189,8 +196,9 @@ struct SettingsView: View {
             .onChange(of: includeEarlier) { scheduleChanged() }
             .onChange(of: widgetShowsPhrase) { WidgetCenter.shared.reloadAllTimelines() }
             .onChange(of: cadenceRaw) { scheduleChanged() }
-            .onChange(of: quietStart) { Task { await NotificationScheduler.reschedule() } }
-            .onChange(of: quietEnd) { Task { await NotificationScheduler.reschedule() } }
+            .onChange(of: quietStart) { old, _ in quietChanged(AppSettings.quietHourSet(start: old, end: quietEnd), was: pauseDuringQuiet) }
+            .onChange(of: quietEnd) { old, _ in quietChanged(AppSettings.quietHourSet(start: quietStart, end: old), was: pauseDuringQuiet) }
+            .onChange(of: pauseDuringQuiet) { old, _ in quietChanged(AppSettings.quietHourSet(start: quietStart, end: quietEnd), was: old) }
             .onChange(of: notificationsOn) { _, on in
                 Task {
                     if on {
@@ -206,6 +214,12 @@ struct SettingsView: View {
 
     private func scheduleChanged() {
         LearningProgress.catchUp()
+        Rotation.didChange()
+    }
+
+    /// Quiet hours or pausing changed: keep the word she's on, then update the widget and notifications.
+    private func quietChanged(_ oldQuiet: Set<Int>, was pausing: Bool) {
+        AppSettings.pauseChanged(from: pausing ? oldQuiet : [])
         Rotation.didChange()
     }
 

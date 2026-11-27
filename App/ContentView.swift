@@ -70,6 +70,9 @@ struct TodayView: View {
     @AppStorage(AppSettings.Key.cadence, store: AppSettings.defaults) private var cadenceRaw = Cadence.hourly.rawValue
 
     @State private var skippedToday = 0
+    @State private var missed: [Word] = []
+    @State private var catchingUp = false
+    @Environment(\.scenePhase) private var scenePhase
     private static let top = "today-top"
 
     var body: some View {
@@ -95,8 +98,25 @@ struct TodayView: View {
                             .padding(.bottom, -8)
                             .accessibilityAddTraits(.isHeader)
 
+                            if !missed.isEmpty {
+                                MissedBanner(count: missed.count,
+                                             onCatchUp: { catchingUp = true },
+                                             onSkip: {
+                                                 LearningProgress.dismissMissed()
+                                                 withAnimation { missed = [] }
+                                             })
+                            }
+
                             WordCardView(word: word)
                                 .id(word.id)
+                                // Seen = she's had it on screen (also after the hour changes while
+                                // she's looking, or when she comes back to the app).
+                                .task(id: "\(word.id)-\(scenePhase == .active)") {
+                                    guard scenePhase == .active else { return }
+                                    LearningProgress.catchUp()
+                                    LearningProgress.markSeen(word)
+                                    missed = LearningProgress.missedWords()
+                                }
                                 .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity),
                                                         removal: .move(edge: .leading).combined(with: .opacity)))
 
@@ -129,10 +149,73 @@ struct TodayView: View {
                     }
                 }
             }
+            .sheet(isPresented: $catchingUp, onDismiss: { missed = LearningProgress.missedWords() }) {
+                CatchUpView(words: missed)
+            }
             .navigationTitle("Palabra de la hora")       // still the back-button / accessibility name
             .toolbar(.hidden, for: .navigationBar)
             .background(Color(.systemGroupedBackground))
             .onAppear { LearningProgress.catchUp() }
+        }
+    }
+}
+
+/// "3 words came up while you were away" — catch up or skip them.
+private struct MissedBanner: View {
+    let count: Int
+    let onCatchUp: () -> Void
+    let onSkip: () -> Void
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "tray.full.fill")
+                .font(.title3)
+                .foregroundStyle(Theme.coral)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("\(count) \(count == 1 ? "word" : "words") came up while you were away")
+                    .font(.subheadline.weight(.semibold))
+                Text("Catch up, or skip them — they'll come round again.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer(minLength: 4)
+            VStack(spacing: 6) {
+                Button("Catch up", action: onCatchUp)
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.small)
+                Button("Skip", action: onSkip)
+                    .font(.caption)
+            }
+        }
+        .tint(Theme.coral)
+        .padding(14)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+}
+
+/// The missed words, one card per page; each counts as seen once it's shown.
+private struct CatchUpView: View {
+    let words: [Word]
+    @Environment(\.dismiss) private var dismiss
+    @State private var page = 0
+
+    var body: some View {
+        NavigationStack {
+            TabView(selection: $page) {
+                ForEach(Array(words.enumerated()), id: \.element.id) { i, word in
+                    ScrollView { WordCardView(word: word).padding() }
+                        .tag(i)
+                        .onAppear { LearningProgress.markSeen(word) }
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .always))
+            .indexViewStyle(.page(backgroundDisplayMode: .always))
+            .background(Color(.systemGroupedBackground))
+            .navigationTitle("Catch up · \(min(page + 1, words.count)) of \(words.count)")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
+            }
         }
     }
 }

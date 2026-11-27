@@ -28,7 +28,7 @@ struct WordProvider: TimelineProvider {
     /// Pre-computes the next 24 word changes. Each entry becomes active exactly at its date, so the
     /// widget flips on the hour without needing a reload. `.atEnd` asks for a new batch afterwards.
     func getTimeline(in context: Context, completion: @escaping (Timeline<WordEntry>) -> Void) {
-        LearningProgress.catchUp() // record words shown while the app was closed
+        LearningProgress.catchUp() // words whose turn passed while the app was closed → missed list
         let schedule = WordSchedule.current
         let now = Date()
         let current = schedule.word(at: now)

@@ -52,6 +52,7 @@ struct ReviewView: View {
                                 .background(Color(.systemGroupedBackground))
                                 .navigationTitle(word.spanish)
                                 .navigationBarTitleDisplayMode(.inline)
+                                .onAppear { LearningProgress.markSeen(word) }   // opened it = seen it
                         } label: {
                             WordRow(word: word, isFavorite: favorites.contains(word)) {
                                 speaker.speak(word.spanish)

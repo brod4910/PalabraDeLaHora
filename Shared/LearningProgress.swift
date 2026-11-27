@@ -1,7 +1,7 @@
 import Foundation
 
 /// What the learner has seen and how they've done in quizzes. Stored in the App Group so the
-/// widget can record words that appear while the app is closed.
+/// widget can note words whose turn passed while the app was closed (they go on the missed list).
 enum LearningProgress {
     private static var defaults: UserDefaults { AppSettings.defaults }
 
@@ -13,29 +13,60 @@ enum LearningProgress {
         set { defaults.set(newValue, forKey: AppSettings.Key.seen) }
     }
 
-    /// Records every word that has come up since the last call (clock ticks and skips).
-    /// Called by the app when it becomes active / skips, and by the widget on each timeline build.
+    /// Words whose turn came and went while she wasn't looking, oldest first (capped), so the Today
+    /// tab can offer to catch up. A word counts as seen only when it's actually shown (`markSeen`).
+    static var missed: [String] {
+        get { defaults.stringArray(forKey: AppSettings.Key.missed) ?? [] }
+        set { defaults.set(Array(newValue.suffix(maxMissed)), forKey: AppSettings.Key.missed) }
+    }
+    static let maxMissed = 40
+
+    /// Moves the cursor up to now: every word that came up since the last call and isn't seen yet
+    /// goes on the missed list. The current word is not marked seen here; the Today screen does that
+    /// when it shows it. Called by the app (on launch / skip) and by the widget.
     static func catchUp(now: Date = .now) {
         let schedule = WordSchedule.current
         let current = schedule.position(at: now)
         let signature = AppSettings.deckSignature
 
-        var start = current
-        if let cursor = defaults.dictionary(forKey: AppSettings.Key.seenCursor),
-           cursor["sig"] as? String == signature,
-           let last = cursor["pos"] as? Int, last < current {
-            // Never walk back more than one full pass through the deck.
-            start = max(last + 1, current - schedule.words.count + 1)
+        guard let cursor = defaults.dictionary(forKey: AppSettings.Key.seenCursor),
+              cursor["sig"] as? String == signature,
+              let last = cursor["pos"] as? Int else {
+            defaults.set(["sig": signature, "pos": current], forKey: AppSettings.Key.seenCursor)
+            return
         }
-
-        var map = seen
-        let stamp = now.timeIntervalSince1970
-        for p in start...current {
-            let id = schedule.word(atPosition: p).id
-            if map[id] == nil { map[id] = stamp }
+        if last < current {
+            let seenNow = seen
+            var list = missed
+            // Never walk back more than the missed list can hold.
+            for p in max(last, current - maxMissed)..<current {
+                let id = schedule.word(atPosition: p).id
+                if seenNow[id] == nil, !list.contains(id) { list.append(id) }
+            }
+            missed = list
         }
-        seen = map
         defaults.set(["sig": signature, "pos": current], forKey: AppSettings.Key.seenCursor)
+    }
+
+    /// She has looked at this word (Today screen, catch-up, a card she opened).
+    static func markSeen(_ word: Word, at date: Date = .now) {
+        var map = seen
+        if map[word.id] == nil {
+            map[word.id] = date.timeIntervalSince1970
+            seen = map
+        }
+        if missed.contains(word.id) {
+            missed.removeAll { $0 == word.id }
+        }
+    }
+
+    static func missedWords() -> [Word] {
+        missed.compactMap { WordBank.word(id: $0) }
+    }
+
+    /// "Skip these": they stay unseen (they'll come round again), the list is cleared.
+    static func dismissMissed() {
+        missed = []
     }
 
     /// Seen words, most recent first.
@@ -46,6 +77,7 @@ enum LearningProgress {
     static func resetSeen() {
         defaults.removeObject(forKey: AppSettings.Key.seen)
         defaults.removeObject(forKey: AppSettings.Key.seenCursor)
+        defaults.removeObject(forKey: AppSettings.Key.missed)
     }
 
     // MARK: Quiz stats
